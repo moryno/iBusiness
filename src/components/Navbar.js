@@ -1,72 +1,80 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import PersonIcon from "@mui/icons-material/Person";
 
-const Navbar = ({ onShow }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+import { Search } from "@material-ui/icons";
+import NavMenus from "./NavMenus";
 
-  const expand = () => {
-    setIsExpanded((isExpanded) => !isExpanded);
-  };
-
+const Navbar = ({ open }) => {
   return (
-    <main className=" w-full">
-      <section className="container mx-auto py-5  flex items-center justify-between">
-        <article className="flex items-center">
-          <h1 className="text-orange font-bold text-3xl cursor-pointer">
-            <span className="text-text">Inua</span> Sauti
+    <main className="w-full bg-bg flex items-center h-[70px] box-border text-white">
+      <section className="p-2 md:p-5 w-full flex items-center justify-between">
+        <article className="hidden md:flex items-center gap-2">
+          <MenuIcon
+            onClick={open}
+            className=" opacity-50 cursor-pointer"
+            fontSize="large"
+          />
+          <h1 className="font-semibold text-2xl cursor-pointer">
+            ARBS Customer Portal
           </h1>
         </article>
-        <article className="hidden md:block">
-          <ul className="flex items-center md:gap-4 gap-10  font-bold text-md cursor-pointer">
-            <NavLink to="/">
-              <li className="text-text">Home</li>
-            </NavLink>
-            <NavLink to="/posts">
-              <li className="hover:text-textHeavy">Reports</li>
-            </NavLink>
-            <NavLink to="/about">
-              <li className="text-red-400">About</li>
-            </NavLink>
-          </ul>
-        </article>
-        <article className="hidden md:flex gap-4 ">Navbar</article>
-        <article className="md:hidden">
-          <div
-            onClick={expand}
-            className="space-y-1 p-1.5 bg-white md:hidden cursor-pointer z-50"
-          >
-            <div className="w-6 h-0.5 bg-black"></div>
-            <div className="w-6 h-0.5 bg-black"></div>
-            <div className="w-6 h-0.5 bg-black"></div>
+
+        <article className="hidden md:flex gap-4 ">
+          <div className="flex items-center rounded-r-sm overflow-hidden bg-white justify-between">
+            <div className="">
+              <input
+                type="text"
+                className="py-1 px-2 outline-none placeholder:text-gray-400 placeholder:text-sm"
+                placeholder="Search for..."
+                name="search"
+              />
+            </div>
+            <div className="bg-button p-2">
+              <Search />
+            </div>
           </div>
-          {isExpanded && (
-            <div>
-              <ul className=" absolute top-0 left-0 bg-button text-white text-center rounded-b-1xl w-full space-y-10 p-10 z-20">
-                <div className="flex justify-start" onClick={expand}>
-                  {" "}
-                  <i className="bx bx-x bx-md text-white"></i>
-                </div>
-                <li
-                  className="cursor-pointer hover:text-textLight"
-                  onClick={expand}
-                >
-                  <a href={`#home`}>Home</a>
+          <div className=" flex items-center font-medium">
+            <ul className="flex items-center gap-1">
+              <li className="">
+                <PersonIcon className="text-[16px] opacity-70 cursor-pointer" />
+              </li>
+              <NavMenus />
+            </ul>
+          </div>
+        </article>
+        <article className="md:hidden flex items-center w-full justify-between">
+          <div
+            onClick={open}
+            className="space-y-1 p-1.5  md:hidden cursor-pointer z-50"
+          >
+            <MenuIcon
+              className=" opacity-50 cursor-pointer "
+              fontSize="large"
+            />
+          </div>
+          <article className="flex md:hidden gap-4 ">
+            <div className="flex items-center rounded-r-sm overflow-hidden bg-white justify-between">
+              <div className="">
+                <input
+                  type="text"
+                  className="py-1 px-2 outline-none placeholder:text-gray-400 placeholder:text-sm"
+                  placeholder="Search for..."
+                  name="search"
+                />
+              </div>
+              <div className="bg-button p-2">
+                <Search />
+              </div>
+            </div>
+            <div className=" flex items-center font-medium">
+              <ul className="flex items-center gap-1">
+                <li className="">
+                  <PersonIcon className="text-[16px] opacity-70 cursor-pointer" />
                 </li>
-                <li
-                  className="cursor-pointer hover:text-textLight"
-                  onClick={expand}
-                >
-                  <a href={`#about`}>Reports</a>
-                </li>
-                <li
-                  className="cursor-pointer hover:text-textLight"
-                  onClick={expand}
-                >
-                  <a href={`#skills`}>About</a>
-                </li>
+                <NavMenus />
               </ul>
             </div>
-          )}
+          </article>
         </article>
       </section>
     </main>

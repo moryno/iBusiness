@@ -1,0 +1,56 @@
+export const bookingColumns = [
+  { field: "bookingId", headerName: "Booking ID", type: "number", width: 70 },
+  {
+    field: "bookingRef",
+    headerName: "Booking Ref",
+    width: 100,
+  },
+  { field: "idNumber", headerName: "ID Number", type: "number", width: 100 },
+  { field: "fullName", headerName: "Full Name", width: 150 },
+  { field: "email", headerName: "Email", width: 150 },
+  { field: "telephone", headerName: "Telephone", width: 150 },
+  {
+    field: "retirementScheme",
+    headerName: "Retirement Scheme Name",
+    width: 100,
+  },
+  { field: "courseCode", headerName: "Course Code", width: 100 },
+  { field: "courseName", headerName: "Course Name", width: 150 },
+  { field: "fromDate", headerName: "From Date", width: 150 },
+  { field: "toDate", headerName: "To Date", width: 150 },
+  { field: "approvalStatus", headerName: "Approval Status", width: 150 },
+];
+
+export const bookingRows = [
+  {
+    id: 1,
+    bookingId: 1879,
+    bookingRef: "TDPK-2000022",
+    idNumber: "89908878",
+    fullName: "John Doe",
+    email: "johndoe@email.com",
+    telephone: "0789909987",
+    retirementScheme: "KOKI-KOKI",
+    courseCode: "TDPK01",
+    courseName: "Truste Development",
+    fromDate: "06/02/2023",
+    toDate: "09/04/2026",
+    approvalStatus: "Draft",
+  },
+
+  {
+    id: 2,
+    bookingId: 1279,
+    bookingRef: "TDPK-2000032",
+    idNumber: "99088798",
+    fullName: "David Doe",
+    email: "davedoe@email.com",
+    telephone: "0989909987",
+    retirementScheme: "KINGSLANDING",
+    courseCode: "TDPK04",
+    courseName: "Software Engineering",
+    fromDate: "06/02/2020",
+    toDate: "09/04/2022",
+    approvalStatus: "Approved",
+  },
+];
