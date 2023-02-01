@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { bookingColumns, bookingRows } from "../helpers/datatableSource";
 import { Link } from "react-router-dom";
 
-const DataTable = () => {
+const DataTable = ({ data }) => {
   let actionColumn = [
     {
       field: "action",
@@ -27,14 +27,18 @@ const DataTable = () => {
   ];
 
   return (
-    <div className="h-[37.5rem]">
-      <DataGrid
-        rows={bookingRows}
-        columns={bookingColumns.concat(actionColumn)}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
+    <div className="h-[500px] w-full">
+      <div className="flex h-full">
+        <div style={{ flexGrow: 1 }}>
+          <DataGrid
+            rows={data}
+            columns={bookingColumns.concat(actionColumn)}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+          />
+        </div>
+      </div>
     </div>
   );
 };

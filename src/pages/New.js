@@ -1,8 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
 const New = () => {
+  const [formInputs, setFormInputs] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormInputs({ ...formInputs, [name]: value });
+  };
+
+  const save = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/bookings",
+        formInputs
+      );
+      setFormInputs({});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <main className="w-full h-screen md:min-h-screen md:bg-section p-2 md:px-5 py-1">
       <section className="">
@@ -15,7 +36,10 @@ const New = () => {
               <button className=" bg-orang text-white font-medium cursor-pointer py-2 px-3 w-fit rounded-md">
                 <Link to="/">Cancel Save</Link>
               </button>
-              <button className=" bg-blue text-white font-medium cursor-pointer py-2 px-8 w-fit rounded-md">
+              <button
+                className="bg-blue text-white font-medium cursor-pointer py-2 px-8 w-fit rounded-md"
+                onClick={save}
+              >
                 Save
               </button>
             </div>
@@ -34,10 +58,18 @@ const New = () => {
                 <select
                   className="w-full md:w-1/2 p-1 border border-gray-300 outline-1 outline-blue text-gray-500"
                   id="bookingType"
+                  name="bookingType"
+                  onChange={handleChange}
                 >
-                  <option className=" rounded-none p-5">First Time</option>
-                  <option className=" rounded-none p-5">Retake</option>
-                  <option className=" rounded-none p-5">Resit</option>
+                  <option className="rounded-none p-5" value="First Time">
+                    First Time
+                  </option>
+                  <option className="rounded-none p-5" value="Retake">
+                    Retake
+                  </option>
+                  <option className="rounded-none p-5" value="Resit">
+                    Resit
+                  </option>
                 </select>
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -51,21 +83,26 @@ const New = () => {
                 <select
                   className="w-full md:w-1/2 p-1 border border-gray-300 outline-1 outline-blue text-gray-500"
                   id="retirementSchemeName"
+                  name="retirementSchemeName"
+                  onChange={handleChange}
                 >
-                  <option className=" rounded-none p-5">
+                  <option
+                    className=" rounded-none p-5"
+                    value="A I C KIJABE MEDICAL"
+                  >
                     A I C KIJABE MEDICAL CENTERE STAFF PENSION SCHEME-476
                   </option>
-                  <option className=" rounded-none p-5">
-                    A I C KIJABE MEDICAL CENTERE STAFF PENSION SCHEME-476
+                  <option
+                    className=" rounded-none p-5"
+                    value="A I C KIJABE PRINTING"
+                  >
+                    A I C KIJABE PRINTING PRESS STAFF RETIREMENT
                   </option>
-                  <option className=" rounded-none p-5">
-                    A I C KIJABE MEDICAL CENTERE STAFF PENSION SCHEME-476
-                  </option>
-                  <option className=" rounded-none p-5">
-                    A I C KIJABE MEDICAL CENTERE STAFF PENSION SCHEME-476
-                  </option>
-                  <option className=" rounded-none p-5">
-                    A I C KIJABE MEDICAL CENTERE STAFF PENSION SCHEME-476
+                  <option
+                    className=" rounded-none p-5"
+                    value="AIC LITENI CATTAGE"
+                  >
+                    AIC LITENI CATTAGE STAFF PENSION
                   </option>
                 </select>
               </div>
@@ -81,6 +118,7 @@ const New = () => {
                   type="text"
                   id="fullName"
                   name="fullName"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -95,6 +133,7 @@ const New = () => {
                   type="text"
                   id="schemePosition"
                   name="schemePosition"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -108,7 +147,8 @@ const New = () => {
                   className="border border-gray-300 p-1 w-full md:w-1/2 outline-none rounded-sm"
                   type="text"
                   id="idNumber"
-                  name="fullName"
+                  name="idNumber"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -120,6 +160,7 @@ const New = () => {
                   type="email"
                   id="email"
                   name="email"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -134,6 +175,7 @@ const New = () => {
                   type="text"
                   id="telephone"
                   name="telephone"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -148,6 +190,7 @@ const New = () => {
                   type="text"
                   id="physicalAddress"
                   name="physicalAddress"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -162,6 +205,7 @@ const New = () => {
                   type="text"
                   id="email"
                   name="employerName"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -174,11 +218,21 @@ const New = () => {
                 <select
                   className="w-full md:w-1/2 p-1 border border-gray-300 outline-1 outline-blue text-gray-500"
                   id="originCountry"
+                  name="originCountry"
+                  onChange={handleChange}
                 >
-                  <option className=" rounded-none p-5">Kenya</option>
-                  <option className=" rounded-none p-5">Tanzania</option>
-                  <option className=" rounded-none p-5">Uganda</option>
-                  <option className=" rounded-none p-5">Others</option>
+                  <option className=" rounded-none p-5" value="Kenya">
+                    Kenya
+                  </option>
+                  <option className=" rounded-none p-5" value="Tanzania">
+                    Tanzania
+                  </option>
+                  <option className=" rounded-none p-5" value="Uganda">
+                    Uganda
+                  </option>
+                  <option className=" rounded-none p-5" value="Others">
+                    Others
+                  </option>
                 </select>
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -191,12 +245,24 @@ const New = () => {
                 <select
                   className="w-full md:w-1/2 p-1 border border-gray-300 outline-1 outline-blue text-gray-500"
                   id="trainingVenue"
+                  name="trainingVenue"
+                  onChange={handleChange}
                 >
-                  <option className=" rounded-none p-5">INHOUSE</option>
-                  <option className=" rounded-none p-5">Kisumu</option>
-                  <option className=" rounded-none p-5">Nairobi</option>
-                  <option className=" rounded-none p-5">Mombasa</option>
-                  <option className=" rounded-none p-5">Naivasha</option>
+                  <option className=" rounded-none p-5" value="INHOUSE">
+                    INHOUSE
+                  </option>
+                  <option className=" rounded-none p-5" value="Kisumu">
+                    Kisumu
+                  </option>
+                  <option className=" rounded-none p-5" value="Nairobi">
+                    Nairobi
+                  </option>
+                  <option className=" rounded-none p-5" value="Mombasa">
+                    Mombasa
+                  </option>
+                  <option className=" rounded-none p-5" value="Naivasha">
+                    Naivasha
+                  </option>
                 </select>
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -208,9 +274,10 @@ const New = () => {
                 </label>
                 <input
                   className="border border-gray-300 p-1 w-full md:w-1/2 outline-none rounded-sm"
-                  type="text"
+                  type="date"
                   id="courseDate"
                   name="courseDate"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -225,6 +292,7 @@ const New = () => {
                   type="number"
                   id="experience"
                   name="experience"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -239,6 +307,7 @@ const New = () => {
                   type="text"
                   id="position"
                   name="position"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -251,10 +320,19 @@ const New = () => {
                 <select
                   className="w-full md:w-1/2 p-1 border border-gray-300 outline-1 outline-blue text-gray-500"
                   id="paymentMode"
+                  name="paymentMode"
+                  onChange={handleChange}
                 >
-                  <option className=" rounded-none p-5">Cheque</option>
-                  <option className=" rounded-none p-5">Cash</option>
-                  <option className=" rounded-none p-5">
+                  <option className=" rounded-none p-5" value="Cheque">
+                    Cheque
+                  </option>
+                  <option className=" rounded-none p-5" value="Cash">
+                    Cash
+                  </option>
+                  <option
+                    className=" rounded-none p-5"
+                    value="Electronic Funds Transfer"
+                  >
                     Electronic Funds Transfer
                   </option>
                 </select>
@@ -272,6 +350,7 @@ const New = () => {
                   type="text"
                   id="additionalRequirements"
                   name="additionalRequirements"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -287,6 +366,7 @@ const New = () => {
                   type="text"
                   id="externalSchemeAdmin"
                   name="externalSchemeAdmin"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex justify-between flex-col gap-1 md:gap-0 md:flex-row w-full md:w-[45%]">
@@ -299,9 +379,15 @@ const New = () => {
                 <select
                   className="w-full md:w-1/2 p-1 border border-gray-300 outline-1 outline-blue text-gray-500"
                   id="disabilityStatus"
+                  name="disabilityStatus"
+                  onChange={handleChange}
                 >
-                  <option className=" rounded-none p-5">Disabled</option>
-                  <option className=" rounded-none p-5">Not Disabled</option>
+                  <option className=" rounded-none p-5" value="Disabled">
+                    Disabled
+                  </option>
+                  <option className=" rounded-none p-5" value="Not Disabled">
+                    Not Disabled
+                  </option>
                 </select>
               </div>
             </form>

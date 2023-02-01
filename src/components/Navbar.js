@@ -6,7 +6,7 @@ import NavMenus from "./NavMenus";
 
 const Navbar = ({ open }) => {
   return (
-    <main className="w-full bg-bg flex items-center h-[70px] box-border text-white">
+    <main className="w-full bg-bg flex items-center h-[10vh] box-border text-white">
       <section className="p-2 md:p-5 w-full flex items-center justify-between">
         <article className="hidden md:flex items-center gap-2">
           <MenuIcon

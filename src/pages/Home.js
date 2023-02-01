@@ -3,8 +3,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import BackupIcon from "@mui/icons-material/Backup";
 import DataTable from "../components/DataTable";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Home = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get("http://localhost:3000/bookings");
+      setData(data);
+    };
+    getData();
+  }, []);
   return (
     <main className="w-full min-h-screen px-2 md:px-5 py-1">
       <section>
@@ -43,7 +54,7 @@ const Home = () => {
         <hr className="text-gray-200 my-2" />
 
         <section className="mt-5">
-          <DataTable />
+          <DataTable data={data} />
         </section>
       </section>
     </main>

@@ -10,7 +10,7 @@ export const bookingColumns = [
   { field: "email", headerName: "Email", width: 150 },
   { field: "telephone", headerName: "Telephone", width: 150 },
   {
-    field: "retirementScheme",
+    field: "retirementSchemeName",
     headerName: "Retirement Scheme Name",
     width: 100,
   },
