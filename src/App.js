@@ -6,14 +6,19 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
-import New from "../pages/New";
+import Home from "./pages/Home";
+import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
+import New from "./pages/New";
 import { useState } from "react";
 
 function App() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showPortal, setShowPortal] = useState(false);
+
+  const onShowPortal = () => {
+    setShowPortal(true);
+  };
 
   const Layout = () => {
     return (
@@ -25,6 +30,7 @@ function App() {
             <Outlet />
           </div>
         </div>
+        <New showPortal={showPortal} onClose={() => setShowPortal(false)} />
       </div>
     );
   };
@@ -36,11 +42,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/new",
-          element: <New />,
+          element: <Home onShow={() => onShowPortal()} />,
         },
       ],
     },
