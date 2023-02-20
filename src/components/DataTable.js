@@ -1,68 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "devextreme/dist/css/dx.light.css";
 import "devextreme/data/odata/store";
-import ODataStore from "devextreme/data/odata/store";
 import DataGrid, {
-  Column,
   Pager,
   Paging,
   FilterRow,
-  Lookup,
   SearchPanel,
-  GroupPanel,
-  RequiredRule,
   Editing,
   Grouping,
   Toolbar,
   Item,
-  ColumnChooser,
   Selection,
   Export,
+  ColumnFixing,
 } from "devextreme-react/data-grid";
-import { Workbook } from "exceljs";
-import { saveAs } from "file-saver";
-import { exportDataGrid as exportDataGridToExcel } from "devextreme/excel_exporter";
-import { jsPDF } from "jspdf";
-import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
-import { Button } from "devextreme-react/button";
 
-const exportFormats = ["xlsx", "pdf"];
+import request from "../helpers/requestMethod";
+import { onExporting, startEdit } from "../helpers/datagridFunctions";
 
-function DataTable({ data }) {
+function DataTable({ date }) {
   const [expanded, setExpanded] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
+  const [data, setData] = useState([]);
 
-  function onExporting(e) {
-    if (e.format === "xlsx") {
-      const workbook = new Workbook();
-      const worksheet = workbook.addWorksheet("Main sheet");
-      // Export to excel method
-      exportDataGridToExcel({
-        component: e.component,
-        worksheet,
-        autoFilterEnabled: true,
-      }).then(() => {
-        workbook.xlsx.writeBuffer().then((buffer) => {
-          saveAs(
-            new Blob([buffer], { type: "application/octet-stream" }),
-            "DataGrid.xlsx"
-          );
-        });
-      });
-      e.cancel = true;
-    } else {
-      // Export to pdf
-      const doc = new jsPDF();
+  const exportFormats = ["xlsx", "pdf"];
 
-      exportDataGridToPdf({
-        jsPDFDocument: doc,
-        component: e.component,
-        indent: 5,
-      }).then(() => {
-        doc.save("Companies.pdf");
-      });
-    }
-  }
   function onContentReady(e) {
     if (!collapsed) {
       e.component.expandRow(["EnviroCare"]);
@@ -72,29 +34,40 @@ function DataTable({ data }) {
     }
   }
 
-  const startEdit = (e) => {
-    if (e.rowType === "data") {
-      e.component.editRow(e.rowIndex);
-    }
-  };
+  // const onSelectionChanged = ({ selectedRowsData }) => {
+  //   const data = selectedRowsData[0];
+  // };
 
-  const onSelectionChanged = ({ selectedRowsData }) => {
-    const data = selectedRowsData[0];
-  };
+  useEffect(() => {
+    try {
+      const getData = async () => {
+        const { data } = await request.get(
+          date
+            ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
+            : "Booking"
+        );
+        setData(data);
+      };
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [date]);
 
   return (
-    <React.Fragment>
+    <main>
       <DataGrid
-        className={"dx-card wide-card"}
-        dataSource={"http://localhost:3000/bookings"}
+        className={"dx-card wide-card "}
+        dataSource={data}
         showBorders={true}
+        keyExpr="bookingId"
         focusedRowEnabled={true}
         defaultFocusedRowIndex={0}
-        onRowDblClick={startEdit}
+        onRowDblClick={(e) => startEdit(e)}
         columnAutoWidth={true}
         columnHidingEnabled={true}
-        onExporting={onExporting}
-        onSelectionChanged={onSelectionChanged}
+        onExporting={(e) => onExporting(e)}
+        // onSelectionChanged={onSelectionChanged}
         onContentReady={onContentReady}
       >
         <Export
@@ -102,15 +75,12 @@ function DataTable({ data }) {
           formats={exportFormats}
           allowExportSelectedData={true}
         />
-        <Editing mode="popup" allowAdding={true} />
-        <ColumnChooser enabled={true} />
+        <Editing mode="popup" />
+        <ColumnFixing enabled={true} />
         <Grouping autoExpandAll={expanded} />
-
         <Selection mode="multiple" />
-
         <Toolbar>
           <Item name="groupPanel" />
-          <Item name="addRowButton" showText="always" />
           <Item name="exportButton" showText="always" />
           <Item name="columnChooserButton" />
           <Item name="searchPanel" />
@@ -119,45 +89,8 @@ function DataTable({ data }) {
         <Pager showPageSizeSelector={true} showInfo={true} />
         <FilterRow visible={true} />
         <SearchPanel visible={true} />
-        <Column dataField={"bookingId"} width={90} hidingPriority={8} />
-        <Column
-          dataField={"bookingRef"}
-          width={100}
-          caption={"Booking Ref"}
-          hidingPriority={3}
-        >
-          <RequiredRule />
-        </Column>
-        <Column dataField={"idNumber"} caption={"ID Number"} hidingPriority={6}>
-          <RequiredRule />
-        </Column>
-        <Column dataField={"fullName"} caption={"Full Name"} hidingPriority={7}>
-          <RequiredRule />
-        </Column>
-        <Column
-          dataField={"email"}
-          caption={"Email"}
-          allowSorting={false}
-          hidingPriority={5}
-        >
-          <RequiredRule />
-        </Column>
-        <Column
-          dataField={"telephone"}
-          caption={"Telephone"}
-          hidingPriority={3}
-        >
-          <RequiredRule />
-        </Column>
-        <Column
-          dataField={"retirementSchemeName"}
-          caption={"Retirement Scheme Name"}
-          hidingPriority={4}
-        >
-          <RequiredRule />
-        </Column>
       </DataGrid>
-    </React.Fragment>
+    </main>
   );
 }
 export default DataTable;

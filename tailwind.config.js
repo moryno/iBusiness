@@ -4,12 +4,12 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
-        bg: "#0096FF",
+        bg: "#489AEE",
         bgLight: "#C3DAF9",
-        bgxLight: "#E3ECf7",
+        bgxLight: "#E3EFFF",
         section: "#F1F1F4",
-        blue: "#0096FF",
-        button: "#0D6EFD",
+        heading: "#3889DD",
+        button: "#286DB5",
         gn: "#27AE60",
         yellow: "#f39f32",
         orang: "#FFAA00",
@@ -17,10 +17,13 @@ module.exports = {
       colors: {
         text: "#556b86",
         heading: "#0D6EFD",
-        // blue: "#0096FF",
+        blueLight: "#0096FF",
         gn: "#27AE60",
+        cLight: "#C3DAF9",
         yellow: "#f39f32",
         orang: "#FFAA00",
+        menu: "#5C95C5",
+        sideMenu: "#FFFFFF",
       },
       fontSize: {},
       height: {},
@@ -32,6 +35,12 @@ module.exports = {
       md: "768px",
       lg: "1024px",
       xl: "1280px",
+    },
+    gridTemplateColumns: {
+      sidebar: "300px auto", // 👈 for sidebar layout. adds grid-cols-sidebar class
+    },
+    gridTemplateRows: {
+      header: "50px auto", // 👈 for the navbar layout. adds grid-rows-header class
     },
   },
   plugins: [],

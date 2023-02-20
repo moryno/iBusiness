@@ -13,7 +13,7 @@ const SideLinks = () => {
         <div key={link.title}>
           <div className="cursor-pointer overflow-y-auto w-full max-h-60 scrollbar-hide bg-blend-overlay">
             <h1
-              className=" font-semibold sticky text-white bg-bg top-0 flex justify-between md:justify-start items-center"
+              className=" font-bold text-sm sticky text-sideMenu bg-heading top-0 flex justify-between md:justify-start items-center"
               onClick={() =>
                 heading !== link.title ? setHeading(link.title) : setHeading("")
               }
@@ -35,7 +35,7 @@ const SideLinks = () => {
                   <div className=" px-5">
                     {link.sublinks.map((mysublinks) => (
                       <div key={mysublinks.name}>
-                        <li className="text-sm text-white py-3 pl-3">
+                        <li className="text-sm font-normal text-sideMenu py-1.5 pl-3">
                           <Link
                             to={mysublinks.link}
                             className="hover:text-gray-300"

@@ -1,24 +1,21 @@
 export const bookingColumns = [
-  { field: "bookingId", headerName: "Booking ID", type: "number", width: 70 },
+  { dataField: "bookingId", caption: "Booking ID", width: 70 },
   {
-    field: "bookingRef",
-    headerName: "Booking Ref",
+    dataField: "bookingType",
+    caption: "Booking Type",
+    width: 90,
+  },
+  { dataField: "externalSchemeAdmin", width: 100 },
+  {
+    dataField: "retirementSchemeName",
+    caption: "Retirement Scheme Name",
     width: 100,
   },
-  { field: "idNumber", headerName: "ID Number", type: "number", width: 100 },
-  { field: "fullName", headerName: "Full Name", width: 150 },
-  { field: "email", headerName: "Email", width: 150 },
-  { field: "telephone", headerName: "Telephone", width: 150 },
-  {
-    field: "retirementSchemeName",
-    headerName: "Retirement Scheme Name",
-    width: 100,
-  },
-  { field: "courseCode", headerName: "Course Code", width: 100 },
-  { field: "courseName", headerName: "Course Name", width: 150 },
-  { field: "fromDate", headerName: "From Date", width: 150 },
-  { field: "toDate", headerName: "To Date", width: 150 },
-  { field: "approvalStatus", headerName: "Approval Status", width: 150 },
+  { dataField: "courseDate", caption: "Course Date", width: 100 },
+  { dataField: "schemePosition", width: 90 },
+  { dataField: "trainingVenue", width: 150 },
+  { dataField: "paymentMode", width: 150 },
+  { dataField: "additionalRequirements", width: 150 },
 ];
 
 export const bookingRows = [

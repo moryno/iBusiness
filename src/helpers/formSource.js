@@ -1,0 +1,67 @@
+export const userInputs = [
+  {
+    id: 1,
+    label: "Full Name",
+    type: "text",
+    name: "fullName",
+    value: "fullName",
+  },
+  {
+    id: 2,
+    label: "Username",
+    type: "text",
+    name: "userName",
+    value: "userName",
+  },
+
+  {
+    id: 3,
+    label: "Email",
+    type: "email",
+    name: "email",
+    value: "email",
+  },
+  {
+    id: 4,
+    label: "Telephone",
+    type: "text",
+    name: "telephone",
+    value: "telephone",
+  },
+  {
+    id: 5,
+    label: "Physical Address",
+    type: "text",
+    name: "physicalAddress",
+    value: "physicalAddress",
+  },
+  {
+    id: 6,
+    label: "Origin Country",
+    type: "text",
+    name: "originCountry",
+    value: "originCountry",
+  },
+  {
+    id: 7,
+    label: "Experience (years)",
+    type: "number",
+    name: "experience",
+    value: "experience",
+  },
+  {
+    id: 8,
+    label: "Position",
+    type: "text",
+    name: "position",
+    value: "position",
+  },
+  {
+    id: 9,
+    label: "Disability Status",
+    type: "select",
+    name: "disabilityStatus",
+    value: "disabilityStatus",
+    options: ["Disabled", "Not Disabled"],
+  },
+];

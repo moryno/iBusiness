@@ -1,50 +1,65 @@
+import { useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
   Outlet,
   Navigate,
 } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 import Home from "./pages/Home";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
 import New from "./pages/New";
-import { useState } from "react";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import MenuButtonsGroup from "./components/MenuButtonsGroup";
+import Layout from "./components/Layout";
 
 function App() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showPortal, setShowPortal] = useState(false);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
-  const onShowPortal = () => {
-    setShowPortal(true);
-  };
-
-  const Layout = () => {
-    return (
-      <div>
-        <Navbar open={() => setIsExpanded(!isExpanded)} />
-        <div style={{ display: "flex" }}>
-          <Sidebar isExpanded={isExpanded} />
-          <div style={{ flex: 6 }}>
-            <Outlet />
-          </div>
-        </div>
-        <New showPortal={showPortal} onClose={() => setShowPortal(false)} />
-      </div>
-    );
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+    return children;
   };
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: (
+        <ProtectedRoute>
+          <Layout />{" "}
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: "/",
-          element: <Home onShow={() => onShowPortal()} />,
+          element: <Home />,
+        },
+        {
+          path: "/new",
+          element: <New />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/test",
+      element: <MenuButtonsGroup />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ]);
   return <RouterProvider router={router} />;

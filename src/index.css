@@ -17,3 +17,11 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+.dx-datagrid-headers {
+    background-color: #C3DAF9 !important;
+    color: #5C95C5 !important;
+}
+.dx-datagrid-columns {
+    max-width: 100px !important;
+}
