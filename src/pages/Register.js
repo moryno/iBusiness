@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import request from "../helpers/requestMethod";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -27,7 +26,10 @@ const Register = () => {
     event.preventDefault();
     try {
       if (inputs.password === confirmPassword) {
-        const { data } = await request.post("/user/register", inputs);
+        const { data } = await axios.post(
+          "http://192.168.1.200:7030/register",
+          inputs
+        );
         navigate("/login");
       } else {
         setError("Password does not match.");
@@ -39,7 +41,7 @@ const Register = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-bgLight">
-      <section className="w-5/6 md:w-1/2 md:min-h-[500px] flex bg-white flex-col md:flex-row-reverse rounded-[10px] overflow-hidden">
+      <section className="w-5/6 md:w-1/2 md:min-h-[500px] lg:min-h-[600px] flex bg-white flex-col md:flex-row-reverse rounded-[10px] overflow-hidden">
         <article className="w-full md:w-1/2 bg-bgxLight flex flex-col p-5 text-menu gap-8">
           <h1 className="text-3xl md:text-[50px]">iBusiness.</h1>
           <p className="hidden md:block">

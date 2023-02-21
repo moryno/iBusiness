@@ -5,12 +5,17 @@ import Sidebar from "./Sidebar";
 
 const Layout = () => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(true);
+
   return (
     <main className="grid min-h-screen grid-rows-header">
-      <Navbar onMenuButtonClick={() => setShowSidebar((prev) => !prev)} />
-      <div className="grid md:grid-cols-sidebar">
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-        <div style={{ flex: 6 }}>
+      <Navbar
+        onMenuButtonClick={() => setShowSidebar((prev) => !prev)}
+        onMenuClick={() => setOpenSidebar((prev) => !prev)}
+      />
+      <div className="flex w-full">
+        <Sidebar showSidebar={showSidebar} openSidebar={openSidebar} />
+        <div className="w-full">
           <Outlet />
         </div>
       </div>

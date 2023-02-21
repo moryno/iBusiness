@@ -4,8 +4,9 @@ import { Print } from "@material-ui/icons";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HelpIcon from "@mui/icons-material/Help";
 import { MdFreeCancellation } from "react-icons/md";
+import { FcAddDatabase } from "react-icons/fc";
 
-export const menuSource = [
+export const homeMenuSource = [
   {
     id: 1,
     title: "Find",
@@ -40,6 +41,35 @@ export const menuSource = [
     id: 6,
     title: "Help",
     icon: <HelpIcon />,
+    onClick: "handleClick",
+  },
+];
+
+export const newMenuSource = [
+  {
+    id: 1,
+    title: "Save",
+    icon: <FcAddDatabase fontSize={"18px"} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 2,
+    title: "Close",
+    icon: <MdFreeCancellation />,
+    onClick: "handleClick",
+  },
+];
+export const updateMenuSource = [
+  {
+    id: 1,
+    title: "Update",
+    icon: <FcAddDatabase fontSize={"18px"} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 2,
+    title: "Close",
+    icon: <MdFreeCancellation />,
     onClick: "handleClick",
   },
 ];

@@ -37,10 +37,10 @@ module.exports = {
       xl: "1280px",
     },
     gridTemplateColumns: {
-      sidebar: "300px auto", // 👈 for sidebar layout. adds grid-cols-sidebar class
+      sidebar: "300px auto",
     },
     gridTemplateRows: {
-      header: "50px auto", // 👈 for the navbar layout. adds grid-rows-header class
+      header: "50px auto",
     },
   },
   plugins: [],

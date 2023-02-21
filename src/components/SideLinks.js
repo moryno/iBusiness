@@ -13,7 +13,7 @@ const SideLinks = () => {
         <div key={link.title}>
           <div className="cursor-pointer overflow-y-auto w-full max-h-60 scrollbar-hide bg-blend-overlay">
             <h1
-              className=" font-bold text-sm sticky text-sideMenu bg-heading top-0 flex justify-between md:justify-start items-center"
+              className=" font-bold text-sm sticky pl-1.5 text-sideMenu bg-heading top-0 flex justify-between md:justify-start items-center"
               onClick={() =>
                 heading !== link.title ? setHeading(link.title) : setHeading("")
               }

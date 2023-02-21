@@ -1,11 +1,11 @@
-import { Close } from "@material-ui/icons";
-import { FcAddDatabase } from "react-icons/fc";
-import { MdFreeCancellation } from "react-icons/md";
-import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import request from "../helpers/requestMethod";
-import { useSelector } from "react-redux";
+import MenuButtonsGroup from "../components/MenuButtonsGroup";
+import { newMenuSource } from "../data/menu";
+
+import MobileMenus from "../components/MobileMenus";
+import Statusbar from "../components/Statusbar";
 
 const New = () => {
   const [userInput, setUserInputs] = useState({});
@@ -23,8 +23,9 @@ const New = () => {
     setBookingInputs({ ...bookingInput, [name]: value });
   };
 
-  const save = async (event) => {
-    event.preventDefault();
+  const save = async () => {
+    console.log("Save");
+
     const formData = {
       user: userInput,
       booking: bookingInput,
@@ -37,37 +38,36 @@ const New = () => {
     }
   };
 
+  const handleClick = (menu) => {
+    switch (menu) {
+      case "Save":
+        save();
+        break;
+      case "Close":
+        navigate("/");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <main className="w-full h-screen md:h-full  px-3 md:px-5 py-1.5">
+    <main className="w-full relative h-full md:h-full  px-3 md:px-5 py-1.5">
       <section className="w-full h-full">
-        <article className="px-3 w-full flex items-center bg-bgxLight ">
-          <div className="flex flex-col md:flex-row md:items-center items-start justify-between w-full">
-            <h1 className="text-menu py-1 text-lg w-full font-semibold">
-              Add a Booking
-            </h1>
-            <div className="flex justify-between md:justify-end items-center bg-bgxLight  w-full">
-              <div
-                onClick={save}
-                className="flex gap-1 border-l border-l-gray-300 hover:bg-bgLight  px-2 text-menu items-center font-medium  cursor-pointer text-sm"
-              >
-                <FcAddDatabase fontSize={"18px"} />
-                Save
-              </div>
-              <Link to="/">
-                <div className="flex gap-1 border-l border-l-gray-300 hover:bg-bgLight  px-2 text-menu items-center font-medium  cursor-pointer text-sm">
-                  <MdFreeCancellation fontSize={"18px"} />
-                  Close
-                </div>
-              </Link>
-            </div>
-          </div>
-        </article>
+        <MenuButtonsGroup
+          heading="Add a booking"
+          menus={newMenuSource}
+          onMenuClick={handleClick}
+        />
+
+        <MobileMenus menus={newMenuSource} onMenuClick={handleClick} />
+
         <article className="flex items-center justify-center">
-          <div className="py-5 md:m-5 w-full p-2 md:p-5">
+          <div className="py-2  w-full p-2 md:px-0">
             <div className="text-menu bg-bgxLight rounded-t-md py-1 px-2 font-medium ">
               Enter all the details in the fields below then click save.
             </div>
-            <form className="flex w-full mt-1 py-4 md:py-8 rounded-sm flex-wrap justify-between gap-2">
+            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm flex-wrap justify-between gap-2">
               <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[45%]">
                 <label
                   className="text-sm font-medium text-gray-600"
@@ -432,6 +432,7 @@ const New = () => {
           </div>
         </article>
       </section>
+      <Statusbar heading="Add New Booking" company="ARBS Customer Portal" />
     </main>
   );
 };

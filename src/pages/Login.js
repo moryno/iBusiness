@@ -25,7 +25,7 @@ const Login = () => {
 
   return (
     <main className="h-screen flex items-center justify-center bg-bgLight">
-      <section className="w-5/6 md:w-1/2 md:min-h-[500px] flex bg-white flex-col-reverse md:flex-row-reverse rounded-[10px] overflow-hidden">
+      <section className="w-5/6 md:w-1/2 md:min-h-[500px] min-h-[500px] flex bg-white flex-col-reverse md:flex-row-reverse rounded-[10px] overflow-hidden">
         <article className="w-full md:w-1/2 p-5">
           <h1 className="text-menu text-lg font-semibold">Login</h1>
           <form className="flex flex-col gap-8" onSubmit={handleLogin}>

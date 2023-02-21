@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { FcAddDatabase } from "react-icons/fc";
 import { MdFreeCancellation } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import request from "../helpers/requestMethod";
 import { updateUserProfile } from "../redux/userSlice";
+import MenuButtonsGroup from "../components/MenuButtonsGroup";
+import { updateMenuSource } from "../data/menu";
+import MobileMenus from "../components/MobileMenus";
+import Statusbar from "../components/Statusbar";
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formInputs, setFormInputs] = useState(currentUser);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,36 +33,33 @@ const Profile = () => {
     }
   };
 
+  const handleClick = (menu) => {
+    switch (menu) {
+      case "Update":
+        handleSubmit();
+        break;
+      case "Close":
+        navigate("/");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <main className="w-full h-screen md:h-full  px-3 md:px-5 py-1.5">
+    <main className="w-full relative h-full md:h-full  px-3 md:px-5 py-1.5">
       {/* Top Section */}
       <section>
-        <article className="px-3 w-full flex items-center bg-bgxLight ">
-          <div className="flex flex-col md:flex-row md:items-center items-start justify-between w-full">
-            <h1 className="text-menu py-1 text-lg w-full font-semibold">
-              Update Profile
-            </h1>
-            <div className="flex justify-between md:justify-end items-center bg-bgxLight  w-full">
-              <div
-                onClick={handleSubmit}
-                className="flex gap-1 border-l border-l-gray-300 hover:bg-bgLight  px-2 text-menu items-center font-medium  cursor-pointer text-sm"
-              >
-                <FcAddDatabase fontSize={"18px"} />
-                Save
-              </div>
-              <Link to="/">
-                <div className="flex gap-1 border-l border-l-gray-300 hover:bg-bgLight  px-2 text-menu items-center font-medium  cursor-pointer text-sm">
-                  <MdFreeCancellation fontSize={"18px"} />
-                  Close
-                </div>
-              </Link>
-            </div>
-          </div>
-        </article>
+        <MenuButtonsGroup
+          heading="Update Profile"
+          menus={updateMenuSource}
+          onMenuClick={handleClick}
+        />
+        <MobileMenus menus={updateMenuSource} onMenuClick={handleClick} />
         {/* User Information Card */}
         <section>
           <article className="md:p-5 flex gap-5 w-full">
-            <article className="flex flex-col md:flex-row w-full md:w-1/2 p-5 relative shadow-xl">
+            <article className="flex flex-col md:flex-row w-full md:w-1/2 p-5 relative shadow-none md:shadow-xl">
               <h2 className="mb-5 text-menu">Information</h2>
               <div className="flex flex-col md:flex-row gap-5">
                 <img
@@ -116,11 +118,11 @@ const Profile = () => {
       </section>
       {/* Bottom Section */}
       <section>
-        <div className="py-5 md:m-5 w-full p-2 md:p-5">
+        <div className="w-full p-2 md:p-5">
           <div className="text-menu bg-bgxLight rounded-t-md py-1 px-2 font-medium ">
             Enter all the details in the fields below then click save.
           </div>
-          <form className="flex w-full mt-1 py-4 md:py-8 rounded-sm flex-wrap justify-between gap-2">
+          <form className="flex w-full mt-1 py-4 md:py-3 rounded-sm flex-wrap justify-between gap-2">
             <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
               <label
                 className="text-sm font-medium text-gray-600"
@@ -279,6 +281,10 @@ const Profile = () => {
           </form>
         </div>
       </section>
+      <Statusbar
+        heading={`Welcome ${currentUser?.fullName}`}
+        company="ARBS Customer Portal"
+      />
     </main>
   );
 };

@@ -36,6 +36,7 @@ function DataTable({ date }) {
 
   // const onSelectionChanged = ({ selectedRowsData }) => {
   //   const data = selectedRowsData[0];
+  //   console.log(data);
   // };
 
   useEffect(() => {
@@ -60,10 +61,13 @@ function DataTable({ date }) {
         className={"dx-card wide-card "}
         dataSource={data}
         showBorders={true}
+        hoverStateEnabled={true}
+        // rowAlternationEnabled={true}
         keyExpr="bookingId"
         focusedRowEnabled={true}
-        defaultFocusedRowIndex={0}
         onRowDblClick={(e) => startEdit(e)}
+        allowColumnReordering={true}
+        allowColumnResizing={true}
         columnAutoWidth={true}
         columnHidingEnabled={true}
         onExporting={(e) => onExporting(e)}
@@ -76,8 +80,7 @@ function DataTable({ date }) {
           allowExportSelectedData={true}
         />
         <Editing mode="popup" />
-        <ColumnFixing enabled={true} />
-        <Grouping autoExpandAll={expanded} />
+        {/* <Grouping autoExpandAll={expanded} /> */}
         <Selection mode="multiple" />
         <Toolbar>
           <Item name="groupPanel" />

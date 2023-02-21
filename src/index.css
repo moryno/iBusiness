@@ -8,7 +8,7 @@
 }
 .scrollbar-hide::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: #FFAA00;
+    background-color: #3889DD;
     transition: all 0.5ms;
 }
 
@@ -21,7 +21,4 @@
 .dx-datagrid-headers {
     background-color: #C3DAF9 !important;
     color: #5C95C5 !important;
-}
-.dx-datagrid-columns {
-    max-width: 100px !important;
 }

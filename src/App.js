@@ -1,8 +1,6 @@
-import { useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  Outlet,
   Navigate,
 } from "react-router-dom";
 
