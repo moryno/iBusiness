@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "devextreme/dist/css/dx.light.css";
 import "devextreme/data/odata/store";
 import DataGrid, {
@@ -21,6 +21,8 @@ import { onExporting, startEdit } from "../helpers/datagridFunctions";
 function DataTable({ date }) {
   const [expanded, setExpanded] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
+  const [changes, setChanges] = useState([]);
+  const [editRowKey, setEditRowKey] = useState(null);
   const [data, setData] = useState([]);
 
   const exportFormats = ["xlsx", "pdf"];
@@ -55,6 +57,16 @@ function DataTable({ date }) {
     }
   }, [date]);
 
+  const onSaving = useCallback((e) => {
+    e.cancel = true;
+    // e.promise = saveChange(dispatch, e.changes[0]);
+    const { data } = e.changes[0];
+  }, []);
+
+  // const onEditRowKeyChange = useCallback((editRowKey) => {
+  //   setEditRowKey(editRowKey);
+  // }, []);
+
   return (
     <main>
       <DataGrid
@@ -71,15 +83,22 @@ function DataTable({ date }) {
         columnAutoWidth={true}
         columnHidingEnabled={true}
         onExporting={(e) => onExporting(e)}
-        // onSelectionChanged={onSelectionChanged}
+        // onSelectionChanged={onEditRowKeyChange}
         onContentReady={onContentReady}
+        onSaving={onSaving}
       >
         <Export
           enabled={true}
           formats={exportFormats}
           allowExportSelectedData={true}
         />
-        <Editing mode="popup" />
+        <Editing
+          mode="popup"
+          // changes={changes}
+          // onChangesChange={onChangesChange}
+          // editRowKey={editRowKey}
+          // onEditRowKeyChange={onEditRowKeyChange}
+        />
         {/* <Grouping autoExpandAll={expanded} /> */}
         <Selection mode="multiple" />
         <Toolbar>

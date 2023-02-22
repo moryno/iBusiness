@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 .scrollbar-hide::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
     background-color: #C3DAF9;
 }
 .scrollbar-hide::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #3889DD;
+    border-radius: 4px;
+    background-color: #FFAA00;
     transition: all 0.5ms;
 }
 
