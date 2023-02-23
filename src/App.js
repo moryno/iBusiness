@@ -30,7 +30,7 @@ function App() {
       path: "/",
       element: (
         <ProtectedRoute>
-          <Layout />{" "}
+          <Layout />
         </ProtectedRoute>
       ),
       children: [

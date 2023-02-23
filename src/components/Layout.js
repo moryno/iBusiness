@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Portal from "./Portal";
 import Sidebar from "./Sidebar";
 
 const Layout = () => {

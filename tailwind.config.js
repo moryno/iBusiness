@@ -4,20 +4,25 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
-        bg: "#286DB5",
+        bg: "#032d60",
         bgLight: "#C3DAF9",
+        light: "#eeedec",
         bgxLight: "#E3EFFF",
+        button: "#0176d3",
+        bgxxLight: "#f3f3f3",
         section: "#F1F1F4",
         heading: "#3889DD",
-        button: "#286DB5",
+
         gn: "#27AE60",
         yellow: "#f39f32",
         orang: "#FFAA00",
+        modal: "#C8C8C8",
       },
       colors: {
         text: "#556b86",
         heading: "#0D6EFD",
         blueLight: "#0096FF",
+        darkBlue: "#0176d3",
         gn: "#27AE60",
         cLight: "#C3DAF9",
         yellow: "#f39f32",

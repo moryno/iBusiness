@@ -1,17 +1,12 @@
 import React, { useState } from "react";
+import { MdOutlineCancelPresentation } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+
 import request from "../helpers/requestMethod";
-import MenuButtonsGroup from "../components/MenuButtonsGroup";
-import { newMenuSource } from "../data/menu";
 
-import MobileMenus from "../components/MobileMenus";
-import Statusbar from "../components/Statusbar";
-import services from "../helpers/geoLocation";
-
-const New = () => {
+const New = ({ handleClose }) => {
   const [userInput, setUserInputs] = useState({});
   const [bookingInput, setBookingInputs] = useState({});
-  console.log(services.getCountries());
   const navigate = useNavigate();
 
   const handleUserChange = (event) => {
@@ -31,42 +26,29 @@ const New = () => {
     };
     try {
       const { data } = await request.post("/Booking/Create", formData);
-      navigate("/");
+      handleClose();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleClick = (menu) => {
-    switch (menu) {
-      case "Save":
-        save();
-        break;
-      case "Close":
-        navigate("/");
-        break;
-      default:
-        break;
-    }
-  };
-
   return (
-    <main className="w-full relative h-full md:h-full  px-3 md:px-5 py-1.5">
-      <section className="w-full h-full">
-        <MenuButtonsGroup
-          heading="Add a booking"
-          menus={newMenuSource}
-          onMenuClick={handleClick}
-        />
-
-        <MobileMenus menus={newMenuSource} onMenuClick={handleClick} />
-
+    <main className="w-full container bg-white md:w-2/3 mx-auto rounded-md md:h-[500px] overflow-y-scroll  h-screen relative px-2 md:p-0">
+      <span className="md:text-2xl text-xl text-gray-500 absolute cursor-pointer top-2 right-5  lg:right-5 z-50  xl:right-5">
+        <MdOutlineCancelPresentation onClick={handleClose} />
+      </span>
+      <section className="w-full md:h-full">
         <article className="flex items-center justify-center">
-          <div className="py-2  w-full p-2 md:px-0">
-            <div className="text-menu bg-bgxLight rounded-t-md py-1 px-2 font-medium ">
-              Enter all the details in the fields below then click save.
-            </div>
-            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm flex-wrap justify-between gap-2">
+          <div className=" md:p-0  w-full md:px-0">
+            <article className="sticky inset-x-0 top-0 z-20">
+              <h2 className="text-menu text-lg bg-bgxLight py-1 px-2 font-semibold ">
+                Create New Booking
+              </h2>
+              <p className="text-menu bg-bgxLight py-1 px-2 font-medium ">
+                Enter all the details in the fields below then tap on save.
+              </p>
+            </article>
+            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-2">
               <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[45%]">
                 <label
                   className="text-sm font-medium text-gray-600"
@@ -94,6 +76,7 @@ const New = () => {
                   </option>
                 </select>
               </div>
+
               <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
                 <label
                   className="text-sm font-medium text-gray-600"
@@ -128,6 +111,7 @@ const New = () => {
                   </option>
                 </select>
               </div>
+
               <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
                 <label
                   className="text-sm font-medium text-gray-600"
@@ -431,7 +415,20 @@ const New = () => {
           </div>
         </article>
       </section>
-      <Statusbar heading="Add New Booking" company="ARBS Customer Portal" />
+      <article className="sticky bg-bgxLight inset-x-0 bottom-0 flex border-t border-gray-200 p-2 justify-center items-center gap-4">
+        <div
+          onClick={save}
+          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-darkBlue items-center font-medium  cursor-pointer text-sm"
+        >
+          Save
+        </div>
+        <div
+          onClick={handleClose}
+          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-darkBlue items-center font-medium  cursor-pointer text-sm"
+        >
+          Cancel
+        </div>
+      </article>
     </main>
   );
 };

@@ -5,10 +5,14 @@ import Statusbar from "../components/Statusbar";
 import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import { homeMenuSource } from "../data/menu";
 import MobileMenus from "../components/MobileMenus";
+import Portal from "../components/Portal";
+import New from "./New";
 
 const Home = () => {
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
+  const [isOpen, setOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -22,7 +26,7 @@ const Home = () => {
         setDate(input);
         break;
       case "New":
-        navigate("/new");
+        setOpen((isOpen) => !isOpen);
         break;
       case "Print Report":
         console.log("Print Report was clicked");
@@ -96,6 +100,9 @@ const Home = () => {
           <DataTable date={date} />
         </section>
       </section>
+      <Portal isOpen={isOpen}>
+        <New handleClose={() => setOpen(false)} />
+      </Portal>
       <Statusbar heading="Booking List" company="ARBS Customer Portal" />
     </main>
   );
