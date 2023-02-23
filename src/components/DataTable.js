@@ -16,11 +16,10 @@ import DataGrid, {
 import request from "../helpers/requestMethod";
 import { onExporting, startEdit } from "../helpers/datagridFunctions";
 
-function DataTable({ date }) {
+function DataTable({ data }) {
   const [collapsed, setCollapsed] = useState(false);
   const [changes, setChanges] = useState([]);
   const [editRowKey, setEditRowKey] = useState(null);
-  const [data, setData] = useState([]);
 
   const exportFormats = ["xlsx", "pdf"];
 
@@ -33,22 +32,6 @@ function DataTable({ date }) {
     }
   }
 
-  useEffect(() => {
-    try {
-      const getData = async () => {
-        const { data } = await request.get(
-          date
-            ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
-            : "Booking"
-        );
-        setData(data);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [date]);
-
   const onSaving = useCallback((e) => {
     e.cancel = true;
 
@@ -60,7 +43,7 @@ function DataTable({ date }) {
       <DataGrid
         className={"dx-card wide-card h-[500px] lg:h-[600px]"}
         dataSource={data}
-        showBorders={true}
+        showBorders={false}
         hoverStateEnabled={true}
         keyExpr="bookingId"
         focusedRowEnabled={true}

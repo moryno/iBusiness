@@ -42,12 +42,12 @@ const NavMenus = () => {
                       alt="profile"
                     />
                   </article>
-                  <article className="bg-bgxLight p-5  shadow-xl">
+                  <article className="bg-light p-5  shadow-xl">
                     <article className="flex flex-col mt-6 items-center">
-                      <h3 className="font-medium text-text">
+                      <h3 className="font-medium text-menuText">
                         {currentUser.fullName}
                       </h3>
-                      <span className="text-[14px] text-text font-normal">
+                      <span className="text-[14px] text-menuText font-normal">
                         {currentUser.email}
                       </span>
                     </article>
@@ -59,7 +59,7 @@ const NavMenus = () => {
                         {mysublinks.sublink.map((slink) => (
                           <li
                             key={slink.name}
-                            className="text-sm text-text my-2.5"
+                            className="text-sm text-menuText my-2.5"
                             onClick={() => handleClick(slink.name)}
                           >
                             <Link to={slink.link} className="hover:text-text">

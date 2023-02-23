@@ -1,24 +1,39 @@
 import DataTable from "../components/DataTable";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Statusbar from "../components/Statusbar";
 import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import { homeMenuSource } from "../data/menu";
 import MobileMenus from "../components/MobileMenus";
 import Portal from "../components/Portal";
 import New from "./New";
+import request from "../helpers/requestMethod";
 
 const Home = () => {
+  const [data, setData] = useState([]);
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
   const [isOpen, setOpen] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInput({ ...input, [name]: value });
   };
+
+  useEffect(() => {
+    try {
+      const getData = async () => {
+        const { data } = await request.get(
+          date
+            ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
+            : "Booking"
+        );
+        setData(data);
+      };
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [date]);
 
   const handleClick = (menu) => {
     switch (menu) {
@@ -97,11 +112,15 @@ const Home = () => {
         </section>
 
         <section className="mt-5">
-          <DataTable date={date} />
+          <DataTable data={data} />
         </section>
       </section>
       <Portal isOpen={isOpen}>
-        <New handleClose={() => setOpen(false)} />
+        <New
+          bookings={data}
+          setBookings={setData}
+          handleClose={() => setOpen(false)}
+        />
       </Portal>
       <Statusbar heading="Booking List" company="ARBS Customer Portal" />
     </main>

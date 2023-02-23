@@ -3,13 +3,19 @@
 @tailwind utilities;
 
 .scrollbar-hide::-webkit-scrollbar {
-    width: 4px;
-    background-color: #C3DAF9;
+    width: 0;
+    background-color: #fff;
+    display: hidden;
+
 }
+
+
 .scrollbar-hide::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: #FFAA00;
+    border-radius: 0;
+    background-color: #f3f3f3;
     transition: all 0.5ms;
+    display: hidden;
+
 }
 
 /* For IE, Edge and Firefox */
@@ -19,6 +25,7 @@
 }
 
 .dx-datagrid-headers {
-    background-color: #C3DAF9 !important;
-    color: #286DB5 !important;
+    background-color: #eeedec !important;
+    color: #282828 !important;
+    font-weight: 500 !important;
 }

@@ -25,4 +25,15 @@ export const menus = [
       { name: "User Defined Codes", link: "" },
     ],
   },
+  {
+    title: "Others Service",
+    submenu: true,
+    sublinks: [
+      { name: "Course Registration", link: "" },
+      { name: "Document Setup", link: "" },
+      { name: "Bulk Messaging", link: "" },
+      { name: "Approve SignUps", link: "" },
+      { name: "User Defined Codes", link: "" },
+    ],
+  },
 ];

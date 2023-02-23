@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { MdOutlineCancelPresentation } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 import request from "../helpers/requestMethod";
 
-const New = ({ handleClose }) => {
+const New = ({ handleClose, bookings, setBookings }) => {
   const [userInput, setUserInputs] = useState({});
   const [bookingInput, setBookingInputs] = useState({});
-  const navigate = useNavigate();
 
   const handleUserChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +24,7 @@ const New = ({ handleClose }) => {
     };
     try {
       const { data } = await request.post("/Booking/Create", formData);
+      setBookings([data?.Booking, ...bookings]);
       handleClose();
     } catch (error) {
       console.log(error);
@@ -34,17 +33,17 @@ const New = ({ handleClose }) => {
 
   return (
     <main className="w-full container bg-white md:w-2/3 mx-auto rounded-md md:h-[500px] overflow-y-scroll  h-screen relative px-2 md:p-0">
-      <span className="md:text-2xl text-xl text-gray-500 absolute cursor-pointer top-2 right-5  lg:right-5 z-50  xl:right-5">
+      <span className="md:text-3xl text-xl text-gray-400 absolute cursor-pointer top-2 right-5  lg:right-5 z-50  xl:right-5">
         <MdOutlineCancelPresentation onClick={handleClose} />
       </span>
       <section className="w-full md:h-full">
         <article className="flex items-center justify-center">
           <div className=" md:p-0  w-full md:px-0">
-            <article className="sticky inset-x-0 top-0 z-20">
-              <h2 className="text-menu text-lg bg-bgxLight py-1 px-2 font-semibold ">
+            <article className="sticky inset-x-0 top-0 z-20  bg-light text-menuText">
+              <h2 className="text-lg py-1 px-2 font-semibold ">
                 Create New Booking
               </h2>
-              <p className="text-menu bg-bgxLight py-1 px-2 font-medium ">
+              <p className="py-1 px-2 font-medium ">
                 Enter all the details in the fields below then tap on save.
               </p>
             </article>
@@ -415,16 +414,16 @@ const New = ({ handleClose }) => {
           </div>
         </article>
       </section>
-      <article className="sticky bg-bgxLight inset-x-0 bottom-0 flex border-t border-gray-200 p-2 justify-center items-center gap-4">
+      <article className="sticky bg-light inset-x-0 bottom-0 flex border-t border-gray-200 p-2 justify-center items-center gap-4">
         <div
           onClick={save}
-          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-darkBlue items-center font-medium  cursor-pointer text-sm"
+          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
         >
           Save
         </div>
         <div
           onClick={handleClose}
-          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-darkBlue items-center font-medium  cursor-pointer text-sm"
+          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
         >
           Cancel
         </div>

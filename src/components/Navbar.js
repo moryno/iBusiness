@@ -10,7 +10,7 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
   const [searchInput, setSearchInput] = useState("");
 
   return (
-    <main className="w-full p-1 md:p-4 bg-bg flex sticky top-0 z-10 items-center h-[50px] box-border text-white">
+    <main className="w-full p-1 md:p-4 bg-bg flex sticky top-0 z-10 items-center h-[50px] box-border text-navColor">
       <section className=" w-full flex items-center justify-between">
         <article className="hidden md:flex items-center gap-2">
           <MenuIcon
@@ -26,7 +26,7 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
         <article className="hidden md:flex gap-4 ">
           <form
             onSubmit={handleSubmit}
-            className="flex items-center rounded-r-sm overflow-hidden bg-white justify-between"
+            className="flex items-center rounded-r-sm overflow-hidden bg-formColor justify-between"
           >
             <div className="">
               <input

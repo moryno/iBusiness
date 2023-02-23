@@ -6,13 +6,13 @@ const Sidebar = ({ showSidebar, openSidebar }) => {
   return (
     <main
       className={classNames({
-        "flex flex-col": true, // layout
-        "bg-bg text-sideMenu": true, // colors
-        "left-0 w-[300px] md:sticky md:top-[50px] md:z-0 top-0 z-20 fixed": true, // positioning
-        "md:h-[calc(100vh_-_50px)] h-full md:w-2/12": true, // for height and width
-        "transition-transform .3s ease-in-out md:translate-x-0": true, //animations
-        "-translate-x-full": !showSidebar, //hide sidebar to the left when in small screen
-        "md:hidden": !openSidebar, //hide sidebar to the left when in small screen
+        "flex flex-col  text-sideColor bg-sidebarBg": true,
+        // " text-sideMenu": true,
+        "left-0 w-[300px] md:sticky overflow-auto md:top-[50px] md:z-0 top-0 z-20 fixed": true,
+        "md:h-[calc(100vh_-_50px)] h-full md:w-2/12": true,
+        "transition-transform .3s ease-in-out md:translate-x-0": true,
+        "-translate-x-full": !showSidebar,
+        "md:hidden": !openSidebar,
       })}
     >
       <section className="flex flex-col h-full justify-between">

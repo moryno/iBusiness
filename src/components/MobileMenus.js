@@ -12,7 +12,7 @@ const MobileMenus = ({ onMenuClick, menus }) => {
         <MenuIcon className=" opacity-50 cursor-pointer" />
       </div>
       {isExpanded && (
-        <ul className="top-0 left-0 bg-bgxLight font-medium w-fit  z-20">
+        <ul className="top-0 left-0 bg-bgxxLight font-medium w-fit  z-20">
           {menus.map((menu) => (
             <li
               key={menu.id}
