@@ -11,8 +11,9 @@ import New from "./pages/New";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import MenuButtonsGroup from "./components/MenuButtonsGroup";
+
 import Layout from "./components/Layout";
+import CreateForm from "./components/CreateForm";
 
 function App() {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -45,16 +46,17 @@ function App() {
           path: "/profile",
           element: <Profile />,
         },
+        {
+          path: "/test",
+          element: <CreateForm />,
+        },
       ],
     },
     {
       path: "/login",
       element: <Login />,
     },
-    {
-      path: "/test",
-      element: <MenuButtonsGroup />,
-    },
+
     {
       path: "/register",
       element: <Register />,

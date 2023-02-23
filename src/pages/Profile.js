@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { FcAddDatabase } from "react-icons/fc";
-import { MdFreeCancellation } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import request from "../helpers/requestMethod";
 import { updateUserProfile } from "../redux/userSlice";

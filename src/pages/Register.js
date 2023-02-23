@@ -26,10 +26,7 @@ const Register = () => {
     event.preventDefault();
     try {
       if (inputs.password === confirmPassword) {
-        const { data } = await axios.post(
-          "http://192.168.1.200:7030/register",
-          inputs
-        );
+        await axios.post("http://192.168.1.200:7030/register", inputs);
         navigate("/login");
       } else {
         setError("Password does not match.");

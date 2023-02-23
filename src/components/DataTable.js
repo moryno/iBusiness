@@ -7,19 +7,16 @@ import DataGrid, {
   FilterRow,
   SearchPanel,
   Editing,
-  Grouping,
   Toolbar,
   Item,
   Selection,
   Export,
-  ColumnFixing,
 } from "devextreme-react/data-grid";
 
 import request from "../helpers/requestMethod";
 import { onExporting, startEdit } from "../helpers/datagridFunctions";
 
 function DataTable({ date }) {
-  const [expanded, setExpanded] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
   const [changes, setChanges] = useState([]);
   const [editRowKey, setEditRowKey] = useState(null);
@@ -35,11 +32,6 @@ function DataTable({ date }) {
       });
     }
   }
-
-  // const onSelectionChanged = ({ selectedRowsData }) => {
-  //   const data = selectedRowsData[0];
-  //   console.log(data);
-  // };
 
   useEffect(() => {
     try {
@@ -59,22 +51,17 @@ function DataTable({ date }) {
 
   const onSaving = useCallback((e) => {
     e.cancel = true;
-    // e.promise = saveChange(dispatch, e.changes[0]);
+
     const { data } = e.changes[0];
   }, []);
-
-  // const onEditRowKeyChange = useCallback((editRowKey) => {
-  //   setEditRowKey(editRowKey);
-  // }, []);
 
   return (
     <main>
       <DataGrid
-        className={"dx-card wide-card "}
+        className={"dx-card wide-card h-[500px] lg:h-[600px]"}
         dataSource={data}
         showBorders={true}
         hoverStateEnabled={true}
-        // rowAlternationEnabled={true}
         keyExpr="bookingId"
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
@@ -83,7 +70,6 @@ function DataTable({ date }) {
         columnAutoWidth={true}
         columnHidingEnabled={true}
         onExporting={(e) => onExporting(e)}
-        // onSelectionChanged={onEditRowKeyChange}
         onContentReady={onContentReady}
         onSaving={onSaving}
       >
@@ -99,7 +85,6 @@ function DataTable({ date }) {
           // editRowKey={editRowKey}
           // onEditRowKeyChange={onEditRowKeyChange}
         />
-        {/* <Grouping autoExpandAll={expanded} /> */}
         <Selection mode="multiple" />
         <Toolbar>
           <Item name="groupPanel" />

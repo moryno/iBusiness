@@ -6,11 +6,12 @@ import { newMenuSource } from "../data/menu";
 
 import MobileMenus from "../components/MobileMenus";
 import Statusbar from "../components/Statusbar";
+import services from "../helpers/geoLocation";
 
 const New = () => {
   const [userInput, setUserInputs] = useState({});
   const [bookingInput, setBookingInputs] = useState({});
-
+  console.log(services.getCountries());
   const navigate = useNavigate();
 
   const handleUserChange = (event) => {
@@ -24,8 +25,6 @@ const New = () => {
   };
 
   const save = async () => {
-    console.log("Save");
-
     const formData = {
       user: userInput,
       booking: bookingInput,

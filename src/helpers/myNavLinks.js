@@ -10,7 +10,7 @@ export const menus = [
       {
         Head: "Set Credentials",
         sublink: [
-          { name: "Update Profile", link: "" },
+          { name: "Update Profile", link: "/profile" },
           { name: "Change Password", link: "" },
           { name: "Sign Out", link: "" },
         ],

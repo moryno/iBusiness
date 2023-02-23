@@ -22,7 +22,7 @@ module.exports = {
         cLight: "#C3DAF9",
         yellow: "#f39f32",
         orang: "#FFAA00",
-        menu: "#5C95C5",
+        menu: "#286DB5",
         sideMenu: "#FFFFFF",
       },
       fontSize: {},
