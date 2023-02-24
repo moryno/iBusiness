@@ -26,20 +26,17 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
         <article className="hidden md:flex gap-4 ">
           <form
             onSubmit={handleSubmit}
-            className="flex items-center rounded-r-sm overflow-hidden bg-formColor justify-between"
+            className="flex py-0.5 px-2 items-center border border-gray-200 overflow-hidden rounded-3xl justify-between"
           >
-            <div className="">
-              <input
-                type="text"
-                className="py-1 px-2 text-text outline-none placeholder:text-gray-400 placeholder:text-sm"
-                placeholder="Search for..."
-                name="search"
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-            </div>
-            <div className="bg-button p-2">
-              <Search />
-            </div>
+            <input
+              type="text"
+              className="py-1 px-2 outline-none bg-transparent  text-navColor text-sm placeholder:text-gray-400 placeholder:text-sm"
+              placeholder="Search for..."
+              name="search"
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <Search />
+
             <SearchCategories searchInput={searchInput} />
           </form>
           <div className=" flex items-center font-medium">

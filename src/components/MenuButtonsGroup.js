@@ -6,7 +6,7 @@ const MenuButtonsGroup = ({ heading, menus, onMenuClick }) => {
     <main className="w-full bg-light md:px-5 flex">
       <section className="flex w-full items-center">
         <article className="flex items-center w-full md:w-3/12">
-          <h1 className=" text-menuText text-lg w-full font-semibold">
+          <h1 className="text-heading text-lg w-full font-semibold">
             {heading}
           </h1>
         </article>

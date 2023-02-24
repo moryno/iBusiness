@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { MdOutlineCancelPresentation } from "react-icons/md";
+import { MdOutlineClose } from "react-icons/md";
+import { ImUndo2 } from "react-icons/im";
+import { FcAddDatabase } from "react-icons/fc";
 
 import request from "../helpers/requestMethod";
 
@@ -22,6 +24,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
       user: userInput,
       booking: bookingInput,
     };
+    console.log(formData);
     try {
       const { data } = await request.post("/Booking/Create", formData);
       setBookings([data?.Booking, ...bookings]);
@@ -32,23 +35,28 @@ const New = ({ handleClose, bookings, setBookings }) => {
   };
 
   return (
-    <main className="w-full container bg-white md:w-2/3 mx-auto rounded-md md:h-[500px] overflow-y-scroll  h-screen relative px-2 md:p-0">
-      <span className="md:text-3xl text-xl text-gray-400 absolute cursor-pointer top-2 right-5  lg:right-5 z-50  xl:right-5">
-        <MdOutlineCancelPresentation onClick={handleClose} />
-      </span>
-      <section className="w-full md:h-full">
+    <main className="w-full container bg-white md:w-2/3 mx-auto overflow-y-scroll md:overflow-visible rounded-md md:h-[500px] h-screen relative  md:p-0">
+      <section className="sticky inset-x-0 top-0 z-20 bg-light w-full">
+        <article className="flex  bg-formTitle text-formHeadingColor md:py-1 px-2 w-full justify-end">
+          {/* <p className="text-xs">Add a booking</p> */}
+          <button className="text-lg cursor-pointer">
+            <MdOutlineClose onClick={handleClose} />
+          </button>
+        </article>
+        <article className="text-formHeadingColor  bg-formHeading">
+          <h2 className="text-lg text-center md:text-left py-1 px-2 font-semibold ">
+            Create New Booking
+          </h2>
+          <p className="py-1 text-center md:text-left px-2 text-sm font-medium ">
+            Enter all the details in the fields below then tap on save.
+          </p>
+        </article>
+      </section>
+      <section className="w-full h-full px-2 md:p-0 md:h-[400px] overflow-y-scroll">
         <article className="flex items-center justify-center">
           <div className=" md:p-0  w-full md:px-0">
-            <article className="sticky inset-x-0 top-0 z-20  bg-light text-menuText">
-              <h2 className="text-lg py-1 px-2 font-semibold ">
-                Create New Booking
-              </h2>
-              <p className="py-1 px-2 font-medium ">
-                Enter all the details in the fields below then tap on save.
-              </p>
-            </article>
-            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-2">
-              <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[45%]">
+            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-4">
+              <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="bookingType"
@@ -56,7 +64,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Booking Type:<sup className=" text-red-600">*</sup>
                 </label>
                 <select
-                  className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                  className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                   id="bookingType"
                   name="bookingType"
                   onChange={handleBookingChange}
@@ -76,7 +84,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                 </select>
               </div>
 
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="retirementSchemeName"
@@ -85,7 +93,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   <sup className=" text-red-600">*</sup>
                 </label>
                 <select
-                  className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                  className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                   id="retirementSchemeName"
                   name="retirementSchemeName"
                   onChange={handleBookingChange}
@@ -111,7 +119,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                 </select>
               </div>
 
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="fullName"
@@ -119,14 +127,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Full Names:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="fullName"
                   name="fullName"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="schemePosition"
@@ -134,14 +142,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Scheme Position:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="schemePosition"
                   name="schemePosition"
                   onChange={handleBookingChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="idNumber"
@@ -149,14 +157,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   ID Number:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="idNumber"
                   name="idNumber"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="email"
@@ -164,14 +172,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Email:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="email"
                   id="email"
                   name="email"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="telephone"
@@ -179,14 +187,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Telephone:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="telephone"
                   name="telephone"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="physicalAddress"
@@ -194,14 +202,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Physical Address:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="physicalAddress"
                   name="physicalAddress"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="employerName"
@@ -209,14 +217,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Employer Names:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="email"
                   name="employerName"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="originCountry"
@@ -224,7 +232,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Origin Country:<sup className=" text-red-600">*</sup>
                 </label>
                 <select
-                  className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                  className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                   id="originCountry"
                   name="originCountry"
                   onChange={handleUserChange}
@@ -246,7 +254,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   </option>
                 </select>
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="trainingVenue"
@@ -254,7 +262,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Training Venue:<sup className=" text-red-600">*</sup>
                 </label>
                 <select
-                  className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                  className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                   id="trainingVenue"
                   name="trainingVenue"
                   onChange={handleBookingChange}
@@ -279,7 +287,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   </option>
                 </select>
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="courseDate"
@@ -287,14 +295,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Couse Date:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="date"
                   id="courseDate"
                   name="courseDate"
                   onChange={handleBookingChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="experience"
@@ -302,14 +310,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Experience (years):<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="number"
                   id="experience"
                   name="experience"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="position"
@@ -317,14 +325,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Position:<sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="position"
                   name="position"
                   onChange={handleUserChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="paymentMode"
@@ -332,7 +340,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Payment Mode:<sup className=" text-red-600">*</sup>
                 </label>
                 <select
-                  className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                  className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                   id="paymentMode"
                   name="paymentMode"
                   onChange={handleBookingChange}
@@ -351,7 +359,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   </option>
                 </select>
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="additionalRequirements"
@@ -360,14 +368,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   <sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="additionalRequirements"
                   name="additionalRequirements"
                   onChange={handleBookingChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="externalSchemeAdmin"
@@ -376,14 +384,14 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   <sup className=" text-red-600">*</sup>
                 </label>
                 <input
-                  className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
+                  className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
                   type="text"
                   id="externalSchemeAdmin"
                   name="externalSchemeAdmin"
                   onChange={handleBookingChange}
                 />
               </div>
-              <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
+              <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]">
                 <label
                   className="text-sm font-medium text-gray-600"
                   htmlFor="disabilityStatus"
@@ -391,7 +399,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                   Disability Status:<sup className=" text-red-600">*</sup>
                 </label>
                 <select
-                  className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                  className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                   id="disabilityStatus"
                   name="disabilityStatus"
                   onChange={handleUserChange}
@@ -414,20 +422,27 @@ const New = ({ handleClose, bookings, setBookings }) => {
           </div>
         </article>
       </section>
-      <article className="sticky bg-light inset-x-0 bottom-0 flex border-t border-gray-200 p-2 justify-center items-center gap-4">
-        <div
-          onClick={save}
-          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
-        >
-          Save
-        </div>
-        <div
-          onClick={handleClose}
-          className="flex gap-1 border border-l-gray-300 hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
-        >
-          Cancel
-        </div>
-      </article>
+      <section className="sticky  inset-x-0 bottom-0 ">
+        <article className="flex bg-formTitle md:bg-white p-2 justify-center items-center gap-4">
+          <button
+            onClick={save}
+            className="flex gap-1 border-none  hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
+          >
+            <FcAddDatabase fontSize={20} />
+            Save
+          </button>
+          <button
+            onClick={handleClose}
+            className="flex gap-1 border-none  hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
+          >
+            <ImUndo2 fontSize={18} />
+            Cancel
+          </button>
+        </article>
+        <article className="flex bg-formTitle text-formHeadingColor px-5 w-full">
+          <p className="text-xs">Add a booking</p>
+        </article>
+      </section>
     </main>
   );
 };

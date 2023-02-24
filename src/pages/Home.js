@@ -64,7 +64,7 @@ const Home = () => {
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <section>
-        <section>
+        <section className="shadow-md ">
           <MenuButtonsGroup
             heading="Booking List"
             menus={homeMenuSource}
@@ -74,7 +74,7 @@ const Home = () => {
           <article className="relative">
             <MobileMenus menus={homeMenuSource} onMenuClick={handleClick} />
 
-            <article className="shadow-md  md:px-5 flex gap-4 items-center">
+            <article className=" md:px-5 flex gap-4 items-center">
               <div className="flex flex-col gap-2 md:flex-row w-full md:py-2">
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
                   <label
