@@ -1,4 +1,4 @@
-export const userInputs = [
+export const bookingFormInputs = [
   {
     id: 1,
     label: "Booking Type",
@@ -94,7 +94,7 @@ export const userInputs = [
   },
   {
     id: 12,
-    label: "Couse Date",
+    label: "Course Date",
     type: "date",
     name: "courseDate",
     inputType: "input",
