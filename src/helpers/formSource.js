@@ -78,7 +78,7 @@ export const bookingFormInputs = [
   },
   {
     id: 10,
-    label: "Retirement Scheme Name",
+    label: "Origin Country",
     type: "text",
     name: "originCountry",
     options: ["Kenya", "Uganda", "Tanzania", "Others"],

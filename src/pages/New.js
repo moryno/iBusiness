@@ -7,25 +7,39 @@ import request from "../helpers/requestMethod";
 import { bookingFormInputs } from "../helpers/formSource";
 
 const New = ({ handleClose, bookings, setBookings }) => {
-  const [userInput, setUserInputs] = useState({});
-  const [bookingInput, setBookingInputs] = useState({});
+  const [formInput, setFormInputs] = useState({});
 
-  const handleUserChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    setUserInputs({ ...userInput, [name]: value });
-  };
-
-  const handleBookingChange = (event) => {
-    const { name, value } = event.target;
-    setBookingInputs({ ...bookingInput, [name]: value });
+    setFormInputs({ ...formInput, [name]: value });
   };
 
   const save = async () => {
     const formData = {
-      user: userInput,
-      booking: bookingInput,
+      user: {
+        fullName: formInput.fullName,
+        idNumber: formInput.idNumber,
+        email: formInput.email,
+        telephone: formInput.telephone,
+        physicalAddress: formInput.physicalAddress,
+        employerName: formInput.employerName,
+        experience: formInput.experience,
+        position: formInput.position,
+        disabilityStatus: formInput.disabilityStatus,
+      },
+      booking: {
+        bookingType: formInput.bookingType,
+        retirementSchemeName: formInput.retirementSchemeName,
+        schemePosition: formInput.schemePosition,
+        originCountry: formInput.originCountry,
+        trainingVenue: formInput.trainingVenue,
+        courseDate: formInput.courseDate,
+        paymentMode: formInput.paymentMode,
+        additionalRequirements: formInput.additionalRequirements,
+        externalSchemeAdmin: formInput.externalSchemeAdmin,
+      },
     };
-    console.log(formData);
+
     try {
       const { data } = await request.post("/Booking/Create", formData);
       setBookings([data?.Booking, ...bookings]);
@@ -74,7 +88,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                         className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                         id={formInput.name}
                         name={formInput.name}
-                        onChange={handleBookingChange}
+                        onChange={handleChange}
                       >
                         {formInput.options.map((option, index) => (
                           <option
@@ -105,7 +119,7 @@ const New = ({ handleClose, bookings, setBookings }) => {
                         type={formInput.type}
                         id={formInput.name}
                         name={formInput.name}
-                        onChange={handleUserChange}
+                        onChange={handleChange}
                       />
                     </div>
                   );
