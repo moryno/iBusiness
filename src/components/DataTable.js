@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import "devextreme/dist/css/dx.light.css";
 import "devextreme/data/odata/store";
 import DataGrid, {
@@ -13,17 +13,15 @@ import DataGrid, {
   Export,
 } from "devextreme-react/data-grid";
 
-import request from "../helpers/requestMethod";
-import { onExporting, startEdit } from "../helpers/datagridFunctions";
+import { getDataGridRef } from "../helpers/datagridFunctions";
 
-function DataTable({ data }) {
+function DataTable({ data, startEdit }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [changes, setChanges] = useState([]);
-  const [editRowKey, setEditRowKey] = useState(null);
-
+  const ref = useRef();
   const exportFormats = ["xlsx", "pdf"];
 
   function onContentReady(e) {
+    getDataGridRef(ref.current);
     if (!collapsed) {
       e.component.expandRow(["EnviroCare"]);
       setCollapsed({
@@ -31,12 +29,6 @@ function DataTable({ data }) {
       });
     }
   }
-
-  const onSaving = useCallback((e) => {
-    e.cancel = true;
-
-    const { data } = e.changes[0];
-  }, []);
 
   return (
     <main>
@@ -50,28 +42,22 @@ function DataTable({ data }) {
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
+        columnResizingMode={"nextColumn"}
+        columnMinWidth={100}
         columnAutoWidth={true}
         columnHidingEnabled={true}
-        onExporting={(e) => onExporting(e)}
+        ref={ref}
         onContentReady={onContentReady}
-        onSaving={onSaving}
       >
         <Export
           enabled={true}
           formats={exportFormats}
           allowExportSelectedData={true}
         />
-        <Editing
-          mode="popup"
-          // changes={changes}
-          // onChangesChange={onChangesChange}
-          // editRowKey={editRowKey}
-          // onEditRowKeyChange={onEditRowKeyChange}
-        />
-        <Selection mode="multiple" />
+        <Editing mode="popup" />
+        <Selection mode="single" />
         <Toolbar>
           <Item name="groupPanel" />
-          <Item name="exportButton" showText="always" />
           <Item name="columnChooserButton" />
           <Item name="searchPanel" />
         </Toolbar>

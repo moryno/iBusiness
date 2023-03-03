@@ -30,24 +30,24 @@ const NavMenus = () => {
             <h1>{link?.title}</h1>
             {link.submenu && (
               <section>
-                <section className="absolute top-8 right-12 md:right-8 z-50 hidden  group-hover:block hover:block">
+                <section className="absolute top-9 right-18 md:right-20 z-50 hidden  group-hover:block hover:block">
                   <div className="py-3">
                     <div className="w-4 h-4 right-3 absolute  bg-white rotate-45"></div>
                   </div>
                   <article className="bg-bg h-16"></article>
                   <article className="bg-card rounded-full overflow-hidden  w-20 h-20 flex items-center justify-center cursor-pointer absolute top-12 right-0 left-0 m-auto">
                     <img
-                      className="max-w-full object-cover"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                      className="w-full object-cover"
+                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
                       alt="profile"
                     />
                   </article>
-                  <article className="bg-light p-5  shadow-xl">
+                  <article className="bg-sidebarHeading p-5  shadow-xl">
                     <article className="flex flex-col mt-6 items-center">
                       <h3 className="font-medium text-heading">
                         {currentUser.fullName}
                       </h3>
-                      <span className="text-[14px] text-heading font-normal">
+                      <span className="text-[14px]  text-heading font-normal">
                         {currentUser.email}
                       </span>
                     </article>
@@ -59,7 +59,7 @@ const NavMenus = () => {
                         {mysublinks.sublink.map((slink) => (
                           <li
                             key={slink.name}
-                            className="text-sm text-heading py-2.5 hover:bg-bgxxLight"
+                            className="text-sm text-heading py-2.5 hover:bg-bgDark"
                             onClick={() => handleClick(slink.name)}
                           >
                             <Link to={slink.link}>{slink.name}</Link>

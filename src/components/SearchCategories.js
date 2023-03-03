@@ -21,7 +21,7 @@ const SearchCategories = ({ searchInput }) => {
       <div
         className={`absolute ${
           searchInput === "" ? "hidden" : "block"
-        } search z-50 bg-white top-12 shadow-xl`}
+        } search z-50 w-[380px] bg-white top-12 shadow-xl`}
       >
         <ul className="text-left cursor-pointer group">
           {searchResult.map((category) => (

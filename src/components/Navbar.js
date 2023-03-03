@@ -1,9 +1,12 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import PersonIcon from "@mui/icons-material/Person";
+import { CgMenuGridO } from "react-icons/cg";
+
+import DropDownMenu from "./DropDownMenu";
 import { Search } from "@material-ui/icons";
 import NavMenus from "./NavMenus";
 import SearchCategories from "./SearchCategories";
 import { useState } from "react";
+import Module from "./Module";
 
 const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
   const handleSubmit = (e) => e.preventDefault();
@@ -23,30 +26,36 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
           </h1>
         </article>
 
-        <article className="hidden md:flex gap-4 ">
+        <article className="hidden md:flex gap-4  ">
           <form
             onSubmit={handleSubmit}
-            className="flex py-0.5 px-2 items-center border border-gray-200 overflow-hidden rounded-3xl justify-between"
+            className="flex  w-[400px] py-0.5 px-2 items-center border border-gray-300 overflow-hidden rounded-3xl justify-between "
           >
+            <Search />
             <input
               type="text"
-              className="py-1 px-2 outline-none bg-transparent  text-navColor text-sm placeholder:text-gray-400 placeholder:text-sm"
+              className="py-1.5  px-2 w-full outline-none bg-transparent  text-sm  placeholder:text-gray-200 placeholder:text-sm"
               placeholder="Search for..."
               name="search"
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            <Search />
-
             <SearchCategories searchInput={searchInput} />
           </form>
-          <div className=" flex items-center font-medium">
-            <ul className="flex items-center gap-1">
-              <li className="">
-                <PersonIcon className="text-[16px] opacity-70 cursor-pointer" />
-              </li>
+          <article className=" flex items-center font-medium">
+            <article className="flex items-center gap-1">
+              <article className="rounded-full overflow-hidden  w-9 h-9 flex items-center justify-center cursor-pointer">
+                <img
+                  className="w-full object-cover"
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                  alt="profile"
+                />
+              </article>
               <NavMenus />
-            </ul>
-          </div>
+            </article>
+          </article>
+          <article className=" self-center">
+            <Module />
+          </article>
         </article>
         <article className="md:hidden flex items-center w-full justify-between">
           <article className="items-center gap-2">
@@ -55,14 +64,18 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
             </h1>
           </article>
           <article className="flex items-center md:hidden gap-2 ">
-            <div className=" flex items-center font-medium">
-              <ul className="flex items-center gap-1">
-                <li className="">
-                  <PersonIcon className="text-[16px] opacity-70 cursor-pointer" />
-                </li>
+            <article className=" flex items-center font-medium">
+              <article className="flex items-center gap-1">
+                <article className="rounded-full overflow-hidden  w-8 h-8 flex items-center justify-center cursor-pointer">
+                  <img
+                    className="w-full object-cover"
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                    alt="profile"
+                  />
+                </article>
                 <NavMenus />
-              </ul>
-            </div>
+              </article>
+            </article>
             <div
               onClick={onMenuButtonClick}
               className="space-y-1 p-1.5 md:hidden cursor-pointer z-40"

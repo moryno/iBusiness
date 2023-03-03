@@ -6,7 +6,7 @@ const Sidebar = ({ showSidebar, openSidebar }) => {
   return (
     <main
       className={classNames({
-        "flex flex-col  text-sideColor bg-sidebarBg": true,
+        "flex md:py-2 flex-col bg-sidebarBg  text-sideColor": true,
         // " text-sideMenu": true,
         "left-0 w-[300px] md:sticky overflow-auto md:top-[50px] md:z-0 top-0 z-20 fixed": true,
         "md:h-[calc(100vh_-_50px)] h-full md:w-2/12": true,

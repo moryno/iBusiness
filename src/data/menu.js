@@ -5,6 +5,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import HelpIcon from "@mui/icons-material/Help";
 import { MdFreeCancellation } from "react-icons/md";
 import { FcAddDatabase } from "react-icons/fc";
+import { TbFileExport } from "react-icons/tb";
+import { SiMicrosoftexcel } from "react-icons/si";
+import { GrDocumentPdf } from "react-icons/gr";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export const homeMenuSource = [
   {
@@ -21,7 +25,7 @@ export const homeMenuSource = [
   },
   {
     id: 3,
-    title: "Print Report",
+    title: "Export",
     icon: <Print />,
     onClick: "handleClick",
   },
@@ -63,7 +67,7 @@ export const updateMenuSource = [
   {
     id: 1,
     title: "Update",
-    icon: <FcAddDatabase fontSize={"18px"} />,
+    icon: <FcAddDatabase />,
     onClick: "handleClick",
   },
   {
@@ -71,6 +75,30 @@ export const updateMenuSource = [
     title: "Close",
     icon: <MdFreeCancellation />,
     onClick: "handleClick",
+  },
+];
+
+export const dropDownMenuSource = [
+  {
+    id: 1,
+    title: "Export",
+    icon: <TbFileExport fontSize={"18px"} />,
+    dropArrow: (
+      <ArrowDropDownIcon className="text-[16px] opacity-70 cursor-pointer" />
+    ),
+    onClick: "handleClick",
+    submenu: true,
+    sublinks: [
+      {
+        Head: "Set Credentials",
+        sublink: [
+          // { name: "Export selected rows to Excel", icon: <SiMicrosoftexcel /> },
+          { name: "Export all data to Excel", icon: <SiMicrosoftexcel /> },
+          // { name: "Export selected rows to PDF", icon: <GrDocumentPdf /> },
+          { name: "Export all data to PDF", icon: <GrDocumentPdf /> },
+        ],
+      },
+    ],
   },
 ];
 

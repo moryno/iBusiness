@@ -1,9 +1,8 @@
-import React from "react";
 import CustomButtonComponent from "../components/CustomButtonComponent";
 
 const MenuButtonsGroup = ({ heading, menus, onMenuClick }) => {
   return (
-    <main className="w-full bg-light md:px-5 flex">
+    <main className="w-full  md:px-5 flex">
       <section className="flex w-full items-center">
         <article className="flex items-center w-full md:w-3/12">
           <h1 className="text-heading text-lg w-full font-semibold">

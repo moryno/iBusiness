@@ -1,4 +1,14 @@
+import DropDownMenu from "./DropDownMenu";
+
 const CustomButtonComponent = ({ onClick, title, icon }) => {
+  if (title === "Export") {
+    return (
+      <article className="flex gap-1 hover:bg-gray-200 py-0.5 px-4 w-fit bg-menuBg text-menuText items-center font-medium  cursor-pointer text-sm">
+        <DropDownMenu />
+      </article>
+    );
+  }
+
   return (
     <article
       onClick={onClick}

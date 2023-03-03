@@ -2,16 +2,30 @@ import React, { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
+import { BiAddToQueue } from "react-icons/bi";
 
 import request from "../helpers/requestMethod";
-import { bookingFormInputs } from "../helpers/formSource";
 
-const New = ({ handleClose, bookings, setBookings }) => {
+const New = ({
+  inputs,
+  handleClose,
+  bookings,
+  singleBooking,
+  setBookings,
+  title,
+  statusBarText,
+  statusMode,
+}) => {
   const [formInput, setFormInputs] = useState({});
+  const [editInput, setEditInputs] = useState(singleBooking);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormInputs({ ...formInput, [name]: value });
+
+    if (statusMode === "CreateBooking") {
+      setFormInputs({ ...formInput, [name]: value });
+    }
+    setEditInputs({ ...editInput, [name]: value });
   };
 
   const save = async () => {
@@ -39,39 +53,59 @@ const New = ({ handleClose, bookings, setBookings }) => {
         externalSchemeAdmin: formInput.externalSchemeAdmin,
       },
     };
+    if (statusMode === "CreateBooking") {
+      try {
+        const { data } = await request.post("/Booking/Create", formData);
+        setBookings([data?.Booking, ...bookings]);
+        handleClose();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await request.put("/Booking/UpdateBooking", editInput);
+        const newBooking = bookings.map((booking) => {
+          if (booking.bookingId === data?.Booking.bookingId) {
+            return data?.Booking;
+          }
+          return booking;
+        });
 
-    try {
-      const { data } = await request.post("/Booking/Create", formData);
-      setBookings([data?.Booking, ...bookings]);
-      handleClose();
-    } catch (error) {
-      console.log(error);
+        setBookings(newBooking);
+        handleClose();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   return (
-    <main className="w-full container bg-white md:w-2/3 mx-auto overflow-y-scroll md:overflow-visible rounded-md md:h-[500px] h-screen relative  md:p-0">
-      <section className="sticky inset-x-0 top-0 z-20 bg-light w-full">
-        <article className="flex  bg-formTitle text-formHeadingColor md:py-1 px-2 w-full justify-end">
-          {/* <p className="text-xs">Add a booking</p> */}
-          <button className="text-lg cursor-pointer">
-            <MdOutlineClose onClick={handleClose} />
-          </button>
-        </article>
-        <article className="text-formHeadingColor  bg-formHeading">
-          <h2 className="text-lg text-center md:text-left py-1 px-2 font-semibold ">
-            Create New Booking
-          </h2>
-          <p className="py-1 text-center md:text-left px-2 text-sm font-medium ">
+    <main className="w-full container  bg-white md:w-2/3 mx-auto overflow-y-scroll md:overflow-visible md:rounded-lg  md:h-[500px] h-screen relative  md:p-0">
+      <section className="sticky inset-x-0 top-0 z-20 bg-light w-full md:rounded-t-lg  overflow-hidden">
+        <MdOutlineClose
+          className="text-lg hover:text-xl text-formHeadingColor opacity-60 absolute right-4 top-2 cursor-pointer"
+          onClick={handleClose}
+        />
+        <article className="text-formHeadingColor pt-1 bg-formHeading">
+          <div className="flex w-full items-center px-2">
+            <div>
+              <BiAddToQueue className="text-xl" />
+            </div>
+            <div className="w-full flex justify-center">
+              <h2 className="text-xl flex font-medium opacity-90">{title}</h2>
+            </div>
+          </div>
+
+          <p className="py-1 text-center  px-2 text-base  opacity-90">
             Enter all the details in the fields below then tap on save.
           </p>
         </article>
       </section>
-      <section className="w-full h-full px-2 md:p-0 md:h-[400px] overflow-y-scroll">
+      <section className="w-full border-r-2 border-l-2 border-col h-full px-2 md:p-0 md:h-[400px] overflow-y-auto">
         <article className="flex items-center justify-center">
           <div className=" md:p-0  w-full md:px-0">
-            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-4">
-              {bookingFormInputs.map((formInput) => {
+            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-2 lg:gap-4">
+              {inputs.map((formInput) => {
                 if (formInput.inputType === "select") {
                   return (
                     <div
@@ -119,6 +153,11 @@ const New = ({ handleClose, bookings, setBookings }) => {
                         type={formInput.type}
                         id={formInput.name}
                         name={formInput.name}
+                        value={
+                          statusMode === "EditBooking"
+                            ? editInput[formInput.value]
+                            : formInput[formInput.value]
+                        }
                         onChange={handleChange}
                       />
                     </div>
@@ -129,25 +168,25 @@ const New = ({ handleClose, bookings, setBookings }) => {
           </div>
         </article>
       </section>
-      <section className="sticky  inset-x-0 bottom-0 ">
-        <article className="flex bg-formTitle md:bg-white p-2 justify-center items-center gap-4">
+      <section className="sticky border-t border-gray-100  inset-x-0 bottom-0 ">
+        <article className="flex border-r-2 border-l-2 border-col bg-formTitle md:bg-white p-2 justify-center items-center gap-4">
           <button
             onClick={save}
-            className="flex gap-1 border-none  hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
+            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
           >
             <FcAddDatabase fontSize={20} />
-            Save
+            {statusMode === "CreateBooking" ? "Save" : "Update"}
           </button>
           <button
             onClick={handleClose}
-            className="flex gap-1 border-none  hover:bg-gray-200 py-1.5 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
+            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
           >
             <ImUndo2 fontSize={18} />
             Cancel
           </button>
         </article>
-        <article className="flex bg-formTitle text-formHeadingColor px-5 w-full">
-          <p className="text-xs">Add a booking</p>
+        <article className="flex bg-formTitle md:rounded-b-lg overflow-hidden text-formHeadingColor px:2 md:px-5 w-full">
+          <p className="text-[14px] opacity-90">{statusBarText}</p>
         </article>
       </section>
     </main>

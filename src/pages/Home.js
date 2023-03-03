@@ -7,16 +7,36 @@ import MobileMenus from "../components/MobileMenus";
 import Portal from "../components/Portal";
 import New from "./New";
 import request from "../helpers/requestMethod";
+import {
+  createBookingFormInputs,
+  editBookingFormInputs,
+} from "../helpers/formSource";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [singleBooking, setSingleBooking] = useState({});
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
+  const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+
+  const today = new Date().toISOString().slice(0, 10);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInput({ ...input, [name]: value });
+  };
+
+  // Fuction to close the Create || update form
+  const handleClose = () => {
+    setStatusMode("");
+    setOpen(false);
+  };
+  // Fuction to edit row
+  const startEdit = (selectedRow) => {
+    setStatusMode("EditBooking");
+    setOpen((isOpen) => !isOpen);
+    setSingleBooking(selectedRow.data);
   };
 
   useEffect(() => {
@@ -38,13 +58,13 @@ const Home = () => {
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
-        setDate(input);
+        input === null && date === ""
+          ? setDate({ startdate: today, enddate: today })
+          : setDate(input);
         break;
       case "New":
+        setStatusMode("CreateBooking");
         setOpen((isOpen) => !isOpen);
-        break;
-      case "Print Report":
-        console.log("Print Report was clicked");
         break;
       case "Delete":
         console.log("Delete was clicked");
@@ -64,7 +84,7 @@ const Home = () => {
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <section>
-        <section className="shadow-md ">
+        <section>
           <MenuButtonsGroup
             heading="Booking List"
             menus={homeMenuSource}
@@ -89,6 +109,7 @@ const Home = () => {
                     id="fromDate"
                     onChange={handleChange}
                     name="startdate"
+                    defaultValue={today}
                   />
                 </div>
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
@@ -104,6 +125,7 @@ const Home = () => {
                     id="toDate"
                     onChange={handleChange}
                     name="enddate"
+                    defaultValue={today}
                   />
                 </div>
               </div>
@@ -112,16 +134,38 @@ const Home = () => {
         </section>
 
         <section className="mt-5">
-          <DataTable data={data} />
+          <DataTable data={data} startEdit={startEdit} />
         </section>
       </section>
-      <Portal isOpen={isOpen}>
-        <New
-          bookings={data}
-          setBookings={setData}
-          handleClose={() => setOpen(false)}
-        />
-      </Portal>
+      {statusMode === "CreateBooking" ? (
+        <Portal isOpen={isOpen}>
+          <New
+            bookings={data}
+            inputs={createBookingFormInputs}
+            setBookings={setData}
+            handleClose={handleClose}
+            title={"Create New Booking"}
+            statusBarText={"Add a booking"}
+            statusMode={statusMode}
+          />
+        </Portal>
+      ) : (
+        statusMode === "EditBooking" && (
+          <Portal isOpen={isOpen}>
+            <New
+              bookings={data}
+              setBookings={setData}
+              inputs={editBookingFormInputs}
+              handleClose={handleClose}
+              title={"Update A Booking"}
+              statusBarText={"Updating a single booking"}
+              statusMode={statusMode}
+              singleBooking={singleBooking}
+            />
+          </Portal>
+        )
+      )}
+
       <Statusbar heading="Booking List" company="ARBS Customer Portal" />
     </main>
   );
