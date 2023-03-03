@@ -8,7 +8,7 @@ const Sidebar = ({ showSidebar, openSidebar }) => {
       className={classNames({
         "flex md:py-2 flex-col bg-sidebarBg  text-sideColor": true,
         // " text-sideMenu": true,
-        "left-0 w-[300px] md:sticky overflow-auto md:top-[50px] md:z-0 top-0 z-20 fixed": true,
+        "left-0 w-[250px] md:sticky overflow-auto md:top-[50px] md:z-0 top-0 z-20 fixed": true,
         "md:h-[calc(100vh_-_50px)] h-full md:w-2/12": true,
         "transition-transform .3s ease-in-out md:translate-x-0": true,
         "-translate-x-full": !showSidebar,

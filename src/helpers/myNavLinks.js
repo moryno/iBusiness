@@ -1,9 +1,8 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
+import { MdArrowDropDown } from "react-icons/md";
 export const menus = [
   {
     title: (
-      <ArrowDropDownIcon className="text-[16px] opacity-70 cursor-pointer" />
+      <MdArrowDropDown className="opacity-70 cursor-pointer" fontSize={26} />
     ),
     submenu: true,
     sublinks: [

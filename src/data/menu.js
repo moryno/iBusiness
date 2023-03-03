@@ -1,50 +1,53 @@
-import AddIcon from "@mui/icons-material/Add";
-import { SearchOutlined } from "@mui/icons-material";
-import { Print } from "@material-ui/icons";
-import DeleteIcon from "@mui/icons-material/Delete";
-import HelpIcon from "@mui/icons-material/Help";
 import { MdFreeCancellation } from "react-icons/md";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbFileExport } from "react-icons/tb";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { GrDocumentPdf } from "react-icons/gr";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+import {
+  MdArrowDropDown,
+  MdOutlineSearch,
+  MdOutlineAdd,
+  MdOutlineLocalPrintshop,
+  MdOutlineDeleteOutline,
+  MdHelpOutline,
+} from "react-icons/md";
 
 export const homeMenuSource = [
   {
     id: 1,
     title: "Find",
-    icon: <SearchOutlined />,
+    icon: <MdOutlineSearch fontSize={20} />,
     onClick: "handleClick",
   },
   {
     id: 2,
     title: "New",
-    icon: <AddIcon />,
+    icon: <MdOutlineAdd fontSize={20} />,
     onClick: "handleClick",
   },
   {
     id: 3,
     title: "Export",
-    icon: <Print />,
+    icon: <MdOutlineLocalPrintshop fontSize={20} />,
     onClick: "handleClick",
   },
   {
     id: 4,
     title: "Delete",
-    icon: <DeleteIcon />,
+    icon: <MdOutlineDeleteOutline fontSize={20} />,
     onClick: "handleClick",
   },
   {
     id: 5,
     title: "Close",
-    icon: <MdFreeCancellation />,
+    icon: <MdFreeCancellation fontSize={20} />,
     onClick: "handleClick",
   },
   {
     id: 6,
     title: "Help",
-    icon: <HelpIcon />,
+    icon: <MdHelpOutline fontSize={20} />,
     onClick: "handleClick",
   },
 ];
@@ -59,7 +62,7 @@ export const newMenuSource = [
   {
     id: 2,
     title: "Close",
-    icon: <MdFreeCancellation />,
+    icon: <MdFreeCancellation fontSize={20} />,
     onClick: "handleClick",
   },
 ];
@@ -67,13 +70,13 @@ export const updateMenuSource = [
   {
     id: 1,
     title: "Update",
-    icon: <FcAddDatabase />,
+    icon: <FcAddDatabase fontSize={20} />,
     onClick: "handleClick",
   },
   {
     id: 2,
     title: "Close",
-    icon: <MdFreeCancellation />,
+    icon: <MdFreeCancellation fontSize={20} />,
     onClick: "handleClick",
   },
 ];
@@ -84,7 +87,7 @@ export const dropDownMenuSource = [
     title: "Export",
     icon: <TbFileExport fontSize={"18px"} />,
     dropArrow: (
-      <ArrowDropDownIcon className="text-[16px] opacity-70 cursor-pointer" />
+      <MdArrowDropDown fontSize={26} className=" opacity-70 cursor-pointer" />
     ),
     onClick: "handleClick",
     submenu: true,

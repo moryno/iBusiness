@@ -1,8 +1,6 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import { CgMenuGridO } from "react-icons/cg";
+import { RiMenuUnfoldFill } from "react-icons/ri";
 
-import DropDownMenu from "./DropDownMenu";
-import { Search } from "@material-ui/icons";
+import { MdOutlineSearch } from "react-icons/md";
 import NavMenus from "./NavMenus";
 import SearchCategories from "./SearchCategories";
 import { useState } from "react";
@@ -16,10 +14,10 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
     <main className="w-full p-1 md:p-4 bg-bg flex sticky top-0 z-10 items-center h-[50px] box-border text-navColor">
       <section className=" w-full flex items-center justify-between">
         <article className="hidden md:flex items-center gap-2">
-          <MenuIcon
+          <RiMenuUnfoldFill
             onClick={onMenuClick}
             className=" opacity-50 cursor-pointer"
-            fontSize="large"
+            fontSize={26}
           />
           <h1 className="font-semibold text-xl cursor-pointer">
             ARBS Customer Portal
@@ -31,7 +29,7 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
             onSubmit={handleSubmit}
             className="flex  w-[400px] py-0.5 px-2 items-center border border-gray-300 overflow-hidden rounded-3xl justify-between "
           >
-            <Search />
+            <MdOutlineSearch fontSize={26} />
             <input
               type="text"
               className="py-1.5  px-2 w-full outline-none bg-transparent  text-sm  placeholder:text-gray-200 placeholder:text-sm"
@@ -53,7 +51,7 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
               <NavMenus />
             </article>
           </article>
-          <article className=" self-center">
+          <article className="self-center">
             <Module />
           </article>
         </article>
@@ -80,11 +78,14 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
               onClick={onMenuButtonClick}
               className="space-y-1 p-1.5 md:hidden cursor-pointer z-40"
             >
-              <MenuIcon
+              <RiMenuUnfoldFill
                 className=" opacity-50 cursor-pointer "
-                fontSize="large"
+                fontSize={20}
               />
             </div>
+            <article className="self-center">
+              <Module />
+            </article>
           </article>
         </article>
       </section>
