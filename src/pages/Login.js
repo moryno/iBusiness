@@ -2,18 +2,16 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { login } from "../redux/apiCall";
-import axios from "axios";
 import request, { msSingleSign } from "../helpers/requestMethod";
 import { setupLogin } from "../helpers/auth";
 import { loginSuccess } from "../redux/userSlice";
 
 const Login = () => {
-  const { hash } = useLocation();
+  const { search } = useLocation();
   const [inputs, setInputs] = useState({
     userName: "",
     password: "",
   });
-  const token = hash.split("&")[0].split("=")[1];
 
   const [error, setError] = useState(null);
 
@@ -36,17 +34,13 @@ const Login = () => {
 
   useEffect(() => {
     const getUserInformation = async () => {
-      const { data } = await request.get("/user/gettoken", {
-        headers: {
-          Authorization: "Bearer " + token, //the token is a variable which holds the token
-        },
-      });
+      const { data } = await request.get(msSingleSign + search);
       setupLogin(data?.token);
       dispatch(loginSuccess(data));
       window.location.replace("/");
     };
-    if (token) getUserInformation();
-  }, [token, dispatch]);
+    if (search) getUserInformation();
+  }, [search, dispatch]);
 
   return (
     <main className="h-screen flex items-center justify-center bg-bgLight">

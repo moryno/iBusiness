@@ -30,3 +30,11 @@
     font-weight: 500 !important;
 }
 
+.dx-form{
+    padding: 16px 20px !important;
+}
+
+.dx-texteditor-input {
+    border-color: red !important;
+  }
+  

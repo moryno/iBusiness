@@ -3,7 +3,6 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-
 import { useSelector } from "react-redux";
 
 import Home from "./pages/Home";
@@ -13,7 +12,6 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 
 import Layout from "./components/Layout";
-import CreateForm from "./components/CreateForm";
 
 function App() {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -46,12 +44,9 @@ function App() {
           path: "/profile",
           element: <Profile />,
         },
-        {
-          path: "/test",
-          element: <CreateForm />,
-        },
       ],
     },
+
     {
       path: "/login",
       element: <Login />,

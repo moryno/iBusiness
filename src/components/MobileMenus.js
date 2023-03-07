@@ -9,7 +9,10 @@ const MobileMenus = ({ onMenuClick, menus }) => {
         onClick={() => setIsExpanded(!isExpanded)}
         className="p-1.5 md:hidden cursor-pointer z-40"
       >
-        <RiMenuUnfoldFill className=" opacity-50 cursor-pointer" />
+        <RiMenuUnfoldFill
+          fontSize={24}
+          className=" opacity-50 cursor-pointer"
+        />
       </div>
       {isExpanded && (
         <ul className="top-0 left-0 bg-bgxxLight font-medium w-fit  z-20">

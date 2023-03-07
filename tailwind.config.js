@@ -26,6 +26,7 @@ module.exports = {
         formTitle: "#006FC9",
         dropPointer: "#fff",
         bgDropDown: "#fff",
+        bb: "#7AB8EB",
       },
       colors: {
         text: "#556b86",

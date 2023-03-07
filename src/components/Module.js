@@ -31,7 +31,7 @@ const Module = () => {
                   className="text-sm flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
                   onClick={() => handleClick(category.title)}
                 >
-                  {category.title}
+                  {category.icon} {category.title}
                 </li>
               ))}
             </div>

@@ -197,6 +197,7 @@ const countries = [
 ];
 
 const cities = [
+  "INHOUSE",
   "New York",
   "Los Angeles",
   "Chicago",
@@ -298,12 +299,36 @@ const cities = [
   "Richmond",
 ];
 
+const bookingType = ["First Time", "Retake", "Resit"];
+
+const paymentMode = ["Cheque", "Cash", "Electronic Funds Transfer"];
+
+const disabilityStatus = ["Disabled", "Not Disabled"];
+
+const retirementSchemeName = [
+  "A I C KIJABE MEDICA",
+  "A I C KIJABE PRINTING",
+  "AIC LITENI CATTAGE",
+];
+
 const services = {
+  getBookinType() {
+    return bookingType;
+  },
+  getRetirementScheme() {
+    return retirementSchemeName;
+  },
   getCountries() {
     return countries;
   },
   getCities() {
     return cities;
+  },
+  getPaymentMode() {
+    return paymentMode;
+  },
+  getDisabilityStatus() {
+    return disabilityStatus;
   },
 };
 

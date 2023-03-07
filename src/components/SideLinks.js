@@ -21,7 +21,7 @@ const SideLinks = () => {
       case "Setups":
         return <FaTools />;
       case "Reports":
-        return <TbReportSearch fontSize={18} />;
+        return <TbReportSearch />;
       case "Member Services":
         return <RiSettings5Fill />;
       case "Other Services":
@@ -34,6 +34,8 @@ const SideLinks = () => {
   return (
     <>
       {moduleCategory.map((link) => {
+        const icon = getCategoryIcon(link.title);
+
         return (
           <div key={link.title}>
             <div className="cursor-pointer px-1 overflow-y-auto w-full max-h-80 scrollbar-hide bg-blend-overlay">
@@ -46,7 +48,7 @@ const SideLinks = () => {
                 }
               >
                 <div className="flex items-center gap-1">
-                  {link?.icon}
+                  {icon}
                   {link.title}
                 </div>
                 <div className="flex items-center">

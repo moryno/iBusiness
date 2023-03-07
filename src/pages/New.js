@@ -103,7 +103,7 @@ const New = ({
       </section>
       <section className="w-full border-r-2 border-l-2 border-col h-full px-2 md:p-0 md:h-[400px] overflow-y-auto">
         <article className="flex items-center justify-center">
-          <div className=" md:p-0  w-full md:px-0">
+          <div className="md:p-0  w-full md:px-0">
             <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-2 lg:gap-4">
               {inputs.map((formInput) => {
                 if (formInput.inputType === "select") {

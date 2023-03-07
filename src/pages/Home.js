@@ -1,6 +1,7 @@
 import DataTable from "../components/DataTable";
 import { useEffect, useState } from "react";
 import Statusbar from "../components/Statusbar";
+import CreateForm from "../components/CreateForm";
 import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import { homeMenuSource } from "../data/menu";
 import MobileMenus from "../components/MobileMenus";
@@ -139,9 +140,9 @@ const Home = () => {
       </section>
       {statusMode === "CreateBooking" ? (
         <Portal isOpen={isOpen}>
-          <New
+          <CreateForm
             bookings={data}
-            inputs={createBookingFormInputs}
+            singleBooking={singleBooking}
             setBookings={setData}
             handleClose={handleClose}
             title={"Create New Booking"}
@@ -152,15 +153,14 @@ const Home = () => {
       ) : (
         statusMode === "EditBooking" && (
           <Portal isOpen={isOpen}>
-            <New
+            <CreateForm
               bookings={data}
+              singleBooking={singleBooking}
               setBookings={setData}
-              inputs={editBookingFormInputs}
               handleClose={handleClose}
               title={"Update A Booking"}
               statusBarText={"Updating a single booking"}
               statusMode={statusMode}
-              singleBooking={singleBooking}
             />
           </Portal>
         )

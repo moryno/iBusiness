@@ -30,12 +30,9 @@ const NavMenus = () => {
             <h1>{link?.title}</h1>
             {link.submenu && (
               <section>
-                <section className="absolute top-7 md:top-9 right-20 md:right-20 z-50 hidden  group-hover:block hover:block">
-                  <div className="py-3">
-                    <div className="w-4 h-4 right-3 absolute  bg-white rotate-45"></div>
-                  </div>
+                <section className="absolute top-7 md:top-10 right-20 md:right-16 z-50 hidden  group-hover:block hover:block">
                   <article className="bg-bg h-16"></article>
-                  <article className="bg-card rounded-full overflow-hidden  w-20 h-20 flex items-center justify-center cursor-pointer absolute top-12 right-0 left-0 m-auto">
+                  <article className="bg-card rounded-full overflow-hidden  w-20 h-20 flex items-center justify-center cursor-pointer absolute top-6 right-0 left-0 m-auto">
                     <img
                       className="w-full object-cover"
                       src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
