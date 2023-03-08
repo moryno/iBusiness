@@ -37,7 +37,10 @@ const Navbar = ({ onMenuButtonClick, onMenuClick }) => {
               name="search"
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            <SearchCategories searchInput={searchInput} />
+            <SearchCategories
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+            />
           </form>
           <article className=" flex items-center font-medium">
             <article className="flex items-center gap-1">

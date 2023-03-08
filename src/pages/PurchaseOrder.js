@@ -16,6 +16,7 @@ import SelectBox from "devextreme-react/select-box";
 import request from "../helpers/requestMethod";
 import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from "devextreme-react/number-box";
+import { useNavigate } from "react-router-dom";
 
 // Memoizing message div to avoid unnecessary rerender
 function MessageDiv({ message }) {
@@ -42,6 +43,8 @@ export const PurchaseOrder = () => {
   const [deliveryPeriod, setDeliveryPeriod] = useState(0);
   const [driverDetails, setdriverDetails] = useState("");
   const [filterRow, setfilterRow] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (dataSource.length === 0) {
@@ -270,6 +273,7 @@ export const PurchaseOrder = () => {
         setSelectedOption(null);
         setQuantity("");
         setDataSource([]);
+        navigate("/");
         break;
 
       default:
