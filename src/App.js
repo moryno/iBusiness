@@ -37,10 +37,6 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/new",
-          element: <New />,
-        },
-        {
           path: "/profile",
           element: <Profile />,
         },

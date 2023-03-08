@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
-import { BiAddToQueue } from "react-icons/bi";
+import { TbBrandBooking } from "react-icons/tb";
 
 import request from "../helpers/requestMethod";
 
@@ -89,7 +89,7 @@ const New = ({
         <article className="text-formHeadingColor pt-1 bg-formHeading">
           <div className="flex w-full items-center px-2">
             <div>
-              <BiAddToQueue className="text-xl" />
+              <TbBrandBooking className="text-2xl opacity-80" />
             </div>
             <div className="w-full flex justify-center">
               <h2 className="text-xl flex font-medium opacity-90">{title}</h2>
@@ -113,13 +113,13 @@ const New = ({
                       className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[47%]"
                     >
                       <label
-                        className="text-sm font-medium text-gray-600"
+                        className="text-sm font-normal text-gray-600"
                         htmlFor={formInput.name}
                       >
                         {formInput.label}:<sup className=" text-red-600">*</sup>
                       </label>
                       <select
-                        className="w-full md:w-1/2  border border-menu rounded-md pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                        className="w-full md:w-1/2 py-1  border border-menu rounded-[4px] pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                         id={formInput.name}
                         name={formInput.name}
                         onChange={handleChange}
@@ -143,13 +143,13 @@ const New = ({
                       className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[47%]"
                     >
                       <label
-                        className="text-sm font-medium text-gray-600"
+                        className="text-sm font-normal text-gray-600"
                         htmlFor={formInput.name}
                       >
                         {formInput.label}:<sup className=" text-red-600">*</sup>
                       </label>
                       <input
-                        className="border border-menu rounded-md pl-1 w-full md:w-1/2 outline-none "
+                        className="border border-menu rounded-[4px] pl-1 w-full md:w-1/2 py-1  outline-none "
                         type={formInput.type}
                         id={formInput.name}
                         name={formInput.name}

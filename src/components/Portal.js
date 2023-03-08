@@ -1,4 +1,3 @@
-import React, { useState, useContext } from "react";
 import { createPortal } from "react-dom";
 const Portal = ({ isOpen, children }) => {
   if (!isOpen) return;
