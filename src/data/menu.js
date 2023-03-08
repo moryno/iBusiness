@@ -80,6 +80,20 @@ export const updateMenuSource = [
     onClick: "handleClick",
   },
 ];
+export const purchaseOrderMenu = [
+  {
+
+    id: 1,
+    title: "Submit Order",
+    onClick: "handleClick"
+
+  },
+  {
+    id: 2,
+    title: "Cancel",
+    onClick: "handleClick"
+  }
+];
 
 export const dropDownMenuSource = [
   {

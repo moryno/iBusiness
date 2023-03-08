@@ -10,6 +10,7 @@ import New from "./pages/New";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import { PurchaseOrder } from "./pages/PurchaseOrder";
 
 import Layout from "./components/Layout";
 
@@ -35,6 +36,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/purchase-order",
+          element: <PurchaseOrder />,
         },
         {
           path: "/new",
