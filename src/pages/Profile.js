@@ -71,25 +71,25 @@ const Profile = () => {
                   <div className="mb-2.5 text-[14px]">
                     <span className=" font-bold mr-1 text-menu">Full Name</span>
                     <span className="text-text font-medium">
-                      {currentUser.fullName}
+                      {currentUser?.fullName}
                     </span>
                   </div>
                   <div className="mb-2.5 text-[14px]">
                     <span className=" font-bold mr-1 text-menu">Username</span>
                     <span className="text-text font-medium">
-                      {currentUser.userName}
+                      {currentUser?.userName}
                     </span>
                   </div>
                   <div className="mb-2.5 text-[14px]">
                     <span className=" font-bold mr-1 text-menu">Email</span>
                     <span className="text-text font-medium">
-                      {currentUser.email}
+                      {currentUser?.email}
                     </span>
                   </div>
                   <div className="mb-2.5 text-[14px]">
                     <span className=" font-bold mr-1 text-menu">Telephone</span>
                     <span className="text-text font-medium">
-                      {currentUser.telephone}
+                      {currentUser?.telephone}
                     </span>
                   </div>
                   <div className="mb-2.5 text-[14px]">
@@ -97,7 +97,7 @@ const Profile = () => {
                       Physical Address
                     </span>
                     <span className="text-text font-medium">
-                      {currentUser.physicalAddress}
+                      {currentUser?.physicalAddress}
                     </span>
                   </div>
                   <div className="mb-2.5 text-[14px]">
@@ -105,7 +105,7 @@ const Profile = () => {
                       Origin Country
                     </span>
                     <span className="text-text font-medium">
-                      {currentUser.originCountry}
+                      {currentUser?.originCountry}
                     </span>
                   </div>
                 </div>

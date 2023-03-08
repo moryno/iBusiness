@@ -1,12 +1,7 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./pages/Home";
-import New from "./pages/New";
+
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
@@ -15,23 +10,10 @@ import { PurchaseOrder } from "./pages/PurchaseOrder";
 import Layout from "./components/Layout";
 
 function App() {
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
-  const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
-    return children;
-  };
-
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      ),
+      element: <Layout />,
       children: [
         {
           path: "/",
@@ -40,10 +22,6 @@ function App() {
         {
           path: "/purchase-order",
           element: <PurchaseOrder />,
-        },
-        {
-          path: "/new",
-          element: <New />,
         },
         {
           path: "/profile",

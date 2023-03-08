@@ -34,7 +34,17 @@
     padding: 16px 20px !important;
 }
 
-.dx-texteditor-input {
-    border-color: red !important;
+ .dx-texteditor-input-container {
+    border: none;
+    border: 1px solid #489AEE;
   }
-  
+  .dx-texteditor-buttons-container{
+    background-color: #489AEE;
+  }
+ .dx-button-content .dx-dropdowneditor-icon{
+    color:#fff
+  }
+
+  .dx-button-content .dx-dropdowneditor-icon:hover{
+    color:#489AEE
+  }

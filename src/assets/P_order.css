@@ -6,11 +6,16 @@
     color: #006FC9;
 }
 
+.purchaseGrid{
+    height: 350px;
+}
+
 .add-item-btns {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
+
 
 .select-control-input {
     border-style: solid !important;

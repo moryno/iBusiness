@@ -38,6 +38,7 @@ module.exports = {
         orang: "#FFAA00",
         menu: "#286DB5",
         menuText: "#0176d3",
+        menuHeading: "#282828",
         heading: "#fff",
         sideColor: "#282828",
         statusBar: "#fff",
