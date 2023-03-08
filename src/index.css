@@ -45,15 +45,25 @@
     color:#fff
   }
 
-  
 
   .dx-button-content .dx-dropdowneditor-icon:hover{
     color:#489AEE
   }
 
   .dx-numberbox-spin-button .dx-numberbox-spin-up-icon, .dx-numberbox-spin-button .dx-numberbox-spin-down-icon{
-    color:#489AEE
+    color:#fff
   }
   .dx-numberbox-spin-button .dx-numberbox-spin-up-icon:hover, .dx-numberbox-spin-button .dx-numberbox-spin-down-icon:hover{
     color:#489AEE
   }
+
+
+
+
+  @media screen and (max-width:767px){
+    .dx-field-item{
+      display: flex;
+      flex-direction: column;
+    }
+   
+}
