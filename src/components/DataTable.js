@@ -33,7 +33,7 @@ function DataTable({ data, startEdit }) {
   return (
     <main>
       <DataGrid
-        className={"dx-card wide-card h-[400px] lg:h-[600px]"}
+        className={"dx-card wide-card h-[500px] md:h-[400px] xl:h-[600px]"}
         dataSource={data}
         showBorders={false}
         hoverStateEnabled={true}

@@ -6,9 +6,7 @@
     color: #006FC9;
 }
 
-.purchaseGrid{
-    height: 350px;
-}
+
 
 .add-item-btns {
     display: flex;
@@ -126,9 +124,7 @@
 
 
 @media screen and (max-width:767px){
-    .purchaseGrid{
-        height: 42vh;
-    }
+
     
     .add-item-btns {
         flex-direction: column;

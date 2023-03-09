@@ -460,7 +460,7 @@ export const PurchaseOrder = () => {
           <MessageDiv message={message} />
         </div>
         <DataGrid
-          className="purchaseGrid"
+          className="purchaseGrid h-[500px] md:h-[42vh] xl:h-[350px]"
           style={{
             borderStyle: "solid",
             marginTop: "1rem",
