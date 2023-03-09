@@ -126,6 +126,10 @@
 
 
 @media screen and (max-width:767px){
+    .purchaseGrid{
+        height: 42vh;
+    }
+    
     .add-item-btns {
         flex-direction: column;
         align-items: start;
