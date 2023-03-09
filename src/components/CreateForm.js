@@ -138,7 +138,7 @@ const CreateForm = ({
           </p>
         </article>
       </section>
-      <section className="w-full border-r-2 border-l-2 border-col h-full px-2 md:p-0 md:h-[400px] overflow-y-auto">
+      <section className="w-full border-r-2 border-l-2 border-col h-full px-2 md:p-0 md:h-[420px] overflow-y-auto">
         <article className="flex items-center justify-center">
           <div className="md:p-0  w-full md:px-0">
             <Form
@@ -251,7 +251,7 @@ const CreateForm = ({
             Cancel
           </button>
         </article>
-        <article className="flex bg-formTitle md:rounded-b-lg overflow-hidden text-formHeadingColor px:2 md:px-5 w-full">
+        <article className="flex bg-formTitle md:rounded-b-lg overflow-hidden text-formHeadingColor py-1 px:2 md:px-5 w-full">
           <p className="text-[14px] opacity-90">{statusBarText}</p>
         </article>
       </section>
