@@ -14,23 +14,10 @@ import Profile from "./pages/Profile";
 import Layout from "./components/Layout";
 
 function App() {
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
-  const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
-    return children;
-  };
-
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      ),
+      element: <Layout />,
       children: [
         {
           path: "/",

@@ -104,7 +104,7 @@ const New = ({
       <section className="w-full border-r-2 border-l-2 border-col h-full px-2 md:p-0 md:h-[400px] overflow-y-auto">
         <article className="flex items-center justify-center">
           <div className="md:p-0  w-full md:px-0">
-            <form className="flex w-full mt-1 py-4 md:py-3 md:px-5 rounded-sm  flex-wrap justify-between gap-2 lg:gap-4">
+            <form className="flex w-full mt-1 py-4 md:p-3 rounded-sm items-stretch flex-wrap justify-between gap-2 lg:gap-3">
               {inputs.map((formInput) => {
                 if (formInput.inputType === "select") {
                   return (
@@ -119,7 +119,7 @@ const New = ({
                         {formInput.label}:<sup className=" text-red-600">*</sup>
                       </label>
                       <select
-                        className="w-full md:w-1/2 py-1  border border-menu rounded-[4px] pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
+                        className="w-full md:w-1/2  border border-gray-400 rounded-[3px] pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
                         id={formInput.name}
                         name={formInput.name}
                         onChange={handleChange}
@@ -149,7 +149,7 @@ const New = ({
                         {formInput.label}:<sup className=" text-red-600">*</sup>
                       </label>
                       <input
-                        className="border border-menu rounded-[4px] pl-1 w-full md:w-1/2 py-1  outline-none "
+                        className="border border-gray-400 rounded-[3px] pl-1 w-full md:w-1/2   outline-none "
                         type={formInput.type}
                         id={formInput.name}
                         name={formInput.name}
@@ -185,7 +185,7 @@ const New = ({
             Cancel
           </button>
         </article>
-        <article className="flex bg-formTitle md:rounded-b-lg overflow-hidden text-formHeadingColor px:2 md:px-5 w-full">
+        <article className="flex bg-formTitle md:rounded-b-lg overflow-hidden text-formHeadingColor py-1 px:2 md:px-5 w-full">
           <p className="text-[14px] opacity-90">{statusBarText}</p>
         </article>
       </section>
