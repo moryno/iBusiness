@@ -137,16 +137,6 @@ const Home = () => {
       </section>
       {statusMode === "CreateBooking" ? (
         <Portal isOpen={isOpen}>
-          {/* <CreateForm
-            bookings={data}
-            singleBooking={singleBooking}
-            setBookings={setData}
-            handleClose={handleClose}
-            title={"Create New Booking"}
-            heading={"Booking Item Management"}
-            statusBarText={"New Booking Item"}
-            statusMode={statusMode}
-          /> */}
           <New
             bookings={data}
             inputs={bookingFormInputs}
