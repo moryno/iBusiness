@@ -6,12 +6,7 @@ import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import { homeMenuSource } from "../data/menu";
 import MobileMenus from "../components/MobileMenus";
 import Portal from "../components/Portal";
-import New from "./New";
 import request from "../helpers/requestMethod";
-import {
-  createBookingFormInputs,
-  editBookingFormInputs,
-} from "../helpers/formSource";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -146,7 +141,8 @@ const Home = () => {
             setBookings={setData}
             handleClose={handleClose}
             title={"Create New Booking"}
-            statusBarText={"Add a booking"}
+            heading={"Booking Item Management"}
+            statusBarText={"New Booking Item"}
             statusMode={statusMode}
           />
         </Portal>
