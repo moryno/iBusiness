@@ -40,6 +40,8 @@ module.exports = {
         menuText: "#0176d3",
         menuHeading: "#282828",
         heading: "#fff",
+        menuText: "#0176d3",
+        menuHeading: "#282828",
         sideColor: "#282828",
         statusBar: "#fff",
         navColor: "#FFFFFF",

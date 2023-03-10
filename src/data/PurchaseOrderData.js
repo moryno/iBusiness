@@ -11,14 +11,14 @@ export const formfields = {
 };
 
 export const items = [
-    { "name" : "Blue Band", "amount" : 600 },
-    { "name" : "Indomie", "amount" : 50 },
-    { "name" : "Biscuits", "amount" : 40 },
-    { "name" : "Rice 1KG", "amount" : 260 },
-    { "name" : "Mumias Sugar 1KG", "amount" : 250 },
-    { "name" : "Cake", "amount" : 600 },
-    { "name" : "Drinking Chocolate", "amount" : 250 },
-    { "name" : "Minute Maid", "amount" : 200 }
+    { name : "Blue Band", amount : 600 },
+    { name : "Indomie", amount : 50 },
+    { name : "Biscuits", amount : 40 },
+    { name : "Rice 1KG", amount : 260 },
+    { name : "Mumias Sugar 1KG", amount : 250 },
+    { name : "Cake", amount : 600 },
+    { name : "Drinking Chocolate", amount : 250 },
+    { name : "Minute Maid", amount : 200 }
 ]
 
 // Describes the format for DevExtreme to create a summary of the table
@@ -27,52 +27,60 @@ export const summary = {
         {
         column: 'Unit Cost',
         summaryType: 'sum',
-        displayFormat: '{0}.00'
+        valueFormat: {
+            type: "fixedPoint",
+            precision: 2,
+            currency: "KES",
+            useGrouping: true
+          },
+        displayFormat: '{0}'
         },
         {
         column: 'Extended Cost',
         summaryType: 'sum',
-        displayFormat: '{0}.00'
+        valueFormat: {
+            type: "fixedPoint",
+            precision: 2,
+            currency: "KES",
+            useGrouping: true
+          },
+        displayFormat: '{0}'
         },
         {
         column: 'Tax Amount',
         summaryType: 'sum',
-        displayFormat: '{0}.00'
+        valueFormat: {
+            type: "fixedPoint",
+            precision: 2,
+            currency: "KES",
+            useGrouping: true
+          },
+        displayFormat: '{0}'
         },
         {
         column: 'Discount Amount',
         summaryType: 'sum',
-        displayFormat: '{0}.00'
+        valueFormat: {
+            type: "fixedPoint",
+            precision: 2,
+            currency: "KES",
+            useGrouping: true
+          },
+        displayFormat: '{0}'
         },
         {
         column: 'Line Total',
         summaryType: 'sum',
-        displayFormat: '{0}.00'
+        valueFormat: {
+            type: "fixedPoint",
+            precision: 2,
+            currency: "KES",
+            useGrouping: true
+          },
+        displayFormat: '{0}'
         }
     ]
 };
-
-// End of definition
-
-
-// Defines the columns to be used by the grid
-export const columns = [
-    { dataField: 'itemNumber', allowEditing: false, width: 50, visible: false  },
-    { dataField: 'item', allowEditing: false },
-    { dataField: 'quantity', allowEditing: true },
-    { dataField: 'unitCost', allowEditing: false},
-    { dataField: 'extendedCost', allowEditing: false},
-    { dataField: 'taxAmount', allowEditing: false },
-    { dataField: 'supplierCost', allowEditing: false},
-    { dataField: 'discountAmount', allowEditing: false},
-    { dataField: 'lineTotal', allowEditing: false },
-    { dataField: 'discountType', allowEditing: false},
-    { dataField: 'OUM', allowEditing: false},
-    { dataField: 'discountRate', allowEditing: false},
-    { dataField: 'taxCode', allowEditing: false},
-    { dataField: 'taxRate', allowEditing: false},
-
-    ];
 
 // End of definition
 
@@ -87,3 +95,27 @@ export const centerOptions = [
     { value: 6, text: 'Mombasa' },
     { value: 7, text: 'Embu' }
 ];
+
+// Defines the columns to be used by the grid
+
+const renderHeader = () => {
+    return <i style={{ color: 'black' }}>Mailing Address</i>;
+}
+
+export const columns = [
+    { dataField: 'itemNumber', allowEditing: false, width: 50, visible: false  },
+    { dataField: 'unitCost', visible: true, allowEditing: false},
+    { dataField: 'extendedCost', visible: true, allowEditing: false},
+    { dataField: 'taxAmount', visible: true, allowEditing: false },
+    { dataField: 'supplierCost', visible: false, allowEditing: false},
+    { dataField: 'discountAmount', visible: true, allowEditing: true},
+    { dataField: 'lineTotal', visible: true, allowEditing: false },
+    { dataField: 'discountType', visible: false, allowEditing: false},
+    { dataField: 'OUM', visible: false, allowEditing: false},
+    { dataField: 'discountRate', visible: false, allowEditing: false},
+    { dataField: 'taxCode', visible: false, allowEditing: false},
+    { dataField: 'taxRate', visible: false, allowEditing: false},
+
+    ];
+
+// End of definition

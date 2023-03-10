@@ -61,6 +61,7 @@
     outline: none;
 }
 
+
 .control-input {
     border-style: solid !important;
     border-color: #dddddd;
@@ -71,6 +72,12 @@
     height: 28px;  
     padding: .5rem;
 }
+
+.delete-btn {
+    font-size: .72rem;
+    color: #555555;    
+}
+
 
 .control-input:focus {
     border-color: #0176D3;
@@ -93,7 +100,7 @@
 .po-left, .po-right {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 .select-control {
@@ -120,6 +127,11 @@
     font-size: .8rem;
     padding-bottom: 0rem;
         
+}
+
+.po-btns {
+    display: flex;
+    gap: 1rem;
 }
 
 

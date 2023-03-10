@@ -9,7 +9,7 @@ const Layout = () => {
   const [openSidebar, setOpenSidebar] = useState(true);
 
   return (
-    <main className="grid min-h-screen grid-rows-header">
+    <main className="grid h-screen grid-rows-header">
       <Navbar
         onMenuButtonClick={() => setShowSidebar((prev) => !prev)}
         onMenuClick={() => setOpenSidebar((prev) => !prev)}
