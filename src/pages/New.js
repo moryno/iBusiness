@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
-import { BiAddToQueue } from "react-icons/bi";
+import { TbBrandBooking } from "react-icons/tb";
 
 import request from "../helpers/requestMethod";
 
@@ -89,7 +89,7 @@ const New = ({
         <article className="text-formHeadingColor pt-1 bg-formHeading">
           <div className="flex w-full items-center px-2">
             <div>
-              <BiAddToQueue className="text-xl" />
+              <TbBrandBooking className="text-xl" />
             </div>
             <div className="w-full flex justify-center">
               <h2 className="text-xl flex font-medium opacity-90">{title}</h2>

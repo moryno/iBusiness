@@ -6,11 +6,14 @@
     color: #006FC9;
 }
 
+
+
 .add-item-btns {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
+
 
 .select-control-input {
     border-style: solid !important;
@@ -133,6 +136,8 @@
 
 
 @media screen and (max-width:767px){
+
+    
     .add-item-btns {
         flex-direction: column;
         align-items: start;

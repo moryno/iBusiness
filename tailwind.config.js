@@ -37,6 +37,8 @@ module.exports = {
         yellow: "#f39f32",
         orang: "#FFAA00",
         menu: "#286DB5",
+        menuText: "#0176d3",
+        menuHeading: "#282828",
         heading: "#fff",
         menuText: "#0176d3",
         menuHeading: "#282828",

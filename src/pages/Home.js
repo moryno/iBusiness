@@ -95,7 +95,7 @@ const Home = () => {
           <article className="relative">
             <MobileMenus menus={homeMenuSource} onMenuClick={handleClick} />
 
-            <article className=" md:px-5 flex gap-4 items-center">
+            <article className=" md:pr-5 flex gap-4 items-center">
               <div className="flex flex-col gap-2 md:flex-row w-full md:py-2">
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
                   <label

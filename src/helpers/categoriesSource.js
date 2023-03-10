@@ -1,8 +1,8 @@
 export const categories = [
   {
     id: 1,
-    title: "Members Approval",
-    link: "",
+    title: "Purchase Orders",
+    link: "purchase-order",
   },
   {
     id: 2,
