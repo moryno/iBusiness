@@ -1,6 +1,6 @@
 const today = new Date().toISOString().slice(0, 10);
 
-export const createBookingFormInputs = [
+export const bookingFormInputs = [
   {
     id: 1,
     label: "Booking Type",

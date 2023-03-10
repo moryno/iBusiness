@@ -7,6 +7,8 @@ import { homeMenuSource } from "../data/menu";
 import MobileMenus from "../components/MobileMenus";
 import Portal from "../components/Portal";
 import request from "../helpers/requestMethod";
+import New from "./New";
+import { bookingFormInputs } from "../helpers/formSource";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -135,8 +137,19 @@ const Home = () => {
       </section>
       {statusMode === "CreateBooking" ? (
         <Portal isOpen={isOpen}>
-          <CreateForm
+          {/* <CreateForm
             bookings={data}
+            singleBooking={singleBooking}
+            setBookings={setData}
+            handleClose={handleClose}
+            title={"Create New Booking"}
+            heading={"Booking Item Management"}
+            statusBarText={"New Booking Item"}
+            statusMode={statusMode}
+          /> */}
+          <New
+            bookings={data}
+            inputs={bookingFormInputs}
             singleBooking={singleBooking}
             setBookings={setData}
             handleClose={handleClose}
