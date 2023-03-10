@@ -3,8 +3,21 @@ import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbBrandBooking } from "react-icons/tb";
-
+import SelectBox from "devextreme-react/select-box";
 import request from "../helpers/requestMethod";
+import services from "../helpers/formDataSource";
+
+const countriesOptions = services.getCountries();
+
+const trainingVenuesOptions = services.getCities();
+
+const bookingTypeOptions = services.getBookinType();
+
+const retirementSchemeOptions = services.getRetirementScheme();
+
+const paymentModeOptions = services.getPaymentMode();
+
+const diabilityStatusOptions = services.getDisabilityStatus();
 
 const New = ({
   inputs,
@@ -81,7 +94,7 @@ const New = ({
   };
 
   return (
-    <main className="bg-white w-full md:w-[60%] mx-auto h-screen md:h-fit  overflow-y-scroll md:overflow-visible">
+    <main className="bg-white w-full md:w-[70%] mx-auto h-screen md:h-fit items-stretch overflow-y-scroll md:overflow-visible">
       <section className="sticky inset-x-0 top-0 z-50">
         <article className="bg-formHeading flex items-center justify-between">
           <div className="flex items-center py-1 px:2 md:px-5 w-full gap-1 text-formHeadingColor">
@@ -97,7 +110,7 @@ const New = ({
         </article>
       </section>
       <section className="md:p-3">
-        <article className="text-formHeadingColor md:rounded-t-sm p-1 md:pt-5 md:pb-3 md:px-10 form-heading">
+        <article className="text-formHeadingColor md:rounded-t-sm p-1 md:py-2 md:px-10 form-heading">
           <h2 className="text-xl flex justify-center md:justify-start font-medium opacity-90">
             {heading}
           </h2>
@@ -140,10 +153,10 @@ const New = ({
                       className="text-sm text-gray-600"
                       htmlFor="employerName"
                     >
-                      Employer Name:<sup className=" text-red-600">*</sup>
+                      Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[70%] outline-none "
+                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[80%] outline-none "
                       type="text"
                       id="employerName"
                       name="employerName"
@@ -155,49 +168,27 @@ const New = ({
                       className="text-sm   text-gray-600"
                       htmlFor="originCountry"
                     >
-                      Origin Country:<sup className=" text-red-600">*</sup>
+                      Org Country:<sup className=" text-red-600">*</sup>
                     </label>
-                    <select
-                      className="w-full md:w-[75%]  rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
-                      id="originCountry"
+                    <SelectBox
+                      dataSource={countriesOptions}
+                      searchEnabled={true}
                       name="originCountry"
-                      onChange={handleChange}
-                    >
-                      <option
-                        className="rounded-none p-5 text-sm"
-                        value="Kenya"
-                      >
-                        Kenya
-                      </option>
-                      <option
-                        className="rounded-none p-5 text-sm"
-                        value="Uganda"
-                      >
-                        Uganda
-                      </option>
-                      <option
-                        className="rounded-none p-5 text-sm"
-                        value="Tanzania"
-                      >
-                        Tanzania
-                      </option>
-                      <option
-                        className="rounded-none p-5 text-sm"
-                        value="Others"
-                      >
-                        Others
-                      </option>
-                    </select>
+                      placeholder="Select a Country"
+                      height={30}
+                      width={"80%"}
+                      className="custom-selectbox"
+                    />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
                     <label
                       className="text-sm text-gray-600"
                       htmlFor="physicalAddress"
                     >
-                      Physical Address:<sup className=" text-red-600">*</sup>
+                      Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[70%]  outline-none "
+                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
@@ -211,7 +202,7 @@ const New = ({
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
+                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
                       type="text"
                       id="idNumber"
                       name="idNumber"
@@ -227,7 +218,7 @@ const New = ({
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
+                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
                       type="text"
                       id="telephone"
                       name="telephone"
@@ -243,7 +234,7 @@ const New = ({
                       Experience:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
+                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
                       type="number"
                       id="experience"
                       name="experience"
@@ -255,7 +246,7 @@ const New = ({
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
+                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
                       type="text"
                       id="position"
                       name="position"
@@ -268,64 +259,37 @@ const New = ({
                       className="text-sm   text-gray-600"
                       htmlFor="disabilityStatus"
                     >
-                      Disability Status:<sup className=" text-red-600">*</sup>
+                      Status:<sup className=" text-red-600">*</sup>
                     </label>
-                    <select
-                      className="w-full md:w-1/2  rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
-                      id="disabilityStatus"
+                    <SelectBox
+                      dataSource={diabilityStatusOptions}
+                      searchEnabled={true}
                       name="disabilityStatus"
-                      onChange={handleChange}
-                    >
-                      <option
-                        className="rounded-none p-5 text-sm"
-                        value="Disabled"
-                      >
-                        Disabled
-                      </option>
-                      <option
-                        className="rounded-none p-5 text-sm"
-                        value="Not Disabled"
-                      >
-                        Not Disabled
-                      </option>
-                    </select>
+                      placeholder="Select Status"
+                      height={30}
+                      width="75%"
+                      className="custom-selectbox"
+                    />
                   </div>
                 </article>
               </section>
               <section className="w-full flex flex-col  gap-2">
-                <div className="flex flex-col gap-3  md:flex-row justify-between w-full">
+                <div className="flex flex-col gap-3  md:flex-row justify-between w-full  md:w-7/12">
                   <label
                     className="text-sm  text-gray-600"
                     htmlFor="retirementSchemeName"
                   >
-                    Retirement Scheme Name:
+                    Sch Name:
                     <sup className=" text-red-600">*</sup>
                   </label>
-                  <select
-                    className="w-full md:w-[70%] rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
-                    id="retirementSchemeName"
-                    name="retirementSchemeName"
-                    onChange={handleChange}
-                  >
-                    <option
-                      className="rounded-none p-5 text-sm"
-                      value="A I C KIJABE MEDICA"
-                    >
-                      A I C KIJABE MEDICA
-                    </option>
-                    <option
-                      className="rounded-none p-5 text-sm"
-                      value="A I C KIJABE PRINTING"
-                    >
-                      A I C KIJABE PRINTING
-                    </option>
-                    <option
-                      className="rounded-none p-5 text-sm"
-                      value="AIC LITENI CATTAGE"
-                    >
-                      AIC LITENI CATTAGE
-                    </option>
-                  </select>
+                  <SelectBox
+                    dataSource={retirementSchemeOptions}
+                    searchEnabled={true}
+                    placeholder="Select an option"
+                    height={30}
+                    width={"80%"}
+                    className="custom-selectbox"
+                  />
                 </div>
 
                 <article className="flex flex-col md:flex-row gap-2">
@@ -337,31 +301,15 @@ const New = ({
                       >
                         Booking Type:<sup className=" text-red-600">*</sup>
                       </label>
-                      <select
-                        className="w-full md:w-1/2  rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
-                        id="bookingType"
-                        name="bookingType"
-                        onChange={handleChange}
-                      >
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="First Time"
-                        >
-                          First Time
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Retake"
-                        >
-                          Retake
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Resit"
-                        >
-                          Resit
-                        </option>
-                      </select>
+                      <SelectBox
+                        dataSource={bookingTypeOptions}
+                        searchEnabled={true}
+                        name="retirementSchemeName"
+                        placeholder="Select a Scheme Name"
+                        height={30}
+                        width={"80%"}
+                        className="custom-selectbox"
+                      />
                     </div>
                     <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
                       <label
@@ -385,37 +333,15 @@ const New = ({
                       >
                         Training Venue:<sup className=" text-red-600">*</sup>
                       </label>
-                      <select
-                        className="w-full md:w-1/2  rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
-                        id="trainingVenue"
+                      <SelectBox
+                        dataSource={trainingVenuesOptions}
+                        searchEnabled={true}
                         name="trainingVenue"
-                        onChange={handleChange}
-                      >
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="INHOUSE"
-                        >
-                          INHOUSE
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Kisumu"
-                        >
-                          Kisumu
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Nairobi"
-                        >
-                          Nairobi
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Mombasa"
-                        >
-                          Mombasa
-                        </option>
-                      </select>
+                        placeholder="Select a Training Venue"
+                        height={30}
+                        width={"80%"}
+                        className="custom-selectbox"
+                      />
                     </div>
                   </article>
                   <article className="w-full md:w-1/2 flex flex-col gap-2">
@@ -441,31 +367,16 @@ const New = ({
                       >
                         Payment Mode:<sup className=" text-red-600">*</sup>
                       </label>
-                      <select
-                        className="w-full md:w-1/2  rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
-                        id="paymentMode"
+                      <SelectBox
+                        dataSource={paymentModeOptions}
+                        searchEnabled={true}
+                        placeholder="Select a Payment Mode"
                         name="paymentMode"
+                        height={30}
                         onChange={handleChange}
-                      >
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Cheque"
-                        >
-                          Cheque
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Cash"
-                        >
-                          Cash
-                        </option>
-                        <option
-                          className="rounded-none p-5 text-sm"
-                          value="Electronic Funds Transfer"
-                        >
-                          Electronic Funds Transfer
-                        </option>
-                      </select>
+                        width={"70%"}
+                        className="custom-selectbox"
+                      />
                     </div>
                     <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
                       <label
@@ -506,8 +417,8 @@ const New = ({
           </div>
         </article>
       </section>
-      <section className="sticky border-t border-gray-100  inset-x-0 bottom-0 ">
-        <article className="flex  bg-formTitle md:bg-white p-2 justify-center items-center gap-4">
+      <section className="sticky   inset-x-0 bottom-0 ">
+        <article className="flex md:bg-white px-2 pb-1 justify-center items-center gap-4">
           <button
             onClick={save}
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"

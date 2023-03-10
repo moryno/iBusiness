@@ -13,6 +13,7 @@ import { FcAddDatabase } from "react-icons/fc";
 import { TbBrandBooking } from "react-icons/tb";
 import services from "../helpers/formDataSource";
 import request from "../helpers/requestMethod";
+import Select from "react-select/dist/declarations/src/Select";
 
 const countriesOptions = {
   items: services.getCountries(),
@@ -161,6 +162,7 @@ const NewForm = () => {
         <label className="text-sm   text-gray-600" htmlFor="originCountry">
           Origin Country:<sup className=" text-red-600">*</sup>
         </label>
+
         <select
           className="w-full md:w-1/2  rounded-[3px] border border-gray-300 pl-1 outline-none placeholder:text-sm outline-blue text-gray-500"
           id="originCountry"
