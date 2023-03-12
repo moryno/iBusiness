@@ -72,11 +72,7 @@ background: linear-gradient(90deg, rgba(0,111,201,1) 0%, rgba(59,150,221,1) 84%,
   } */
 
 
-  .dx-texteditor-container .dx-texteditor-input-container .dx-texteditor-input{
-    height: 10px !important;
-    /* line-height: 14px !important; */
-    padding: 0 30px 0 8px !important;
-  }
+ 
 
   @media screen and (max-width:767px){
     .dx-field-item{
