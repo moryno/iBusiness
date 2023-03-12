@@ -4,6 +4,8 @@ import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbBrandBooking } from "react-icons/tb";
 import SelectBox from "devextreme-react/select-box";
+import DateBox from "devextreme-react/date-box";
+import NumberBox from "devextreme-react/number-box";
 import request from "../helpers/requestMethod";
 import services from "../helpers/formDataSource";
 
@@ -94,7 +96,7 @@ const New = ({
   };
 
   return (
-    <main className="bg-white w-full md:w-[70%] mx-auto h-screen md:h-fit items-stretch overflow-y-scroll md:overflow-visible">
+    <main className="bg-white w-full md:w-[70%] lg:w-[80%] xl:w-[70%] xxl:w-[60%]  mx-auto h-screen md:h-fit items-stretch overflow-y-scroll md:overflow-visible">
       <section className="sticky inset-x-0 top-0 z-50">
         <article className="bg-formHeading flex items-center justify-between">
           <div className="flex items-center py-1 px:2 md:px-5 w-full gap-1 text-formHeadingColor">
@@ -121,34 +123,61 @@ const New = ({
         </article>
         <article className="h-full px-2 md:border md:border-gray-300 overflow-y-auto">
           <div>
-            <form className="flex w-full mt-1 py-4 md:py-3 items-stretch rounded-sm flex-wrap justify-between gap-2">
+            <form className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
               <section className="flex flex-col md:flex-row w-full gap-2">
-                <article className="w-full md:w-7/12 flex flex-col items gap-2">
-                  <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full">
+                <article className="w-full flex flex-wrap box-border justify-between  gap-2">
+                  <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label className="text-sm text-gray-600" htmlFor="fullName">
                       Full Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[80%] outline-none "
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="fullName"
                       name="fullName"
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full">
+                  <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
+                    <label className="text-sm text-gray-600" htmlFor="idNumber">
+                      ID Number:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <input
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      type="text"
+                      id="idNumber"
+                      name="idNumber"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label className="text-sm text-gray-600" htmlFor="email">
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[80%] outline-none "
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="email"
                       name="email"
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full">
+                  <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
+                    <label
+                      className="text-sm text-gray-600"
+                      htmlFor="telephone"
+                    >
+                      Telephone:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <input
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      type="text"
+                      id="telephone"
+                      name="telephone"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label
                       className="text-sm text-gray-600"
                       htmlFor="employerName"
@@ -156,14 +185,29 @@ const New = ({
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[80%] outline-none "
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="employerName"
                       name="employerName"
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full">
+                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
+                    <label
+                      className="text-sm text-gray-600"
+                      htmlFor="experience"
+                    >
+                      Experience:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <NumberBox
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      height={28}
+                      id="experience"
+                      name="experience"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
                     <label
                       className="text-sm   text-gray-600"
                       htmlFor="originCountry"
@@ -175,12 +219,23 @@ const New = ({
                       searchEnabled={true}
                       name="originCountry"
                       placeholder="Select a Country"
-                      height={30}
-                      width={"80%"}
-                      className="custom-selectbox"
+                      height={28}
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
-                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
+                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
+                    <label className="text-sm text-gray-600" htmlFor="position">
+                      Position:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <input
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      type="text"
+                      id="experience"
+                      name="experience"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
                     <label
                       className="text-sm text-gray-600"
                       htmlFor="physicalAddress"
@@ -188,73 +243,14 @@ const New = ({
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-[80%]  outline-none "
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
                       onChange={handleChange}
                     />
                   </div>
-                </article>
-                <article className="w-full md:w-5/12 flex flex-col gap-2">
-                  <div className="flex justify-between  box-border flex-col gap-3  md:flex-row w-full">
-                    <label className="text-sm text-gray-600" htmlFor="idNumber">
-                      ID Number:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
-                      type="text"
-                      id="idNumber"
-                      name="idNumber"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full">
-                    <label
-                      className="text-sm text-gray-600"
-                      htmlFor="telephone"
-                    >
-                      Telephone:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
-                      type="text"
-                      id="telephone"
-                      name="telephone"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
-                    <label
-                      className="text-sm text-gray-600"
-                      htmlFor="experience"
-                    >
-                      Experience:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
-                      type="number"
-                      id="experience"
-                      name="experience"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
-                    <label className="text-sm text-gray-600" htmlFor="position">
-                      Position:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <input
-                      className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-3/4 outline-none "
-                      type="text"
-                      id="position"
-                      name="position"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full">
+                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
                     <label
                       className="text-sm   text-gray-600"
                       htmlFor="disabilityStatus"
@@ -266,146 +262,138 @@ const New = ({
                       searchEnabled={true}
                       name="disabilityStatus"
                       placeholder="Select Status"
-                      height={30}
-                      width="75%"
-                      className="custom-selectbox"
+                      height={28}
+                      className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
+                    <label
+                      className="text-sm  text-gray-600"
+                      htmlFor="retirementSchemeName"
+                    >
+                      Sch Name:
+                      <sup className=" text-red-600">*</sup>
+                    </label>
+                    <SelectBox
+                      dataSource={retirementSchemeOptions}
+                      searchEnabled={true}
+                      placeholder="Select an option"
+                      height={28}
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
               </section>
-              <section className="w-full flex flex-col  gap-2">
-                <div className="flex flex-col gap-3  md:flex-row justify-between w-full  md:w-7/12">
-                  <label
-                    className="text-sm  text-gray-600"
-                    htmlFor="retirementSchemeName"
-                  >
-                    Sch Name:
-                    <sup className=" text-red-600">*</sup>
-                  </label>
-                  <SelectBox
-                    dataSource={retirementSchemeOptions}
-                    searchEnabled={true}
-                    placeholder="Select an option"
-                    height={30}
-                    width={"80%"}
-                    className="custom-selectbox"
-                  />
-                </div>
+              <section className="w-full flex flex-col gap-2">
+                <article className="w-full flex flex-wrap lg:w-[80%] box-border justify-between  gap-2">
+                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+                    <label
+                      className="text-sm   text-gray-600"
+                      htmlFor="bookingType"
+                    >
+                      Booking Type:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <SelectBox
+                      dataSource={bookingTypeOptions}
+                      searchEnabled={true}
+                      name="retirementSchemeName"
+                      placeholder="Select a Scheme Name"
+                      height={28}
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
+                    <label
+                      className="text-sm text-gray-600"
+                      htmlFor="schemePosition"
+                    >
+                      Sch Position:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <input
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      type="text"
+                      id="schemePosition"
+                      name="schemePosition"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+                    <label
+                      className="text-sm   text-gray-600"
+                      htmlFor="trainingVenue"
+                    >
+                      Training Venue:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <SelectBox
+                      dataSource={trainingVenuesOptions}
+                      searchEnabled={true}
+                      name="trainingVenue"
+                      placeholder="Select a Training Venue"
+                      height={28}
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                    />
+                  </div>
 
-                <article className="flex flex-col md:flex-row gap-2">
-                  <article className="w-full md:w-1/2 flex flex-col gap-2">
-                    <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full">
-                      <label
-                        className="text-sm   text-gray-600"
-                        htmlFor="bookingType"
-                      >
-                        Booking Type:<sup className=" text-red-600">*</sup>
-                      </label>
-                      <SelectBox
-                        dataSource={bookingTypeOptions}
-                        searchEnabled={true}
-                        name="retirementSchemeName"
-                        placeholder="Select a Scheme Name"
-                        height={30}
-                        width={"80%"}
-                        className="custom-selectbox"
-                      />
-                    </div>
-                    <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
-                      <label
-                        className="text-sm text-gray-600"
-                        htmlFor="schemePosition"
-                      >
-                        Scheme Position:<sup className=" text-red-600">*</sup>
-                      </label>
-                      <input
-                        className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
-                        type="text"
-                        id="schemePosition"
-                        name="schemePosition"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full">
-                      <label
-                        className="text-sm   text-gray-600"
-                        htmlFor="trainingVenue"
-                      >
-                        Training Venue:<sup className=" text-red-600">*</sup>
-                      </label>
-                      <SelectBox
-                        dataSource={trainingVenuesOptions}
-                        searchEnabled={true}
-                        name="trainingVenue"
-                        placeholder="Select a Training Venue"
-                        height={30}
-                        width={"80%"}
-                        className="custom-selectbox"
-                      />
-                    </div>
-                  </article>
-                  <article className="w-full md:w-1/2 flex flex-col gap-2">
-                    <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
-                      <label
-                        className="text-sm text-gray-600"
-                        htmlFor="courseDate"
-                      >
-                        Course Date:<sup className=" text-red-600">*</sup>
-                      </label>
-                      <input
-                        className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
-                        type="text"
-                        id="courseDate"
-                        name="courseDate"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full">
-                      <label
-                        className="text-sm   text-gray-600"
-                        htmlFor="paymentMode"
-                      >
-                        Payment Mode:<sup className=" text-red-600">*</sup>
-                      </label>
-                      <SelectBox
-                        dataSource={paymentModeOptions}
-                        searchEnabled={true}
-                        placeholder="Select a Payment Mode"
-                        name="paymentMode"
-                        height={30}
-                        onChange={handleChange}
-                        width={"70%"}
-                        className="custom-selectbox"
-                      />
-                    </div>
-                    <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full">
-                      <label
-                        className="text-sm text-gray-600"
-                        htmlFor="externalSchemeAdmin"
-                      >
-                        External Scheme Admin:
-                        <sup className=" text-red-600">*</sup>
-                      </label>
-                      <input
-                        className="rounded-[3px] border border-gray-300 pl-1 w-full md:w-1/2 outline-none "
-                        type="text"
-                        id="externalSchemeAdmin"
-                        name="externalSchemeAdmin"
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </article>
+                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
+                    <label
+                      className="text-sm text-gray-600"
+                      htmlFor="courseDate"
+                    >
+                      Course Date:<sup className=" text-red-600">*</sup>
+                    </label>
+
+                    <DateBox
+                      id="courseDate"
+                      name="courseDate"
+                      height={28}
+                      onChange={handleChange}
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+                    <label
+                      className="text-sm   text-gray-600"
+                      htmlFor="paymentMode"
+                    >
+                      Payment Mode:<sup className=" text-red-600">*</sup>
+                    </label>
+                    <SelectBox
+                      dataSource={paymentModeOptions}
+                      searchEnabled={true}
+                      placeholder="Select a Payment Mode"
+                      name="paymentMode"
+                      height={28}
+                      onChange={handleChange}
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
+                    <label
+                      className="text-sm text-gray-600"
+                      htmlFor="externalSchemeAdmin"
+                    >
+                      Scheme Admin:
+                      <sup className=" text-red-600">*</sup>
+                    </label>
+                    <input
+                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      type="text"
+                      id="externalSchemeAdmin"
+                      name="externalSchemeAdmin"
+                      onChange={handleChange}
+                    />
+                  </div>
                 </article>
-                <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full">
+                <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                   <label
                     className="text-sm text-gray-600"
-                    htmlFor="externalSchemeAdmin"
+                    htmlFor="additionalRequirements"
                   >
-                    Additional Requirements:
+                    Requirements:
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className="w-full md:w-[70%] resize-none col-span-2 rounded-[3px] border border-gray-300 pl-1  outline-none "
+                    className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
