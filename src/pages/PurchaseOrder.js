@@ -5,7 +5,7 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import { purchaseOrderMenu } from "../data/menu";
 import DataSource from 'devextreme/data/data_source';
-import { Form } from '../components/PurchaseOrder/Form'
+import Form from '../components/PurchaseOrder/Form'
 import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
 import { useNavigate } from 'react-router-dom';
@@ -14,11 +14,28 @@ import { useNavigate } from 'react-router-dom';
 export const PurchaseOrder = () => {
   // eslint-disable-next-line
   const [data, setData] = useState(new DataSource());
+  const [dataToSubmit, setSubmitData] = useState();
+  const form = useRef();
   const count = useRef(1);
   const message = useRef();
   const navigate = useNavigate();
+  
+
+  const submitData = () => {
+    console.log("Submitting data...");
+    const confirmedData = {
+      formData: dataToSubmit,
+      tableData: data.store()._array
+    }
+    console.log(confirmedData);
+  }
+
   const handleClick = (menu) => {
     switch (menu) {
+      case "Submit Order":
+        submitData();
+        break;
+
       case "Close":
         navigate("/");
         break;
@@ -38,7 +55,7 @@ export const PurchaseOrder = () => {
         />
       </section>
       <div className="mt-3 w-full">
-        <Form />
+        <Form setSubmitData={setSubmitData} datatosubmit={dataToSubmit}/>
       </div>
       <section className="mt-2">
         <div className="po-grid h-full mt-2">

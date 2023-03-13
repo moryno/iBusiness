@@ -194,8 +194,8 @@ export const InputField = ({ count, data, message }) => {
                 Clear
               </button>
           </div>
+          <MessageDiv message={message.current} />  
         </div>
-        <MessageDiv message={message.current} />  
         </>
   
     )

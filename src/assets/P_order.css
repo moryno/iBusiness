@@ -136,6 +136,9 @@
 
 .po-message {
     font-size: .8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .simple-item {

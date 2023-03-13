@@ -5,9 +5,7 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import { items, summary, columns } from '../../data/PurchaseOrderData'
 import dataitem from '../../utils/Order';
-import { IoClose } from "react-icons/io5";
 import { getDataGridRef } from "../../helpers/datagridFunctions";
-import { BiX } from "react-icons/bi";
 
 // Table component
 
@@ -161,6 +159,7 @@ export const Table = ({ data, count, message }) => {
         handleRowAdded();
       }
     }
+
   
     
   
@@ -173,7 +172,6 @@ export const Table = ({ data, count, message }) => {
           reshapeOnPush={true}
           onRowUpdated={handleRowUpdated}
           showRowLines={true}
-          paging={false}
           onKeyDown={handleKeyPress}
           onRowRemoving={handleRowRemoving}
           columnHidingEnabled={true}
@@ -215,6 +213,7 @@ export const Table = ({ data, count, message }) => {
             allowEditing={column.allowEditing}
             visible={column.visible}
             dataType="number"
+            key={column.dataField}
             format={{
               type: "fixedPoint",
               precision: 2,
