@@ -8,6 +8,7 @@ import DataSource from 'devextreme/data/data_source';
 import { Form } from '../components/PurchaseOrder/Form'
 import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
+import { useNavigate } from 'react-router-dom';
 
 // Main Function
 export const PurchaseOrder = () => {
@@ -15,29 +16,40 @@ export const PurchaseOrder = () => {
   const [data, setData] = useState(new DataSource());
   const count = useRef(1);
   const message = useRef();
- 
+  const navigate = useNavigate();
+  const handleClick = (menu) => {
+    switch (menu) {
+      case "Close":
+        navigate("/");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <main className="w-full min-h-full relative h-full px-3 md:px-5 py-1.5">
-        <section>
-          <MenuButtonsGroup
-            heading="Purchase Order"
-            menus={purchaseOrderMenu}
-            
-          />
-        </section>
-        <div className="mt-3 w-full">
-          <Form />
+      <section>
+        <MenuButtonsGroup
+          heading="Purchase Order"
+          menus={purchaseOrderMenu}
+          onMenuClick={handleClick}
+        />
+      </section>
+      <div className="mt-3 w-full">
+        <Form />
+      </div>
+      <section className="mt-2">
+        <div className="po-grid h-full mt-2">
+          <div className="add-item-btns">
+            <InputField data={data} count={count} message={message} />
+          </div>
+          <Table data={data} count={count} message={message} />
         </div>
-        <section className="mt-2">
-            <div className="po-grid h-full mt-2">
-              <div className='add-item-btns'>
-              <InputField data={data} count={count} message={message}/>
-              </div>
-              <Table data={data} count={count} message={message}/>
-            </div>
-        </section>
+      </section>
     </main>
-  )
-}
+  );
+};
 
 // End of function

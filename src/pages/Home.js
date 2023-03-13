@@ -152,13 +152,15 @@ const Home = () => {
       ) : (
         statusMode === "EditBooking" && (
           <Portal isOpen={isOpen}>
-            <CreateForm
+            <New
               bookings={data}
+              inputs={bookingFormInputs}
               singleBooking={singleBooking}
               setBookings={setData}
               handleClose={handleClose}
-              title={"Update A Booking"}
-              statusBarText={"Updating a single booking"}
+              title={"Update A Booking Item"}
+              heading={"Booking Item Management"}
+              statusBarText={"Updating Booking Item"}
               statusMode={statusMode}
             />
           </Portal>

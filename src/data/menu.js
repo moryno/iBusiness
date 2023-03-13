@@ -2,6 +2,7 @@ import { MdFreeCancellation } from "react-icons/md";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbFileExport } from "react-icons/tb";
 import { SiMicrosoftexcel } from "react-icons/si";
+import { SlPrinter } from "react-icons/sl";
 import { GrDocumentPdf } from "react-icons/gr";
 
 import {
@@ -82,17 +83,23 @@ export const updateMenuSource = [
 ];
 export const purchaseOrderMenu = [
   {
-
     id: 1,
     title: "Submit Order",
-    onClick: "handleClick"
-
+    icon: <SlPrinter fontSize={18} />,
+    onClick: "handleClick",
   },
   {
     id: 2,
-    title: "Cancel",
-    onClick: "handleClick"
-  }
+    title: "Export",
+    icon: <MdOutlineLocalPrintshop fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
+    title: "Close",
+    icon: <MdFreeCancellation fontSize={20} />,
+    onClick: "handleClick",
+  },
 ];
 
 export const dropDownMenuSource = [

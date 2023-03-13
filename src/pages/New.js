@@ -21,6 +21,8 @@ const paymentModeOptions = services.getPaymentMode();
 
 const diabilityStatusOptions = services.getDisabilityStatus();
 
+const today = new Date().toISOString().slice(0, 10);
+
 const New = ({
   inputs,
   handleClose,
@@ -33,6 +35,14 @@ const New = ({
   statusMode,
 }) => {
   const [formInput, setFormInputs] = useState({});
+  const [experience, setExperience] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState("Kenya");
+  const [selectedStatus, setSelectedStatus] = useState("Not Disabled");
+  const [schemeOptions, setSchemeOptions] = useState("A I C KIJABE PRINTING");
+  const [bookingType, setBookingType] = useState("First Time");
+  const [trainingVenue, setTrainingVenue] = useState("INHOUSE");
+  const [courseDate, setCourseDate] = useState(today);
+  const [paymentMode, setPaymentMode] = useState("Cheque");
   const [editInput, setEditInputs] = useState(singleBooking);
 
   const handleChange = (event) => {
@@ -53,22 +63,23 @@ const New = ({
         telephone: formInput.telephone,
         physicalAddress: formInput.physicalAddress,
         employerName: formInput.employerName,
-        experience: formInput.experience,
+        experience,
         position: formInput.position,
-        disabilityStatus: formInput.disabilityStatus,
+        disabilityStatus: selectedStatus,
       },
       booking: {
-        bookingType: formInput.bookingType,
-        retirementSchemeName: formInput.retirementSchemeName,
+        bookingType,
+        retirementSchemeName: schemeOptions,
         schemePosition: formInput.schemePosition,
-        originCountry: formInput.originCountry,
-        trainingVenue: formInput.trainingVenue,
-        courseDate: formInput.courseDate,
-        paymentMode: formInput.paymentMode,
+        originCountry: selectedCountry,
+        trainingVenue: trainingVenue,
+        courseDate,
+        paymentMode,
         additionalRequirements: formInput.additionalRequirements,
         externalSchemeAdmin: formInput.externalSchemeAdmin,
       },
     };
+
     if (statusMode === "CreateBooking") {
       try {
         const { data } = await request.post("/Booking/Create", formData);
@@ -204,7 +215,7 @@ const New = ({
                       height={28}
                       id="experience"
                       name="experience"
-                      onChange={handleChange}
+                      onValueChanged={(e) => setExperience(e.value)}
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
@@ -218,6 +229,8 @@ const New = ({
                       dataSource={countriesOptions}
                       searchEnabled={true}
                       name="originCountry"
+                      value={selectedCountry}
+                      onValueChanged={(e) => setSelectedCountry(e.value)}
                       placeholder="Select a Country"
                       height={28}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
@@ -263,6 +276,8 @@ const New = ({
                       name="disabilityStatus"
                       placeholder="Select Status"
                       height={28}
+                      value={selectedStatus}
+                      onValueChanged={(e) => setSelectedStatus(e.value)}
                       className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
@@ -279,6 +294,8 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={28}
+                      value={schemeOptions}
+                      onValueChanged={(e) => setSchemeOptions(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
@@ -299,6 +316,8 @@ const New = ({
                       name="retirementSchemeName"
                       placeholder="Select a Scheme Name"
                       height={28}
+                      value={bookingType}
+                      onValueChanged={(e) => setBookingType(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -330,6 +349,8 @@ const New = ({
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={28}
+                      value={trainingVenue}
+                      onValueChanged={(e) => setTrainingVenue(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -346,7 +367,8 @@ const New = ({
                       id="courseDate"
                       name="courseDate"
                       height={28}
-                      onChange={handleChange}
+                      value={courseDate}
+                      onValueChanged={(e) => setCourseDate(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -363,7 +385,8 @@ const New = ({
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
                       height={28}
-                      onChange={handleChange}
+                      value={paymentMode}
+                      onValueChanged={(e) => setPaymentMode(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -393,7 +416,7 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    className="rounded-[3px] border border-gray-300  resize-none text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
@@ -406,7 +429,7 @@ const New = ({
         </article>
       </section>
       <section className="sticky   inset-x-0 bottom-0 ">
-        <article className="flex md:bg-white px-2 pb-1 justify-center items-center gap-4">
+        <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">
           <button
             onClick={save}
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
