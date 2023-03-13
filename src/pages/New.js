@@ -36,13 +36,13 @@ const New = ({
 }) => {
   const [formInput, setFormInputs] = useState({});
   const [experience, setExperience] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [schemeOptions, setSchemeOptions] = useState("");
-  const [bookingType, setBookingType] = useState("");
-  const [trainingVenue, setTrainingVenue] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("Kenya");
+  const [selectedStatus, setSelectedStatus] = useState("Not Disabled");
+  const [schemeOptions, setSchemeOptions] = useState("A I C KIJABE PRINTING");
+  const [bookingType, setBookingType] = useState("First Time");
+  const [trainingVenue, setTrainingVenue] = useState("INHOUSE");
   const [courseDate, setCourseDate] = useState(today);
-  const [paymentMode, setPaymentMode] = useState("");
+  const [paymentMode, setPaymentMode] = useState("Cheque");
   const [editInput, setEditInputs] = useState(singleBooking);
 
   const handleChange = (event) => {
@@ -229,6 +229,7 @@ const New = ({
                       dataSource={countriesOptions}
                       searchEnabled={true}
                       name="originCountry"
+                      value={selectedCountry}
                       onValueChanged={(e) => setSelectedCountry(e.value)}
                       placeholder="Select a Country"
                       height={28}
@@ -275,6 +276,7 @@ const New = ({
                       name="disabilityStatus"
                       placeholder="Select Status"
                       height={28}
+                      value={selectedStatus}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
                       className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
@@ -292,6 +294,7 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={28}
+                      value={schemeOptions}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
@@ -313,6 +316,7 @@ const New = ({
                       name="retirementSchemeName"
                       placeholder="Select a Scheme Name"
                       height={28}
+                      value={bookingType}
                       onValueChanged={(e) => setBookingType(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
@@ -345,6 +349,7 @@ const New = ({
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={28}
+                      value={trainingVenue}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
@@ -380,6 +385,7 @@ const New = ({
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
                       height={28}
+                      value={paymentMode}
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
