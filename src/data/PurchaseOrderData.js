@@ -11,14 +11,14 @@ export const formfields = {
 };
 
 export const items = [
-    { name : "Blue Band", amount : 600 },
-    { name : "Indomie", amount : 50 },
-    { name : "Biscuits", amount : 40 },
-    { name : "Rice 1KG", amount : 260 },
-    { name : "Mumias Sugar 1KG", amount : 250 },
-    { name : "Cake", amount : 600 },
-    { name : "Drinking Chocolate", amount : 250 },
-    { name : "Minute Maid", amount : 200 }
+    { key : 1, name : "Blue Band", amount : 600 },
+    { key : 2, name : "Indomie", amount : 50 },
+    { key : 3, name : "Biscuits", amount : 40 },
+    { key : 4, name : "Rice 1KG", amount : 260 },
+    { key : 5, name : "Mumias Sugar 1KG", amount : 250 },
+    { key : 6, name : "Cake", amount : 600 },
+    { key : 7, name : "Drinking Chocolate", amount : 250 },
+    { key : 8, name : "Minute Maid", amount : 200 }
 ]
 
 // Describes the format for DevExtreme to create a summary of the table
