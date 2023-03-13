@@ -3,6 +3,10 @@ import '../../assets/P_order.css';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import { centerOptions } from '../../data/PurchaseOrderData'
+import SelectBox from 'devextreme-react/select-box';
+import TextBox from 'devextreme-react/text-box';
+import DateBox from 'devextreme-react/date-box';
+import TextArea from 'devextreme-react/text-area';
 
 // Getting date today
 
@@ -17,9 +21,9 @@ const dateString = `${year}-${month}-${day}`;
 // Form Component
 
 export const Form = () => {
-    const [costCenter, setCostCenter] = useState('');
-    const [supplier, setSupplier] = useState('');
-    const [shipsTo, setShipsTo] = useState('');
+    const [costCenter, setCostCenter] = useState(1);
+    const [supplier, setSupplier] = useState(1);
+    const [shipsTo, setShipsTo] = useState(1);
     const [orderDate, setOrderDate] = useState(dateString);
     const [firstDeliveryDate, setfirstDeliveryDate] = useState(dateString);
     const [narration, setNarration] = useState('');
@@ -52,7 +56,9 @@ export const Form = () => {
   
       const handleCostCenter = (e) => {
         setCostCenter(e.value);
+
       }
+      
       const handleSupplier = (e) => {
         setSupplier(e.value);
       }
@@ -69,54 +75,42 @@ export const Form = () => {
           <div className='po-left'>
             <div className='select-control'>
               <label className='label-control'>Cost Center:</label>
-              <select name="Center" className="select-control-input" value={costCenter} onChange={handleCostCenter} >
-                {centerOptions.map(center => (
-                  <option className="select-options" key={center.value} value={costCenter}>{center.text}</option>
-                ))}
-              </select>
+              <SelectBox items={centerOptions} searchEnabled={true} valueExpr="value" displayExpr="text" width="68%" height="4.5vh" value={costCenter} onValueChanged={handleCostCenter}/>
             </div>
             <div className='select-control'>
               <label className='label-control'>Ships to:</label>
-              <select name="Center" className="select-control-input" value={shipsTo} onChange={handleShipsTo} >
-                {centerOptions.map(center => (
-                  <option key={center.value} value={center.value}>{center.text}</option>
-                ))}
-              </select>
+              <SelectBox items={centerOptions} valueExpr="value" displayExpr="text" width="68%" height="4.5vh" value={shipsTo} onValueChanged={handleShipsTo}/>
             </div>
             <div className='select-control'>
               <label className='label-control'>Order Amount:</label>
-              <input type='text' className="control-input"/>
+              <TextBox width="68%" height="4vh"/>
             </div>
             <div className='select-control'>
               <label className='label-control'>First Delivery Date:</label>
-              <input type='date' className="control-input" value={firstDeliveryDate} onChange={handleFirstdDeliveryDate} />
+              <DateBox defaultValue={dateString} width="68%" height="4vh" value={firstDeliveryDate} onValueChanged={handleFirstdDeliveryDate} />
             </div>
           </div>
           <div className='po-right'>
             <div className='select-control'>
               <label className='label-control'>Supplier:</label>
-              <select className="select-control-input" value={supplier} onChange={handleSupplier} >
-                {centerOptions.map(center => (
-                  <option key={center.value} value={center.value}>{center.text}</option>
-                ))}
-              </select>
+              <SelectBox items={centerOptions} valueExpr="value" displayExpr="text" width="68%" height="4.5vh" value={supplier} onValueChanged={handleSupplier}/>
             </div>
             <div className='select-control'>
               <label className='label-control'>Order Date:</label>
-              <input type='date' className="control-input" value={orderDate} onChange={handleOrderDate} />
+              <DateBox defaultValue={dateString} width="68%" height="4vh" value={orderDate} onValueChanged={handleOrderDate} />
             </div>
             <div className='select-control'>
               <label className='label-control'>Delivery Period (Days):</label>
-              <input type='text' className="control-input" value={deliveryPeriod} onChange={handleDeliveryPeriod} />
+              <TextBox width="79%" height="4vh" value={deliveryPeriod} onValueChanged={handleDeliveryPeriod} />
             </div>
             <div className='select-control'>
               <label className='label-control'>Vehicle/Driver Details:</label>
-              <input type='text' className="control-input" value={driverDetails} onChange={handleDriverDetails} />
+              <TextBox width="79%" height="4vh" value={driverDetails} onValueChanged={handleDriverDetails} />
             </div>
           </div>
           <div className='select-control'>
             <label className='label-control'>Narration:</label>
-            <textarea rows="10" cols="50" style={{resize: 'none', marginLeft: '3.2rem'}} type='text' className="select-control-input narration-input" value={narration} onChange={handleNarration} />
+            <TextArea type='text' width="40vw" height="9vh" placeholder="Type narration here" style={{ marginLeft: "3.3rem"}}className="select-control-input" value={narration} onValueChanged={handleNarration} />
           </div>
         </div>
     )

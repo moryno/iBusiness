@@ -89,7 +89,7 @@ export const InputField = ({ count, data, message }) => {
           setQuantity();
           selectboxRef.current.instance.focus();
 
-      } else if( itemtoupdate.itemNumber === selectedOption ) {
+      } else if ( itemtoupdate.itemNumber === selectedOption ) {
         let extendedCost = item.amount * (quantity + itemtoupdate.quantity);
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
@@ -171,6 +171,7 @@ export const InputField = ({ count, data, message }) => {
           placeholder="Quantity"
           showSpinButtons={true}
           width="150px"
+          min={0}
           ref={numberBoxRef}
           onKeyDown={handleEnterPressQuantity}
           height="35px" />

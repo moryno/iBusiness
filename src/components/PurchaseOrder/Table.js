@@ -7,6 +7,7 @@ import { items, summary, columns } from '../../data/PurchaseOrderData'
 import dataitem from '../../utils/Order';
 import { IoClose } from "react-icons/io5";
 import { getDataGridRef } from "../../helpers/datagridFunctions";
+import { BiX } from "react-icons/bi";
 
 // Table component
 
@@ -35,21 +36,24 @@ export const Table = ({ data, count, message }) => {
     }
   
     const handleRowInserted = (rowIndex) => {
-      if ( rowIndex.data.quantity === "" || isNaN(rowIndex.data.quantity)){
+      if ( rowIndex.data.quantity === "" || isNaN(rowIndex.data.quantity) || rowIndex.data.item === ""){
         data.store().remove(rowIndex.key);
         data.reload();
         return;
       }
-  
-      let unitCost = 200.56;
-      let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
-      let discountAmount = extendedCost * 0.05;
-      let itemtoadd = new dataitem(
-          count.current,
-          rowIndex.data.item,
-          parseInt(rowIndex.data.quantity),
+
+      const item = items.find((x) => x.name === rowIndex.data.item);
+      const itemtoupdate = data.store()._array.find((x) => x.item === rowIndex.data.item);
+
+      if ( typeof itemtoupdate === "undefined" ) {
+        let extendedCost = item.amount * rowIndex.data.quantity;
+        let discountAmount = extendedCost * 0.05;
+        let itemtoadd = new dataitem(
+          item.key,
+          item.name,
+          rowIndex.data.quantity,
           extendedCost * 0.25,
-          unitCost,
+          item.amount,
           extendedCost,
           "VAT",
           "16%",
@@ -60,12 +64,41 @@ export const Table = ({ data, count, message }) => {
           discountAmount,
           extendedCost - discountAmount
           );
-        data.store().insert(itemtoadd.data());
-        data.store().remove(rowIndex.key);
-        data.reload();
-        count.current++;
-        message.current = `${rowIndex.data.item} has been added successfully.`;
-        gridRef.current.instance.focus();
+          data.store().remove(rowIndex.key);
+          data.store().insert(itemtoadd.data());
+          data.reload();
+          count.current++;
+          message.current = `${item.name} has been added successfully.`;
+          gridRef.current.instance.focus();
+
+      } else if ( itemtoupdate.item === rowIndex.data.item ) {
+        let extendedCost = item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
+        let discountAmount = extendedCost * 0.05;
+        let itemtoadd = new dataitem(
+          item.key,
+          item.name,
+          rowIndex.data.quantity + itemtoupdate.quantity,
+          extendedCost * 0.25,
+          item.amount,
+          extendedCost,
+          "VAT",
+          "16%",
+          extendedCost * 0.16,
+          "Merchant",
+          extendedCost * 0.1,
+          "5%",
+          discountAmount,
+          extendedCost - discountAmount
+          );
+
+          data.store().remove(itemtoupdate);
+          data.store().remove(rowIndex.key);
+          data.store().insert(itemtoadd.data());
+          data.reload();
+          count.current++;
+          message.current = `${item.name} has been added successfully.`;
+          gridRef.current.instance.focus();
+      }
         
     } 
     // Recalculates values after row info is updated
@@ -116,10 +149,8 @@ export const Table = ({ data, count, message }) => {
       return (
         <button 
         onClick={(e) => onDeleteClick(cellInfo)}
-        className="delete-btn  h-auto items-center cursor-pointer"
+        className="delete-btn h-auto items-center cursor-pointer"
         >
-        <IoClose style={{ display:'inline', fontSize:'0.9rem', paddingBottom:'.2rem' }}/>
-        &nbsp;
         Remove
       </button>
       );
@@ -167,7 +198,7 @@ export const Table = ({ data, count, message }) => {
               dataType="string"
               editorType="dxSelectBox"
               allowHeaderFiltering={false}
-              editorOptions={{ items: items.map(item => (item.name)), searchEnabled: true }}
+              editorOptions={{ items: items, displayExpr:"name", valueExpr:"name", searchEnabled: true }}
               headerCellRender={renderHeader}
           />
           <Column
