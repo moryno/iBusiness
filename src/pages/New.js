@@ -21,6 +21,8 @@ const paymentModeOptions = services.getPaymentMode();
 
 const diabilityStatusOptions = services.getDisabilityStatus();
 
+const today = new Date().toISOString().slice(0, 10);
+
 const New = ({
   inputs,
   handleClose,
@@ -39,7 +41,7 @@ const New = ({
   const [schemeOptions, setSchemeOptions] = useState("");
   const [bookingType, setBookingType] = useState("");
   const [trainingVenue, setTrainingVenue] = useState("");
-  const [courseDate, setCourseDate] = useState(null);
+  const [courseDate, setCourseDate] = useState(today);
   const [paymentMode, setPaymentMode] = useState("");
   const [editInput, setEditInputs] = useState(singleBooking);
 
@@ -52,8 +54,6 @@ const New = ({
     setEditInputs({ ...editInput, [name]: value });
   };
 
-  
- 
   const save = async () => {
     const formData = {
       user: {
@@ -79,7 +79,7 @@ const New = ({
         externalSchemeAdmin: formInput.externalSchemeAdmin,
       },
     };
-   
+
     if (statusMode === "CreateBooking") {
       try {
         const { data } = await request.post("/Booking/Create", formData);
@@ -134,7 +134,7 @@ const New = ({
         </article>
         <article className="h-full px-2 md:border md:border-gray-300 overflow-y-auto">
           <div>
-            <form  className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
+            <form className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
               <section className="flex flex-col md:flex-row w-full gap-2">
                 <article className="w-full flex flex-wrap box-border justify-between  gap-2">
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -215,7 +215,7 @@ const New = ({
                       height={28}
                       id="experience"
                       name="experience"
-                      onValueChanged={(e)=> setExperience(e.value)}
+                      onValueChanged={(e) => setExperience(e.value)}
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
@@ -229,7 +229,7 @@ const New = ({
                       dataSource={countriesOptions}
                       searchEnabled={true}
                       name="originCountry"
-                      onValueChanged={(e)=> setSelectedCountry(e.value)}
+                      onValueChanged={(e) => setSelectedCountry(e.value)}
                       placeholder="Select a Country"
                       height={28}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
@@ -275,7 +275,7 @@ const New = ({
                       name="disabilityStatus"
                       placeholder="Select Status"
                       height={28}
-                      onValueChanged={(e)=> setSelectedStatus(e.value)}
+                      onValueChanged={(e) => setSelectedStatus(e.value)}
                       className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
@@ -292,7 +292,7 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={28}
-                      onValueChanged={(e)=> setSchemeOptions(e.value)}
+                      onValueChanged={(e) => setSchemeOptions(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
@@ -313,7 +313,7 @@ const New = ({
                       name="retirementSchemeName"
                       placeholder="Select a Scheme Name"
                       height={28}
-                      onValueChanged={(e)=> setBookingType(e.value)}
+                      onValueChanged={(e) => setBookingType(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -345,7 +345,7 @@ const New = ({
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={28}
-                      onValueChanged={(e)=> setTrainingVenue(e.value)}
+                      onValueChanged={(e) => setTrainingVenue(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -362,7 +362,8 @@ const New = ({
                       id="courseDate"
                       name="courseDate"
                       height={28}
-                      onValueChanged={(e)=> setCourseDate(e.value)}
+                      value={courseDate}
+                      onValueChanged={(e) => setCourseDate(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -379,7 +380,7 @@ const New = ({
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
                       height={28}
-                      onValueChanged={(e)=> setPaymentMode(e.value)}
+                      onValueChanged={(e) => setPaymentMode(e.value)}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>

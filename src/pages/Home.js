@@ -152,18 +152,17 @@ const Home = () => {
       ) : (
         statusMode === "EditBooking" && (
           <Portal isOpen={isOpen}>
-           
-             <New
-            bookings={data}
-            inputs={bookingFormInputs}
-            singleBooking={singleBooking}
-            setBookings={setData}
-            handleClose={handleClose}
-            title={"Update A Booking Item"}
-            heading={"Booking Item Management"}
-            statusBarText={"Updating Booking Item"}
-            statusMode={statusMode}
-          />
+            <New
+              bookings={data}
+              inputs={bookingFormInputs}
+              singleBooking={singleBooking}
+              setBookings={setData}
+              handleClose={handleClose}
+              title={"Update A Booking Item"}
+              heading={"Booking Item Management"}
+              statusBarText={"Updating Booking Item"}
+              statusMode={statusMode}
+            />
           </Portal>
         )
       )}
