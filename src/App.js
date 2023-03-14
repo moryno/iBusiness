@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Home from "./pages/Home";
 
@@ -10,10 +11,24 @@ import { PurchaseOrder } from "./pages/PurchaseOrder";
 import Layout from "./components/Layout";
 
 function App() {
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return (window.location.href =
+        "https://i-business-ui-git-main-moryno.vercel.app/");
+    }
+
+    return children;
+  };
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: "/",
