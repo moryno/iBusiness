@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import '../../assets/P_order.css';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -30,15 +30,15 @@ export const InputField = ({ count, data, setMessage }) => {
         return null;
   
       } else if ( quantity === "" ) {
-        //setMessage('Please enter the number of items.');
+        setMessage('Please enter the number of items.');
         return 0;
   
       } else if ( isNaN(quantity) ) {
-        //setMessage('Quantity has to be a number.');
+        setMessage('Quantity has to be a number.');
         return 0;
   
       } else if ( quantity === 0 ) {
-        //setMessage('Quantity cannot be none.');
+        setMessage('Quantity cannot be none.');
         return 0;
       }
   

@@ -21,15 +21,15 @@ const dateString = `${year}-${month}-${day}`;
 // Form Component
 
 const Form = ({ setSubmitData }) => {
-    const [costCenter, setCostCenter] = useState("1");
-    const [supplier, setSupplier] = useState("1");
-    const [shipsTo, setShipsTo] = useState("1");
+    const [costCenter, setCostCenter] = useState();
+    const [supplier, setSupplier] = useState();
+    const [shipsTo, setShipsTo] = useState();
     const [orderDate, setOrderDate] = useState(dateString);
-    const [orderAmount, setOrderAmount] = useState("");    
+    const [orderAmount, setOrderAmount] = useState();    
     const [firstDeliveryDate, setfirstDeliveryDate] = useState(dateString);
-    const [narration, setNarration] = useState('');
-    const [deliveryPeriod, setDeliveryPeriod] = useState("");
-    const [driverDetails, setdriverDetails] = useState('');
+    const [narration, setNarration] = useState();
+    const [deliveryPeriod, setDeliveryPeriod] = useState();
+    const [driverDetails, setdriverDetails] = useState();
 
     useEffect(
       () => {
@@ -47,7 +47,7 @@ const Form = ({ setSubmitData }) => {
           }
           ]
         )
-      }, [costCenter, supplier, shipsTo, orderDate, orderAmount, firstDeliveryDate, narration, deliveryPeriod, driverDetails]
+      }, [costCenter, supplier, shipsTo, orderDate, orderAmount, firstDeliveryDate, narration, deliveryPeriod, driverDetails, setSubmitData]
     )
 
   
