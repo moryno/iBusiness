@@ -14,15 +14,16 @@ function App() {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const ProtectedRoute = ({ children }) => {
-    // if (!currentUser) {
-    //   return (window.location.href =
-    //     "https://i-business-ui-git-main-moryno.vercel.app/");
-    // }
+    if (!currentUser) {
+      console.log(currentUser);
+      return (window.location.href =
+        "https://i-business-ui-git-main-moryno.vercel.app/");
+    }
 
     return children;
   };
 
-  console.log(useSelector((state) => state.user));
+  console.log(currentUser);
   const router = createBrowserRouter([
     {
       path: "/",
