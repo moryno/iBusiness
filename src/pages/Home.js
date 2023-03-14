@@ -14,7 +14,7 @@ import { bookingFormInputs } from "../helpers/formSource";
 import { setupLogin } from "../helpers/auth";
 import { loginSuccess } from "../redux/userSlice";
 
-const Home = ({ setUserToken }) => {
+const Home = () => {
   const [data, setData] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [input, setInput] = useState(null);
@@ -25,7 +25,6 @@ const Home = ({ setUserToken }) => {
   const { hash } = useLocation();
   const dispatch = useDispatch();
   const token = hash.split("=")[1];
-  setUserToken(token);
 
   const today = new Date().toISOString().slice(0, 10);
 

@@ -12,24 +12,13 @@ import { PurchaseOrder } from "./pages/PurchaseOrder";
 import Layout from "./components/Layout";
 
 function App() {
-  const [userToken, setUserToken] = useState("");
-
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const ProtectedRoute = ({ children }) => {
-    if (userToken) {
-      if (!currentUser) {
-        console.log(currentUser);
-        return (window.location.href =
-          "https://i-business-ui-git-main-moryno.vercel.app/");
-      }
-      return children;
-    } else {
-      return (window.location.href =
-        "https://i-business-ui-git-main-moryno.vercel.app/");
-    }
+    return children;
   };
 
+  console.log(currentUser);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -41,7 +30,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home setUserToken={setUserToken} />,
+          element: <Home />,
         },
         {
           path: "/purchase-order",
