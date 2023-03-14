@@ -47,16 +47,14 @@ const Home = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await request.get("/User", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await request.get("/User");
 
       dispatch(loginSuccess(data));
     };
 
     if (token) {
-      getUser();
       setupLogin(token);
+      getUser();
     }
   }, [token, dispatch]);
 
