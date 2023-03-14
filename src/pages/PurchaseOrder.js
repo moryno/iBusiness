@@ -13,8 +13,8 @@ import { useNavigate } from 'react-router-dom';
 
 // Main Function
 export const PurchaseOrder = () => {
-  // eslint-disable-next-line
   const [currentmessage, setMessage] = useState("Hey what's good?");
+  // eslint-disable-next-line
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
   const count = useRef(1);
