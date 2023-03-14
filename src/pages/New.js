@@ -107,7 +107,8 @@ const New = ({
     if (statusMode === "CreateBooking") {
       try {
         const { data } = await request.post("/Booking/Create", formData);
-        setBookings([data?.Booking, ...bookings]);
+        console.log(data);
+        // setBookings([data?.Booking, ...bookings]);
         handleClose();
       } catch (error) {
         console.log(error);

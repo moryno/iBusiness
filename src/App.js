@@ -39,16 +39,6 @@ function App() {
         },
       ],
     },
-
-    {
-      path: "/login",
-      element: <Login />,
-    },
-
-    {
-      path: "/register",
-      element: <Register />,
-    },
   ]);
   return <RouterProvider router={router} />;
 }
