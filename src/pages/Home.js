@@ -25,6 +25,7 @@ const Home = () => {
   const { hash } = useLocation();
   const dispatch = useDispatch();
   const token = hash.split("=")[1];
+  setupLogin(token);
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -51,7 +52,6 @@ const Home = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setupLogin(token);
       dispatch(loginSuccess(data));
     };
 
