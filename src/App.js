@@ -21,6 +21,8 @@ function App() {
 
     return children;
   };
+
+  console.log(useSelector((state) => state.user));
   const router = createBrowserRouter([
     {
       path: "/",
