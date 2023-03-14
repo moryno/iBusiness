@@ -11,7 +11,7 @@ import { PurchaseOrder } from "./pages/PurchaseOrder";
 import Layout from "./components/Layout";
 
 function App() {
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const currentUser = localStorage.getItem("user");
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
