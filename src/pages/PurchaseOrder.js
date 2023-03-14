@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Main Function
 export const PurchaseOrder = () => {
-  const [currentmessage, setMessage] = useState("Hey what's good?");
+  const [currentmessage, setMessage] = useState();
   // eslint-disable-next-line
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
