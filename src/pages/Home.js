@@ -1,7 +1,9 @@
-import DataTable from "../components/DataTable";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+import DataTable from "../components/DataTable";
 import Statusbar from "../components/Statusbar";
-import CreateForm from "../components/CreateForm";
 import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import { homeMenuSource } from "../data/menu";
 import MobileMenus from "../components/MobileMenus";
@@ -9,6 +11,8 @@ import Portal from "../components/Portal";
 import request from "../helpers/requestMethod";
 import New from "./New";
 import { bookingFormInputs } from "../helpers/formSource";
+import { setupLogin } from "../helpers/auth";
+import { loginSuccess } from "../redux/userSlice";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -17,6 +21,10 @@ const Home = () => {
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+
+  const { hash } = useLocation();
+  const dispatch = useDispatch();
+  const token = hash.split("=")[1];
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -36,6 +44,16 @@ const Home = () => {
     setOpen((isOpen) => !isOpen);
     setSingleBooking(selectedRow.data);
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await request.get("/User");
+      setupLogin(data?.token);
+      dispatch(loginSuccess(data));
+    };
+
+    if (token) getUser();
+  }, [token, dispatch]);
 
   useEffect(() => {
     try {
