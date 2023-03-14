@@ -25,7 +25,7 @@ const Home = () => {
   const { hash } = useLocation();
   const dispatch = useDispatch();
   const token = hash.split("=")[1];
-
+  console.log(token);
   const today = new Date().toISOString().slice(0, 10);
 
   const handleChange = (event) => {
@@ -47,7 +47,9 @@ const Home = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await request.get("/User");
+      const { data } = await request.get("/User", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       console.log(data);
       setupLogin(data?.token);
       dispatch(loginSuccess(data));
