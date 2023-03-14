@@ -34,15 +34,31 @@ const New = ({
   statusMode,
 }) => {
   const [formInput, setFormInputs] = useState({});
-  const [experience, setExperience] = useState(0);
-  const [selectedCountry, setSelectedCountry] = useState("Kenya");
-  const [selectedStatus, setSelectedStatus] = useState("Not Disabled");
-  const [schemeOptions, setSchemeOptions] = useState("A I C KIJABE PRINTING");
-  const [bookingType, setBookingType] = useState("First Time");
-  const [trainingVenue, setTrainingVenue] = useState("INHOUSE");
-  const [courseDate, setCourseDate] = useState(today);
-  const [paymentMode, setPaymentMode] = useState("Cheque");
   const [editInput, setEditInputs] = useState(singleBooking);
+  const [experience, setExperience] = useState(
+    statusMode === "EditBooking" ? editInput.experience : 0
+  );
+  const [selectedCountry, setSelectedCountry] = useState(
+    statusMode === "EditBooking" ? editInput.originCountry : "Kenya"
+  );
+  const [selectedStatus, setSelectedStatus] = useState(
+    statusMode === "EditBooking" ? editInput.disabilityStatus : "Not Disabled"
+  );
+  const [schemeOptions, setSchemeOptions] = useState(
+    statusMode === "EditBooking"
+      ? editInput.retirementSchemeName
+      : "A I C KIJABE PRINTING"
+  );
+  const [bookingType, setBookingType] = useState(
+    statusMode === "EditBooking" ? editInput.bookingType : "First Time"
+  );
+  const [trainingVenue, setTrainingVenue] = useState(
+    statusMode === "EditBooking" ? editInput.trainingVenue : "INHOUSE"
+  );
+  const [courseDate, setCourseDate] = useState(
+    statusMode === "EditBooking" ? editInput.courseDate : today
+  );
+  const [paymentMode, setPaymentMode] = useState("Cheque");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -266,11 +282,7 @@ const New = ({
                       id="experience"
                       name="experience"
                       onValueChanged={(e) => setExperience(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.experience
-                          : experience
-                      }
+                      value={experience}
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
@@ -285,11 +297,7 @@ const New = ({
                       searchEnabled={true}
                       name="originCountry"
                       onValueChanged={(e) => setSelectedCountry(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.originCountry
-                          : selectedCountry
-                      }
+                      value={selectedCountry}
                       placeholder="Select a Country"
                       height={28}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
@@ -346,11 +354,7 @@ const New = ({
                       placeholder="Select Status"
                       height={28}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.disabilityStatus
-                          : selectedStatus
-                      }
+                      value={selectedStatus}
                       className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
@@ -368,11 +372,7 @@ const New = ({
                       placeholder="Select an option"
                       height={28}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.retirementSchemeName
-                          : schemeOptions
-                      }
+                      value={schemeOptions}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
@@ -394,11 +394,7 @@ const New = ({
                       placeholder="Select a Scheme Name"
                       height={28}
                       onValueChanged={(e) => setBookingType(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.bookingType
-                          : bookingType
-                      }
+                      value={bookingType}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -436,11 +432,7 @@ const New = ({
                       placeholder="Select a Training Venue"
                       height={28}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.trainingVenue
-                          : trainingVenue
-                      }
+                      value={trainingVenue}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -458,11 +450,7 @@ const New = ({
                       name="courseDate"
                       height={28}
                       onValueChanged={(e) => setCourseDate(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.courseDate
-                          : courseDate
-                      }
+                      value={courseDate}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
