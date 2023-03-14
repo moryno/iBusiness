@@ -18,14 +18,14 @@ function App() {
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return (window.location.href =
-        "https://i-business-ui-git-main-moryno.vercel.app/");
+      console.log(currentUser);
+      // return (window.location.href =
+      //   "https://i-business-ui-git-main-moryno.vercel.app/");
     }
 
     return children;
   };
-
-  console.log(useSelector((state) => state.user));
+  console.log(currentUser);
   const router = createBrowserRouter([
     {
       path: "/",
