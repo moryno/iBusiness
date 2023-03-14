@@ -12,13 +12,10 @@ import { PurchaseOrder } from "./pages/PurchaseOrder";
 import Layout from "./components/Layout";
 
 function App() {
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
   const ProtectedRoute = ({ children }) => {
     return children;
   };
 
-  console.log(currentUser);
   const router = createBrowserRouter([
     {
       path: "/",
