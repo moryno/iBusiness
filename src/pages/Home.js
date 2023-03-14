@@ -51,7 +51,7 @@ const Home = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setupLogin(data?.token);
+      setupLogin(token);
       dispatch(loginSuccess(data));
     };
 
