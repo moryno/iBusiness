@@ -17,28 +17,29 @@ import { loginSuccess } from "./redux/userSlice";
 import request from "./helpers/requestMethod";
 
 function App() {
-  const { hash } = useLocation();
+  const location = useLocation();
   const dispatch = useDispatch();
-  const token = hash.split("=")[1];
+  // const token = hash.split("=")[1];
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
-  console.log(useSelector((state) => state.user));
+  console.log(location);
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await request.get("/User");
-      console.log(data);
-      setupLogin(data?.token);
-      dispatch(loginSuccess(data));
-    };
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const { data } = await request.get("/User");
+  //     console.log(data);
+  //     setupLogin(data?.token);
+  //     dispatch(loginSuccess(data));
+  //   };
 
-    if (token) getUser();
-  }, [token, dispatch]);
+  //   if (token) getUser();
+  // }, [token, dispatch]);
 
   const ProtectedRoute = ({ children }) => {
-    // if (!currentUser) {
-    //   return (window.location.href =
-    //     "https://i-business-ui-git-main-moryno.vercel.app/");
-    // }
+    if (!currentUser) {
+      // return (window.location.href =
+      //   "https://i-business-ui-git-main-moryno.vercel.app/");
+      console.log(currentUser);
+    }
 
     return children;
   };
