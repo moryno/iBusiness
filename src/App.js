@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -11,7 +12,9 @@ import { PurchaseOrder } from "./pages/PurchaseOrder";
 import Layout from "./components/Layout";
 
 function App() {
-  const currentUser = localStorage.getItem("user");
+  const [currentUser, setCurrentUSer] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
