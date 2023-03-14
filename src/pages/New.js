@@ -107,8 +107,8 @@ const New = ({
     if (statusMode === "CreateBooking") {
       try {
         const { data } = await request.post("/Booking/Create", formData);
-        console.log(data);
-        // setBookings([data?.Booking, ...bookings]);
+
+        setBookings([data?.Booking?.booking, ...bookings]);
         handleClose();
       } catch (error) {
         console.log(error);
@@ -117,8 +117,8 @@ const New = ({
       try {
         const { data } = await request.put("/Booking/UpdateBooking", editData);
         const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === data?.Booking.bookingId) {
-            return data?.Booking;
+          if (booking.bookingId === data?.Booking.booking.bookingId) {
+            return data?.Booking.booking;
           }
           return booking;
         });
