@@ -24,7 +24,6 @@ const diabilityStatusOptions = services.getDisabilityStatus();
 const today = new Date().toISOString().slice(0, 10);
 
 const New = ({
-  inputs,
   handleClose,
   bookings,
   singleBooking,
@@ -72,11 +71,36 @@ const New = ({
         retirementSchemeName: schemeOptions,
         schemePosition: formInput.schemePosition,
         originCountry: selectedCountry,
-        trainingVenue: trainingVenue,
+        trainingVenue,
         courseDate,
         paymentMode,
         additionalRequirements: formInput.additionalRequirements,
         externalSchemeAdmin: formInput.externalSchemeAdmin,
+      },
+    };
+
+    const editData = {
+      user: {
+        fullName: editInput.fullName,
+        idNumber: editInput.idNumber,
+        email: editInput.email,
+        telephone: editInput.telephone,
+        physicalAddress: editInput.physicalAddress,
+        employerName: editInput.employerName,
+        experience,
+        position: editInput.position,
+        disabilityStatus: selectedStatus,
+      },
+      booking: {
+        bookingType,
+        retirementSchemeName: schemeOptions,
+        schemePosition: editInput.schemePosition,
+        originCountry: selectedCountry,
+        trainingVenue,
+        courseDate,
+        paymentMode,
+        additionalRequirements: editInput.additionalRequirements,
+        externalSchemeAdmin: editInput.externalSchemeAdmin,
       },
     };
 
@@ -90,7 +114,7 @@ const New = ({
       }
     } else {
       try {
-        const { data } = await request.put("/Booking/UpdateBooking", editInput);
+        const { data } = await request.put("/Booking/UpdateBooking", editData);
         const newBooking = bookings.map((booking) => {
           if (booking.bookingId === data?.Booking.bookingId) {
             return data?.Booking;
@@ -147,6 +171,11 @@ const New = ({
                       id="fullName"
                       name="fullName"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.fullName
+                          : formInput.fullName
+                      }
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
@@ -159,6 +188,11 @@ const New = ({
                       id="idNumber"
                       name="idNumber"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.idNumber
+                          : formInput.idNumber
+                      }
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -171,6 +205,11 @@ const New = ({
                       id="email"
                       name="email"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.email
+                          : formInput.email
+                      }
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
@@ -186,6 +225,11 @@ const New = ({
                       id="telephone"
                       name="telephone"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.telephone
+                          : formInput.telephone
+                      }
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -201,6 +245,11 @@ const New = ({
                       id="employerName"
                       name="employerName"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.employerName
+                          : formInput.employerName
+                      }
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -216,6 +265,11 @@ const New = ({
                       id="experience"
                       name="experience"
                       onValueChanged={(e) => setExperience(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.experience
+                          : experience
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
@@ -229,8 +283,12 @@ const New = ({
                       dataSource={countriesOptions}
                       searchEnabled={true}
                       name="originCountry"
-                      value={selectedCountry}
                       onValueChanged={(e) => setSelectedCountry(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.originCountry
+                          : selectedCountry
+                      }
                       placeholder="Select a Country"
                       height={28}
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
@@ -243,9 +301,14 @@ const New = ({
                     <input
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
-                      id="experience"
-                      name="experience"
+                      id="position"
+                      name="position"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.position
+                          : formInput.position
+                      }
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
@@ -261,6 +324,11 @@ const New = ({
                       id="physicalAddress"
                       name="physicalAddress"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.physicalAddress
+                          : formInput.physicalAddress
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
@@ -276,8 +344,12 @@ const New = ({
                       name="disabilityStatus"
                       placeholder="Select Status"
                       height={28}
-                      value={selectedStatus}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.disabilityStatus
+                          : selectedStatus
+                      }
                       className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
@@ -294,8 +366,12 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={28}
-                      value={schemeOptions}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.retirementSchemeName
+                          : schemeOptions
+                      }
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
@@ -313,11 +389,15 @@ const New = ({
                     <SelectBox
                       dataSource={bookingTypeOptions}
                       searchEnabled={true}
-                      name="retirementSchemeName"
+                      name="bookingType"
                       placeholder="Select a Scheme Name"
                       height={28}
-                      value={bookingType}
                       onValueChanged={(e) => setBookingType(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.bookingType
+                          : bookingType
+                      }
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -334,6 +414,11 @@ const New = ({
                       id="schemePosition"
                       name="schemePosition"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.schemePosition
+                          : formInput.schemePosition
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -349,8 +434,12 @@ const New = ({
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={28}
-                      value={trainingVenue}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.trainingVenue
+                          : trainingVenue
+                      }
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -367,8 +456,12 @@ const New = ({
                       id="courseDate"
                       name="courseDate"
                       height={28}
-                      value={courseDate}
                       onValueChanged={(e) => setCourseDate(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.courseDate
+                          : courseDate
+                      }
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -385,8 +478,12 @@ const New = ({
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
                       height={28}
-                      value={paymentMode}
                       onValueChanged={(e) => setPaymentMode(e.value)}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.paymentMode
+                          : paymentMode
+                      }
                       className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -404,6 +501,11 @@ const New = ({
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
                       onChange={handleChange}
+                      value={
+                        statusMode === "EditBooking"
+                          ? editInput.externalSchemeAdmin
+                          : formInput.externalSchemeAdmin
+                      }
                     />
                   </div>
                 </article>
@@ -421,6 +523,11 @@ const New = ({
                     id="additionalRequirements"
                     name="additionalRequirements"
                     onChange={handleChange}
+                    value={
+                      statusMode === "EditBooking"
+                        ? editInput.additionalRequirements
+                        : formInput.additionalRequirements
+                    }
                   ></textarea>
                 </div>
               </section>

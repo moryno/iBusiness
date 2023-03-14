@@ -160,7 +160,6 @@ const Home = () => {
         <Portal isOpen={isOpen}>
           <New
             bookings={data}
-            inputs={bookingFormInputs}
             singleBooking={singleBooking}
             setBookings={setData}
             handleClose={handleClose}
@@ -175,7 +174,6 @@ const Home = () => {
           <Portal isOpen={isOpen}>
             <New
               bookings={data}
-              inputs={bookingFormInputs}
               singleBooking={singleBooking}
               setBookings={setData}
               handleClose={handleClose}
