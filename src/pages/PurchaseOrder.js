@@ -8,16 +8,16 @@ import DataSource from 'devextreme/data/data_source';
 import Form from '../components/PurchaseOrder/Form'
 import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
+import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
 
 // Main Function
 export const PurchaseOrder = () => {
   // eslint-disable-next-line
+  const [currentmessage, setMessage] = useState("Hey what's good?");
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
-  const form = useRef();
   const count = useRef(1);
-  const message = useRef();
   const navigate = useNavigate();
   
 
@@ -60,9 +60,12 @@ export const PurchaseOrder = () => {
       <section className="mt-2">
         <div className="po-grid h-full mt-2">
           <div className="add-item-btns">
-            <InputField data={data} count={count} message={message} />
+          <div className="add-item">
+          <InputField data={data} count={count} setMessage={setMessage} />
+          <MessageDiv message={currentmessage} />  
+        </div>
           </div>
-          <Table data={data} count={count} message={message} />
+          <Table data={data} count={count} setMessage={setMessage} />
         </div>
       </section>
     </main>

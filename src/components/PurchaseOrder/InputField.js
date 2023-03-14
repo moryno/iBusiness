@@ -8,24 +8,9 @@ import SelectBox from 'devextreme-react/select-box';
 import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
 
-// Memoizing message div to avoid unnecessary rerender
-const MessageDiv = ({ message }) => {
-    const [ currentmessage, setMessage ] = useState("");
-      useEffect(() => {
-        setMessage(message);
-      }, [message]);
-  
-    return (
-      <p className="po-message">{currentmessage}</p>
-    )
-  }
-  
-// End
-
 // Input section component
 
-export const InputField = ({ count, data, message }) => {
-    const options = items.map(item => (item.name));
+export const InputField = ({ count, data, setMessage }) => {
     const [quantity, setQuantity] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const numberBoxRef = useRef(null);
@@ -41,7 +26,7 @@ export const InputField = ({ count, data, message }) => {
       // Data validation
   
       if ( selectedOption === null ){
-        message.current = 'Please select an item.';
+        setMessage('Please select an item.');
         return null;
   
       } else if ( quantity === "" ) {
@@ -84,7 +69,7 @@ export const InputField = ({ count, data, message }) => {
           data.store().insert(itemtoadd.data());
           data.reload();
           count.current++;
-          message.current = `${item.name} has been added successfully.`;
+          setMessage(`${item.name} has been added successfully.`);
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
@@ -113,7 +98,7 @@ export const InputField = ({ count, data, message }) => {
           data.store().insert(itemtoadd.data());
           data.reload();
           count.current++;
-          message.current = `${item.name} has been added successfully.`;
+          setMessage(`${item.name} has been added successfully.`);
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
@@ -127,6 +112,7 @@ export const InputField = ({ count, data, message }) => {
   
     const handleClearData = () => {
       data.store().clear();
+      setMessage("Table successfully cleared. You can add new items.")
       data.reload();
       //setMessage('Items cleared successfully. You can now add new items.')
     }
@@ -150,7 +136,6 @@ export const InputField = ({ count, data, message }) => {
   
     return (
       <>
-        <div className="add-item">
           <SelectBox
             dataSource={items}
             displayExpr="name"
@@ -194,8 +179,6 @@ export const InputField = ({ count, data, message }) => {
                 Clear
               </button>
           </div>
-          <MessageDiv message={message.current} />  
-        </div>
         </>
   
     )
@@ -204,3 +187,4 @@ export const InputField = ({ count, data, message }) => {
   }
   
   // End of component's code
+

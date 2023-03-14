@@ -9,7 +9,7 @@ import { getDataGridRef } from "../../helpers/datagridFunctions";
 
 // Table component
 
-export const Table = ({ data, count, message }) => {
+export const Table = ({ data, count, setMessage }) => {
     const gridRef = useRef(null);
     const [collapsed, setCollapsed] = useState(false);
     const addRef = useRef(null);
@@ -41,7 +41,8 @@ export const Table = ({ data, count, message }) => {
       }
 
       const item = items.find((x) => x.name === rowIndex.data.item);
-      const itemtoupdate = data.store()._array.find((x) => x.item === rowIndex.data.item);
+      const itemtoupdate = data.store()._array.find((x) => x.itemNumber === item.key);
+      console.log(itemtoupdate);
 
       if ( typeof itemtoupdate === "undefined" ) {
         let extendedCost = item.amount * rowIndex.data.quantity;
@@ -66,10 +67,11 @@ export const Table = ({ data, count, message }) => {
           data.store().insert(itemtoadd.data());
           data.reload();
           count.current++;
-          message.current = `${item.name} has been added successfully.`;
+          setMessage(`${item.name} has been added successfully.`);
           gridRef.current.instance.focus();
 
       } else if ( itemtoupdate.item === rowIndex.data.item ) {
+        console.log(rowIndex.data.quantity);
         let extendedCost = item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
@@ -94,8 +96,9 @@ export const Table = ({ data, count, message }) => {
           data.store().insert(itemtoadd.data());
           data.reload();
           count.current++;
-          message.current = `${item.name} has been added successfully.`;
+          setMessage(`${item.name} has been added successfully.`);
           gridRef.current.instance.focus();
+
       }
         
     } 
@@ -123,7 +126,7 @@ export const Table = ({ data, count, message }) => {
         data.store().remove(rowIndex.key);
         data.store().insert(itemtoadd.data());
         data.reload();
-        message.current = 'Item details updated.';
+        setMessage(`${rowIndex.data.item} has been updated.`);
         console.log(data.store()._array)
     }
   
