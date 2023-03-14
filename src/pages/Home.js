@@ -48,11 +48,14 @@ const Home = () => {
   useEffect(() => {
     const getUser = async () => {
       const { data } = await request.get("/User");
-      setupLogin(data?.token);
+
       dispatch(loginSuccess(data));
     };
 
-    if (token) getUser();
+    if (token) {
+      setupLogin(token);
+      getUser();
+    }
   }, [token, dispatch]);
 
   useEffect(() => {
@@ -157,7 +160,6 @@ const Home = () => {
         <Portal isOpen={isOpen}>
           <New
             bookings={data}
-            inputs={bookingFormInputs}
             singleBooking={singleBooking}
             setBookings={setData}
             handleClose={handleClose}
@@ -172,7 +174,6 @@ const Home = () => {
           <Portal isOpen={isOpen}>
             <New
               bookings={data}
-              inputs={bookingFormInputs}
               singleBooking={singleBooking}
               setBookings={setData}
               handleClose={handleClose}
