@@ -34,7 +34,7 @@ const New = ({
   statusMode,
 }) => {
   const [formInput, setFormInputs] = useState({});
-  const [experience, setExperience] = useState(null);
+  const [experience, setExperience] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState("Kenya");
   const [selectedStatus, setSelectedStatus] = useState("Not Disabled");
   const [schemeOptions, setSchemeOptions] = useState("A I C KIJABE PRINTING");
