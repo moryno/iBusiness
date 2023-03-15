@@ -75,7 +75,7 @@ function DataTable({ data, startEdit }) {
           height={"50vh"}
           width={"50vw"}
         />
-        <HeaderFilter visible={true} />
+
         <SearchPanel visible={true} />
       </DataGrid>
     </main>
