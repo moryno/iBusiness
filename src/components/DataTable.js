@@ -41,7 +41,6 @@ function DataTable({ data, startEdit }) {
         dataSource={data}
         showBorders={false}
         filterBuilder={filterBuilder}
-        defaultFilterValue={filterValue}
         hoverStateEnabled={true}
         keyExpr="bookingId"
         focusedRowEnabled={true}
@@ -90,21 +89,8 @@ const filterBuilderPopupPosition = {
   offset: { y: 10 },
 };
 
-const filterBuilder = {
-  customOperations: [
-    {
-      name: "bookingType",
-      caption: "Booking Type",
-      hasValue: false,
-    },
-  ],
-  allowHierarchicalFields: true,
-};
-
-const filterValue = [
-  ["bookingType", "=", "First Time"],
-  "and",
-  ["retirementSchemeName", "A I C KIJABE PRINTING"],
+const filterBuilder = [
+  ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
 ];
 
 export default DataTable;
