@@ -9,20 +9,6 @@ import NumberBox from "devextreme-react/number-box";
 import request from "../helpers/requestMethod";
 import services from "../helpers/formDataSource";
 
-const countriesOptions = services.getCountries();
-
-const trainingVenuesOptions = services.getCities();
-
-const bookingTypeOptions = services.getBookinType();
-
-const retirementSchemeOptions = services.getRetirementScheme();
-
-const paymentModeOptions = services.getPaymentMode();
-
-const diabilityStatusOptions = services.getDisabilityStatus();
-
-const today = new Date().toISOString().slice(0, 10);
-
 const New = ({
   handleClose,
   bookings,
@@ -548,5 +534,21 @@ const New = ({
     </main>
   );
 };
+
+// COntrols Options
+
+const countriesOptions = services.getCountries();
+
+const trainingVenuesOptions = services.getCities();
+
+const bookingTypeOptions = services.getBookinType();
+
+const retirementSchemeOptions = services.getRetirementScheme();
+
+const paymentModeOptions = services.getPaymentMode();
+
+const diabilityStatusOptions = services.getDisabilityStatus();
+
+const today = new Date().toISOString().slice(0, 10);
 
 export default New;

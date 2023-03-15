@@ -24,12 +24,24 @@
     scrollbar-width: none;  /* Firefox */
 }
 
+/* DataGrid Styling */
+#bookingGrid{
+  height: 70vh;
+  font-size: 0.875rem;
+}
+
 .dx-datagrid-headers {
     background-color: #489AEE !important;
     color:#fff !important;
     font-weight: 500 !important;
 }
 
+.dx-overlay-content .dx-popup-normal {
+  height: 20vh !important;
+  width: 20vw !important;
+}
+
+/* DX FOr Styling */
 .dx-form{
   
     padding: 10px!important;
@@ -78,6 +90,18 @@ background: linear-gradient(90deg, rgba(0,111,201,1) 0%, rgba(59,150,221,1) 84%,
     .dx-field-item{
       display: flex;
       flex-direction: column;
+    }
+    #bookingGrid{
+      height: 60vh;
+    
+    }
+   
+}
+  @media screen and (max-width:480px){
+   
+    #bookingGrid{
+      height: 70vh;
+    
     }
    
 }

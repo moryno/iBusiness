@@ -5,6 +5,9 @@ import DataGrid, {
   Pager,
   Paging,
   FilterRow,
+  HeaderFilter,
+  FilterPanel,
+  FilterBuilderPopup,
   SearchPanel,
   Editing,
   Toolbar,
@@ -33,9 +36,12 @@ function DataTable({ data, startEdit }) {
   return (
     <main>
       <DataGrid
-        className={"dx-card wide-card h-[500px] md:h-[400px] xl:h-[600px]"}
+        id="bookingGrid"
+        className={"dx-card wide-card"}
         dataSource={data}
         showBorders={false}
+        filterBuilder={filterBuilder}
+        defaultFilterValue={filterValue}
         hoverStateEnabled={true}
         keyExpr="bookingId"
         focusedRowEnabled={true}
@@ -64,9 +70,41 @@ function DataTable({ data, startEdit }) {
         <Paging defaultPageSize={10} />
         <Pager showPageSizeSelector={true} showInfo={true} />
         <FilterRow visible={true} />
+        <FilterPanel visible={true} />
+        <FilterBuilderPopup
+          position={filterBuilderPopupPosition}
+          height={"50vh"}
+          width={"50vw"}
+        />
+        <HeaderFilter visible={true} />
         <SearchPanel visible={true} />
       </DataGrid>
     </main>
   );
 }
+
+const filterBuilderPopupPosition = {
+  of: window,
+  at: "center",
+  my: "center",
+  offset: { y: 10 },
+};
+
+const filterBuilder = {
+  customOperations: [
+    {
+      name: "bookingType",
+      caption: "Booking Type",
+      hasValue: false,
+    },
+  ],
+  allowHierarchicalFields: true,
+};
+
+const filterValue = [
+  ["bookingType", "=", "First Time"],
+  "and",
+  ["retirementSchemeName", "A I C KIJABE PRINTING"],
+];
+
 export default DataTable;
