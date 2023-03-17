@@ -98,7 +98,11 @@ function DataTable({ data, startEdit }) {
         dataSource={options}
         target="#data-grid"
         visible={contextMenuVisible}
-        position={contextMenuPosition}
+        position={{
+          my: "top left",
+          at: "bottom left",
+          of: contextMenuPosition,
+        }}
         onItemClick={handleContextMenuHidden}
         onHidden={handleContextMenuHidden}
       />
