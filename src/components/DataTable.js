@@ -5,7 +5,6 @@ import DataGrid, {
   Pager,
   Paging,
   FilterRow,
-  HeaderFilter,
   FilterPanel,
   FilterBuilderPopup,
   SearchPanel,
@@ -17,11 +16,13 @@ import DataGrid, {
 } from "devextreme-react/data-grid";
 
 import { getDataGridRef } from "../helpers/datagridFunctions";
+import { ContextMenu } from "devextreme-react";
 
 function DataTable({ data, startEdit }) {
   const [collapsed, setCollapsed] = useState(false);
   const ref = useRef();
   const exportFormats = ["xlsx", "pdf"];
+  const [contextMenuTargetRow, setContextMenuTargetRow] = useState(null);
 
   function onContentReady(e) {
     getDataGridRef(ref.current);
@@ -32,6 +33,14 @@ function DataTable({ data, startEdit }) {
       });
     }
   }
+
+  const handleEdit = () => {
+    console.log("Edit has been clicked");
+  };
+
+  const handleDelete = () => {
+    console.log("Delete has been clicked");
+  };
 
   return (
     <main>
@@ -45,6 +54,7 @@ function DataTable({ data, startEdit }) {
         keyExpr="bookingId"
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
+        onRowClick={(e) => setContextMenuTargetRow(e.data)}
         allowColumnReordering={true}
         allowColumnResizing={true}
         columnResizingMode={"nextColumn"}
@@ -54,6 +64,16 @@ function DataTable({ data, startEdit }) {
         ref={ref}
         onContentReady={onContentReady}
       >
+        {contextMenuTargetRow && (
+          <ContextMenu
+            dataSource={[
+              { text: "Edit", onClick: handleEdit },
+              { text: "Delete", onClick: handleDelete },
+            ]}
+            target={".dx-datagrid-content"}
+            onItemClick={() => setContextMenuTargetRow(null)}
+          />
+        )}
         <Export
           enabled={true}
           formats={exportFormats}

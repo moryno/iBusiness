@@ -169,7 +169,7 @@ const New = ({
                       Full Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="fullName"
                       name="fullName"
@@ -186,7 +186,7 @@ const New = ({
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="idNumber"
                       name="idNumber"
@@ -203,7 +203,7 @@ const New = ({
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="email"
                       name="email"
@@ -223,7 +223,7 @@ const New = ({
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="telephone"
                       name="telephone"
@@ -243,7 +243,7 @@ const New = ({
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="employerName"
                       name="employerName"
@@ -392,7 +392,7 @@ const New = ({
                       Sch Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] h-7 border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="schemePosition"
                       name="schemePosition"
@@ -471,7 +471,7 @@ const New = ({
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
