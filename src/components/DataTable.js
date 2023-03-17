@@ -96,7 +96,7 @@ function DataTable({ data, startEdit }) {
       </DataGrid>
       <ContextMenu
         dataSource={options}
-        target="#data-grid"
+        target={() => document.querySelector(".dx-selection")[0]}
         visible={contextMenuVisible}
         position={{
           my: "top left",
