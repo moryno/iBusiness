@@ -11,6 +11,7 @@ import { Table } from '../components/PurchaseOrder/Table'
 import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
 import request from "../helpers/requestMethod";
+import Statusbar from "../components/Statusbar";
 
 // Main Function
 export const PurchaseOrder = () => {
@@ -93,6 +94,7 @@ export const PurchaseOrder = () => {
                 </div>
             </div>
         </div>
+        <Statusbar heading="Purchase Order Entry" company="iBusiness" />
     </main>
   );
 };
