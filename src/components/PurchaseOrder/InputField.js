@@ -7,10 +7,11 @@ import dataitem from '../../utils/Order';
 import SelectBox from 'devextreme-react/select-box';
 import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
+import ConfirmMessage from './ConfirmMessage';
 
 // Input section component
 
-export const InputField = ({ count, data, setMessage }) => {
+export const InputField = ({ count, data, setMessage, setModalMessage }) => {
     const [quantity, setQuantity] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const numberBoxRef = useRef(null);
@@ -111,10 +112,16 @@ export const InputField = ({ count, data, setMessage }) => {
     // Clears the table field
   
     const handleClearData = () => {
-      data.store().clear();
-      setMessage("Table successfully cleared. You can add new items.")
-      data.reload();
-      //setMessage('Items cleared successfully. You can now add new items.')
+      setModalMessage("Are you sure you want to clear the table?");
+      ConfirmMessage("", function(result) {
+        if (result) {
+          data.store().clear();
+          setMessage("Table successfully cleared. You can add new items.")
+          data.reload();
+        } else {
+
+        }
+      });
     }
     
       const handleQuantityChange = (e) => {

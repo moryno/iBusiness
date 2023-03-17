@@ -53,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.2.4",
-    "devextreme-themebuilder": "^22.2.4"
+    "devextreme-themebuilder": "^22.2.4",
+    "tailwindcss": "^3.2.4"
   }
 }
