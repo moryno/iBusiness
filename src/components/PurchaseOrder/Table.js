@@ -134,7 +134,7 @@ export const Table = ({ data, count, setMessage }) => {
   
   
     const handleRowRemoving = (e) => {
-      e.cancel = console.log(!window.confirm(confirmDeleteMessage(e.data)));
+      e.cancel = console.log(window.confirm(confirmDeleteMessage(e.data)));
     };
     
     const confirmDeleteMessage = (rowIndex) => {

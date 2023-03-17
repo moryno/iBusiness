@@ -20,7 +20,7 @@ const dateString = `${year}-${month}-${day}`;
 
 // Form Component
 
-const Form = ({ setSubmitData }) => {
+const Form = ({ setSubmitData, dataSent }) => {
     const [costCenter, setCostCenter] = useState();
     const [supplier, setSupplier] = useState();
     const [shipsTo, setShipsTo] = useState();
@@ -34,23 +34,22 @@ const Form = ({ setSubmitData }) => {
     useEffect(
       () => {
         setSubmitData(
-          [{
+          {
             costCenter: costCenter,
             supplier: supplier,
             shipsTo: shipsTo,
             orderDate: orderDate,
-            orderAmount: orderAmount,
-            deliveryPeriod: deliveryPeriod,
+            orderAmount: parseInt(orderAmount),
+            deliveryPeriod: parseInt(deliveryPeriod),
             firstDeliveryDate: firstDeliveryDate,
-            driverDetails: driverDetails,
+            vehicleDetails: driverDetails,
             narration: narration
           }
-          ]
         )
       }, [costCenter, supplier, shipsTo, orderDate, orderAmount, firstDeliveryDate, narration, deliveryPeriod, driverDetails, setSubmitData]
     )
 
-  
+ 
     return (
         <div className='po-form'>
           <div className='po-left'>

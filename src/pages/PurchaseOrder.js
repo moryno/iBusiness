@@ -10,6 +10,7 @@ import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
 import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
+import request from "../helpers/requestMethod";
 
 // Main Function
 export const PurchaseOrder = () => {
@@ -18,16 +19,27 @@ export const PurchaseOrder = () => {
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
   const count = useRef(1);
+  const [modalmessage, setModalMessage] = useState();
   const navigate = useNavigate();
   
 
-  const submitData = () => {
-    console.log("Submitting data...");
+  const submitData = async() => {
     const confirmedData = {
       formData: dataToSubmit,
       tableData: data.store()._array
     }
+
     console.log(confirmedData);
+    setMessage("Submitting data...");
+    const { status } = await request.post("/createpurchaseorder", confirmedData);
+    if (status === 200) {
+      setMessage("Data submitted successfully.");
+      data.store().clear();
+      data.reload();
+    } else {
+      return setMessage("There was an error trying to submit your request.");
+    }
+
   }
 
   const handleClick = (menu) => {
@@ -55,19 +67,32 @@ export const PurchaseOrder = () => {
         />
       </section>
       <div className="mt-3 w-full">
-        <Form setSubmitData={setSubmitData} datatosubmit={dataToSubmit}/>
+        <Form setSubmitData={setSubmitData} />
       </div>
       <section className="mt-2">
         <div className="po-grid h-full mt-2">
           <div className="add-item-btns">
           <div className="add-item">
-          <InputField data={data} count={count} setMessage={setMessage} />
+          <InputField data={data} count={count} setMessage={setMessage}  setModalMessage={setModalMessage}/>
           <MessageDiv message={currentmessage} />  
         </div>
           </div>
-          <Table data={data} count={count} setMessage={setMessage} />
+          <Table data={data} count={count} setMessage={setMessage} setModalMessage={setModalMessage}/>
         </div>
       </section>
+      <div id="confirm-modal" className="po-modal">
+            <div className="po-modal-content">
+                <div className="po-modal-header">
+                </div>
+                <div className="po-modal-body">
+                    <p>{modalmessage}</p>
+                </div>
+                <div className="po-modal-footer">
+                    <button id="confirm-yes" className="po-modal-btn">Yes</button>
+                    <button id="confirm-no" className="po-modal-btn">No</button>
+                </div>
+            </div>
+        </div>
     </main>
   );
 };
