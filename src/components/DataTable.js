@@ -14,7 +14,7 @@ import DataGrid, {
   Selection,
   Export,
 } from "devextreme-react/data-grid";
-import { ContextMenu } from "devextreme-react/context-menu";
+import { ContextMenu } from "devextreme-react/ui/context-menu";
 
 import { getDataGridRef } from "../helpers/datagridFunctions";
 
@@ -48,6 +48,13 @@ function DataTable({ data, startEdit }) {
     setContextMenuVisible(false);
   };
 
+  const contextMenuItems = [
+    { text: "Edit", onClick: () => console.log("Edit clicked") },
+    { text: "Delete", onClick: () => console.log("Delete clicked") },
+  ];
+
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
   return (
     <main>
       <DataGrid
@@ -60,7 +67,10 @@ function DataTable({ data, startEdit }) {
         keyExpr="bookingId"
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
-        onRowClick={handleRowClick}
+        onRowClick={(e) => {
+          setSelectedRowData(e.data);
+          e.event.currentTarget.classList.add("dx-position-contextmenu");
+        }}
         allowColumnReordering={true}
         allowColumnResizing={true}
         columnResizingMode={"nextColumn"}
@@ -95,16 +105,18 @@ function DataTable({ data, startEdit }) {
         <SearchPanel visible={true} />
       </DataGrid>
       <ContextMenu
-        dataSource={options}
+        // dataSource={contextMenuItems}
         target={() => document.querySelector(".dx-selection")[0]}
-        visible={contextMenuVisible}
-        position={{
-          my: "top left",
-          at: "bottom left",
-          of: contextMenuPosition,
-        }}
-        onItemClick={handleContextMenuHidden}
-        onHidden={handleContextMenuHidden}
+        items={contextMenuItems}
+        position={{ at: "right" }}
+        // visible={contextMenuVisible}
+        // position={{
+        //   my: "top left",
+        //   at: "bottom left",
+        //   of: contextMenuPosition,
+        // }}
+        // onItemClick={handleContextMenuHidden}
+        // onHidden={handleContextMenuHidden}
       />
     </main>
   );
@@ -119,10 +131,6 @@ const filterBuilderPopupPosition = {
 
 const filterBuilder = [
   ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
-];
-const options = [
-  { text: "Edit", icon: "edit" },
-  { text: "Delete", icon: "trash" },
 ];
 
 export default DataTable;
