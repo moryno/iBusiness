@@ -5,7 +5,6 @@ import DataGrid, {
   Pager,
   Paging,
   FilterRow,
-  HeaderFilter,
   FilterPanel,
   FilterBuilderPopup,
   SearchPanel,
@@ -15,6 +14,7 @@ import DataGrid, {
   Selection,
   Export,
 } from "devextreme-react/data-grid";
+import { ContextMenu } from "devextreme-react/context-menu";
 
 import { getDataGridRef } from "../helpers/datagridFunctions";
 
@@ -33,6 +33,21 @@ function DataTable({ data, startEdit }) {
     }
   }
 
+  const [contextMenuVisible, setContextMenuVisible] = useState(false);
+  const [contextMenuPosition, setContextMenuPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  const handleRowClick = (e) => {
+    setContextMenuVisible(true);
+    setContextMenuPosition({ x: e.event.clientX, y: e.event.clientY });
+  };
+
+  const handleContextMenuHidden = () => {
+    setContextMenuVisible(false);
+  };
+
   return (
     <main>
       <DataGrid
@@ -45,6 +60,7 @@ function DataTable({ data, startEdit }) {
         keyExpr="bookingId"
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
+        onRowClick={handleRowClick}
         allowColumnReordering={true}
         allowColumnResizing={true}
         columnResizingMode={"nextColumn"}
@@ -78,6 +94,18 @@ function DataTable({ data, startEdit }) {
 
         <SearchPanel visible={true} />
       </DataGrid>
+      <ContextMenu
+        dataSource={options}
+        target="#data-grid"
+        visible={contextMenuVisible}
+        position={{
+          my: "top left",
+          at: "bottom left",
+          of: contextMenuPosition,
+        }}
+        onItemClick={handleContextMenuHidden}
+        onHidden={handleContextMenuHidden}
+      />
     </main>
   );
 }
@@ -91,6 +119,10 @@ const filterBuilderPopupPosition = {
 
 const filterBuilder = [
   ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
+];
+const options = [
+  { text: "Edit", icon: "edit" },
+  { text: "Delete", icon: "trash" },
 ];
 
 export default DataTable;
