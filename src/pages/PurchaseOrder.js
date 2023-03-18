@@ -10,7 +10,8 @@ import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
 import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
-import request from "../helpers/requestMethod";
+import Statusbar from "../components/Statusbar";
+import axios from "axios";
 
 // Main Function
 export const PurchaseOrder = () => {
@@ -31,7 +32,23 @@ export const PurchaseOrder = () => {
 
     console.log(confirmedData);
     setMessage("Submitting data...");
-    const { status } = await request.post("/createpurchaseorder", confirmedData);
+    const { status } = async() => {
+      
+        try {
+          
+          const BASE_URL = "http://localhost:5000";
+          let request = axios.create({ baseURL: BASE_URL });
+          await request.post("/createpurchaseorder", confirmedData);
+          setMessage("Data submitted successfully.");
+          data.store().clear();
+          data.reload();
+
+         } catch(e)
+          {
+            console.log(e);
+            return setMessage("There was an error trying to submit your request.");
+          }
+      };
     if (status === 200) {
       setMessage("Data submitted successfully.");
       data.store().clear();
@@ -93,6 +110,7 @@ export const PurchaseOrder = () => {
                 </div>
             </div>
         </div>
+      <Statusbar heading="Purchase Order Entry" company="iBusiness" />
     </main>
   );
 };
