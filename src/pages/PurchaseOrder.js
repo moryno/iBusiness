@@ -12,6 +12,7 @@ import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
 import request from "../helpers/tempRequest";
 import Statusbar from "../components/Statusbar";
+import { useSelector } from "react-redux";
 
 
 // Main Function
@@ -23,11 +24,12 @@ export const PurchaseOrder = () => {
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState();
   const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
   
   useEffect(() => {
     async function getdata (){
     const user = {
-      "userid": "Staicy"
+      "userid": currentUser?.fullname
     };
     try {
       const response = await request.post("/PurchaseOrder/getorderitems", user);
