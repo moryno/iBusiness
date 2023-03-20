@@ -162,7 +162,7 @@ export const Table = ({ data, count, setMessage }) => {
             currentUser?.fullname,
             (currentUser?.fullname + rowIndex.data.item)
             );
-        data.store().remove(rowIndex.key);
+        
         data.store().insert(itemtoadd.data());
         data.reload();
         setMessage(`${rowIndex.data.item} has been updated.`);
@@ -185,9 +185,8 @@ export const Table = ({ data, count, setMessage }) => {
           console.log(response);
 
         } catch(e) {
-          const itemtoremove = data.store()._array.find((x) => x.item === data.name);
-          data.store().insert(data);
-          data.store().remove(itemtoremove);
+          data.store().remove(rowIndex.key);
+          data.store().insert(rowIndex.data);
           data.reload();
           console.log(e);
         }
