@@ -29,7 +29,7 @@ export const PurchaseOrder = () => {
   useEffect(() => {
     async function getdata (){
     const user = {
-      "userid": currentUser?.fullname
+      "userid": currentUser?.email
     };
     try {
       const response = await request.post("/PurchaseOrder/getorderitems", user);
