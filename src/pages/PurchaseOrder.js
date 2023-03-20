@@ -55,7 +55,7 @@ export const PurchaseOrder = () => {
     console.log(confirmedData);
     setMessage("Submitting data...");      
         try {
-          const { data } = await request.post("/createpurchaseorder", confirmedData);
+          const { data } = await request.post("/PurchaseOrder/createpurchaseorder", confirmedData);
           console.log(data);
           setMessage("Data submitted successfully.");
 

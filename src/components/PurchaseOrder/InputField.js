@@ -9,7 +9,7 @@ import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
 import ConfirmMessage from './ConfirmMessage';
 import { useSelector } from "react-redux";
-import request from "../../helpers/tempRequest";
+import request from "../../helpers/requestMethod";
 
 // Input section component
 
@@ -89,7 +89,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
               "id" : "Staicy3"
             }
             console.log(data);
-            const response = await request.post("/insertorderitems", data);
+            const response = await request.post("PurchaseOrder/insertorderitems", data);
             console.log(response);
 
           } catch(e) {
