@@ -146,7 +146,7 @@ export const Table = ({ data, count, setMessage }) => {
         
     } 
     // Recalculates values after row info is updated
-    const handleRowUpdated = (rowIndex) => {
+    const handleRowUpdated = async(rowIndex) => {
       console.log(rowIndex.data);
         let unitCost = rowIndex.data.unitCost;
         let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
@@ -166,8 +166,34 @@ export const Table = ({ data, count, setMessage }) => {
         data.store().insert(itemtoadd.data());
         data.reload();
         setMessage(`${rowIndex.data.item} has been updated.`);
-        console.log(data.store()._array)
+        console.log(data.store()._array);
+
+        try {
+          const data = {
+            "item" : item.name,
+            "quantity" : dataitem.quantity,
+            "unitCost" : dataitem.amount,
+            "extendedCost" : dataitem.extendedCost,
+            "taxAmount" :  dataitem.taxAmount,
+            "discountAmount" : dataitem.discountAmount,
+            "lineTotal" : dataitem.lineTotal,
+            "partitionKey" : dataitem.partitionKey,
+            "id" :  dataitem.id
+          }
+
+          const response = await request.post("/updateorderitem", data);
+          console.log(response);
+
+        } catch(e) {
+          const itemtoremove = data.store()._array.find((x) => x.item === data.name);
+          data.store().insert(data);
+          data.store().remove(itemtoremove);
+          data.reload();
+          console.log(e);
+        }
     }
+
+
   
     // End of function
   
