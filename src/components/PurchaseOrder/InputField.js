@@ -186,6 +186,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           showSpinButtons={true}
           width="150px"
           min={0}
+          max={5000}
           ref={numberBoxRef}
           onKeyDown={handleEnterPressQuantity}
           height="35px" />

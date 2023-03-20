@@ -245,6 +245,7 @@ export const Table = ({ data, count, setMessage }) => {
              allowEditing={true}
              visible={true}
              dataType="number"
+             max={5000}
              showSpinButtons={true}
              alignment='left'
           />
