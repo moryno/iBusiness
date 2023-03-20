@@ -79,14 +79,14 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           try {
             const data = {
               "item" : item.name,
-              "quantity" : quantity,
+              "quantity" : itemtoadd.quantity,
               "unitCost" : item.amount,
-              "extendedCost" : extendedCost,
-              "taxAmount" : extendedCost * 0.25,
-              "discountAmount" : extendedCost * 0.16,
-              "lineTotal" : extendedCost - discountAmount,
-              "partitionKey" : "Staicy",
-              "id" : "Staicy3"
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
             }
             console.log(data);
             const response = await request.post("PurchaseOrder/insertorderitems", data);
