@@ -83,7 +83,7 @@ export const Table = ({ data, count, setMessage }) => {
               "id" : "Brian7"
             }
             console.log(data);
-            const response = await request.post("/insertorderitems", data);
+            const response = await request.post("PurchaseOrder/insertorderitems", data);
             console.log(response);
 
           } catch(e) {
@@ -132,7 +132,7 @@ export const Table = ({ data, count, setMessage }) => {
               "id" : "Brian7"
             }
             console.log(data);
-            const response = await request.post("/insertorderitems", data);
+            const response = await request.post("PurchaseOrder/insertorderitems", data);
             console.log(response);
 
           } catch(e) {
@@ -181,7 +181,7 @@ export const Table = ({ data, count, setMessage }) => {
             "id" :  dataitem.id
           }
 
-          const response = await request.post("/updateorderitem", data);
+          const response = await request.post("PurchaseOrder/updateorderitem", data);
           console.log(response);
 
         } catch(e) {
