@@ -87,10 +87,10 @@ export const Table = ({ data, count, setMessage }) => {
             console.log(response);
 
           } catch(e) {
-            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-            data.store().remove(itemtoremove);
-            data.reload();
-            console.log(e);
+            // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            // data.store().remove(itemtoremove);
+            // data.reload();
+            // console.log(e);
           }
 
       } else if ( itemtoupdate.item === rowIndex.data.item ) {
@@ -136,10 +136,10 @@ export const Table = ({ data, count, setMessage }) => {
             console.log(response);
 
           } catch(e) {
-            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-            data.store().remove(itemtoremove);
-            data.reload();
-            console.log(e);
+            // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            // data.store().remove(itemtoremove);
+            // data.reload();
+            // console.log(e);
           }
 
       }
@@ -147,6 +147,7 @@ export const Table = ({ data, count, setMessage }) => {
     } 
     // Recalculates values after row info is updated
     const handleRowUpdated = (rowIndex) => {
+      console.log(rowIndex.data);
         let unitCost = rowIndex.data.unitCost;
         let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
         let discountAmount = rowIndex.data.discountAmount;
