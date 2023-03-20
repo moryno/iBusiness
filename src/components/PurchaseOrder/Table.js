@@ -171,14 +171,14 @@ export const Table = ({ data, count, setMessage }) => {
         try {
           const data = {
             "item" : rowIndex.data.item,
-            "quantity" : dataitem.quantity,
-            "unitCost" : dataitem.amount,
-            "extendedCost" : dataitem.extendedCost,
-            "taxAmount" :  dataitem.taxAmount,
-            "discountAmount" : dataitem.discountAmount,
-            "lineTotal" : dataitem.lineTotal,
-            "partitionKey" : dataitem.partitionKey,
-            "id" :  dataitem.id
+            "quantity" : itemtoadd.quantity,
+            "unitCost" : itemtoadd.amount,
+            "extendedCost" : itemtoadd.extendedCost,
+            "taxAmount" :  itemtoadd.taxAmount,
+            "discountAmount" : itemtoadd.discountAmount,
+            "lineTotal" : itemtoadd.lineTotal,
+            "partitionKey" : itemtoadd.partitionKey,
+            "id" :  itemtoadd.id
           }
 
           const response = await request.post("PurchaseOrder/updateorderitem", data);
