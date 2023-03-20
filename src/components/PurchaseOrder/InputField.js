@@ -20,6 +20,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
     const selectboxRef = useRef(null);
     const addRef = useRef(null);
     const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
+    console.log(currentUser);
   
     const handleOptionSelection = (e) => {
       setSelectedOption(e.value);
