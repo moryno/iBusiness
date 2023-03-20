@@ -58,8 +58,8 @@ export const Table = ({ data, count, setMessage }) => {
           extendedCost * 0.25,
           extendedCost * 0.16,
           extendedCost - discountAmount,
-          currentUser?.fullname
-          (currentUser?.fullname + rowIndex.data.item)
+          currentUser?.email,
+          `${currentUser?.email}.${rowIndex.data.item}`
           
           );
           data.store().remove(rowIndex.key);
@@ -73,14 +73,14 @@ export const Table = ({ data, count, setMessage }) => {
           try {
             const data = {
               "item" : item.name,
-              "quantity" : rowIndex.data.quantity,
+              "quantity" : itemtoadd.quantity,
               "unitCost" : item.amount,
-              "extendedCost" : extendedCost,
-              "taxAmount" : extendedCost * 0.25,
-              "discountAmount" : extendedCost * 0.16,
-              "lineTotal" : extendedCost - discountAmount,
-              "partitionKey" : "James",
-              "id" : "Brian7"
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
             }
             console.log(data);
             const response = await request.post("PurchaseOrder/insertorderitems", data);
@@ -122,14 +122,14 @@ export const Table = ({ data, count, setMessage }) => {
           try {
             const data = {
               "item" : item.name,
-              "quantity" : rowIndex.data.quantity,
+              "quantity" : itemtoadd.quantity,
               "unitCost" : item.amount,
-              "extendedCost" : extendedCost,
-              "taxAmount" : extendedCost * 0.25,
-              "discountAmount" : extendedCost * 0.16,
-              "lineTotal" : extendedCost - discountAmount,
-              "partitionKey" : "James",
-              "id" : "Brian7"
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
             }
             console.log(data);
             const response = await request.post("PurchaseOrder/insertorderitems", data);
@@ -159,8 +159,8 @@ export const Table = ({ data, count, setMessage }) => {
             extendedCost * 0.25,
             discountAmount,
             extendedCost - discountAmount,
-            currentUser?.fullname,
-            (currentUser?.fullname + rowIndex.data.item)
+            currentUser?.email,
+            `${currentUser?.email}.${rowIndex.data.item}`
             );
         
         data.store().insert(itemtoadd.data());
