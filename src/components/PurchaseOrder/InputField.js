@@ -8,6 +8,8 @@ import SelectBox from 'devextreme-react/select-box';
 import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
 import ConfirmMessage from './ConfirmMessage';
+import { useSelector } from "react-redux";
+import request from "../../helpers/tempRequest";
 
 // Input section component
 
@@ -17,13 +19,14 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
     const numberBoxRef = useRef(null);
     const selectboxRef = useRef(null);
     const addRef = useRef(null);
+    const currentUser = useSelector((state) => state.user?.currentUser?.user);
   
     const handleOptionSelection = (e) => {
       setSelectedOption(e.value);
       
    }   
   
-    const handleItemPopulation = () => {
+    const handleItemPopulation = async() => {
       // Data validation
   
       if ( selectedOption === null ){
@@ -52,21 +55,19 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         let extendedCost = item.amount * quantity;
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
-          item.key,
           item.name,
           quantity,
-          extendedCost * 0.25,
           item.amount,
           extendedCost,
-          "VAT",
-          "16%",
+          extendedCost * 0.25,
           extendedCost * 0.16,
-          "Merchant",
-          extendedCost * 0.1,
-          "5%",
-          discountAmount,
-          extendedCost - discountAmount
+          extendedCost - discountAmount,
+          currentUser?.fullname,
+          (currentUser?.fullname + item.name)
+          
+
           );
+
           data.store().insert(itemtoadd.data());
           data.reload();
           count.current++;
@@ -74,25 +75,44 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
+          
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : extendedCost,
+              "taxAmount" : extendedCost * 0.25,
+              "discountAmount" : extendedCost * 0.16,
+              "lineTotal" : extendedCost - discountAmount,
+              "partitionKey" : "Staicy",
+              "id" : "Staicy3"
+            }
+            console.log(data);
+            const response = await request.post("/insertorderitems", data);
+            console.log(response);
+
+          } catch(e) {
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.reload();
+            console.log(e);
+          }
+        
 
       } else if ( itemtoupdate.itemNumber === selectedOption ) {
         let extendedCost = item.amount * (quantity + itemtoupdate.quantity);
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
-          item.key,
           item.name,
-          quantity + itemtoupdate.quantity,
-          extendedCost * 0.25,
+          quantity,
           item.amount,
           extendedCost,
-          "VAT",
-          "16%",
+          extendedCost * 0.25,
           extendedCost * 0.16,
-          "Merchant",
-          extendedCost * 0.1,
-          "5%",
-          discountAmount,
-          extendedCost - discountAmount
+          extendedCost - discountAmount,
+          currentUser?.fullname,
+          (currentUser?.fullname + item.name)
           );
 
           data.store().remove(itemtoupdate);

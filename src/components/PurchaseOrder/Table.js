@@ -6,12 +6,15 @@ import 'devextreme/dist/css/dx.light.css';
 import { items, summary, columns } from '../../data/PurchaseOrderData'
 import dataitem from '../../utils/Order';
 import { getDataGridRef } from "../../helpers/datagridFunctions";
+import { useSelector } from "react-redux";
+import request from "../../helpers/tempRequest";
 
 // Table component
 
 export const Table = ({ data, count, setMessage }) => {
     const gridRef = useRef(null);
     const [collapsed, setCollapsed] = useState(false);
+    const currentUser = useSelector((state) => state.user?.currentUser?.user);
     const addRef = useRef(null);
     data.sort({ getter: "itemNumber", desc: true });
 
@@ -33,7 +36,7 @@ export const Table = ({ data, count, setMessage }) => {
   
     }
   
-    const handleRowInserted = (rowIndex) => {
+    const handleRowInserted = async(rowIndex) => {
       if ( rowIndex.data.quantity === "" || isNaN(rowIndex.data.quantity) || rowIndex.data.item === ""){
         data.store().remove(rowIndex.key);
         data.reload();
@@ -48,20 +51,16 @@ export const Table = ({ data, count, setMessage }) => {
         let extendedCost = item.amount * rowIndex.data.quantity;
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
-          item.key,
           item.name,
           rowIndex.data.quantity,
-          extendedCost * 0.25,
           item.amount,
           extendedCost,
-          "VAT",
-          "16%",
+          extendedCost * 0.25,
           extendedCost * 0.16,
-          "Merchant",
-          extendedCost * 0.1,
-          "5%",
-          discountAmount,
-          extendedCost - discountAmount
+          extendedCost - discountAmount,
+          currentUser?.fullname
+          (currentUser?.fullname + rowIndex.data.item)
+          
           );
           data.store().remove(rowIndex.key);
           data.store().insert(itemtoadd.data());
@@ -70,25 +69,45 @@ export const Table = ({ data, count, setMessage }) => {
           setMessage(`${item.name} has been added successfully.`);
           gridRef.current.instance.focus();
 
+                    
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : rowIndex.data.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : extendedCost,
+              "taxAmount" : extendedCost * 0.25,
+              "discountAmount" : extendedCost * 0.16,
+              "lineTotal" : extendedCost - discountAmount,
+              "partitionKey" : "James",
+              "id" : "Brian7"
+            }
+            console.log(data);
+            const response = await request.post("/insertorderitems", data);
+            console.log(response);
+
+          } catch(e) {
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.reload();
+            console.log(e);
+          }
+
       } else if ( itemtoupdate.item === rowIndex.data.item ) {
         console.log(rowIndex.data.quantity);
         let extendedCost = item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
-          item.key,
-          item.name,
-          rowIndex.data.quantity + itemtoupdate.quantity,
-          extendedCost * 0.25,
-          item.amount,
-          extendedCost,
-          "VAT",
-          "16%",
-          extendedCost * 0.16,
-          "Merchant",
-          extendedCost * 0.1,
-          "5%",
-          discountAmount,
-          extendedCost - discountAmount
+            item.name,
+            rowIndex.data.quantity + itemtoupdate.quantity,
+            item.amount,
+            extendedCost,
+            extendedCost * 0.25,
+            extendedCost * 0.16,
+            extendedCost - discountAmount,
+            currentUser?.fullname,
+            (currentUser?.fullname + item.name)
+
           );
 
           data.store().remove(itemtoupdate);
@@ -99,6 +118,30 @@ export const Table = ({ data, count, setMessage }) => {
           setMessage(`${item.name} has been added successfully.`);
           gridRef.current.instance.focus();
 
+                    
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : rowIndex.data.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : extendedCost,
+              "taxAmount" : extendedCost * 0.25,
+              "discountAmount" : extendedCost * 0.16,
+              "lineTotal" : extendedCost - discountAmount,
+              "partitionKey" : "James",
+              "id" : "Brian7"
+            }
+            console.log(data);
+            const response = await request.post("/insertorderitems", data);
+            console.log(response);
+
+          } catch(e) {
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.reload();
+            console.log(e);
+          }
+
       }
         
     } 
@@ -108,20 +151,15 @@ export const Table = ({ data, count, setMessage }) => {
         let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
         let discountAmount = rowIndex.data.discountAmount;
         let itemtoadd = new dataitem(
-            rowIndex.data.itemNumber,
             rowIndex.data.item,
             parseInt(rowIndex.data.quantity),
-            extendedCost * 0.25,
             unitCost,
             extendedCost,
-            "VAT",
-            "16%",
+            extendedCost * 0.25,
             extendedCost * 0.16,
-            "Merchant",
-            extendedCost * 0.1,
-            "5%",
-            discountAmount,
-            extendedCost - discountAmount
+            extendedCost - discountAmount,
+            currentUser?.fullname
+            (currentUser?.fullname + rowIndex.data.item)
             );
         data.store().remove(rowIndex.key);
         data.store().insert(itemtoadd.data());

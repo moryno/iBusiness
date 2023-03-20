@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import '../assets/P_order.css';
 import 'devextreme/dist/css/dx.common.css';
@@ -10,8 +10,9 @@ import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
 import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
-import request from "../helpers/tempRequest";
+import request from "../helpers/requestMethod";
 import Statusbar from "../components/Statusbar";
+
 
 // Main Function
 export const PurchaseOrder = () => {
@@ -23,6 +24,27 @@ export const PurchaseOrder = () => {
   const [modalmessage, setModalMessage] = useState();
   const navigate = useNavigate();
   
+  useEffect(() => {
+    async function getdata (){
+    const user = {
+      "userid": "Staicy"
+    };
+    try {
+      const response = await request.post("/PurchaseOrder/getorderitems", user);
+      response.data.map(item => {
+        return data.store().insert(item);
+      })
+      data.reload();
+          
+    } catch(e) { 
+      console.log(e);
+
+    }
+  }
+
+  getdata();
+
+  }, [data]);
 
   const submitData = async() => {
     const confirmedData = {
@@ -36,10 +58,9 @@ export const PurchaseOrder = () => {
           const { data } = await request.post("/createpurchaseorder", confirmedData);
           console.log(data);
           setMessage("Data submitted successfully.");
-          data.store().clear();
-          data.reload();
 
-         } catch(e)
+         }
+          catch(e)
           {
             console.log(e);
             return setMessage("There was an error trying to submit your request.");

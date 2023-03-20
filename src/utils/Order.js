@@ -1,39 +1,30 @@
 class dataitem {
-    constructor(count, itemName, quantity, oum, unitCost, extendedCost, taxCode, taxRate, taxAmount, discountType, supplierCost, discountRate, discountAmount, lineTotal){
-      this.itemName = itemName;
-      this.number = count;
+    constructor(item, quantity, unitCost, extendedCost, taxAmount, discountAmount, lineTotal, partitionKey, id){
+      this.item = item;
       this.quantity = quantity;
-      this.OUM = oum;
       this.unitCost = unitCost;
       this.extendedCost = extendedCost;
-      this.taxCode = taxCode;
-      this.taxRate = taxRate;
       this.taxAmount = taxAmount;
-      this.discountType = discountType;
-      this.supplierCost = supplierCost;
-      this.discountRate = discountRate;
       this.discountAmount = discountAmount;
       this.lineTotal = lineTotal;
+      this.partitionKey = partitionKey;
+      this.id = id;
+
 
       return this;
     }
 
     data() {
       return {
-        itemNumber: this.number,
-        item: this.itemName,
+        item: this.item,
         quantity: this.quantity,
-        OUM: this.OUM,
         unitCost: this.unitCost,
         extendedCost: this.extendedCost,
-        taxCode: this.taxCode,
-        taxRate: this.taxRate,
         taxAmount: this.taxAmount,
-        discountType: this.discountType,
-        supplierCost: this.supplierCost,
-        discountRate: this.discountRate,
         discountAmount: this.discountAmount,
-        lineTotal: this.lineTotal
+        lineTotal: this.lineTotal,
+        partitionKey: this.partitionKey,
+        id: this.id
       }
     }
   }
