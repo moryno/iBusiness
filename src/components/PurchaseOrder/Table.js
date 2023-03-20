@@ -83,7 +83,7 @@ export const Table = ({ data, count, setMessage }) => {
               "id" : itemtoadd.id
             }
             console.log(data);
-            const response = await request.post("PurchaseOrder/insertorderitems", data);
+            const response = await request.put("PurchaseOrder/insertorderitems", data);
             console.log(response);
 
           } catch(e) {
