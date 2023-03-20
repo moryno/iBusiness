@@ -150,14 +150,14 @@ export const Table = ({ data, count, setMessage }) => {
       console.log(rowIndex.data);
         let unitCost = rowIndex.data.unitCost;
         let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
-        let discountAmount = rowIndex.data.discountAmount;
+        let discountAmount = extendedCost * 0.16;
         let itemtoadd = new dataitem(
             rowIndex.data.item,
             parseInt(rowIndex.data.quantity),
             unitCost,
             extendedCost,
             extendedCost * 0.25,
-            extendedCost * 0.16,
+            discountAmount,
             extendedCost - discountAmount,
             currentUser?.fullname,
             (currentUser?.fullname + rowIndex.data.item)
