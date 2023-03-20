@@ -180,7 +180,7 @@ export const Table = ({ data, count, setMessage }) => {
             "partitionKey" : itemtoadd.partitionKey,
             "id" :  itemtoadd.id
           }
-
+          console.log(data);
           const response = await request.post("PurchaseOrder/updateorderitem", data);
           console.log(response);
 
