@@ -10,7 +10,7 @@ import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
 import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
-import request from "../helpers/requestMethod";
+import request from "../helpers/tempRequest";
 import Statusbar from "../components/Statusbar";
 
 

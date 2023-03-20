@@ -9,7 +9,7 @@ import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
 import ConfirmMessage from './ConfirmMessage';
 import { useSelector } from "react-redux";
-import request from "../../helpers/requestMethod";
+import request from "../../helpers/tempRequest";
 
 // Input section component
 

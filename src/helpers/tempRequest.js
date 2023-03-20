@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://bookingapptrial.azurewebsites.net/api";
 
 let request = axios.create({ baseURL: BASE_URL });
 
