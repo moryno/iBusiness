@@ -173,7 +173,7 @@ export const Table = ({ data, count, setMessage }) => {
           const data = {
             "item" : rowIndex.data.item,
             "quantity" : itemtoadd.quantity,
-            "unitCost" : itemtoadd.amount,
+            "unitCost" : itemtoadd.unitCost,
             "extendedCost" : itemtoadd.extendedCost,
             "taxAmount" :  itemtoadd.taxAmount,
             "discountAmount" : itemtoadd.discountAmount,
