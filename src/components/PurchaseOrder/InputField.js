@@ -140,7 +140,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
               "id" : itemtoadd.id
             }
             console.log(data);
-            const response = await request.put("PurchaseOrder/updateorderitems", data);
+            const response = await request.put("PurchaseOrder/updateorderitem", data);
             console.log(response);
 
           } catch(e) {
