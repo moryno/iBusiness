@@ -1,16 +1,19 @@
+import React, { useState, useEffect } from "react";
+
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { RxDot } from "react-icons/rx";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RiToolsFill, RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
+import axios from "axios";
+import { sideMenuRequest } from "../helpers/requestMethod";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
-
-  const moduleCategory = useSelector((state) => state.moduleCategory?.category);
+  const [moduleCategory, setModuleCategory] = useState([]);
+  // const moduleCategory = useSelector((state) => state.moduleCategory?.category);
 
   const getCategoryIcon = (title) => {
     switch (title) {
@@ -30,6 +33,14 @@ const SideLinks = () => {
         break;
     }
   };
+
+  useEffect(() => {
+    const getSideMenus = async () => {
+      const { data } = await axios.get(sideMenuRequest);
+      setModuleCategory(data);
+    };
+    getSideMenus();
+  }, []);
 
   return (
     <>
@@ -59,7 +70,7 @@ const SideLinks = () => {
                   )}
                 </div>
               </div>
-              {link.submenu && (
+              {link.subMenu && (
                 <div
                   className={`
               ${heading === link.title && "hidden"}
@@ -67,7 +78,7 @@ const SideLinks = () => {
                 >
                   <div className="">
                     <div className="px-2">
-                      {link.sublinks.map((mysublinks) => (
+                      {link.subLinks.map((mysublinks) => (
                         <div
                           className="flex items-center gap-1 hover:bg-[#f5f5f5]"
                           key={mysublinks.name}
