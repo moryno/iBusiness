@@ -65,7 +65,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           extendedCost * 0.16,
           extendedCost - discountAmount,
           currentUser?.email,
-          `${currentUser?.email}.${rowIndex.data.item}`
+          `${currentUser?.email}.${item.name}`
           
 
           );
@@ -114,7 +114,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           extendedCost * 0.16,
           extendedCost - discountAmount,
           currentUser?.fullname,
-          `${currentUser?.email}.${rowIndex.data.item}`
+          `${currentUser?.email}.${item.name}`
           );
 
           data.store().remove(itemtoupdate);
