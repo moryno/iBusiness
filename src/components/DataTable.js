@@ -54,10 +54,9 @@ function DataTable({ data, startEdit }) {
   }
 
   function handleContextMenuShowing(e) {
-    console.log(e.currentTarget.dataset);
+    const rowIndex = contextMenuTarget.dataset.rowKey;
+    const columnIndex = contextMenuTarget.dataset.columnIndex;
     const dataGrid = dataGridRef.current.instance;
-    const rowIndex = dataGrid.getRowIndexByKey(e.currentTarget.dataset.rowKey);
-    const columnIndex = e.currentTarget.dataset.columnIndex;
     const cellElement = dataGrid.getCellElement(rowIndex, columnIndex);
     dataGrid.showContextMenuAt(cellElement);
   }
@@ -116,13 +115,15 @@ function DataTable({ data, startEdit }) {
 
         <SearchPanel visible={true} />
       </DataGrid>
-      <ContextMenu
-        dataSource={options}
-        target={contextMenuTarget}
-        showEvent="dxcontextmenu"
-        onShowing={handleContextMenuShowing}
-        onHiding={handleContextMenuHiding}
-      />
+      {contextMenuTarget && (
+        <ContextMenu
+          dataSource={options}
+          target={contextMenuTarget}
+          showEvent="dxcontextmenu"
+          onShowing={handleContextMenuShowing}
+          onHiding={handleContextMenuHiding}
+        />
+      )}
     </main>
   );
 }
