@@ -188,7 +188,7 @@ export const Table = ({ data, count, setMessage }) => {
           data.store().remove(rowIndex.key);
           data.store().insert(rowIndex.data);
           data.reload();
-          console.log(e);
+          console.log(e.response.data);
         }
     }
 
