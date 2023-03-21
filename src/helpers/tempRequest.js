@@ -2,7 +2,9 @@ import axios from "axios";
 
 const BASE_URL = "https://bookingapptrial.azurewebsites.net/api";
 
-let request = axios.create({ baseURL: BASE_URL });
+let request = axios.create({ baseURL: BASE_URL, headers: {
+  'Access-Control-Allow-Origin' : 'https://ibusiness-git-main-moryno.vercel.app'
+  } });
 
 request.interceptors.request.use(
   (config) => {
