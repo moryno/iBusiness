@@ -17,14 +17,19 @@ import DataGrid, {
 import { ContextMenu } from "devextreme-react/context-menu";
 
 import { getDataGridRef } from "../helpers/datagridFunctions";
+import { bookingColumns } from "../data/PurchaseOrderData";
 
 function DataTable({ data, startEdit }) {
   const [collapsed, setCollapsed] = useState(false);
-  const ref = useRef();
+  // Define a state variable to hold the context menu target element
+  const [contextMenuTarget, setContextMenuTarget] = useState(null);
+
+  // Define a dataGridRef variable to hold the reference to the datagrid
+  const dataGridRef = useRef();
   const exportFormats = ["xlsx", "pdf"];
 
   function onContentReady(e) {
-    getDataGridRef(ref.current);
+    getDataGridRef(dataGridRef.current);
     if (!collapsed) {
       e.component.expandRow(["EnviroCare"]);
       setCollapsed({
@@ -48,12 +53,20 @@ function DataTable({ data, startEdit }) {
     setContextMenuVisible(false);
   };
 
+  // Define a function to handle the context menu event
+  const handleContextMenu = (e) => {
+    console.log(e);
+    e.preventDefault();
+    setContextMenuTarget(e.event.currentTarget);
+  };
+
   return (
     <main>
       <DataGrid
         id="bookingGrid"
         className={"dx-card wide-card"}
         dataSource={data}
+        columns={bookingColumns}
         showBorders={false}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
@@ -63,12 +76,12 @@ function DataTable({ data, startEdit }) {
         onRowClick={handleRowClick}
         allowColumnReordering={true}
         allowColumnResizing={true}
-        columnResizingMode={"nextColumn"}
         columnMinWidth={100}
         columnAutoWidth={true}
         columnHidingEnabled={true}
-        ref={ref}
+        ref={dataGridRef}
         onContentReady={onContentReady}
+        onCellContextMenu={handleContextMenu}
       >
         <Export
           enabled={true}
@@ -96,15 +109,24 @@ function DataTable({ data, startEdit }) {
       </DataGrid>
       <ContextMenu
         dataSource={options}
-        target="#data-grid"
-        visible={contextMenuVisible}
-        position={{
-          my: "top left",
-          at: "bottom left",
-          of: contextMenuPosition,
+        target={contextMenuTarget}
+        showEvent="dxcontextmenu"
+        onHiding={() => setContextMenuTarget(null)}
+        onShowing={() => {
+          const dataGridInstance = dataGridRef.current.instance;
+          const rowIndex = dataGridInstance.getRowIndexByKey(
+            contextMenuTarget.dataset.rowKey
+          );
+          const columnIndex = dataGridInstance.columnOption(
+            contextMenuTarget.dataset.columnIndex,
+            "index"
+          );
+          const cellElement = dataGridInstance.getCellElement(
+            rowIndex,
+            columnIndex
+          );
+          dataGridInstance.showContextMenuAt(cellElement);
         }}
-        onItemClick={handleContextMenuHidden}
-        onHidden={handleContextMenuHidden}
       />
     </main>
   );
