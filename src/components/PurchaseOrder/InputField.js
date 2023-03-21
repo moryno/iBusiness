@@ -142,8 +142,9 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
             console.log(response);
 
           } catch(e) {
-            data.store().remove(rowIndex.key);
-            data.store().insert(rowIndex.data);
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.store().insert(itemtoupdate);
             data.reload();
             console.log(e);
           }
