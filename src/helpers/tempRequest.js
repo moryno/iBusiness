@@ -9,7 +9,7 @@ request.interceptors.request.use(
     const TOKEN = localStorage.getItem("token");
 
     if (TOKEN) {
-      config.headers = { Authorization: `Bearer ${TOKEN}` };
+      config.headers = { Authorization: `Bearer ${TOKEN}`, 'Access-Control-Allow-Credentials':true };
     }
 
     return config;
