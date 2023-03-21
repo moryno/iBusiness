@@ -147,10 +147,9 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
     } 
     // Recalculates values after row info is updated
     const handleRowUpdated = async(rowIndex) => {
-      console.log(rowIndex.data);
         let unitCost = rowIndex.data.unitCost;
         let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
-        let discountAmount = extendedCost * 0.16;
+        let discountAmount = rowIndex.data.discountAmount;
         let itemtoadd = new dataitem(
             rowIndex.data.item,
             parseInt(rowIndex.data.quantity),
@@ -228,6 +227,15 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       }
     }
 
+    const handleRowUpdating = (e) => {
+      console.log(e);
+      if (e.oldData.discountAmount === e.newData.discountAmount) {
+        console.log("Same");
+      } else {
+        console.log("Updating")
+      }
+    }
+
   
     
   
@@ -236,6 +244,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
           style={{height: '41vh', borderStyle:'solid', marginTop:'1rem', fontSize: '.7rem'}}
           showBorders={true}
           dataSource={data}
+          onRowUpdating={handleRowUpdating}
           hoverStateEnabled={true}
           reshapeOnPush={true}
           onRowUpdated={handleRowUpdated}
