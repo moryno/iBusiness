@@ -103,6 +103,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         
 
       } else if ( itemtoupdate.item === item.name ) {
+        console.log(quantity);
+        console.log(itemtoupdate.quantity);
         let extendedCost = item.amount * (quantity + itemtoupdate.quantity);
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
@@ -139,7 +141,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
               "id" : itemtoadd.id
             }
             console.log(data);
-            const response = await request.put("PurchaseOrder/insertorderitems", data);
+            const response = await request.put("PurchaseOrder/updateorderitems", data);
             console.log(response);
 
           } catch(e) {
