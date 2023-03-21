@@ -16,7 +16,6 @@ export const Table = ({ data, count, setMessage }) => {
     const [collapsed, setCollapsed] = useState(false);
     const currentUser = useSelector((state) => state.user?.currentUser?.user);
     const addRef = useRef(null);
-    data.sort({ getter: "itemNumber", desc: true });
 
     function onContentReady(e) {
       getDataGridRef(gridRef.current);
