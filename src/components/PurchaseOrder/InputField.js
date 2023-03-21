@@ -103,13 +103,12 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         
 
       } else if ( itemtoupdate.item === item.name ) {
-        console.log(quantity);
-        console.log(itemtoupdate.quantity);
-        let extendedCost = item.amount * (quantity + itemtoupdate.quantity);
+        let newquantity = quantity + itemtoupdate.quantity
+        let extendedCost = item.amount * newquantity;
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
           item.name,
-          quantity,
+          newquantity,
           item.amount,
           extendedCost,
           extendedCost * 0.25,
