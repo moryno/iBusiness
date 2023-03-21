@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import MenuButtonsGroup from "../components/MenuButtonsGroup";
 import '../assets/P_order.css';
 import 'devextreme/dist/css/dx.common.css';
@@ -10,7 +10,10 @@ import { InputField } from '../components/PurchaseOrder/InputField'
 import { Table } from '../components/PurchaseOrder/Table'
 import { MessageDiv } from '../components/PurchaseOrder/Message'
 import { useNavigate } from 'react-router-dom';
-import request from "../helpers/requestMethod";
+import request from "../helpers/tempRequest";
+import Statusbar from "../components/Statusbar";
+import { useSelector } from "react-redux";
+
 
 // Main Function
 export const PurchaseOrder = () => {
@@ -21,7 +24,30 @@ export const PurchaseOrder = () => {
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState();
   const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
   
+  useEffect(() => {
+    async function getdata (){
+    
+    const user = {
+      "userid": currentUser?.email
+    };
+    try {
+      const response = await request.post("/PurchaseOrder/getorderitems", user);
+      response.data.map(item => {
+        return data.store().insert(item);
+      })
+      data.reload();
+          
+    } catch(e) { 
+      console.log(e);
+
+    }
+  }
+
+  getdata();
+
+  }, [data]);
 
   const submitData = async() => {
     const confirmedData = {
@@ -30,15 +56,18 @@ export const PurchaseOrder = () => {
     }
 
     console.log(confirmedData);
-    setMessage("Submitting data...");
-    const { status } = await request.post("/createpurchaseorder", confirmedData);
-    if (status === 200) {
-      setMessage("Data submitted successfully.");
-      data.store().clear();
-      data.reload();
-    } else {
-      return setMessage("There was an error trying to submit your request.");
-    }
+    setMessage("Submitting data...");      
+        try {
+          const { data } = await request.post("/PurchaseOrder/createpurchaseorder", confirmedData);
+          console.log(data);
+          setMessage("Data submitted successfully.");
+
+         }
+          catch(e)
+          {
+            console.log(e);
+            return setMessage("There was an error trying to submit your request.");
+          }
 
   }
 
@@ -93,6 +122,7 @@ export const PurchaseOrder = () => {
                 </div>
             </div>
         </div>
+      <Statusbar heading="Purchase Order Entry" company="iBusiness" />
     </main>
   );
 };

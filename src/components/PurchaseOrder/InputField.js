@@ -8,6 +8,8 @@ import SelectBox from 'devextreme-react/select-box';
 import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
 import ConfirmMessage from './ConfirmMessage';
+import { useSelector } from "react-redux";
+import request from "../../helpers/tempRequest";
 
 // Input section component
 
@@ -17,13 +19,16 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
     const numberBoxRef = useRef(null);
     const selectboxRef = useRef(null);
     const addRef = useRef(null);
+    const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
+    console.log(currentUser);
   
     const handleOptionSelection = (e) => {
       setSelectedOption(e.value);
       
    }   
   
-    const handleItemPopulation = () => {
+    const handleItemPopulation = async() => {
       // Data validation
   
       if ( selectedOption === null ){
@@ -46,27 +51,25 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       // End of validation
 
       const item = items.find((x) => x.key === selectedOption);
-      const itemtoupdate = data.store()._array.find((x) => x.itemNumber === selectedOption);
+      const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
 
       if ( typeof itemtoupdate === "undefined" ) {
         let extendedCost = item.amount * quantity;
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
-          item.key,
           item.name,
           quantity,
-          extendedCost * 0.25,
           item.amount,
           extendedCost,
-          "VAT",
-          "16%",
+          extendedCost * 0.25,
           extendedCost * 0.16,
-          "Merchant",
-          extendedCost * 0.1,
-          "5%",
-          discountAmount,
-          extendedCost - discountAmount
+          extendedCost - discountAmount,
+          currentUser?.email,
+          `${currentUser?.email}.${item.name}`
+          
+
           );
+
           data.store().insert(itemtoadd.data());
           data.reload();
           count.current++;
@@ -74,25 +77,45 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
+          
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : itemtoadd.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
+            }
+            console.log(data);
+            const response = await request.post("PurchaseOrder/insertorderitems", data);
+            console.log(response);
 
-      } else if ( itemtoupdate.itemNumber === selectedOption ) {
-        let extendedCost = item.amount * (quantity + itemtoupdate.quantity);
+          } catch(e) {
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.reload();
+            console.log(e);
+          }
+        
+
+      } else if ( itemtoupdate.item === item.name ) {
+        let newquantity = quantity + itemtoupdate.quantity
+        let extendedCost = item.amount * newquantity;
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
-          item.key,
           item.name,
-          quantity + itemtoupdate.quantity,
-          extendedCost * 0.25,
+          newquantity,
           item.amount,
           extendedCost,
-          "VAT",
-          "16%",
+          extendedCost * 0.25,
           extendedCost * 0.16,
-          "Merchant",
-          extendedCost * 0.1,
-          "5%",
-          discountAmount,
-          extendedCost - discountAmount
+          extendedCost - discountAmount,
+          currentUser?.email,
+          `${currentUser?.email}.${item.name}`
           );
 
           data.store().remove(itemtoupdate);
@@ -103,6 +126,29 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
+
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : itemtoadd.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
+            }
+            console.log(data);
+            const response = await request.put("PurchaseOrder/updateorderitem", data);
+            console.log(response);
+
+          } catch(e) {
+            // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            // data.store().remove(itemtoremove);
+            // data.reload();
+            // console.log(e);
+          }
   
       }
     };
@@ -164,6 +210,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           showSpinButtons={true}
           width="150px"
           min={0}
+          max={5000}
           ref={numberBoxRef}
           onKeyDown={handleEnterPressQuantity}
           height="35px" />
