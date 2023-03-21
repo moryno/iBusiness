@@ -139,7 +139,7 @@ const New = ({
         <article className="bg-formHeading flex items-center justify-between">
           <div className="flex items-center py-1 px:2 md:px-5 w-full gap-1 text-formHeadingColor">
             <TbBrandBooking />
-            <p className="text-[14px] opacity-90">{title}</p>
+            <p className="text-xs opacity-90">{title}</p>
           </div>
           <div className="px:2 md:px-5">
             <MdOutlineClose
@@ -151,10 +151,10 @@ const New = ({
       </section>
       <section className="md:p-3">
         <article className="text-formHeadingColor md:rounded-t-sm p-1 md:py-2 md:px-10 form-heading">
-          <h2 className="text-xl flex justify-center md:justify-start font-medium opacity-90">
+          <h2 className="text-base flex justify-center md:justify-start font-medium opacity-90">
             {heading}
           </h2>
-          <p className="text-base text-center md:text-left">
+          <p className="text-sm text-center md:text-left">
             Enter all the booking information in the fields below then tap on
             save.
           </p>
@@ -165,7 +165,7 @@ const New = ({
               <section className="flex flex-col md:flex-row w-full gap-2">
                 <article className="w-full flex flex-wrap box-border justify-between  gap-2">
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
-                    <label className="text-sm text-gray-600" htmlFor="fullName">
+                    <label className="text-xs text-gray-600" htmlFor="fullName">
                       Full Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
@@ -182,7 +182,7 @@ const New = ({
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
-                    <label className="text-sm text-gray-600" htmlFor="idNumber">
+                    <label className="text-xs text-gray-600" htmlFor="idNumber">
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
@@ -199,7 +199,7 @@ const New = ({
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
-                    <label className="text-sm text-gray-600" htmlFor="email">
+                    <label className="text-xs text-gray-600" htmlFor="email">
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
@@ -217,7 +217,7 @@ const New = ({
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="telephone"
                     >
                       Telephone:<sup className=" text-red-600">*</sup>
@@ -237,7 +237,7 @@ const New = ({
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="employerName"
                     >
                       Empl Name:<sup className=" text-red-600">*</sup>
@@ -257,7 +257,7 @@ const New = ({
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="experience"
                     >
                       Experience:<sup className=" text-red-600">*</sup>
@@ -273,7 +273,7 @@ const New = ({
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
                     <label
-                      className="text-sm   text-gray-600"
+                      className="text-xs   text-gray-600"
                       htmlFor="originCountry"
                     >
                       Org Country:<sup className=" text-red-600">*</sup>
@@ -290,7 +290,7 @@ const New = ({
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
-                    <label className="text-sm text-gray-600" htmlFor="position">
+                    <label className="text-xs text-gray-600" htmlFor="position">
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
@@ -308,7 +308,7 @@ const New = ({
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="physicalAddress"
                     >
                       Address:<sup className=" text-red-600">*</sup>
@@ -328,7 +328,7 @@ const New = ({
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
                     <label
-                      className="text-sm   text-gray-600"
+                      className="text-xs   text-gray-600"
                       htmlFor="disabilityStatus"
                     >
                       Status:<sup className=" text-red-600">*</sup>
@@ -346,7 +346,7 @@ const New = ({
                   </div>
                   <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
                     <label
-                      className="text-sm  text-gray-600"
+                      className="text-xs  text-gray-600"
                       htmlFor="retirementSchemeName"
                     >
                       Sch Name:
@@ -368,7 +368,7 @@ const New = ({
                 <article className="w-full flex flex-wrap lg:w-[80%] box-border justify-between  gap-2">
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
-                      className="text-sm   text-gray-600"
+                      className="text-xs   text-gray-600"
                       htmlFor="bookingType"
                     >
                       Booking Type:<sup className=" text-red-600">*</sup>
@@ -386,7 +386,7 @@ const New = ({
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="schemePosition"
                     >
                       Sch Position:<sup className=" text-red-600">*</sup>
@@ -406,7 +406,7 @@ const New = ({
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
-                      className="text-sm   text-gray-600"
+                      className="text-xs   text-gray-600"
                       htmlFor="trainingVenue"
                     >
                       Training Venue:<sup className=" text-red-600">*</sup>
@@ -425,7 +425,7 @@ const New = ({
 
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="courseDate"
                     >
                       Course Date:<sup className=" text-red-600">*</sup>
@@ -442,7 +442,7 @@ const New = ({
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
-                      className="text-sm   text-gray-600"
+                      className="text-xs   text-gray-600"
                       htmlFor="paymentMode"
                     >
                       Payment Mode:<sup className=" text-red-600">*</sup>
@@ -464,7 +464,7 @@ const New = ({
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
                     <label
-                      className="text-sm text-gray-600"
+                      className="text-xs text-gray-600"
                       htmlFor="externalSchemeAdmin"
                     >
                       Scheme Admin:
@@ -486,7 +486,7 @@ const New = ({
                 </article>
                 <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                   <label
-                    className="text-sm text-gray-600"
+                    className="text-xs text-gray-600"
                     htmlFor="additionalRequirements"
                   >
                     Requirements:
@@ -514,21 +514,21 @@ const New = ({
         <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">
           <button
             onClick={save}
-            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
+            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <FcAddDatabase fontSize={20} />
             {statusMode === "CreateBooking" ? "Save" : "Update"}
           </button>
           <button
             onClick={handleClose}
-            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-sm"
+            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <ImUndo2 fontSize={18} />
             Cancel
           </button>
         </article>
         <article className="flex bg-formTitle text-formHeadingColor py-1 px:2 md:px-5 w-full">
-          <p className="text-[14px] opacity-90">{statusBarText}</p>
+          <p className="text-xs opacity-90">{statusBarText}</p>
         </article>
       </section>
     </main>

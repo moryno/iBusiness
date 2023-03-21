@@ -22,7 +22,7 @@ const DropDownMenu = () => {
                         {mysublinks.sublink.map((slink) => (
                           <li
                             key={slink.name}
-                            className="text-sm flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
+                            className="text-xs flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
                             onClick={() => handleExporting(slink.name)}
                           >
                             {slink.icon} {slink.name}

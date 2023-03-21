@@ -16,7 +16,7 @@ const Module = () => {
     <main className="flex flex-col">
       <section className="cursor-pointer group">
         <article className="md:flex opacity-70 hidden  items-center font-medium">
-          <CgMenuGridO fontSize={28} />
+          <CgMenuGridO fontSize={24} />
         </article>
         <article className="flex md:hidden opacity-70 items-center font-medium">
           <GoKebabVertical fontSize={16} />
@@ -28,7 +28,7 @@ const Module = () => {
               {moduleCategories.map((category) => (
                 <li
                   key={category.id}
-                  className="text-sm flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
+                  className="text-xs flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
                   onClick={() => handleClick(category.title)}
                 >
                   {category.icon} {category.title}

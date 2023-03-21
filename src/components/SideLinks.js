@@ -84,7 +84,7 @@ const SideLinks = () => {
                           key={mysublinks.name}
                         >
                           <RxDot />
-                          <li className="text-sm font-normal text-sideMenu py-1.5">
+                          <li className="text-xl font-normal text-sideMenu py-1.5">
                             <Link to={mysublinks.link}>{mysublinks.name}</Link>
                           </li>
                         </div>

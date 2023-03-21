@@ -65,7 +65,7 @@ module.exports = {
       sidebar: "300px auto",
     },
     gridTemplateRows: {
-      header: "50px auto",
+      header: "40px auto",
     },
   },
   plugins: [],
