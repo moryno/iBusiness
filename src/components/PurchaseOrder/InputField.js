@@ -142,10 +142,10 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
             console.log(response);
 
           } catch(e) {
-            // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-            // data.store().remove(itemtoremove);
-            // data.reload();
-            // console.log(e);
+            data.store().remove(rowIndex.key);
+            data.store().insert(rowIndex.data);
+            data.reload();
+            console.log(e);
           }
   
       }
