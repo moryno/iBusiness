@@ -54,6 +54,8 @@ function DataTable({ data, startEdit }) {
   }
 
   function handleContextMenuShowing(e) {
+    console.log(e);
+    console.log("Function was called");
     const rowIndex = contextMenuTarget.dataset.rowKey;
     const columnIndex = contextMenuTarget.dataset.columnIndex;
     const dataGrid = dataGridRef.current.instance;
@@ -63,11 +65,10 @@ function DataTable({ data, startEdit }) {
 
   // Define a function to handle the context menu event
   const handleContextMenu = (e) => {
-    console.log(e);
     e.preventDefault();
     setContextMenuTarget(e.cellElement);
   };
-
+  console.log(contextMenuTarget);
   return (
     <main>
       <DataGrid
@@ -81,7 +82,6 @@ function DataTable({ data, startEdit }) {
         keyExpr="bookingId"
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
-        onRowClick={handleRowClick}
         allowColumnReordering={true}
         allowColumnResizing={true}
         columnMinWidth={100}
