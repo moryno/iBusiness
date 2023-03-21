@@ -162,7 +162,7 @@ export const Table = ({ data, count, setMessage }) => {
             currentUser?.email,
             `${currentUser?.email}.${rowIndex.data.item}`
             );
-        const itemtoremove = data.store()._array.find((x) => x.item === rowIndex.data.name);
+        const itemtoremove = data.store()._array.find((x) => x.item === rowIndex.data.item);
         data.store().remove(itemtoremove);
         data.store().insert(itemtoadd.data());
         data.reload();
