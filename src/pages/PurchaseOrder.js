@@ -55,7 +55,6 @@ export const PurchaseOrder = () => {
       tableData: data.store()._array
     }
 
-    console.log(confirmedData);
     setMessage("Submitting data...");      
         try {
           const { data } = await request.post("/PurchaseOrder/createpurchaseorder", confirmedData);
