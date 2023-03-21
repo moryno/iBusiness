@@ -2,16 +2,14 @@ import axios from "axios";
 
 const BASE_URL = "https://bookingapptrial.azurewebsites.net/api";
 
-let request = axios.create({ baseURL: BASE_URL, headers: {
-  'Access-Control-Allow-Origin' : 'https://ibusiness-git-main-moryno.vercel.app'
-  } });
+let request = axios.create({ baseURL: BASE_URL });
 
 request.interceptors.request.use(
   (config) => {
     const TOKEN = localStorage.getItem("token");
 
     if (TOKEN) {
-      config.headers = { Authorization: `Bearer ${TOKEN}` };
+      config.headers = { Authorization: `Bearer ${TOKEN}`, 'Access-Control-Allow-Origin' : 'https://ibusiness-git-main-moryno.vercel.app' };
     }
 
     return config;
