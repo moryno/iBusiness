@@ -51,7 +51,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       // End of validation
 
       const item = items.find((x) => x.key === selectedOption);
-      const itemtoupdate = data.store()._array.find((x) => x.itemNumber === selectedOption);
+      const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
 
       if ( typeof itemtoupdate === "undefined" ) {
         let extendedCost = item.amount * quantity;
@@ -102,7 +102,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           }
         
 
-      } else if ( itemtoupdate.itemNumber === selectedOption ) {
+      } else if ( itemtoupdate.item === item.name ) {
         let extendedCost = item.amount * (quantity + itemtoupdate.quantity);
         let discountAmount = extendedCost * 0.05;
         let itemtoadd = new dataitem(
@@ -125,6 +125,29 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
+
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : itemtoadd.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
+            }
+            console.log(data);
+            const response = await request.put("PurchaseOrder/insertorderitems", data);
+            console.log(response);
+
+          } catch(e) {
+            // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            // data.store().remove(itemtoremove);
+            // data.reload();
+            // console.log(e);
+          }
   
       }
     };
