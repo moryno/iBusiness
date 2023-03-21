@@ -8,10 +8,11 @@ import dataitem from '../../utils/Order';
 import { getDataGridRef } from "../../helpers/datagridFunctions";
 import { useSelector } from "react-redux";
 import request from "../../helpers/tempRequest";
+import ConfirmMessage from './ConfirmMessage';
 
 // Table component
 
-export const Table = ({ data, count, setMessage }) => {
+export const Table = ({ data, count, setMessage, setModalMessage }) => {
     const gridRef = useRef(null);
     const [collapsed, setCollapsed] = useState(false);
     const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -197,8 +198,8 @@ export const Table = ({ data, count, setMessage }) => {
     // End of function
   
   
-    const handleRowRemoving = (e) => {
-      e.cancel = console.log(window.confirm(confirmDeleteMessage(e.data)));
+    const handleRowRemoving = async(e) => {
+      e.cancel = true;
     };
     
     const confirmDeleteMessage = (rowIndex) => {

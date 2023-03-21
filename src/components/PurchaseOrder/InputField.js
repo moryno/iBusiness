@@ -20,9 +20,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
     const selectboxRef = useRef(null);
     const addRef = useRef(null);
     const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
-    console.log(currentUser);
-  
+ 
     const handleOptionSelection = (e) => {
       setSelectedOption(e.value);
       
@@ -158,7 +156,6 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
     // Clears the table field
   
     const handleClearData = () => {
-      setModalMessage("Are you sure you want to clear the table?");
       ConfirmMessage("", function(result) {
         if (result) {
           data.store().clear();
