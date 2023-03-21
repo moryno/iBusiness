@@ -157,7 +157,7 @@ const Home = () => {
         </section>
       </section>
       {statusMode === "CreateBooking" ? (
-        <Portal isOpen={isOpen}>
+        <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
             bookings={data}
             singleBooking={singleBooking}
@@ -171,7 +171,7 @@ const Home = () => {
         </Portal>
       ) : (
         statusMode === "EditBooking" && (
-          <Portal isOpen={isOpen}>
+          <Portal isOpen={isOpen} setOpen={setOpen}>
             <New
               bookings={data}
               singleBooking={singleBooking}

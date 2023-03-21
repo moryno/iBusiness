@@ -23,7 +23,7 @@ const SearchCategories = ({ searchInput, setSearchInput }) => {
     setSearchInput("");
     setIsExpanded(false);
   };
-  
+
   return (
     <>
       <div
