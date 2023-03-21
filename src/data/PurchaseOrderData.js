@@ -123,9 +123,9 @@ export const bookingColumns = [
     width: 70,
     cellRender: (data) => {
       return (
-        <div data-row-key={data.key} data-column-index={data.columnIndex}>
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
           {data.value}
-        </div>
+        </td>
       );
     },
   },
@@ -134,9 +134,9 @@ export const bookingColumns = [
 
     cellRender: (data) => {
       return (
-        <div data-row-key={data.key} data-column-index={data.columnIndex}>
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
           {data.value}
-        </div>
+        </td>
       );
     },
   },
@@ -145,9 +145,9 @@ export const bookingColumns = [
 
     cellRender: (data) => {
       return (
-        <div data-row-key={data.key} data-column-index={data.columnIndex}>
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
           {data.value}
-        </div>
+        </td>
       );
     },
   },
@@ -156,9 +156,9 @@ export const bookingColumns = [
     width: 300,
     cellRender: (data) => {
       return (
-        <div data-row-key={data.key} data-column-index={data.columnIndex}>
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
           {data.value}
-        </div>
+        </td>
       );
     },
   },
@@ -166,9 +166,9 @@ export const bookingColumns = [
     dataField: "schemePosition",
     cellRender: (data) => {
       return (
-        <div data-row-key={data.key} data-column-index={data.columnIndex}>
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
           {data.value}
-        </div>
+        </td>
       );
     },
   },
@@ -177,9 +177,9 @@ export const bookingColumns = [
 
     cellRender: (data) => {
       return (
-        <div data-row-key={data.key} data-column-index={data.columnIndex}>
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
           {data.value}
-        </div>
+        </td>
       );
     },
   },

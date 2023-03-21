@@ -49,15 +49,23 @@ function DataTable({ data, startEdit }) {
     setContextMenuPosition({ x: e.event.clientX, y: e.event.clientY });
   };
 
-  const handleContextMenuHidden = () => {
-    setContextMenuVisible(false);
-  };
+  function handleContextMenuHiding() {
+    setContextMenuTarget(null);
+  }
+
+  function handleContextMenuShowing(e) {
+    const dataGrid = dataGridRef.current.instance;
+    const rowIndex = dataGrid.getRowIndexByKey(e.currentTarget.dataset.rowKey);
+    const columnIndex = e.currentTarget.dataset.columnIndex;
+    const cellElement = dataGrid.getCellElement(rowIndex, columnIndex);
+    dataGrid.showContextMenuAt(cellElement);
+  }
 
   // Define a function to handle the context menu event
   const handleContextMenu = (e) => {
     console.log(e);
     e.preventDefault();
-    setContextMenuTarget(e.event.currentTarget);
+    setContextMenuTarget(e.cellElement);
   };
 
   return (
@@ -111,22 +119,8 @@ function DataTable({ data, startEdit }) {
         dataSource={options}
         target={contextMenuTarget}
         showEvent="dxcontextmenu"
-        onHiding={() => setContextMenuTarget(null)}
-        onShowing={() => {
-          const dataGridInstance = dataGridRef.current.instance;
-          const rowIndex = dataGridInstance.getRowIndexByKey(
-            contextMenuTarget.dataset.rowKey
-          );
-          const columnIndex = dataGridInstance.columnOption(
-            contextMenuTarget.dataset.columnIndex,
-            "index"
-          );
-          const cellElement = dataGridInstance.getCellElement(
-            rowIndex,
-            columnIndex
-          );
-          dataGridInstance.showContextMenuAt(cellElement);
-        }}
+        onShowing={handleContextMenuShowing}
+        onHiding={handleContextMenuHiding}
       />
     </main>
   );
