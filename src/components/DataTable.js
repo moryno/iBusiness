@@ -54,6 +54,7 @@ function DataTable({ data, startEdit }) {
   }
 
   function handleContextMenuShowing(e) {
+    console.log(e.currentTarget.dataset);
     const dataGrid = dataGridRef.current.instance;
     const rowIndex = dataGrid.getRowIndexByKey(e.currentTarget.dataset.rowKey);
     const columnIndex = e.currentTarget.dataset.columnIndex;
