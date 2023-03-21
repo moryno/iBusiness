@@ -114,7 +114,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           extendedCost * 0.25,
           extendedCost * 0.16,
           extendedCost - discountAmount,
-          currentUser?.fullname,
+          currentUser?.email,
           `${currentUser?.email}.${item.name}`
           );
 

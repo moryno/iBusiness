@@ -105,7 +105,7 @@ export const Table = ({ data, count, setMessage }) => {
             extendedCost * 0.25,
             extendedCost * 0.16,
             extendedCost - discountAmount,
-            currentUser?.fullname,
+            currentUser?.email,
             (currentUser?.fullname + item.name)
 
           );
