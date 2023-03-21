@@ -65,7 +65,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           extendedCost * 0.16,
           extendedCost - discountAmount,
           currentUser?.email,
-          (currentUser?.email + item.name)
+          `${currentUser?.email}.${rowIndex.data.item}`
           
 
           );
