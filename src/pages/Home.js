@@ -45,7 +45,6 @@ const Home = () => {
     console.log(selectedRow);
     setStatusMode("EditBooking");
     setOpen((isOpen) => !isOpen);
-    console.log(selectedRow.data);
     setSelectedBookingId(selectedRow.data.bookingId);
   };
 
@@ -117,7 +116,7 @@ const Home = () => {
         break;
     }
   };
-  console.log(singleBooking);
+
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <section>
