@@ -200,14 +200,17 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
     const handleRowRemoving = async(e) => {
       console.log(e.data);
       e.cancel = !window.confirm(confirmDeleteMessage(e.data));
-      try {
-        const response = await request.delete("PurchaseOrder/removeorderitem", e.data);
-        console.log(response);
-      } catch (e) {
-        console.log(e);
-        data.store().insert(e.data);
-        setMessage("Server error. Item was not removed.");
-      }
+      if (!e.cancel) { 
+        try {
+          const response = await request.delete("PurchaseOrder/removeorderitem", e.data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+          data.store().insert(e.data);
+          setMessage("Server error. Item was not removed.");
+        }
+      } 
+    
     };
     
     const confirmDeleteMessage = (rowIndex) => {
