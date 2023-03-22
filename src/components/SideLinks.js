@@ -9,6 +9,7 @@ import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
 import axios from "axios";
 import { sideMenuRequest } from "../helpers/requestMethod";
+import { AzureCosmos } from "../helpers/sideMenuRequest";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
@@ -35,57 +36,53 @@ const SideLinks = () => {
   };
 
   useEffect(() => {
-    const getSideMenus = async () => {
-      const { data } = await axios.get(sideMenuRequest);
-      setModuleCategory(data);
-    };
-    getSideMenus();
+    AzureCosmos().then((response) => setModuleCategory(response));
   }, []);
 
   return (
     <>
-      {moduleCategory.map((link) => {
-        const icon = getCategoryIcon(link.title);
+      {moduleCategory?.map((link) => {
+        const icon = getCategoryIcon(link.Title);
 
         return (
-          <div key={link.title}>
+          <div key={link.id}>
             <div className="cursor-pointer px-1 overflow-y-auto w-full max-h-80 scrollbar-hide bg-blend-overlay">
               <div
-                className="font-semibold text-sm sticky pl-2 py-1 bg-sidebarHeading text-heading top-0 flex justify-between  items-center w-full"
+                className="font-semibold text-xs sticky pl-2 py-0.5 bg-sidebarHeading text-heading top-0 flex justify-between  items-center w-full"
                 onClick={() =>
-                  heading !== link.title
-                    ? setHeading(link.title)
+                  heading !== link.Title
+                    ? setHeading(link.Title)
                     : setHeading("")
                 }
               >
                 <div className="flex items-center gap-1">
                   {icon}
-                  {link.title}
+                  {link.Title}
                 </div>
                 <div className="flex items-center">
-                  {heading !== link.title ? (
-                    <MdArrowDropUp fontSize={26} />
+                  {heading !== link.Title ? (
+                    <MdArrowDropUp fontSize={20} />
                   ) : (
-                    <MdArrowDropDown fontSize={26} />
+                    <MdArrowDropDown fontSize={20} />
                   )}
                 </div>
               </div>
-              {link.subMenu && (
+              {link.SubMenu && (
                 <div
                   className={`
-              ${heading === link.title && "hidden"}
+              ${heading === link.Title && "hidden"}
               `}
                 >
                   <div className="">
                     <div className="px-2">
-                      {link.subLinks.map((mysublinks) => (
+                      {link.SubLinks.map((mysublinks) => (
                         <div
                           className="flex items-center gap-1 hover:bg-[#f5f5f5]"
-                          key={mysublinks.name}
+                          key={mysublinks.Name}
                         >
                           <RxDot />
-                          <li className="text-xl font-normal text-sideMenu py-1.5">
-                            <Link to={mysublinks.link}>{mysublinks.name}</Link>
+                          <li className="text-xs font-normal text-sideMenu py-1.5">
+                            <Link to={mysublinks.Link}>{mysublinks.Name}</Link>
                           </li>
                         </div>
                       ))}

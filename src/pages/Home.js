@@ -117,7 +117,7 @@ const Home = () => {
               <div className="flex flex-col gap-2 md:flex-row w-full md:py-2">
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
                   <label
-                    className="font-medium text-xs  text-gray-600"
+                    className="font-semibold text-xs  text-gray-600"
                     htmlFor="fromDate"
                   >
                     From Date:
@@ -133,7 +133,7 @@ const Home = () => {
                 </div>
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
                   <label
-                    className="font-medium text-xs  text-gray-600"
+                    className="font-semibold text-xs  text-gray-600"
                     htmlFor="toDate"
                   >
                     To Date:
