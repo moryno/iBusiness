@@ -60,6 +60,11 @@ function DataTable({ data, startEdit }) {
   const handleContextMenu = (e) => {
     // e.preventDefault();
     console.log(e + "   function to handle the context menu event");
+    console.log(JSON.stringify(e) + "   functent");
+    for (let key in e) {
+      console.log(key + ":", e[key], +" for loop to see what e has");
+    }
+
     setContextMenuTarget(e.cellElement);
   };
   console.log(contextMenuTarget);

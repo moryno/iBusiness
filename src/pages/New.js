@@ -402,7 +402,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.booking.schemePosition
+                          ? editInput.booking?.schemePosition
                           : formInput.schemePosition
                       }
                     />
@@ -459,7 +459,7 @@ const New = ({
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.booking.paymentMode
+                          ? editInput.booking?.paymentMode
                           : paymentMode
                       }
                       className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
@@ -481,7 +481,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.booking.externalSchemeAdmin
+                          ? editInput.booking?.externalSchemeAdmin
                           : formInput.externalSchemeAdmin
                       }
                     />
@@ -503,7 +503,7 @@ const New = ({
                     onChange={handleChange}
                     value={
                       statusMode === "EditBooking"
-                        ? editInput.booking.additionalRequirements
+                        ? editInput.booking?.additionalRequirements
                         : formInput.additionalRequirements
                     }
                   ></textarea>
