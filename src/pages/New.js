@@ -151,7 +151,7 @@ const New = ({
       </section>
       <section className="md:p-3">
         <article className="text-formHeadingColor md:rounded-t-sm p-1 md:py-2 md:px-10 form-heading">
-          <h2 className="text-base flex justify-center md:justify-start font-medium opacity-90">
+          <h2 className="text-xl flex justify-center md:justify-start font-medium opacity-90">
             {heading}
           </h2>
           <p className="text-sm text-center md:text-left">
