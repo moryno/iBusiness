@@ -121,6 +121,7 @@ const New = ({
     // Update Booking information
     const editData = {
       user: {
+        userID: singleBooking.user.userID,
         fullName,
         idNumber,
         email,
