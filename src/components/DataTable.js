@@ -38,16 +38,9 @@ function DataTable({ data, startEdit }) {
     }
   }
 
-  const [contextMenuVisible, setContextMenuVisible] = useState(false);
-  const [contextMenuPosition, setContextMenuPosition] = useState({
-    x: 0,
-    y: 0,
-  });
-
-  const handleRowClick = (e) => {
-    setContextMenuVisible(true);
-    setContextMenuPosition({ x: e.event.clientX, y: e.event.clientY });
-  };
+  // const handleRowClick = (e) => {
+  //   setContextMenuVisible(true);
+  // };
 
   function handleContextMenuHiding() {
     setContextMenuTarget(null);
@@ -66,6 +59,7 @@ function DataTable({ data, startEdit }) {
   // Define a function to handle the context menu event
   const handleContextMenu = (e) => {
     e.preventDefault();
+    console.log(e + "   function to handle the context menu event");
     setContextMenuTarget(e.cellElement);
   };
   console.log(contextMenuTarget);
@@ -82,6 +76,7 @@ function DataTable({ data, startEdit }) {
         keyExpr="bookingId"
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
+        onRowClick={handleContextMenu}
         allowColumnReordering={true}
         allowColumnResizing={true}
         columnMinWidth={100}

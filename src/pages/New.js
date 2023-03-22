@@ -154,7 +154,7 @@ const New = ({
           <h2 className="text-xl flex justify-center md:justify-start font-medium opacity-90">
             {heading}
           </h2>
-          <p className="text-sm text-center md:text-left">
+          <p className="text-xs text-center md:text-left">
             Enter all the booking information in the fields below then tap on
             save.
           </p>
@@ -169,7 +169,7 @@ const New = ({
                       Full Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="fullName"
                       name="fullName"
@@ -186,7 +186,7 @@ const New = ({
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="idNumber"
                       name="idNumber"
@@ -203,7 +203,7 @@ const New = ({
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="email"
                       name="email"
@@ -223,7 +223,7 @@ const New = ({
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="telephone"
                       name="telephone"
@@ -243,7 +243,7 @@ const New = ({
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="employerName"
                       name="employerName"
@@ -263,7 +263,7 @@ const New = ({
                       Experience:<sup className=" text-red-600">*</sup>
                     </label>
                     <NumberBox
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       height={28}
                       id="experience"
                       name="experience"
@@ -286,7 +286,7 @@ const New = ({
                       value={selectedCountry}
                       placeholder="Select a Country"
                       height={28}
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -294,7 +294,7 @@ const New = ({
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="position"
                       name="position"
@@ -314,7 +314,7 @@ const New = ({
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
@@ -341,7 +341,7 @@ const New = ({
                       height={28}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
                       value={selectedStatus}
-                      className="rounded-[3px] p-2.5 text-center border border-gray-300 text-[14px] pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
+                      className="rounded-[3px] text-center border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
                   <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
@@ -359,7 +359,7 @@ const New = ({
                       height={28}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
                       value={schemeOptions}
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
@@ -381,7 +381,7 @@ const New = ({
                       height={28}
                       onValueChanged={(e) => setBookingType(e.value)}
                       value={bookingType}
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -392,7 +392,7 @@ const New = ({
                       Sch Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] h-7 border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] h-7 border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="schemePosition"
                       name="schemePosition"
@@ -419,7 +419,7 @@ const New = ({
                       height={28}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
                       value={trainingVenue}
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
 
@@ -437,7 +437,7 @@ const New = ({
                       height={28}
                       onValueChanged={(e) => setCourseDate(e.value)}
                       value={courseDate}
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -459,7 +459,7 @@ const New = ({
                           ? editInput.paymentMode
                           : paymentMode
                       }
-                      className="rounded-[3px] border border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -471,7 +471,7 @@ const New = ({
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border h-7 border-gray-300 text-[14px] pl-1 w-full md:w-[70%]  outline-none"
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
@@ -493,7 +493,7 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className="rounded-[3px] border border-gray-300  resize-none text-[14px] pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    className="rounded-[3px] border border-gray-300  resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"

@@ -10,13 +10,14 @@ import MobileMenus from "../components/MobileMenus";
 import Portal from "../components/Portal";
 import request from "../helpers/requestMethod";
 import New from "./New";
-import { bookingFormInputs } from "../helpers/formSource";
+
 import { setupLogin } from "../helpers/auth";
 import { loginSuccess } from "../redux/userSlice";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
+  const [selectedBookingId, setSelectedBookingId] = useState({});
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
@@ -28,6 +29,7 @@ const Home = () => {
 
   const today = new Date().toISOString().slice(0, 10);
 
+  // Fuction to get date change
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInput({ ...input, [name]: value });
@@ -42,9 +44,10 @@ const Home = () => {
   const startEdit = (selectedRow) => {
     setStatusMode("EditBooking");
     setOpen((isOpen) => !isOpen);
-    setSingleBooking(selectedRow.data);
+    setSelectedBookingId(selectedRow.data.bookingId);
   };
 
+  // This Hook is to fetch user information after successfully login
   useEffect(() => {
     const getUser = async () => {
       const { data } = await request.get("/User");
@@ -58,6 +61,7 @@ const Home = () => {
     }
   }, [token, dispatch]);
 
+  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid is double clicked
   useEffect(() => {
     try {
       const getData = async () => {
@@ -74,6 +78,18 @@ const Home = () => {
     }
   }, [date]);
 
+  // This Hook is to fetch single booking when a row in the datagrid is double clicked
+  useEffect(() => {
+    const getSingleBooking = async () => {
+      const { data } = await request.get(
+        `Booking?bookingID=${selectedBookingId}`
+      );
+      setSingleBooking(data);
+    };
+    getSingleBooking();
+  }, [selectedBookingId]);
+
+  // This fucntion is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
@@ -123,7 +139,7 @@ const Home = () => {
                     From Date:
                   </label>
                   <input
-                    className="border border-gray-300 w-1/2 outline-none rounded-sm"
+                    className="border text-sm border-gray-300 w-1/2 outline-none rounded-sm"
                     type="date"
                     id="fromDate"
                     onChange={handleChange}
@@ -139,7 +155,7 @@ const Home = () => {
                     To Date:
                   </label>
                   <input
-                    className="border border-gray-300 w-1/2 outline-none rounded-sm"
+                    className="border text-sm border-gray-300 w-1/2 outline-none rounded-sm"
                     type="date"
                     id="toDate"
                     onChange={handleChange}
