@@ -109,27 +109,27 @@ const New = ({
 
     const editData = {
       user: {
-        fullName: editInput.fullName,
-        idNumber: editInput.idNumber,
-        email: editInput.email,
-        telephone: editInput.telephone,
-        physicalAddress: editInput.physicalAddress,
-        employerName: editInput.employerName,
+        fullName: editInput.user.fullName,
+        idNumber: editInput.user.idNumber,
+        email: editInput.user.email,
+        telephone: editInput.user.telephone,
+        physicalAddress: editInput.user.physicalAddress,
+        employerName: editInput.user.employerName,
         experience,
-        position: editInput.position,
+        position: editInput.user.position,
         disabilityStatus: selectedStatus,
       },
       booking: {
-        bookingId: singleBooking.bookingId,
+        bookingId: singleBooking.booking.bookingId,
         bookingType,
         retirementSchemeName: schemeOptions,
-        schemePosition: editInput.schemePosition,
+        schemePosition: editInput.booking.schemePosition,
         originCountry: selectedCountry,
         trainingVenue,
         courseDate,
         paymentMode,
-        additionalRequirements: editInput.additionalRequirements,
-        externalSchemeAdmin: editInput.externalSchemeAdmin,
+        additionalRequirements: editInput.booking.additionalRequirements,
+        externalSchemeAdmin: editInput.booking.externalSchemeAdmin,
       },
     };
     console.log(editData);
@@ -204,7 +204,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.fullName
+                          ? editInput.user?.fullName
                           : formInput.fullName
                       }
                     />
@@ -221,7 +221,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.idNumber
+                          ? editInput.user?.idNumber
                           : formInput.idNumber
                       }
                     />
@@ -238,7 +238,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.email
+                          ? editInput.user?.email
                           : formInput.email
                       }
                     />
@@ -258,7 +258,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.telephone
+                          ? editInput.user?.telephone
                           : formInput.telephone
                       }
                     />
@@ -278,7 +278,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.employerName
+                          ? editInput.user?.employerName
                           : formInput.employerName
                       }
                     />
@@ -322,14 +322,14 @@ const New = ({
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="position"
                       name="position"
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.position
+                          ? editInput.user?.position
                           : formInput.position
                       }
                     />
@@ -342,14 +342,14 @@ const New = ({
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <input
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
+                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.physicalAddress
+                          ? editInput.user?.physicalAddress
                           : formInput.physicalAddress
                       }
                     />
@@ -427,7 +427,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.schemePosition
+                          ? editInput.booking?.schemePosition
                           : formInput.schemePosition
                       }
                     />
@@ -484,7 +484,7 @@ const New = ({
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.paymentMode
+                          ? editInput.booking?.paymentMode
                           : paymentMode
                       }
                       className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
@@ -506,7 +506,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.externalSchemeAdmin
+                          ? editInput.booking?.externalSchemeAdmin
                           : formInput.externalSchemeAdmin
                       }
                     />
@@ -528,7 +528,7 @@ const New = ({
                     onChange={handleChange}
                     value={
                       statusMode === "EditBooking"
-                        ? editInput.additionalRequirements
+                        ? editInput.booking?.additionalRequirements
                         : formInput.additionalRequirements
                     }
                   ></textarea>
