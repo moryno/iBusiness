@@ -59,7 +59,7 @@ function DataTable({ data, startEdit }) {
   // Define a function to handle the context menu event
   const handleContextMenu = (e) => {
     // e.preventDefault();
-    console.log(e.cellElement + "   function to handle the context menu event");
+    console.log(e + "   function to handle the context menu event");
     setContextMenuTarget(e.cellElement);
   };
   console.log(contextMenuTarget);

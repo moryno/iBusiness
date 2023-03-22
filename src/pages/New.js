@@ -22,29 +22,29 @@ const New = ({
   const [formInput, setFormInputs] = useState({});
   const [editInput, setEditInputs] = useState(singleBooking);
   const [experience, setExperience] = useState(
-    statusMode === "EditBooking" ? editInput.user.experience : 0
+    statusMode === "EditBooking" ? editInput.user?.experience : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditBooking" ? editInput.user.originCountry : "Kenya"
+    statusMode === "EditBooking" ? editInput.user?.originCountry : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
     statusMode === "EditBooking"
-      ? editInput.user.disabilityStatus
+      ? editInput.user?.disabilityStatus
       : "Not Disabled"
   );
   const [schemeOptions, setSchemeOptions] = useState(
     statusMode === "EditBooking"
-      ? editInput.booking.retirementSchemeName
+      ? editInput.booking?.retirementSchemeName
       : "A I C KIJABE PRINTING"
   );
   const [bookingType, setBookingType] = useState(
-    statusMode === "EditBooking" ? editInput.booking.bookingType : "First Time"
+    statusMode === "EditBooking" ? editInput.booking?.bookingType : "First Time"
   );
   const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditBooking" ? editInput.booking.trainingVenue : "INHOUSE"
+    statusMode === "EditBooking" ? editInput.booking?.trainingVenue : "INHOUSE"
   );
   const [courseDate, setCourseDate] = useState(
-    statusMode === "EditBooking" ? editInput.booking.courseDate : today
+    statusMode === "EditBooking" ? editInput.booking?.courseDate : today
   );
   const [paymentMode, setPaymentMode] = useState("Cheque");
 
@@ -85,26 +85,26 @@ const New = ({
 
     const editData = {
       user: {
-        fullName: editInput.user.fullName,
-        idNumber: editInput.user.idNumber,
-        email: editInput.user.email,
-        telephone: editInput.user.telephone,
-        physicalAddress: editInput.user.physicalAddress,
-        employerName: editInput.user.employerName,
+        fullName: editInput.user?.fullName,
+        idNumber: editInput.user?.idNumber,
+        email: editInput.user?.email,
+        telephone: editInput.user?.telephone,
+        physicalAddress: editInput.user?.physicalAddress,
+        employerName: editInput.user?.employerName,
         experience,
-        position: editInput.user.position,
+        position: editInput.user?.position,
         disabilityStatus: selectedStatus,
       },
       booking: {
         bookingType,
         retirementSchemeName: schemeOptions,
-        schemePosition: editInput.booking.schemePosition,
+        schemePosition: editInput.booking?.schemePosition,
         originCountry: selectedCountry,
         trainingVenue,
         courseDate,
         paymentMode,
-        additionalRequirements: editInput.booking.additionalRequirements,
-        externalSchemeAdmin: editInput.booking.externalSchemeAdmin,
+        additionalRequirements: editInput.booking?.additionalRequirements,
+        externalSchemeAdmin: editInput.booking?.externalSchemeAdmin,
       },
     };
     console.log(editData);
@@ -179,7 +179,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.fullName
+                          ? editInput.user?.fullName
                           : formInput.fullName
                       }
                     />
@@ -196,7 +196,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.idNumber
+                          ? editInput.user?.idNumber
                           : formInput.idNumber
                       }
                     />
@@ -213,7 +213,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.email
+                          ? editInput.user?.email
                           : formInput.email
                       }
                     />
@@ -233,7 +233,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.telephone
+                          ? editInput.user?.telephone
                           : formInput.telephone
                       }
                     />
@@ -253,7 +253,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.employerName
+                          ? editInput.user?.employerName
                           : formInput.employerName
                       }
                     />
@@ -304,7 +304,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.position
+                          ? editInput.user?.position
                           : formInput.position
                       }
                     />
@@ -324,7 +324,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user.physicalAddress
+                          ? editInput.user?.physicalAddress
                           : formInput.physicalAddress
                       }
                     />

@@ -42,7 +42,6 @@ const Home = () => {
   };
   // Fuction to edit row
   const startEdit = (selectedRow) => {
-    console.log(selectedRow);
     setStatusMode("EditBooking");
     setOpen((isOpen) => !isOpen);
     setSelectedBookingId(selectedRow.data.bookingId);
