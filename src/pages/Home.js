@@ -17,7 +17,7 @@ import { loginSuccess } from "../redux/userSlice";
 const Home = () => {
   const [data, setData] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
-  const [selectedBookingId, setSelectedBookingId] = useState({});
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
@@ -86,7 +86,7 @@ const Home = () => {
       );
       setSingleBooking(data);
     };
-    getSingleBooking();
+    if (selectedBookingId) getSingleBooking();
   }, [selectedBookingId]);
 
   // This fucntion is used to toggle between each menu botton clicks

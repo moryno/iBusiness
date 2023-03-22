@@ -19,24 +19,41 @@ const New = ({
   statusBarText,
   statusMode,
 }) => {
-  const [formInput, setFormInputs] = useState({});
-  const [editInput, setEditInputs] = useState({
-    user: {
-      fullName: singleBooking.user?.fullName,
-      idNumber: singleBooking.user?.idNumber,
-      email: singleBooking.user?.email,
-      telephone: singleBooking.user?.telephone,
-      physicalAddress: singleBooking.user?.physicalAddress,
-      employerName: singleBooking.user?.employerName,
-      position: singleBooking.user?.position,
-    },
-    booking: {
-      bookingId: singleBooking.booking?.bookingId,
-      schemePosition: singleBooking.booking?.schemePosition,
-      additionalRequirements: singleBooking.booking?.additionalRequirements,
-      externalSchemeAdmin: singleBooking.booking?.externalSchemeAdmin,
-    },
-  });
+  // Define state to store the change in the input field
+  // Code starts here
+  const [fullName, setFullName] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
+  );
+  const [idNumber, setIdNumber] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.idNumber : ""
+  );
+  const [email, setEmail] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.email : ""
+  );
+  const [telephone, setTelephone] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.telephone : ""
+  );
+  const [physicalAddress, setPhysicalAddress] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.physicalAddress : ""
+  );
+  const [employerName, setEmployerName] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.employerName : ""
+  );
+  const [position, setPosition] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.position : ""
+  );
+  const [schemePosition, setSchemePosition] = useState(
+    statusMode === "EditBooking" ? singleBooking.booking?.schemePosition : ""
+  );
+  const [additionalRequirements, setAdditionalRequirements] = useState(
+    statusMode === "EditBooking"
+      ? singleBooking.booking?.additionalRequirements
+      : ""
+  );
+  const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
+    statusMode === "EditBooking" ? singleBooking.user?.originCountry : ""
+  );
+
   const [experience, setExperience] = useState(
     statusMode === "EditBooking" ? singleBooking.user?.experience : 0
   );
@@ -71,68 +88,64 @@ const New = ({
       ? singleBooking.booking?.paymentMode
       : "INHOUSE"
   );
+  // Code ends here
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    if (statusMode === "CreateBooking") {
-      setFormInputs({ ...formInput, [name]: value });
-    }
-    setEditInputs({ ...editInput, [name]: value });
-  };
-
+  // A function to save the booking details to the backend then populate the datagrid
   const save = async () => {
+    // Create Booking information
     const formData = {
       user: {
-        fullName: formInput.fullName,
-        idNumber: formInput.idNumber,
-        email: formInput.email,
-        telephone: formInput.telephone,
-        physicalAddress: formInput.physicalAddress,
-        employerName: formInput.employerName,
+        fullName,
+        idNumber,
+        email,
+        telephone,
+        physicalAddress,
+        employerName,
         experience,
-        position: formInput.position,
+        position,
         disabilityStatus: selectedStatus,
       },
       booking: {
         bookingType,
         retirementSchemeName: schemeOptions,
-        schemePosition: formInput.schemePosition,
+        schemePosition,
         originCountry: selectedCountry,
         trainingVenue,
         courseDate,
         paymentMode,
-        additionalRequirements: formInput.additionalRequirements,
-        externalSchemeAdmin: formInput.externalSchemeAdmin,
+        additionalRequirements,
+        externalSchemeAdmin,
       },
     };
 
+    // Update Booking information
     const editData = {
       user: {
-        fullName: editInput.user.fullName,
-        idNumber: editInput.user.idNumber,
-        email: editInput.user.email,
-        telephone: editInput.user.telephone,
-        physicalAddress: editInput.user.physicalAddress,
-        employerName: editInput.user.employerName,
+        fullName,
+        idNumber,
+        email,
+        telephone,
+        physicalAddress,
+        employerName,
         experience,
-        position: editInput.user.position,
+        position,
         disabilityStatus: selectedStatus,
       },
       booking: {
         bookingId: singleBooking.booking.bookingId,
         bookingType,
         retirementSchemeName: schemeOptions,
-        schemePosition: editInput.booking.schemePosition,
+        schemePosition,
         originCountry: selectedCountry,
         trainingVenue,
         courseDate,
         paymentMode,
-        additionalRequirements: editInput.booking.additionalRequirements,
-        externalSchemeAdmin: editInput.booking.externalSchemeAdmin,
+        additionalRequirements,
+        externalSchemeAdmin,
       },
     };
-    console.log(editData);
+
+    // Check to save depending on the current mode
     if (statusMode === "CreateBooking") {
       try {
         const { data } = await request.post("/Booking/Create", formData);
@@ -145,7 +158,7 @@ const New = ({
     } else {
       try {
         const { data } = await request.put("/Booking/UpdateBooking", editData);
-        console.log(data);
+
         const newBooking = bookings.map((booking) => {
           if (booking.bookingId === data?.Booking.bookingId) {
             return data?.Booking;
@@ -201,12 +214,8 @@ const New = ({
                       type="text"
                       id="fullName"
                       name="fullName"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.fullName
-                          : formInput.fullName
-                      }
+                      onChange={(e) => setFullName(e.target.value)}
+                      value={fullName}
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
@@ -218,12 +227,8 @@ const New = ({
                       type="text"
                       id="idNumber"
                       name="idNumber"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.idNumber
-                          : formInput.idNumber
-                      }
+                      onChange={(e) => setIdNumber(e.target.value)}
+                      value={idNumber}
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -235,12 +240,8 @@ const New = ({
                       type="text"
                       id="email"
                       name="email"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.email
-                          : formInput.email
-                      }
+                      onChange={(e) => setEmail(e.target.value)}
+                      value={email}
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
@@ -255,12 +256,8 @@ const New = ({
                       type="text"
                       id="telephone"
                       name="telephone"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.telephone
-                          : formInput.telephone
-                      }
+                      onChange={(e) => setTelephone(e.target.value)}
+                      value={telephone}
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -275,12 +272,8 @@ const New = ({
                       type="text"
                       id="employerName"
                       name="employerName"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.employerName
-                          : formInput.employerName
-                      }
+                      onChange={(e) => setEmployerName(e.target.value)}
+                      value={employerName}
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -326,12 +319,8 @@ const New = ({
                       type="text"
                       id="position"
                       name="position"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.position
-                          : formInput.position
-                      }
+                      onChange={(e) => setPosition(e.target.value)}
+                      value={position}
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
@@ -346,12 +335,8 @@ const New = ({
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.user?.physicalAddress
-                          : formInput.physicalAddress
-                      }
+                      onChange={(e) => setPhysicalAddress(e.target.value)}
+                      value={physicalAddress}
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
@@ -424,12 +409,8 @@ const New = ({
                       type="text"
                       id="schemePosition"
                       name="schemePosition"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.booking?.schemePosition
-                          : formInput.schemePosition
-                      }
+                      onChange={(e) => setSchemePosition(e.target.value)}
+                      value={schemePosition}
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -482,11 +463,7 @@ const New = ({
                       name="paymentMode"
                       height={28}
                       onValueChanged={(e) => setPaymentMode(e.value)}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.booking?.paymentMode
-                          : paymentMode
-                      }
+                      value={paymentMode}
                       className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
@@ -503,12 +480,8 @@ const New = ({
                       type="text"
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
-                      onChange={handleChange}
-                      value={
-                        statusMode === "EditBooking"
-                          ? editInput.booking?.externalSchemeAdmin
-                          : formInput.externalSchemeAdmin
-                      }
+                      onChange={(e) => setExternalSchemeAdmin(e.target.value)}
+                      value={externalSchemeAdmin}
                     />
                   </div>
                 </article>
@@ -525,12 +498,8 @@ const New = ({
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
-                    onChange={handleChange}
-                    value={
-                      statusMode === "EditBooking"
-                        ? editInput.booking?.additionalRequirements
-                        : formInput.additionalRequirements
-                    }
+                    onChange={(e) => setAdditionalRequirements(e.target.value)}
+                    value={additionalRequirements}
                   ></textarea>
                 </div>
               </section>
