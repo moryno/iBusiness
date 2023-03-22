@@ -20,33 +20,57 @@ const New = ({
   statusMode,
 }) => {
   const [formInput, setFormInputs] = useState({});
-  const [editInput, setEditInputs] = useState(singleBooking);
+  const [editInput, setEditInputs] = useState({
+    user: {
+      fullName: singleBooking.user?.fullName,
+      idNumber: singleBooking.user?.idNumber,
+      email: singleBooking.user?.email,
+      telephone: singleBooking.user?.telephone,
+      physicalAddress: singleBooking.user?.physicalAddress,
+      employerName: singleBooking.user?.employerName,
+      position: singleBooking.user?.position,
+    },
+    booking: {
+      bookingId: singleBooking.booking?.bookingId,
+      schemePosition: singleBooking.booking?.schemePosition,
+      additionalRequirements: singleBooking.booking?.additionalRequirements,
+      externalSchemeAdmin: singleBooking.booking?.externalSchemeAdmin,
+    },
+  });
   const [experience, setExperience] = useState(
-    statusMode === "EditBooking" ? editInput.user?.experience : 0
+    statusMode === "EditBooking" ? singleBooking.user?.experience : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditBooking" ? editInput.user?.originCountry : "Kenya"
+    statusMode === "EditBooking" ? singleBooking.user?.originCountry : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
     statusMode === "EditBooking"
-      ? editInput.user?.disabilityStatus
+      ? singleBooking.user?.disabilityStatus
       : "Not Disabled"
   );
   const [schemeOptions, setSchemeOptions] = useState(
     statusMode === "EditBooking"
-      ? editInput.booking?.retirementSchemeName
+      ? singleBooking.booking?.retirementSchemeName
       : "A I C KIJABE PRINTING"
   );
   const [bookingType, setBookingType] = useState(
-    statusMode === "EditBooking" ? editInput.booking?.bookingType : "First Time"
+    statusMode === "EditBooking"
+      ? singleBooking.booking?.bookingType
+      : "First Time"
   );
   const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditBooking" ? editInput.booking?.trainingVenue : "INHOUSE"
+    statusMode === "EditBooking"
+      ? singleBooking.booking?.trainingVenue
+      : "INHOUSE"
   );
   const [courseDate, setCourseDate] = useState(
-    statusMode === "EditBooking" ? editInput.booking?.courseDate : today
+    statusMode === "EditBooking" ? singleBooking.booking?.courseDate : today
   );
-  const [paymentMode, setPaymentMode] = useState("Cheque");
+  const [paymentMode, setPaymentMode] = useState(
+    statusMode === "EditBooking"
+      ? singleBooking.booking?.paymentMode
+      : "INHOUSE"
+  );
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -85,26 +109,27 @@ const New = ({
 
     const editData = {
       user: {
-        fullName: editInput.user?.fullName,
-        idNumber: editInput.user?.idNumber,
-        email: editInput.user?.email,
-        telephone: editInput.user?.telephone,
-        physicalAddress: editInput.user?.physicalAddress,
-        employerName: editInput.user?.employerName,
+        fullName: editInput.fullName,
+        idNumber: editInput.idNumber,
+        email: editInput.email,
+        telephone: editInput.telephone,
+        physicalAddress: editInput.physicalAddress,
+        employerName: editInput.employerName,
         experience,
-        position: editInput.user?.position,
+        position: editInput.position,
         disabilityStatus: selectedStatus,
       },
       booking: {
+        bookingId: singleBooking.bookingId,
         bookingType,
         retirementSchemeName: schemeOptions,
-        schemePosition: editInput.booking?.schemePosition,
+        schemePosition: editInput.schemePosition,
         originCountry: selectedCountry,
         trainingVenue,
         courseDate,
         paymentMode,
-        additionalRequirements: editInput.booking?.additionalRequirements,
-        externalSchemeAdmin: editInput.booking?.externalSchemeAdmin,
+        additionalRequirements: editInput.additionalRequirements,
+        externalSchemeAdmin: editInput.externalSchemeAdmin,
       },
     };
     console.log(editData);
@@ -122,8 +147,8 @@ const New = ({
         const { data } = await request.put("/Booking/UpdateBooking", editData);
         console.log(data);
         const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === data?.Booking.booking.bookingId) {
-            return data?.Booking.booking;
+          if (booking.bookingId === data?.Booking.bookingId) {
+            return data?.Booking;
           }
           return booking;
         });
@@ -179,7 +204,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.fullName
+                          ? editInput.fullName
                           : formInput.fullName
                       }
                     />
@@ -196,7 +221,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.idNumber
+                          ? editInput.idNumber
                           : formInput.idNumber
                       }
                     />
@@ -213,7 +238,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.email
+                          ? editInput.email
                           : formInput.email
                       }
                     />
@@ -233,7 +258,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.telephone
+                          ? editInput.telephone
                           : formInput.telephone
                       }
                     />
@@ -253,7 +278,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.employerName
+                          ? editInput.employerName
                           : formInput.employerName
                       }
                     />
@@ -304,7 +329,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.position
+                          ? editInput.position
                           : formInput.position
                       }
                     />
@@ -324,7 +349,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.user?.physicalAddress
+                          ? editInput.physicalAddress
                           : formInput.physicalAddress
                       }
                     />
@@ -402,7 +427,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.booking?.schemePosition
+                          ? editInput.schemePosition
                           : formInput.schemePosition
                       }
                     />
@@ -459,7 +484,7 @@ const New = ({
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.booking?.paymentMode
+                          ? editInput.paymentMode
                           : paymentMode
                       }
                       className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
@@ -481,7 +506,7 @@ const New = ({
                       onChange={handleChange}
                       value={
                         statusMode === "EditBooking"
-                          ? editInput.booking?.externalSchemeAdmin
+                          ? editInput.externalSchemeAdmin
                           : formInput.externalSchemeAdmin
                       }
                     />
@@ -503,7 +528,7 @@ const New = ({
                     onChange={handleChange}
                     value={
                       statusMode === "EditBooking"
-                        ? editInput.booking?.additionalRequirements
+                        ? editInput.additionalRequirements
                         : formInput.additionalRequirements
                     }
                   ></textarea>
