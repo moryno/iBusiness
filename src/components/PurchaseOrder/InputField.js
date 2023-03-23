@@ -62,10 +62,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           extendedCost * 0.25,
           extendedCost * 0.16,
           extendedCost - discountAmount,
-          currentUser?.email,
-          `${currentUser?.email}.${item.name}`
-          
-
+          currentUser?.email ?? "None",
+          `${currentUser?.email}.${item.name}` ?? "None"
           );
 
           data.store().insert(itemtoadd.data());
@@ -75,6 +73,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           setSelectedOption(null);
           setQuantity();
           selectboxRef.current.instance.focus();
+          console.log(itemtoadd);
           
           // try {
           //   const data = {
@@ -112,8 +111,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           extendedCost * 0.25,
           extendedCost * 0.16,
           extendedCost - discountAmount,
-          currentUser?.email,
-          `${currentUser?.email}.${item.name}`
+          currentUser?.email ?? "None",
+          `${currentUser?.email}.${item.name}` ?? "None"
           );
 
           data.store().remove(itemtoupdate);

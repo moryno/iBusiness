@@ -15,11 +15,9 @@ import DataGrid, {
   Export,
 } from "devextreme-react/data-grid";
 import { ContextMenu } from "devextreme-react/context-menu";
-
 import { getDataGridRef } from "../helpers/datagridFunctions";
-import { bookingColumns } from "../data/PurchaseOrderData";
 
-function DataTable({ data, startEdit }) {
+function DataTable({ data, startEdit, columns, keyExpr }) {
   const [collapsed, setCollapsed] = useState(false);
   // Define a state variable to hold the context menu target element
   const [contextMenuTarget, setContextMenuTarget] = useState(null);
@@ -74,11 +72,11 @@ function DataTable({ data, startEdit }) {
         id="bookingGrid"
         className={"dx-card wide-card"}
         dataSource={data}
-        columns={bookingColumns}
+        columns={columns}
         showBorders={false}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
-        keyExpr="bookingId"
+        keyExpr={keyExpr}
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
         onRowClick={handleContextMenu}

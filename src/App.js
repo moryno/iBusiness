@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import { PurchaseOrder } from "./pages/PurchaseOrder";
 
 import Layout from "./components/Layout";
+import Orders from "./pages/Orders";
 
 function App() {
   const ProtectedRoute = ({ children }) => {
@@ -37,6 +38,10 @@ function App() {
           path: "/profile",
           element: <Profile />,
         },
+        {
+          path: "/orders",
+          element: <Orders />,
+        }
       ],
     },
   ]);
