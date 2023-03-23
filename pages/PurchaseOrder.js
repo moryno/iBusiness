@@ -55,8 +55,6 @@ export const PurchaseOrder = () => {
       tableData: data.store()._array
     }
 
-    console.log(confirmedData);
-
     setMessage("Submitting data...");      
         try {
           const { data } = await request.post("/PurchaseOrder/createpurchaseorder", confirmedData);
@@ -79,7 +77,7 @@ export const PurchaseOrder = () => {
         break;
 
       case "Close":
-        navigate("/");
+        navigate("/orders");
         break;
 
       default:
