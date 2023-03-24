@@ -32,7 +32,7 @@ function App() {
         },
         {
           path: "/purchase-order",
-          element: <PurchaseOrder />,
+          element: <PurchaseOrder orderstate={0}/>,
         },
         {
           path: "/profile",
@@ -41,6 +41,10 @@ function App() {
         {
           path: "/orders",
           element: <Orders />,
+        },
+        {
+          path: "/updateorder/:id",
+          element: <PurchaseOrder orderstate={1}/>,
         }
       ],
     },

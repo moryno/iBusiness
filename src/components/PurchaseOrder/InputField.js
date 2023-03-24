@@ -9,7 +9,7 @@ import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from 'devextreme-react/number-box';
 import ConfirmMessage from './ConfirmMessage';
 import { useSelector } from "react-redux";
-import request from "../../helpers/tempRequest";
+import request from "../../helpers/requestMethod";
 
 // Input section component
 
@@ -75,28 +75,28 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           selectboxRef.current.instance.focus();
           console.log(itemtoadd);
           
-          // try {
-          //   const data = {
-          //     "item" : item.name,
-          //     "quantity" : itemtoadd.quantity,
-          //     "unitCost" : item.amount,
-          //     "extendedCost" : itemtoadd.extendedCost,
-          //     "taxAmount" : itemtoadd.taxAmount,
-          //     "discountAmount" : itemtoadd.discountAmount,
-          //     "lineTotal" : itemtoadd.lineTotal,
-          //     "partitionKey" : itemtoadd.partitionKey,
-          //     "id" : itemtoadd.id
-          //   }
-          //   console.log(data);
-          //   const response = await request.post("PurchaseOrder/insertorderitems", data);
-          //   console.log(response);
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : itemtoadd.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
+            }
+            console.log(data);
+            const response = await request.post("PurchaseOrder/insertorderitems", data);
+            console.log(response);
 
-          // } catch(e) {
-          //   const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-          //   data.store().remove(itemtoremove);
-          //   data.reload();
-          //   console.log(e);
-          // }
+          } catch(e) {
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.reload();
+            console.log(e);
+          }
         
 
       } else if ( itemtoupdate.item === item.name ) {
@@ -124,29 +124,29 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
           setQuantity();
           selectboxRef.current.instance.focus();
 
-          // try {
-          //   const data = {
-          //     "item" : item.name,
-          //     "quantity" : itemtoadd.quantity,
-          //     "unitCost" : item.amount,
-          //     "extendedCost" : itemtoadd.extendedCost,
-          //     "taxAmount" : itemtoadd.taxAmount,
-          //     "discountAmount" : itemtoadd.discountAmount,
-          //     "lineTotal" : itemtoadd.lineTotal,
-          //     "partitionKey" : itemtoadd.partitionKey,
-          //     "id" : itemtoadd.id
-          //   }
-          //   console.log(data);
-          //   const response = await request.put("PurchaseOrder/updateorderitem", data);
-          //   console.log(response);
+          try {
+            const data = {
+              "item" : item.name,
+              "quantity" : itemtoadd.quantity,
+              "unitCost" : item.amount,
+              "extendedCost" : itemtoadd.extendedCost,
+              "taxAmount" : itemtoadd.taxAmount,
+              "discountAmount" : itemtoadd.discountAmount,
+              "lineTotal" : itemtoadd.lineTotal,
+              "partitionKey" : itemtoadd.partitionKey,
+              "id" : itemtoadd.id
+            }
+            console.log(data);
+            const response = await request.put("PurchaseOrder/updateorderitem", data);
+            console.log(response);
 
-          // } catch(e) {
-          //   const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-          //   data.store().remove(itemtoremove);
-          //   data.store().insert(itemtoupdate);
-          //   data.reload();
-          //   console.log(e);
-          // }
+          } catch(e) {
+            const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+            data.store().remove(itemtoremove);
+            data.store().insert(itemtoupdate);
+            data.reload();
+            console.log(e);
+          }
   
       }
     };

@@ -65,7 +65,6 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
 
     setContextMenuTarget(e.cellElement);
   };
-  console.log(contextMenuTarget);
   return (
     <main>
       <DataGrid
@@ -78,7 +77,7 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onRowDblClick={(e) => startEdit(e)}
+        onRowDblClick={startEdit}
         onRowClick={handleContextMenu}
         allowColumnReordering={true}
         allowColumnResizing={true}

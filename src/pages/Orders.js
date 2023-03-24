@@ -43,11 +43,6 @@ const Orders = () => {
   // };
   
   // Fuction to edit row
-  const startEdit = (selectedRow) => {
-    setStatusMode("EditBooking");
-    setOpen((isOpen) => !isOpen);
-    setSelectedBookingId(selectedRow.data.bookingId);
-  };
 
 
   // This Hook is to fetch all orders
@@ -67,6 +62,11 @@ const Orders = () => {
       console.log(error);
     }
   }, []);
+
+    const startEdit = (e) => {
+    navigate(`/updateorder/${e.data.orderNumber}`);
+  }
+
 
   // // This Hook is to fetch single booking when a row in the datagrid is double clicked
   // useEffect(() => {
@@ -93,7 +93,7 @@ const Orders = () => {
         console.log("Delete was clicked");
         break;
       case "Close":
-        console.log("Close was clicked");
+        navigate('/')
         break;
       case "Help":
         console.log("Help was clicked");

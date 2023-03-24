@@ -169,7 +169,7 @@ const Home = () => {
         </section>
 
         <section className="mt-5">
-          <DataTable data={data} columns={bookingColumns} keyExpr="bookingId" startEdit={startEdit} />
+          <DataTable data={data} columns={bookingColumns} keyExpr="bookingId" startEdit={(e) => (startEdit(e))} />
         </section>
       </section>
       {statusMode === "CreateBooking" ? (

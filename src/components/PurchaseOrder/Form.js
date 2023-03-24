@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react'
 import '../../assets/P_order.css';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -20,7 +20,7 @@ const dateString = `${year}-${month}-${day}`;
 
 // Form Component
 
-const Form = ({ setSubmitData, dataSent }) => {
+const Form = ({ formUpdateData, setSubmitData, orderState }) => {
     const [costCenter, setCostCenter] = useState();
     const [supplier, setSupplier] = useState();
     const [shipsTo, setShipsTo] = useState();
@@ -30,6 +30,21 @@ const Form = ({ setSubmitData, dataSent }) => {
     const [narration, setNarration] = useState();
     const [deliveryPeriod, setDeliveryPeriod] = useState();
     const [driverDetails, setdriverDetails] = useState();
+
+    useEffect(() => {
+      if (  orderState === 1) {
+      setCostCenter(formUpdateData.costCenter);
+      setSupplier(formUpdateData.supplier);
+      setShipsTo(formUpdateData.shipsTo);
+      setOrderDate(dateString);
+      setOrderAmount(formUpdateData.orderAmount);
+      setDeliveryPeriod(formUpdateData.deliveryPeriod);
+      setfirstDeliveryDate(dateString);
+      setdriverDetails(formUpdateData.driverDetails);
+      setNarration(formUpdateData.narration);
+
+      }
+    }, [formUpdateData])
 
     useEffect(
       () => {
@@ -45,6 +60,7 @@ const Form = ({ setSubmitData, dataSent }) => {
             vehicleDetails: driverDetails,
             narration: narration
           }
+          
         )
       }, [costCenter, supplier, shipsTo, orderDate, orderAmount, firstDeliveryDate, narration, deliveryPeriod, driverDetails, setSubmitData]
     )
