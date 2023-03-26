@@ -1,0 +1,53 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    
+}
+
+h1, h4, h5, h6 {
+    margin: 0;
+    padding-top: .5rem;
+}
+
+:root {
+    --blue: #0088ff;
+    --buttonblue: #0088ff;
+    --darkblue: #1063b3;
+    --grey: #575757;
+    --maroon: #ea0208;
+    --cream: #f9fcfe;
+
+  }
+.hero-header{
+    margin: 1.25rem;
+}
+.about-p {
+    text-align: center;
+    word-spacing: .1rem;
+    color: var(--grey);
+    width: 70%;
+    font-size: 1.25rem;
+   
+}
+
+@media screen and (max-width:767px) {
+    .about {
+        padding-left: 5%;
+        padding-right: 5%;
+        align-items: center;
+        margin-top: -15vh;
+    }
+
+    .about-p {
+        font-size: 1rem !important;
+        width: 80vw;
+        color: var(--grey);
+        word-spacing: 0;
+        flex: 2;
+        text-align: center;
+    }
+}
+    

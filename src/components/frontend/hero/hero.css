@@ -1,0 +1,156 @@
+/* Lander page */
+:root {
+  --blue: #0088ff;
+  --buttonblue: #0088ff;
+  --darkblue: #1063b3;
+  --grey: #575757;
+  --maroon: #ea0208;
+  --cream: #f9fcfe;
+
+}
+
+h1, h4, h5, h6 {
+  margin: 0;
+  padding-top: .5rem;
+}
+
+
+.hero-content {
+  padding-left: 4rem;
+  padding-right: 4rem;
+  margin-top: 4rem;
+  height: max-content;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: auto;
+
+}
+
+.hero-header {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+
+.landing-header {
+  color: var(--blue);
+  font-size: 3.1rem;
+  font-weight: 700;
+  word-spacing: 2px;
+  line-height: normal;
+}
+
+
+.info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 2rem;
+}
+
+.hero-image-div {
+  flex: 1;
+}
+
+.hero-image {
+  width: 40vw;
+  height: 55vh;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  transform: rotate();
+  border-radius: .1rem;
+}
+
+.hero-form-control {
+    display: block;
+    width: 25vw;
+    padding: 0.65rem 0.9rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--grey);
+    background-color: var(--cream);
+    background-clip: padding-box;
+    border: 1.5px solid var(--blue);
+    border-radius: 0.25rem;
+    -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .hero-form-control:focus {
+    border-color: var(--blue);
+    outline: none;
+    box-shadow: 2px 2px 2px var(--blue);
+  }
+
+
+
+
+  .landing-page-brand {
+    font-size: 2rem;
+    color: var(--blue);
+  }
+  
+  .lander-page-subtitle {
+    font-size: 1.3rem;
+    color: var(--grey);
+    margin-top: -.5rem;
+  }
+
+  .hero-landing-btn {
+    height: auto;
+    width: 10rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    
+  }
+
+
+@media screen and (max-width:767px) {
+
+  .hero-image-div {
+    display: none;
+  }
+
+  .hero-content {
+    padding-left: .2rem;
+    transform: scale(0.8);
+    margin-top: -5vh;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+
+  .hero-form-control {
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  .lander-page-subtitle {
+    font-size: 1.3rem;
+    color: var(--grey);
+    margin-top: -.5rem;
+    text-align: start;
+  }
+
+  .info {
+    gap: 3rem;
+  }
+
+  #hero-landing-btn {
+    width: vw;
+  }
+
+}
