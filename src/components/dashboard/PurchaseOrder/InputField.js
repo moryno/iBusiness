@@ -9,6 +9,7 @@ import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from "devextreme-react/number-box";
 import ConfirmMessage from "./ConfirmMessage";
 import { useSelector } from "react-redux";
+import request from "../../../helpers/requestMethod";
 
 // Input section component
 
@@ -57,8 +58,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        currentUser?.email,
-        `${currentUser?.email}.${item.name}`
+        currentUser?.email ?? "None",
+        `${currentUser?.email}.${item.name}` ?? "None"
       );
 
       data.store().insert(itemtoadd.data());
@@ -68,29 +69,34 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       setSelectedOption(null);
       setQuantity();
       selectboxRef.current.instance.focus();
+      console.log(itemtoadd);
 
-      // try {
-      //   const data = {
-      //     "item" : item.name,
-      //     "quantity" : itemtoadd.quantity,
-      //     "unitCost" : item.amount,
-      //     "extendedCost" : itemtoadd.extendedCost,
-      //     "taxAmount" : itemtoadd.taxAmount,
-      //     "discountAmount" : itemtoadd.discountAmount,
-      //     "lineTotal" : itemtoadd.lineTotal,
-      //     "partitionKey" : itemtoadd.partitionKey,
-      //     "id" : itemtoadd.id
-      //   }
-      //   console.log(data);
-      //   const response = await request.post("PurchaseOrder/insertorderitems", data);
-      //   console.log(response);
-
-      // } catch(e) {
-      //   const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-      //   data.store().remove(itemtoremove);
-      //   data.reload();
-      //   console.log(e);
-      // }
+      try {
+        const data = {
+          item: item.name,
+          quantity: itemtoadd.quantity,
+          unitCost: item.amount,
+          extendedCost: itemtoadd.extendedCost,
+          taxAmount: itemtoadd.taxAmount,
+          discountAmount: itemtoadd.discountAmount,
+          lineTotal: itemtoadd.lineTotal,
+          partitionKey: itemtoadd.partitionKey,
+          id: itemtoadd.id,
+        };
+        console.log(data);
+        const response = await request.post(
+          "PurchaseOrder/insertorderitems",
+          data
+        );
+        console.log(response);
+      } catch (e) {
+        const itemtoremove = data
+          .store()
+          ._array.find((x) => x.item === item.name);
+        data.store().remove(itemtoremove);
+        data.reload();
+        console.log(e);
+      }
     } else if (itemtoupdate.item === item.name) {
       let newquantity = quantity + itemtoupdate.quantity;
       let extendedCost = item.amount * newquantity;
@@ -103,8 +109,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        currentUser?.email,
-        `${currentUser?.email}.${item.name}`
+        currentUser?.email ?? "None",
+        `${currentUser?.email}.${item.name}` ?? "None"
       );
 
       data.store().remove(itemtoupdate);
@@ -116,29 +122,33 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       setQuantity();
       selectboxRef.current.instance.focus();
 
-      // try {
-      //   const data = {
-      //     "item" : item.name,
-      //     "quantity" : itemtoadd.quantity,
-      //     "unitCost" : item.amount,
-      //     "extendedCost" : itemtoadd.extendedCost,
-      //     "taxAmount" : itemtoadd.taxAmount,
-      //     "discountAmount" : itemtoadd.discountAmount,
-      //     "lineTotal" : itemtoadd.lineTotal,
-      //     "partitionKey" : itemtoadd.partitionKey,
-      //     "id" : itemtoadd.id
-      //   }
-      //   console.log(data);
-      //   const response = await request.put("PurchaseOrder/updateorderitem", data);
-      //   console.log(response);
-
-      // } catch(e) {
-      //   const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-      //   data.store().remove(itemtoremove);
-      //   data.store().insert(itemtoupdate);
-      //   data.reload();
-      //   console.log(e);
-      // }
+      try {
+        const data = {
+          item: item.name,
+          quantity: itemtoadd.quantity,
+          unitCost: item.amount,
+          extendedCost: itemtoadd.extendedCost,
+          taxAmount: itemtoadd.taxAmount,
+          discountAmount: itemtoadd.discountAmount,
+          lineTotal: itemtoadd.lineTotal,
+          partitionKey: itemtoadd.partitionKey,
+          id: itemtoadd.id,
+        };
+        console.log(data);
+        const response = await request.put(
+          "PurchaseOrder/updateorderitem",
+          data
+        );
+        console.log(response);
+      } catch (e) {
+        const itemtoremove = data
+          .store()
+          ._array.find((x) => x.item === item.name);
+        data.store().remove(itemtoremove);
+        data.store().insert(itemtoupdate);
+        data.reload();
+        console.log(e);
+      }
     }
   };
 

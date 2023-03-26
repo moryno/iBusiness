@@ -10,6 +10,7 @@ import Home from "./pages/dashboard/Home";
 
 import Layout from "./components/dashboard/Layout";
 import { PurchaseOrder } from "./pages/dashboard/purchase-orders/PurchaseOrder";
+import Orders from "./pages/dashboard/Orders";
 
 import "./App.css";
 import "./assets/styles.css";
@@ -54,6 +55,14 @@ function App() {
         {
           path: "/dashboard/profile",
           element: <Profile />,
+        },
+        {
+          path: "/dashboard/orders",
+          element: <Orders />,
+        },
+        {
+          path: "/dashboard//updateorder/:id",
+          element: <PurchaseOrder orderstate={1} />,
         },
       ],
     },

@@ -1,33 +1,21 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+import { orderColumns } from "../../data/PurchaseOrderData";
 import DataTable from "../../components/dashboard/DataTable";
 import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
-import Portal from "../../components/dashboard/Portal";
-import request from "../../helpers/requestMethod";
-import New from "./New";
 
-import { setupLogin } from "../../helpers/auth";
-import { loginSuccess } from "../../redux/userSlice";
+import request from "../../helpers/tempRequest";
 
-import { bookingColumns } from "../../data/PurchaseOrderData";
-
-const Home = () => {
+const Orders = () => {
   const [data, setData] = useState([]);
-  const [singleBooking, setSingleBooking] = useState({});
-  const [selectedBookingId, setSelectedBookingId] = useState(null);
+
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
-  const [statusMode, setStatusMode] = useState("");
-  const [isOpen, setOpen] = useState(false);
-
-  const { hash } = useLocation();
-  const dispatch = useDispatch();
-  const token = hash.split("=")[1];
+  const navigate = useNavigate();
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -37,59 +25,46 @@ const Home = () => {
     setInput({ ...input, [name]: value });
   };
 
-  // Fuction to close the Create || update form
-  const handleClose = () => {
-    setStatusMode("");
-    setOpen(false);
-  };
+  // // Fuction to close the Create || update form
+  // const handleClose = () => {
+  //   setStatusMode("");
+  //   setOpen(false);
+  // };
+
   // Fuction to edit row
-  const startEdit = (selectedRow) => {
-    setStatusMode("EditBooking");
-    setOpen((isOpen) => !isOpen);
-    setSelectedBookingId(selectedRow.data.bookingId);
-  };
 
-  // This Hook is to fetch user information after successfully login
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await request.get("/User");
-
-      dispatch(loginSuccess(data));
-    };
-
-    if (token) {
-      setupLogin(token);
-      getUser();
-    }
-  }, [token, dispatch]);
-
-  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid is double clicked
+  // This Hook is to fetch all orders
   useEffect(() => {
     try {
       const getData = async () => {
-        const { data } = await request.get(
-          date
-            ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
-            : "Booking"
-        );
-        setData(data);
+        const response = await request.get("PurchaseOrder/orders");
+        // response.data.map(order => {
+        //   return data.store().insert(order);
+
+        // })
+
+        setData(response.data);
       };
       getData();
     } catch (error) {
       console.log(error);
     }
-  }, [date]);
+  }, []);
 
-  // This Hook is to fetch single booking when a row in the datagrid is double clicked
-  useEffect(() => {
-    const getSingleBooking = async () => {
-      const { data } = await request.get(
-        `Booking?bookingID=${selectedBookingId}`
-      );
-      setSingleBooking(data);
-    };
-    if (selectedBookingId) getSingleBooking();
-  }, [selectedBookingId]);
+  const startEdit = (e) => {
+    navigate(`/updateorder/${e.data.orderNumber}`);
+  };
+
+  // // This Hook is to fetch single booking when a row in the datagrid is double clicked
+  // useEffect(() => {
+  //   const getSingleBooking = async () => {
+  //     const { data } = await request.get(
+  //       `Booking?bookingID=${selectedBookingId}`
+  //     );
+  //     setSingleBooking(data);
+  //   };
+  //   if (selectedBookingId) getSingleBooking();
+  // }, [selectedBookingId]);
 
   // This fucntion is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
@@ -100,14 +75,12 @@ const Home = () => {
           : setDate(input);
         break;
       case "New":
-        setStatusMode("CreateBooking");
-        setOpen((isOpen) => !isOpen);
-        break;
+        navigate("/purchase-order");
       case "Delete":
         console.log("Delete was clicked");
         break;
       case "Close":
-        console.log("Close was clicked");
+        navigate("/");
         break;
       case "Help":
         console.log("Help was clicked");
@@ -123,7 +96,7 @@ const Home = () => {
       <section>
         <section>
           <MenuButtonsGroup
-            heading="Booking List"
+            heading="Purchase Orders"
             menus={homeMenuSource}
             onMenuClick={handleClick}
           />
@@ -173,45 +146,15 @@ const Home = () => {
         <section className="mt-5">
           <DataTable
             data={data}
-            columns={bookingColumns}
-            keyExpr="bookingId"
-            startEdit={(e) => startEdit(e)}
+            columns={orderColumns}
+            keyExpr="orderNumber"
+            startEdit={startEdit}
           />
         </section>
       </section>
-      {statusMode === "CreateBooking" ? (
-        <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={data}
-            singleBooking={singleBooking}
-            setBookings={setData}
-            handleClose={handleClose}
-            title={"Create New Booking"}
-            heading={"Booking Item Management"}
-            statusBarText={"New Booking Item"}
-            statusMode={statusMode}
-          />
-        </Portal>
-      ) : (
-        statusMode === "EditBooking" && (
-          <Portal isOpen={isOpen} setOpen={setOpen}>
-            <New
-              bookings={data}
-              singleBooking={singleBooking}
-              setBookings={setData}
-              handleClose={handleClose}
-              title={"Update A Booking Item"}
-              heading={"Booking Item Management"}
-              statusBarText={"Updating Booking Item"}
-              statusMode={statusMode}
-            />
-          </Portal>
-        )
-      )}
-
-      <Statusbar heading="Booking List" company="ARBS Customer Portal" />
+      <Statusbar heading="Purchase Orders" company="iBusiness" />
     </main>
   );
 };
 
-export default Home;
+export default Orders;

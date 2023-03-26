@@ -18,7 +18,7 @@ import { bookingRows } from "../../helpers/datatableSource";
 import { getDataGridRef } from "../../helpers/datagridFunctions";
 import { bookingColumns } from "../../data/PurchaseOrderData";
 
-function DataTable({ data, startEdit }) {
+function DataTable({ data, startEdit, columns, keyExpr }) {
   const [collapsed, setCollapsed] = useState(false);
   // Define a state variable to hold the context menu target element
   const [contextMenuTarget, setContextMenuTarget] = useState(null);
@@ -104,7 +104,7 @@ function DataTable({ data, startEdit }) {
         showBorders={false}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
-        keyExpr="bookingId"
+        keyExpr={keyExpr}
         focusedRowEnabled={true}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}

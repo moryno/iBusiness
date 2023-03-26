@@ -1,24 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
-// import MenuButtonsGroup from "../components/MenuButtonsGroup";
+import MenuButtonsGroup from "../../../components/dashboard/MenuButtonsGroup";
 import "./PurchaseOrder.css";
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
+import { purchaseOrderMenu } from "../../../data/menu";
 import DataSource from "devextreme/data/data_source";
 import Form from "../../../components/dashboard/PurchaseOrder/Form";
 import { InputField } from "../../../components/dashboard/PurchaseOrder/InputField";
 import { Table } from "../../../components/dashboard/PurchaseOrder/Table";
 import { MessageDiv } from "../../../components/dashboard/PurchaseOrder/Message";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import request from "../../../helpers/requestMethod";
-import MenuButtonsGroup from "../../../components/dashboard/MenuButtonsGroup";
-import { purchaseOrderMenu } from "../../../data/menu";
 import Statusbar from "../../../components/dashboard/Statusbar";
+import { useSelector } from "react-redux";
 
 // Main Function
-export const PurchaseOrder = () => {
+export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
-  // eslint-disable-next-line
+  const [formUpdateData, setFormUpdateData] = useState({
+    costCenter: "",
+    supplier: "",
+    shipsTo: "",
+    orderDate: "",
+    orderAmount: 0,
+    deliveryPeriod: 0,
+    firstDeliveryDate: "",
+    vehicleDetails: "",
+    narration: "",
+  });
+  const { id } = useParams();
+  // eslint-disable-next-line})
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
   const count = useRef(1);
@@ -27,26 +38,45 @@ export const PurchaseOrder = () => {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   useEffect(() => {
-    async function getdata() {
-      const user = {
-        userid: currentUser?.email,
-      };
-      try {
-        const response = await request.post(
-          "/PurchaseOrder/getorderitems",
-          user
-        );
-        response.data.map((item) => {
-          return data.store().insert(item);
-        });
-        data.reload();
-      } catch (e) {
-        console.log(e);
+    if (orderstate === 0) {
+      async function getdata() {
+        const user = {
+          userid: currentUser?.email,
+        };
+        try {
+          const response = await request.post(
+            "/PurchaseOrder/getorderitems",
+            user
+          );
+          response.data.map((item) => {
+            return data.store().insert(item);
+          });
+          data.reload();
+        } catch (e) {
+          console.log(e);
+        }
       }
-    }
 
-    getdata();
-  }, [data]);
+      getdata();
+    } else if (orderstate === 1) {
+      const getUpdateData = async () => {
+        try {
+          const response = await request.get(
+            `/PurchaseOrder/getorder?orderNumber=${id}`
+          );
+          response.data.tableData.map((item) => {
+            data.store().insert(item);
+            data.reload();
+          });
+          setFormUpdateData(response.data.formInfo);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+
+      getUpdateData();
+    }
+  }, []);
 
   const submitData = async () => {
     const confirmedData = {
@@ -62,6 +92,9 @@ export const PurchaseOrder = () => {
       );
       console.log(data);
       setMessage("Data submitted successfully.");
+      setTimeout(() => {
+        navigate("/orders");
+      }, 1500);
     } catch (e) {
       console.log(e);
       return setMessage("There was an error trying to submit your request.");
@@ -75,7 +108,7 @@ export const PurchaseOrder = () => {
         break;
 
       case "Close":
-        navigate("/");
+        navigate("/orders");
         break;
 
       default:
@@ -93,7 +126,11 @@ export const PurchaseOrder = () => {
         />
       </section>
       <div className="mt-3 w-full">
-        <Form setSubmitData={setSubmitData} />
+        <Form
+          setSubmitData={setSubmitData}
+          orderState={orderstate}
+          formUpdateData={formUpdateData}
+        />
       </div>
       <section className="mt-2">
         <div className="po-grid h-full mt-2">

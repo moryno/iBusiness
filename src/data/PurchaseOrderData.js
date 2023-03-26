@@ -115,6 +115,23 @@ export const columns = [
 
 // End of definition
 
+// Defines columns used by orders grid
+
+export const orderColumns = [
+  { dataField: "orderNumber", alignment:'left' },
+  { dataField: "costCenter" },
+  { dataField: "supplier" },
+  { dataField: "shipsTo" },
+  { dataField: "orderDate" },
+  { dataField: "orderAmount", alignment:'left' },
+  { dataField: "deliveryPeriod", alignment:'left' },
+  { dataField: "firstDeliveryDate" },
+  { dataField: "vehicleDetails", alignment:'left' }
+
+];
+
+//
+
 // Defines the columns to be used by the Booking Grid
 
 export const bookingColumns = [
