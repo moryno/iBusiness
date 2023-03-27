@@ -107,6 +107,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         // data.reload();
         // console.log(e);
       }
+
     } else if (itemtoupdate.item === rowIndex.data.item) {
       console.log(rowIndex.data.quantity);
       let extendedCost =
@@ -215,7 +216,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       try {
         const response = await request.delete(
           "PurchaseOrder/removeorderitem",
-          e.data
+          {data: e.data}
         );
         console.log(response);
       } catch (e) {

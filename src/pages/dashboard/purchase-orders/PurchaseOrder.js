@@ -10,7 +10,7 @@ import { InputField } from "../../../components/dashboard/PurchaseOrder/InputFie
 import { Table } from "../../../components/dashboard/PurchaseOrder/Table";
 import { MessageDiv } from "../../../components/dashboard/PurchaseOrder/Message";
 import { useNavigate, useParams } from "react-router-dom";
-import request from "../../../helpers/requestMethod";
+import request from "../../../helpers/tempRequest";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import { useSelector } from "react-redux";
 
@@ -147,6 +147,7 @@ export const PurchaseOrder = ({ orderstate }) => {
                 count={count}
                 setMessage={setMessage}
                 setModalMessage={setModalMessage}
+                orderState={orderstate}
               />
               <MessageDiv message={currentmessage} />
             </div>
