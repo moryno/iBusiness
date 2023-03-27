@@ -3,17 +3,28 @@ import "./getstarted.css";
 import data from "../../../../data/pages/getstarted";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { setupLogin } from "../../../../helpers/auth";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../../../redux/userSlice";
+import request from "../../../../helpers/requestMethod";
 
 export const GetStarted = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, token } = location.state;
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const dispatch = useDispatch();
+
   const [inputs, setInputs] = useState({
-    fullName: "",
-    userName: "",
-    email: "",
+    fullName: user?.displayName,
+    userName: user?.givenName,
+    email: user?.userPrincipalName,
     telephone: "",
-    phsyicalAddress: "",
+    physicalAddress: "",
     originCountry: "",
     password: "",
     confirmPassword: "",
@@ -26,20 +37,32 @@ export const GetStarted = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     if (inputs.password === inputs.confirmPassword) {
+  //       await axios.post(
+  //         "https://bookingapptrial.azurewebsites.net/register",
+  //         inputs
+  //       );
+  //       navigate("/sign-in");
+  //     } else {
+  //       setError("Password does not match.");
+  //     }
+  //   } catch (error) {
+  //     setError(error.response.data.Message);
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (inputs.password === inputs.confirmPassword) {
-        await axios.post(
-          "https://bookingapptrial.azurewebsites.net/register",
-          inputs
-        );
-        navigate("/sign-in");
-      } else {
-        setError("Password does not match.");
-      }
+      const { data } = await request.post(inputs, config);
+      setupLogin(data?.token);
+      dispatch(loginSuccess(data));
+      navigate("/dashboard");
     } catch (error) {
-      setError(error.response.data.Message);
+      console.log(error);
     }
   };
 
@@ -61,15 +84,55 @@ export const GetStarted = () => {
         <div className="gs-form">
           <p className="gs-subheader">{data.s_subheader}</p>
           <div className="gs-inputs">
-            {data.fields.map((input) => (
-              <input
-                type={input.type}
-                name={input.name}
-                placeholder={input.placeholder}
-                onChange={handleChange}
-                className="gs-form-control"
-              />
-            ))}
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Full Name"
+              onChange={handleChange}
+              className="gs-form-control"
+              value={inputs.fullName}
+            />
+            <input
+              type="text"
+              name="userName"
+              placeholder="Username"
+              onChange={handleChange}
+              className="gs-form-control"
+              value={inputs.userName}
+            />
+            <input
+              type="email"
+              name="fullNemailame"
+              placeholder="Email"
+              onChange={handleChange}
+              className="gs-form-control"
+              value={inputs.email}
+            />
+            <input
+              type="text"
+              name="physicalAddress"
+              placeholder="Physical Address"
+              onChange={handleChange}
+              className="gs-form-control"
+              value={inputs.physicalAddress}
+            />
+            <input
+              type="text"
+              name="telephone"
+              placeholder="Telephone"
+              onChange={handleChange}
+              className="gs-form-control"
+              value={inputs.telephone}
+            />
+            <input
+              type="text"
+              name="originCountry"
+              placeholder="Origin Country"
+              onChange={handleChange}
+              className="gs-form-control"
+              value={inputs.originCountry}
+            />
+
             <button value="Submit" onClick={handleSubmit} className="gs-button">
               {data.btn_text}
             </button>

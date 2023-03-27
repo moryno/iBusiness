@@ -9,12 +9,14 @@ import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import request from "../../helpers/requestMethod";
+import { bookingRequest } from "../../helpers/requestMethod";
 import New from "./New";
 
 import { setupLogin } from "../../helpers/auth";
 import { loginSuccess } from "../../redux/userSlice";
 
 import { bookingColumns } from "../../data/PurchaseOrderData";
+import axios from "axios";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -67,10 +69,10 @@ const Home = () => {
   useEffect(() => {
     try {
       const getData = async () => {
-        const { data } = await request.get(
+        const { data } = await axios.get(
           date
-            ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
-            : "Booking"
+            ? `${bookingRequest}/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
+            : `${bookingRequest}/Booking`
         );
         setData(data);
       };

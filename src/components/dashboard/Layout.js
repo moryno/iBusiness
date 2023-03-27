@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import DasboardNavbar from "./DasboardNavbar";
-import Portal from "./Portal";
+import DashboardNavbar from "./DashboardNavbar";
 import Sidebar from "./Sidebar";
 
 const Layout = () => {
@@ -10,7 +9,7 @@ const Layout = () => {
 
   return (
     <main className="grid h-screen grid-rows-header">
-      <DasboardNavbar
+      <DashboardNavbar
         onMenuButtonClick={() => setShowSidebar((prev) => !prev)}
         onMenuClick={() => setOpenSidebar((prev) => !prev)}
       />

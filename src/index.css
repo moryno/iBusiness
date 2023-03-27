@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --blue: #0088ff;
+  --buttonblue: #0088ff;
+  --darkblue: #1063b3;
+  --grey: #575757;
+  --maroon: #ea0208;
+  --cream: #f9fcfe;
+
+}
+
+.notfound-header {
+  font-size: 5rem;
+  margin: 0;
+}
+
+.notfound-text {
+  font-size: 2rem;
+}
+
+.notfound-header {
+  color: var(--maroon);
+}
+
+.notfound-text {
+  color: var(--blue);
+}
+
+
 .scrollbar-hide::-webkit-scrollbar {
     width: 0;
     background-color: #fff;
