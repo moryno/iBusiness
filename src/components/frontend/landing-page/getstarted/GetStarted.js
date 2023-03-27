@@ -8,11 +8,13 @@ import axios from "axios";
 import { setupLogin } from "../../../../helpers/auth";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../redux/userSlice";
-import request, { msSingleSign } from "../../../../helpers/requestMethod";
+import { msSingleSign } from "../../../../helpers/requestMethod";
+import { toast } from "react-toastify";
 
 export const GetStarted = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
   const { user, token } = location.state;
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -57,11 +59,16 @@ export const GetStarted = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true);
       const { data } = await axios.post(msSingleSign, inputs, config);
+      setLoading(false);
+      toast.success("Registered successfully");
       setupLogin(data?.token);
       dispatch(loginSuccess(data));
       navigate("/dashboard");
     } catch (error) {
+      setLoading(false);
+      toast.error("A problem has occured!");
       console.log(error);
     }
   };
