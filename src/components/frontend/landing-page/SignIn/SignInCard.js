@@ -47,6 +47,8 @@ export const Card = () => {
     if (search) getUserInformation();
   }, [search, dispatch]);
 
+  console.log(search);
+
   return (
     <main className="card-container">
       <div className="signin-container">
