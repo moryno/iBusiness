@@ -3,13 +3,11 @@ import { useDispatch } from "react-redux";
 import "./signin.css";
 import data from "../../../../data/pages/signin";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import request, {
-  msSingleSign,
-  homeWebsite,
-} from "../../../../helpers/requestMethod";
+import { msSingleSign } from "../../../../helpers/requestMethod";
 import { setupLogin } from "../../../../helpers/auth";
 import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
+import axios from "axios";
 
 export const Card = () => {
   const { search } = useLocation();
@@ -40,7 +38,7 @@ export const Card = () => {
 
   useEffect(() => {
     const getUserInformation = async () => {
-      const { data } = await request.get(search);
+      const { data } = await axios.get(msSingleSign + search);
 
       if (data?.registered) {
         setupLogin(data?.token);
