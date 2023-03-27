@@ -27,6 +27,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     firstDeliveryDate: "",
     vehicleDetails: "",
     narration: "",
+    orderNumber: 0
   });
   const { id } = useParams();
   // eslint-disable-next-line})
@@ -91,9 +92,14 @@ export const PurchaseOrder = ({ orderstate }) => {
         confirmedData
       );
       console.log(data);
-      setMessage("Data submitted successfully.");
+      if (orderstate === 0){
+        setMessage("Data submitted successfully.");
+      }
+      else {
+        setMessage("Order has been updated successfully.");
+      }
       setTimeout(() => {
-        navigate("/orders");
+        navigate("/dashboard/orders");
       }, 1500);
     } catch (e) {
       console.log(e);
@@ -108,7 +114,7 @@ export const PurchaseOrder = ({ orderstate }) => {
         break;
 
       case "Close":
-        navigate("/orders");
+        navigate("/dashboard/orders");
         break;
 
       default:
@@ -120,7 +126,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     <main className="w-full min-h-full relative h-full px-3 md:px-5 py-1.5">
       <section>
         <MenuButtonsGroup
-          heading="Purchase Order"
+          heading= {orderstate === 0 ? "Purchase Order Entry" : "Update Purchase Order"}
           menus={purchaseOrderMenu}
           onMenuClick={handleClick}
         />

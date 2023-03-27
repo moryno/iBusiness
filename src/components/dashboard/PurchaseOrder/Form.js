@@ -30,6 +30,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
   const [narration, setNarration] = useState();
   const [deliveryPeriod, setDeliveryPeriod] = useState();
   const [driverDetails, setdriverDetails] = useState();
+  const [orderNumber, setOrderNumber] = useState();
 
   useEffect(() => {
     if (orderState === 1) {
@@ -42,6 +43,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
       setfirstDeliveryDate(dateString);
       setdriverDetails(formUpdateData.driverDetails);
       setNarration(formUpdateData.narration);
+      setOrderNumber(formUpdateData.orderNumber);
     }
   }, [formUpdateData]);
 
@@ -56,6 +58,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
       firstDeliveryDate: firstDeliveryDate,
       vehicleDetails: driverDetails,
       narration: narration,
+      orderNumber: orderNumber
     });
   }, [
     costCenter,

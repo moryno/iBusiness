@@ -71,32 +71,32 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       selectboxRef.current.instance.focus();
       console.log(itemtoadd);
 
-      try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.post(
-          "PurchaseOrder/insertorderitems",
-          data
-        );
-        console.log(response);
-      } catch (e) {
-        const itemtoremove = data
-          .store()
-          ._array.find((x) => x.item === item.name);
-        data.store().remove(itemtoremove);
-        data.reload();
-        console.log(e);
-      }
+      // try {
+      //   const data = {
+      //     item: item.name,
+      //     quantity: itemtoadd.quantity,
+      //     unitCost: item.amount,
+      //     extendedCost: itemtoadd.extendedCost,
+      //     taxAmount: itemtoadd.taxAmount,
+      //     discountAmount: itemtoadd.discountAmount,
+      //     lineTotal: itemtoadd.lineTotal,
+      //     partitionKey: itemtoadd.partitionKey,
+      //     id: itemtoadd.id,
+      //   };
+      //   console.log(data);
+      //   const response = await request.post(
+      //     "PurchaseOrder/insertorderitems",
+      //     data
+      //   );
+      //   console.log(response);
+      // } catch (e) {
+      //   const itemtoremove = data
+      //     .store()
+      //     ._array.find((x) => x.item === item.name);
+      //   data.store().remove(itemtoremove);
+      //   data.reload();
+      //   console.log(e);
+      // }
     } else if (itemtoupdate.item === item.name) {
       let newquantity = quantity + itemtoupdate.quantity;
       let extendedCost = item.amount * newquantity;
@@ -122,33 +122,33 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       setQuantity();
       selectboxRef.current.instance.focus();
 
-      try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.put(
-          "PurchaseOrder/updateorderitem",
-          data
-        );
-        console.log(response);
-      } catch (e) {
-        const itemtoremove = data
-          .store()
-          ._array.find((x) => x.item === item.name);
-        data.store().remove(itemtoremove);
-        data.store().insert(itemtoupdate);
-        data.reload();
-        console.log(e);
-      }
+      // try {
+      //   const data = {
+      //     item: item.name,
+      //     quantity: itemtoadd.quantity,
+      //     unitCost: item.amount,
+      //     extendedCost: itemtoadd.extendedCost,
+      //     taxAmount: itemtoadd.taxAmount,
+      //     discountAmount: itemtoadd.discountAmount,
+      //     lineTotal: itemtoadd.lineTotal,
+      //     partitionKey: itemtoadd.partitionKey,
+      //     id: itemtoadd.id,
+      //   };
+      //   console.log(data);
+      //   const response = await request.put(
+      //     "PurchaseOrder/updateorderitem",
+      //     data
+      //   );
+      //   console.log(response);
+      // } catch (e) {
+      //   const itemtoremove = data
+      //     .store()
+      //     ._array.find((x) => x.item === item.name);
+      //   data.store().remove(itemtoremove);
+      //   data.store().insert(itemtoupdate);
+      //   data.reload();
+      //   console.log(e);
+      // }
     }
   };
 

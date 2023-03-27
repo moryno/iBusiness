@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://ibusinessaccountservice.azurewebsites.net/api";
+const BASE_URL = "http://localhost:5000/api";
 
 let request = axios.create({ baseURL: BASE_URL });
 

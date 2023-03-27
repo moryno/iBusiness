@@ -98,8 +98,8 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
       <DataGrid
         id="bookingGrid"
         className={"dx-card wide-card"}
-        dataSource={bookingRows}
-        columns={bookingColumns}
+        dataSource={data}
+        columns={columns}
         onCellContextMenu={handleContextMenu}
         showBorders={false}
         filterBuilder={filterBuilder}

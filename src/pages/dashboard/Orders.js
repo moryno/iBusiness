@@ -39,10 +39,11 @@ const Orders = () => {
       const getData = async () => {
         const response = await request.get("PurchaseOrder/orders");
         // response.data.map(order => {
+        //   console.log(order);
         //   return data.store().insert(order);
 
         // })
-
+        console.log(response.data);
         setData(response.data);
       };
       getData();
@@ -52,7 +53,7 @@ const Orders = () => {
   }, []);
 
   const startEdit = (e) => {
-    navigate(`/updateorder/${e.data.orderNumber}`);
+    navigate(`/dashboard/updateorder/${e.data.orderNumber}`);
   };
 
   // // This Hook is to fetch single booking when a row in the datagrid is double clicked
@@ -75,7 +76,7 @@ const Orders = () => {
           : setDate(input);
         break;
       case "New":
-        navigate("/purchase-order");
+        navigate("/dashboard/purchase-order");
       case "Delete":
         console.log("Delete was clicked");
         break;
