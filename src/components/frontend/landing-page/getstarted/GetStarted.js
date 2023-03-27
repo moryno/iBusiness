@@ -8,7 +8,7 @@ import axios from "axios";
 import { setupLogin } from "../../../../helpers/auth";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../redux/userSlice";
-import request from "../../../../helpers/requestMethod";
+import request, { msSingleSign } from "../../../../helpers/requestMethod";
 
 export const GetStarted = () => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export const GetStarted = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await request.post(inputs, config);
+      const { data } = await axios.post(msSingleSign, inputs, config);
       setupLogin(data?.token);
       dispatch(loginSuccess(data));
       navigate("/dashboard");

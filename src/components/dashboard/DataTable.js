@@ -14,9 +14,7 @@ import DataGrid, {
   Export,
 } from "devextreme-react/data-grid";
 import { ContextMenu } from "devextreme-react/context-menu";
-import { bookingRows } from "../../helpers/datatableSource";
 import { getDataGridRef } from "../../helpers/datagridFunctions";
-import { bookingColumns } from "../../data/PurchaseOrderData";
 
 function DataTable({ data, startEdit, columns, keyExpr }) {
   const [collapsed, setCollapsed] = useState(false);

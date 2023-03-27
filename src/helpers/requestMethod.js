@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  "https://ibusinessaccountservice.azurewebsites.net/login/Loginwithmicrosoft";
+const BASE_URL = "https://ibusinessbooking.azurewebsites.net/api";
 
 let request = axios.create({ baseURL: BASE_URL });
 
