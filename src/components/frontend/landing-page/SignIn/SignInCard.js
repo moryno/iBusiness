@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./signin.css";
 import data from "../../../../data/pages/signin";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import request, {
   msSingleSign,
   homeWebsite,
@@ -18,6 +18,7 @@ export const Card = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -39,15 +40,20 @@ export const Card = () => {
 
   useEffect(() => {
     const getUserInformation = async () => {
-      const { data } = await request.get(msSingleSign + search);
-      setupLogin(data?.token);
-      dispatch(loginSuccess(data));
-      window.location.href = homeWebsite + "#token=" + data?.token;
+      const { data } = await request.get(search);
+
+      if (data?.registered) {
+        setupLogin(data?.token);
+        dispatch(loginSuccess(data));
+        navigate("/dashboard");
+      } else {
+        navigate("/get-started", {
+          state: { user: data?.graphinfo, token: data?.token },
+        });
+      }
     };
     if (search) getUserInformation();
   }, [search, dispatch]);
-
-  console.log(search);
 
   return (
     <main className="card-container">

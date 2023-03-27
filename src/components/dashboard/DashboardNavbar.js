@@ -6,7 +6,7 @@ import SearchCategories from "./SearchCategories";
 import { useState } from "react";
 import Module from "./Module";
 
-const DasboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
+const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
   const handleSubmit = (e) => e.preventDefault();
   const [searchInput, setSearchInput] = useState("");
 
@@ -96,4 +96,4 @@ const DasboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
   );
 };
 
-export default DasboardNavbar;
+export default DashboardNavbar;

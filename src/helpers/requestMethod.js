@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://ibusinessaccountservice.azurewebsites.net/api";
+const BASE_URL =
+  "https://ibusinessaccountservice.azurewebsites.net/login/Loginwithmicrosoft";
 
 let request = axios.create({ baseURL: BASE_URL });
 
@@ -23,6 +24,8 @@ export default request;
 
 export const sideMenuRequest =
   "http://localhost:5000/api/CategoryMenus/GetAllCategories";
+
+export const bookingRequest = "http://ibusinessbooking.azurewebsites.net/api";
 
 export const msSingleSign =
   "https://ibusinessaccountservice.azurewebsites.net/login/Loginwithmicrosoft";

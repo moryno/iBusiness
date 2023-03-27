@@ -19,7 +19,7 @@ const NavMenus = () => {
     if (link === "Sign Out") {
       handleLogOut();
     } else if (link === "Update Profile") {
-      navigate("/profile");
+      navigate("/dashboard/profile");
     }
   };
   return (
