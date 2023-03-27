@@ -12,6 +12,23 @@
 
 }
 
+.notfound-header {
+  font-size: 5rem;
+  margin: 0;
+}
+
+.notfound-text {
+  font-size: 2rem;
+}
+
+.notfound-header {
+  color: var(--maroon);
+}
+
+.notfound-text {
+  color: var(--blue);
+}
+
 
 .scrollbar-hide::-webkit-scrollbar {
     width: 0;
