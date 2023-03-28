@@ -85,7 +85,7 @@ export const purchaseOrderMenu = [
   {
     id: 1,
     title: "Submit Order",
-    icon: <SlPrinter fontSize={18} />,
+    icon: <SlPrinter fontSize={20} />,
     onClick: "handleClick",
   },
   {

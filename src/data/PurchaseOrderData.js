@@ -123,7 +123,12 @@ export const orderColumns = [
   { dataField: "supplier" },
   { dataField: "shipsTo" },
   { dataField: "orderDate" },
-  { dataField: "orderAmount", alignment:'left' },
+  { dataField: "orderAmount", alignment:'left', format: {
+    type: "fixedPoint",
+    precision: 2,
+    currency: "KES",
+    useGrouping: true,
+  } },
   { dataField: "deliveryPeriod", alignment:'left' },
   { dataField: "firstDeliveryDate" },
   { dataField: "vehicleDetails", alignment:'left' }

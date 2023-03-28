@@ -30,10 +30,11 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
   const [narration, setNarration] = useState();
   const [deliveryPeriod, setDeliveryPeriod] = useState();
   const [driverDetails, setdriverDetails] = useState();
-  const [orderNumber, setOrderNumber] = useState();
+  const [orderNumber, setOrderNumber] = useState(0);
 
   useEffect(() => {
     if (orderState === 1) {
+      console.log(formUpdateData.orderDate);
       setCostCenter(formUpdateData.costCenter);
       setSupplier(formUpdateData.supplier);
       setShipsTo(formUpdateData.shipsTo);

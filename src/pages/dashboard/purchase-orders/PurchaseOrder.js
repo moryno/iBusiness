@@ -80,9 +80,13 @@ export const PurchaseOrder = ({ orderstate }) => {
   }, []);
 
   const submitData = async () => {
+    const user = {
+      userid: currentUser?.email,
+    };
     const confirmedData = {
       formData: dataToSubmit,
       tableData: data.store()._array,
+      user: user
     };
 
     setMessage("Submitting data...");
