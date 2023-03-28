@@ -63,7 +63,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       console.log(e);
     }
 
-    if (itemtoupdate == null) {
+    if (typeof itemtoupdate === "undefined") {
       let extendedCost = item.amount * rowIndex.data.quantity;
       let discountAmount = extendedCost * 0.05;
       rowIndex.data = new dataitem(
@@ -77,7 +77,6 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         currentUser?.email,
         `${currentUser?.email}.${rowIndex.data.item}`
       );
-      console.log("Item is being added");
       data.reload();
       count.current++;
       setMessage(`${item.name} has been added successfully.`);
@@ -97,11 +96,12 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         };
         console.log(data);
         const response = await request.put(
-          "PurchaseOrder/insertorderitems",
+          "PurchaseOrder/updateorderitem",
           data
         );
         console.log(response);
       } catch (e) {
+        console.log(e);
         // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
         // data.store().remove(itemtoremove);
         // data.reload();
@@ -109,8 +109,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       }
 
     } else {
-      let extendedCost =
-        item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
+      let extendedCost = item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
       let discountAmount = extendedCost * 0.05;
       rowIndex.data = new dataitem(
         item.name,
@@ -121,26 +120,25 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         extendedCost * 0.16,
         extendedCost - discountAmount,
         currentUser?.email,
-        currentUser?.fullname + item.name
+        `${currentUser?.email}.${rowIndex.data.item}`
       );
 
       data.store().remove(itemtoupdate);
       data.reload();
-      count.current++;
       setMessage(`${item.name} has been updated successfully.`);
       gridRef.current.instance.focus();
 
       try {
         const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
+          item: rowIndex.data.name,
+          quantity: rowIndex.data.quantity,
+          unitCost: rowIndex.data.amount,
+          extendedCost: rowIndex.data.extendedCost,
+          taxAmount: rowIndex.data.taxAmount,
+          discountAmount: rowIndex.data.discountAmount,
+          lineTotal: rowIndex.data.lineTotal,
+          partitionKey: rowIndex.data.partitionKey,
+          id: rowIndex.data.id,
         };
         console.log(data);
         const response = await request.post(
@@ -149,6 +147,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         );
         console.log(response);
       } catch (e) {
+        console.log(e);
         // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
         // data.store().remove(itemtoremove);
         // data.reload();

@@ -64,7 +64,6 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
 
       data.store().insert(itemtoadd.data());
       data.reload();
-      count.current++;
       setMessage(`${item.name} has been added successfully.`);
       setSelectedOption(null);
       setQuantity();
