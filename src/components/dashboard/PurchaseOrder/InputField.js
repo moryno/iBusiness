@@ -13,7 +13,7 @@ import request from "../../../helpers/tempRequest";
 
 // Input section component
 
-export const InputField = ({ count, data, setMessage, orderstate }) => {
+export const InputField = ({ count, data, setMessage, setModalMessage }) => {
   const [quantity, setQuantity] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const numberBoxRef = useRef(null);
@@ -71,32 +71,32 @@ export const InputField = ({ count, data, setMessage, orderstate }) => {
       selectboxRef.current.instance.focus();
       console.log(itemtoadd);
       
-      try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.post(
-          "PurchaseOrder/insertorderitems",
-          data
-        );
-        console.log(response);
-      } catch (e) {
-        const itemtoremove = data
-          .store()
-          ._array.find((x) => x.item === item.name);
-        data.store().remove(itemtoremove);
-        data.reload();
-        console.log(e);
-      }
+      // try {
+      //   const data = {
+      //     item: item.name,
+      //     quantity: itemtoadd.quantity,
+      //     unitCost: item.amount,
+      //     extendedCost: itemtoadd.extendedCost,
+      //     taxAmount: itemtoadd.taxAmount,
+      //     discountAmount: itemtoadd.discountAmount,
+      //     lineTotal: itemtoadd.lineTotal,
+      //     partitionKey: itemtoadd.partitionKey,
+      //     id: itemtoadd.id,
+      //   };
+      //   console.log(data);
+      //   const response = await request.post(
+      //     "PurchaseOrder/insertorderitems",
+      //     data
+      //   );
+      //   console.log(response);
+      // } catch (e) {
+      //   const itemtoremove = data
+      //     .store()
+      //     ._array.find((x) => x.item === item.name);
+      //   data.store().remove(itemtoremove);
+      //   data.reload();
+      //   console.log(e);
+      // }
     } else if (itemtoupdate.item === item.name) {
       let newquantity = quantity + itemtoupdate.quantity;
       let extendedCost = item.amount * newquantity;
@@ -122,33 +122,33 @@ export const InputField = ({ count, data, setMessage, orderstate }) => {
       setQuantity();
       selectboxRef.current.instance.focus();
 
-      try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.put(
-          "PurchaseOrder/updateorderitem",
-          data
-        );
-        console.log(response);
-      } catch (e) {
-        const itemtoremove = data
-          .store()
-          ._array.find((x) => x.item === item.name);
-        data.store().remove(itemtoremove);
-        data.store().insert(itemtoupdate);
-        data.reload();
-        console.log(e);
-      }
+      // try {
+      //   const data = {
+      //     item: item.name,
+      //     quantity: itemtoadd.quantity,
+      //     unitCost: item.amount,
+      //     extendedCost: itemtoadd.extendedCost,
+      //     taxAmount: itemtoadd.taxAmount,
+      //     discountAmount: itemtoadd.discountAmount,
+      //     lineTotal: itemtoadd.lineTotal,
+      //     partitionKey: itemtoadd.partitionKey,
+      //     id: itemtoadd.id,
+      //   };
+      //   console.log(data);
+      //   const response = await request.put(
+      //     "PurchaseOrder/updateorderitem",
+      //     data
+      //   );
+      //   console.log(response);
+      // } catch (e) {
+      //   const itemtoremove = data
+      //     .store()
+      //     ._array.find((x) => x.item === item.name);
+      //   data.store().remove(itemtoremove);
+      //   data.store().insert(itemtoupdate);
+      //   data.reload();
+      //   console.log(e);
+      // }
 
     }
   };
@@ -158,7 +158,7 @@ export const InputField = ({ count, data, setMessage, orderstate }) => {
   // Clears the table field
 
   const handleClearData = () => {
-    ConfirmMessage("", function (result) {
+    ConfirmMessage("Hello", function (result) {
       if (result) {
         data.store().clear();
         setMessage("Table successfully cleared. You can add new items.");

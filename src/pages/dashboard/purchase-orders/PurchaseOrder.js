@@ -34,7 +34,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
   const count = useRef(1);
-  const [modalmessage, setModalMessage] = useState();
+  const [modalmessage, setModalMessage] = useState("Are you sure you want to clear the table?");
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
@@ -150,7 +150,6 @@ export const PurchaseOrder = ({ orderstate }) => {
                 data={data}
                 count={count}
                 setMessage={setMessage}
-                setModalMessage={setModalMessage}
                 orderState={orderstate}
               />
               <MessageDiv message={currentmessage} />
