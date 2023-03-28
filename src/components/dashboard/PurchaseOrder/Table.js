@@ -83,30 +83,30 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       setMessage(`${item.name} has been added successfully.`);
       gridRef.current.instance.focus();
 
-      // try {
-      //   const data = {
-      //     item: item.name,
-      //     quantity: itemtoadd.quantity,
-      //     unitCost: item.amount,
-      //     extendedCost: itemtoadd.extendedCost,
-      //     taxAmount: itemtoadd.taxAmount,
-      //     discountAmount: itemtoadd.discountAmount,
-      //     lineTotal: itemtoadd.lineTotal,
-      //     partitionKey: itemtoadd.partitionKey,
-      //     id: itemtoadd.id,
-      //   };
-      //   console.log(data);
-      //   const response = await request.put(
-      //     "PurchaseOrder/insertorderitems",
-      //     data
-      //   );
-      //   console.log(response);
-      // } catch (e) {
-      //   // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-      //   // data.store().remove(itemtoremove);
-      //   // data.reload();
-      //   // console.log(e);
-      // }
+      try {
+        const data = {
+          item: item.name,
+          quantity: itemtoadd.quantity,
+          unitCost: item.amount,
+          extendedCost: itemtoadd.extendedCost,
+          taxAmount: itemtoadd.taxAmount,
+          discountAmount: itemtoadd.discountAmount,
+          lineTotal: itemtoadd.lineTotal,
+          partitionKey: itemtoadd.partitionKey,
+          id: itemtoadd.id,
+        };
+        console.log(data);
+        const response = await request.put(
+          "PurchaseOrder/insertorderitems",
+          data
+        );
+        console.log(response);
+      } catch (e) {
+        // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+        // data.store().remove(itemtoremove);
+        // data.reload();
+        // console.log(e);
+      }
 
     } else {
       let extendedCost =
@@ -130,30 +130,30 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       setMessage(`${item.name} has been updated successfully.`);
       gridRef.current.instance.focus();
 
-      // try {
-      //   const data = {
-      //     item: item.name,
-      //     quantity: itemtoadd.quantity,
-      //     unitCost: item.amount,
-      //     extendedCost: itemtoadd.extendedCost,
-      //     taxAmount: itemtoadd.taxAmount,
-      //     discountAmount: itemtoadd.discountAmount,
-      //     lineTotal: itemtoadd.lineTotal,
-      //     partitionKey: itemtoadd.partitionKey,
-      //     id: itemtoadd.id,
-      //   };
-      //   console.log(data);
-      //   const response = await request.post(
-      //     "PurchaseOrder/insertorderitems",
-      //     data
-      //   );
-      //   console.log(response);
-      // } catch (e) {
-      //   // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-      //   // data.store().remove(itemtoremove);
-      //   // data.reload();
-      //   // console.log(e);
-      // }
+      try {
+        const data = {
+          item: item.name,
+          quantity: itemtoadd.quantity,
+          unitCost: item.amount,
+          extendedCost: itemtoadd.extendedCost,
+          taxAmount: itemtoadd.taxAmount,
+          discountAmount: itemtoadd.discountAmount,
+          lineTotal: itemtoadd.lineTotal,
+          partitionKey: itemtoadd.partitionKey,
+          id: itemtoadd.id,
+        };
+        console.log(data);
+        const response = await request.post(
+          "PurchaseOrder/insertorderitems",
+          data
+        );
+        console.log(response);
+      } catch (e) {
+        // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+        // data.store().remove(itemtoremove);
+        // data.reload();
+        // console.log(e);
+      }
     }
   };
 
@@ -175,8 +175,11 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         currentUser?.email,
         `${currentUser?.email}.${rowIndex.oldData.item}`
       );
+      rowIndex.component.saveEditData();
       data.reload();
+      console.log(rowIndex.newData);
       setMessage(`${rowIndex.oldData.item} has been updated.`);
+      
     } 
     else if(typeof rowIndex.newData.discountAmount !== "undefined"){
       let discountAmount = parseInt(rowIndex.newData.discountAmount);
@@ -191,6 +194,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         currentUser?.email,
         `${currentUser?.email}.${rowIndex.oldData.item}`
       );
+      rowIndex.component.saveEditData();
       data.reload();
       setMessage(`${rowIndex.oldData.item} has been updated.`);
 
@@ -201,27 +205,17 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
     }
 
 
-    // try {
-    //   const data = {
-    //     item: rowIndex.data.item,
-    //     quantity: itemtoadd.quantity,
-    //     unitCost: itemtoadd.unitCost,
-    //     extendedCost: itemtoadd.extendedCost,
-    //     taxAmount: itemtoadd.taxAmount,
-    //     discountAmount: itemtoadd.discountAmount,
-    //     lineTotal: itemtoadd.lineTotal,
-    //     partitionKey: itemtoadd.partitionKey,
-    //     id: itemtoadd.id,
-    //   };
-    //   console.log(data);
-    //   const response = await request.put("PurchaseOrder/updateorderitem", data);
-    //   console.log(response);
-    // } catch (e) {
-    //   data.store().remove(rowIndex.key);
-    //   data.store().insert(rowIndex.data);
-    //   data.reload();
-    //   console.log(e.response.data);
-    // }
+    try {
+      console.log(rowIndex.newData);
+      const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.newData);
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+      // data.store().remove(rowIndex.key);
+      // data.store().insert(rowIndex.data);
+      // data.reload();
+      // console.log(e);
+    }
   };
 
   // End of function
