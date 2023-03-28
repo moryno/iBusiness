@@ -9,11 +9,10 @@ import { CosmosClient } from "@azure/cosmos";
 
 // This is your Azure CosmosDB account URI link
 
-const endpoint = "https://categorymenus.documents.azure.com:443/";
+const endpoint = "";
 
 // The primary key for the Azure Cosmos account.
-const key =
-  "VY5Q0pRE8tqMhjGNEH4guReMPeDZd4osZAS7mYgMUHJV4sZloFmrEiPlFc8GiwG4og5TwRAhEXbqACDbrylzcg==";
+const key = "";
 
 // Instantiating a CosmosClient object
 const cosmosClient = new CosmosClient({ endpoint, key });

@@ -3,13 +3,13 @@ import { CgMenuGridO } from "react-icons/cg";
 import { GoKebabVertical } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { moduleCategories } from "../../helpers/moduleSource";
-import { getSelectedModule } from "../../helpers/mySubLinks";
+import { getModule } from "../../redux/moduleSlice";
 
 const Module = () => {
   const dispatch = useDispatch();
 
-  const handleClick = (category) => {
-    getSelectedModule(dispatch, category);
+  const handleClick = (partitionKey) => {
+    dispatch(getModule(partitionKey));
   };
 
   return (
@@ -29,7 +29,7 @@ const Module = () => {
                 <li
                   key={category.id}
                   className="text-xs flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
-                  onClick={() => handleClick(category.title)}
+                  onClick={() => handleClick(category.partitionKey)}
                 >
                   {category.icon} {category.title}
                 </li>
