@@ -1,22 +1,43 @@
-import { useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import Home from "./pages/Home";
-
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import { PurchaseOrder } from "./pages/PurchaseOrder";
-
-import Layout from "./components/Layout";
+import Profile from "./pages/dashboard/Profile";
+import Home from "./pages/dashboard/Home";
+import Layout from "./components/dashboard/Layout";
+import { PurchaseOrder } from "./pages/dashboard/purchase-orders/PurchaseOrder";
+import Orders from "./pages/dashboard/Orders";
+import "./assets/styles.css";
+import { LandingPage } from "./pages/landing-page/LandingPage";
+import { SignUp } from "./pages/landing-page/GetStarted";
+import { SignIn } from "./pages/landing-page/SignIn";
 
 function App() {
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
   const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/" />;
+    }
     return children;
   };
 
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <LandingPage />,
+    },
+    {
+      path: "/sign-in",
+      element: <SignIn />,
+    },
+    {
+      path: "/get-started",
+      element: <SignUp />,
+    },
     {
       path: "/",
       element: (
@@ -26,16 +47,24 @@ function App() {
       ),
       children: [
         {
-          path: "/",
+          path: "/dashboard",
           element: <Home />,
         },
         {
-          path: "/purchase-order",
-          element: <PurchaseOrder />,
+          path: "/dashboard/purchase-order",
+          element: <PurchaseOrder orderstate={0}/>,
         },
         {
-          path: "/profile",
+          path: "/dashboard/profile",
           element: <Profile />,
+        },
+        {
+          path: "/dashboard/orders",
+          element: <Orders />,
+        },
+        {
+          path: "/dashboard/updateorder/:id",
+          element: <PurchaseOrder orderstate={1} />,
         },
       ],
     },

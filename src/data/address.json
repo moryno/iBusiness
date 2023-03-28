@@ -1,0 +1,12 @@
+{
+    "location_header" : "Location",
+    "location" : {
+        "building" : "Golf View Office Suites",
+        "city" : "Muthaiga, Nairobi",
+        "country" : "Kenya"
+    },
+    "phone_header" : "Phone Number",
+    "phone" : "+254 711340201",
+    "email_header" : "Email Address",
+    "email" : "info@ibusiness.net"
+}

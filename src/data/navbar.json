@@ -1,0 +1,20 @@
+{
+    "navmobilecontent" : {
+        "links" : [ 
+            { "key" : "1", "to" : "/products", "value" : "Products" },
+            { "key" : "2", "to" : "/company", "value" : "Company" },
+            { "key" : "3", "to" : "/company", "value" : "Our story" },
+            { "key" : "4", "to" : "/sign-in", "value" : "Sign in" },
+            { "key" : "5", "to" : "/get-started", "value" : "Get started" },
+            { "key" : "6", "to" : "/support", "value" : "Support" }
+        ]
+    },
+    "navlinks" : [ 
+                    { "key" : "1", "to": "/products", "value" : "Products"},
+                    { "key" : "2", "to" : "/company", "value" : "Company"},
+                    { "key" : "3", "to" : "/support", "value" : "Support"} 
+                 ],
+    "actionbutton" : { "to" : "/get-started", "value" : "Get started" },
+    "signuptext" : { "to": "/sign-in", "value" : "Sign in" },
+    "brand" : "iBusiness"
+}

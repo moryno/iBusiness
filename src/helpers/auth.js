@@ -1,6 +1,6 @@
 export const logoutFunc = () => {
   localStorage.removeItem("token");
-  window.location.href = "https://i-business-ui-git-main-moryno.vercel.app/";
+  window.location.href = "/";
 };
 
 export const setupLogin = (token) => {
