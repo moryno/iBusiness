@@ -265,7 +265,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
   return (
     <DataGrid
       style={{
-        height: "41vh",
+        height: "37.5vh",
         borderStyle: "solid",
         marginTop: "1rem",
         fontSize: ".7rem",
