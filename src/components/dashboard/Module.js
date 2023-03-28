@@ -22,7 +22,7 @@ const Module = () => {
           <GoKebabVertical fontSize={16} />
         </article>
 
-        <section className="absolute md:top-10 top-8 right-1 md:right-5  z-50 hidden  group-hover:block hover:block">
+        <section className="absolute md:top-8 top-6 right-1 md:right-5  z-50 hidden  group-hover:block hover:block">
           <article className="bg-bgDropDown rounded-sm px-2 py-1 shadow-xl">
             <div className="flex flex-col mt-2 justify-between">
               {moduleCategories.map((category) => (

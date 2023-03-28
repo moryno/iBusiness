@@ -21,10 +21,11 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
   // Define a state variable to hold the context menu target element
   const [contextMenuTarget, setContextMenuTarget] = useState(null);
   const [contextMenuRow, setContextMenuRow] = useState(null);
-  console.log(contextMenuRow);
+
   // Define a dataGridRef variable to hold the reference to the datagrid
   const dataGridRef = useRef();
   const exportFormats = ["xlsx", "pdf"];
+  const pageSizes = [10, 25, 50, 100];
 
   function onContentReady(e) {
     getDataGridRef(dataGridRef.current);
@@ -90,7 +91,6 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
     { text: "Export", onClick: handleExport },
   ];
 
-  console.log(contextMenuTarget);
   return (
     <main>
       <DataGrid
@@ -125,8 +125,7 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
           <Item name="columnChooserButton" />
           <Item name="searchPanel" />
         </Toolbar>
-        <Paging defaultPageSize={10} />
-        <Pager showPageSizeSelector={true} showInfo={true} />
+
         <FilterRow visible={true} />
         <FilterPanel visible={true} />
         <FilterBuilderPopup
@@ -136,6 +135,12 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
         />
 
         <SearchPanel visible={true} />
+        <Paging defaultPageSize={10} />
+        <Pager
+          showPageSizeSelector={true}
+          showInfo={true}
+          allowedPageSizes={pageSizes}
+        />
       </DataGrid>
       <ContextMenu
         dataSource={contextMenuItems}
