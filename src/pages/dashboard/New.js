@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbBrandBooking } from "react-icons/tb";
+import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
+import { Validator, RequiredRule } from "devextreme-react/validator";
 import request from "../../helpers/requestMethod";
 import services from "../../helpers/formDataSource";
+import { useSelector } from "react-redux";
+import { ValidationGroup } from "devextreme-react";
 
 const New = ({
   handleClose,
@@ -21,6 +25,7 @@ const New = ({
 }) => {
   // Define state to store the change in the input field
   // Code starts here
+  console.log(singleBooking);
   const [fullName, setFullName] = useState(
     statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
   );
@@ -51,7 +56,9 @@ const New = ({
       : ""
   );
   const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.originCountry : ""
+    statusMode === "EditBooking"
+      ? singleBooking.booking?.externalSchemeAdmin
+      : ""
   );
 
   const [experience, setExperience] = useState(
@@ -90,16 +97,26 @@ const New = ({
   );
   // Code ends here
 
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
+  const validationGroupRef = useRef(null);
+  const validationRules = {
+    required: true,
+    // add more validation rules as needed
+  };
+
   // A function to save the booking details to the backend then populate the datagrid
   const save = async () => {
     // Create Booking information
     const formData = {
       user: {
+        userID: currentUser?.userID,
         fullName,
         idNumber,
         email,
         telephone,
         physicalAddress,
+        originCountry: selectedCountry,
         employerName,
         experience,
         position,
@@ -109,7 +126,6 @@ const New = ({
         bookingType,
         retirementSchemeName: schemeOptions,
         schemePosition,
-        originCountry: selectedCountry,
         trainingVenue,
         courseDate,
         paymentMode,
@@ -121,7 +137,7 @@ const New = ({
     // Update Booking information
     const editData = {
       user: {
-        userID: singleBooking.user.userID,
+        userID: singleBooking?.user?.userID,
         fullName,
         idNumber,
         email,
@@ -133,7 +149,7 @@ const New = ({
         disabilityStatus: selectedStatus,
       },
       booking: {
-        bookingId: singleBooking.booking.bookingId,
+        bookingId: singleBooking?.booking?.bookingId,
         bookingType,
         retirementSchemeName: schemeOptions,
         schemePosition,
@@ -153,6 +169,8 @@ const New = ({
 
         setBookings([data?.Booking?.booking, ...bookings]);
         handleClose();
+
+        // perform form submission
       } catch (error) {
         console.log(error);
       }
@@ -210,12 +228,14 @@ const New = ({
                     <label className="text-xs text-gray-600" htmlFor="fullName">
                       Full Name:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="fullName"
                       name="fullName"
-                      onChange={(e) => setFullName(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
                     />
                   </div>
@@ -223,12 +243,13 @@ const New = ({
                     <label className="text-xs text-gray-600" htmlFor="idNumber">
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="idNumber"
                       name="idNumber"
-                      onChange={(e) => setIdNumber(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
                     />
                   </div>
@@ -236,12 +257,13 @@ const New = ({
                     <label className="text-xs text-gray-600" htmlFor="email">
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="email"
                       name="email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setEmail(e.value)}
                       value={email}
                     />
                   </div>
@@ -252,12 +274,13 @@ const New = ({
                     >
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="telephone"
                       name="telephone"
-                      onChange={(e) => setTelephone(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
                     />
                   </div>
@@ -268,12 +291,13 @@ const New = ({
                     >
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="employerName"
                       name="employerName"
-                      onChange={(e) => setEmployerName(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
                     />
                   </div>
@@ -289,6 +313,7 @@ const New = ({
                       height={28}
                       id="experience"
                       name="experience"
+                      validationRules={validationRules}
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
                     />
@@ -304,6 +329,7 @@ const New = ({
                       dataSource={countriesOptions}
                       searchEnabled={true}
                       name="originCountry"
+                      validationRules={validationRules}
                       onValueChanged={(e) => setSelectedCountry(e.value)}
                       value={selectedCountry}
                       placeholder="Select a Country"
@@ -315,12 +341,13 @@ const New = ({
                     <label className="text-xs text-gray-600" htmlFor="position">
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="position"
                       name="position"
-                      onChange={(e) => setPosition(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setPosition(e.value)}
                       value={position}
                     />
                   </div>
@@ -331,12 +358,13 @@ const New = ({
                     >
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
-                      onChange={(e) => setPhysicalAddress(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
                     />
                   </div>
@@ -351,6 +379,7 @@ const New = ({
                       dataSource={diabilityStatusOptions}
                       searchEnabled={true}
                       name="disabilityStatus"
+                      validationRules={validationRules}
                       placeholder="Select Status"
                       height={28}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
@@ -369,6 +398,7 @@ const New = ({
                     <SelectBox
                       dataSource={retirementSchemeOptions}
                       searchEnabled={true}
+                      validationRules={validationRules}
                       placeholder="Select an option"
                       height={28}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
@@ -391,6 +421,7 @@ const New = ({
                       dataSource={bookingTypeOptions}
                       searchEnabled={true}
                       name="bookingType"
+                      validationRules={validationRules}
                       placeholder="Select a Scheme Name"
                       height={28}
                       onValueChanged={(e) => setBookingType(e.value)}
@@ -405,12 +436,13 @@ const New = ({
                     >
                       Sch Position:<sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] h-7 border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="schemePosition"
                       name="schemePosition"
-                      onChange={(e) => setSchemePosition(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
                     />
                   </div>
@@ -425,6 +457,7 @@ const New = ({
                       dataSource={trainingVenuesOptions}
                       searchEnabled={true}
                       name="trainingVenue"
+                      validationRules={validationRules}
                       placeholder="Select a Training Venue"
                       height={28}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
@@ -444,6 +477,7 @@ const New = ({
                     <DateBox
                       id="courseDate"
                       name="courseDate"
+                      validationRules={validationRules}
                       height={28}
                       onValueChanged={(e) => setCourseDate(e.value)}
                       value={courseDate}
@@ -462,6 +496,7 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
+                      validationRules={validationRules}
                       height={28}
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={paymentMode}
@@ -476,12 +511,13 @@ const New = ({
                       Scheme Admin:
                       <sup className=" text-red-600">*</sup>
                     </label>
-                    <input
+                    <TextBox
                       className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
-                      onChange={(e) => setExternalSchemeAdmin(e.target.value)}
+                      validationRules={validationRules}
+                      onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
                     />
                   </div>
