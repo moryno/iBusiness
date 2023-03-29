@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 
 import DataTable from "../../components/dashboard/DataTable";
 import Statusbar from "../../components/dashboard/Statusbar";
@@ -10,10 +8,6 @@ import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import request from "../../helpers/requestMethod";
 import New from "./New";
-
-import { setupLogin } from "../../helpers/auth";
-import { loginSuccess } from "../../redux/userSlice";
-
 import { bookingColumns } from "../../data/PurchaseOrderData";
 
 const Home = () => {
@@ -26,10 +20,7 @@ const Home = () => {
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { hash } = useLocation();
-  const dispatch = useDispatch();
-  const token = hash.split("=")[1];
-
+  // Get todays day to use in the filter date fields of the datagrid
   const today = new Date().toISOString().slice(0, 10);
 
   // Fuction to get date change
@@ -50,21 +41,7 @@ const Home = () => {
     setSelectedBookingId(selectedRow.data.bookingId);
   };
 
-  // This Hook is to fetch user information after successfully login
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await request.get("/User");
-
-      dispatch(loginSuccess(data));
-    };
-
-    if (token) {
-      setupLogin(token);
-      getUser();
-    }
-  }, [token, dispatch]);
-
-  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid is double clicked
+  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {
     try {
       const getData = async () => {
@@ -172,7 +149,6 @@ const Home = () => {
             </article>
           </article>
         </section>
-
         <section className="mt-5">
           <DataTable
             data={data}
@@ -183,6 +159,7 @@ const Home = () => {
           />
         </section>
       </section>
+
       {statusMode === "CreateBooking" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New

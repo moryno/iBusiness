@@ -6,15 +6,18 @@ import { menus } from "../../helpers/myNavLinks";
 import { logout } from "../../redux/userSlice";
 
 const NavMenus = () => {
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Get current user
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
+  // Handle logout and remove token from persist
   const handleLogOut = () => {
     dispatch(logout());
   };
 
+  // Function when menu is clicked
   const handleClick = (link) => {
     if (link === "Sign Out") {
       handleLogOut();
@@ -22,6 +25,7 @@ const NavMenus = () => {
       navigate("/dashboard/profile");
     }
   };
+
   return (
     <>
       {menus.map((link) => (

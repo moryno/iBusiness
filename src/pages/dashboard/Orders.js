@@ -77,6 +77,7 @@ const Orders = () => {
         break;
       case "New":
         navigate("/dashboard/purchase-order");
+        break;
       case "Delete":
         console.log("Delete was clicked");
         break;
