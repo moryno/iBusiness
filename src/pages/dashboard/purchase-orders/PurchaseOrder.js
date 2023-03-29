@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import request from "../../../helpers/tempRequest";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import { useSelector } from "react-redux";
+import { LoadPanel } from "devextreme-react/load-panel";
 
 // Main Function
 export const PurchaseOrder = ({ orderstate }) => {
@@ -30,7 +31,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     orderNumber: 0
   });
   const { id } = useParams();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line})
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
@@ -60,9 +61,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     } else if (orderstate === 1) {
       const getUpdateData = async () => {
         try {
-          const response = await request.get(
-            `/PurchaseOrder/getorder?orderNumber=${id}`
-          );
+          const response = await request.get(`/PurchaseOrder/getorder?orderNumber=${id}`);
           response.data.tableData.map((item) => {
             data.store().insert(item);
             data.reload();
@@ -158,8 +157,8 @@ export const PurchaseOrder = ({ orderstate }) => {
             count={count}
             setMessage={setMessage}
             setModalMessage={setModalMessage}
-            loading={loading}
           />
+          <LoadPanel visible={loading} messageText="Checking for unsubmitted orders..."/>
         </div>
       </section>
       <div id="confirm-modal" className="po-modal">

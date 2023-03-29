@@ -254,12 +254,6 @@ export const Table = ({ data, count, setMessage, loading }) => {
       onRowUpdating={handleRowUpdated}
       showRowLines={true}
       onKeyDown={handleKeyPress}
-      loadPanel={{
-          enabled: true,
-          text: "Loading data...",
-          visible: loading,
-          showPane: true,
-        }}
       onRowRemoving={handleRowRemoving}
       columnHidingEnabled={true}
       onRowInserting={handleRowInserted}
