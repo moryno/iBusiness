@@ -16,7 +16,7 @@ import DataGrid, {
 import { ContextMenu } from "devextreme-react/context-menu";
 import { getDataGridRef } from "../../helpers/datagridFunctions";
 
-function DataTable({ data, startEdit, columns, keyExpr }) {
+function DataTable({ data, startEdit, columns, keyExpr, loading }) {
   const [collapsed, setCollapsed] = useState(false);
   // Define a state variable to hold the context menu target element
   const [contextMenuTarget, setContextMenuTarget] = useState(null);
@@ -111,6 +111,12 @@ function DataTable({ data, startEdit, columns, keyExpr }) {
         columnAutoWidth={true}
         columnHidingEnabled={true}
         ref={dataGridRef}
+        loadPanel={{
+          enabled: true,
+          text: "Loading data...",
+          visible: loading,
+          showPane: true,
+        }}
         onContentReady={onContentReady}
       >
         <Export

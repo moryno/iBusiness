@@ -24,6 +24,7 @@ const Home = () => {
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { hash } = useLocation();
   const dispatch = useDispatch();
@@ -67,11 +68,13 @@ const Home = () => {
   useEffect(() => {
     try {
       const getData = async () => {
+        setLoading(true);
         const { data } = await request.get(
           date
             ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
             : "Booking"
         );
+        setLoading(false);
         setData(data);
       };
       getData();
@@ -176,6 +179,7 @@ const Home = () => {
             columns={bookingColumns}
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
+            loading={loading}
           />
         </section>
       </section>
