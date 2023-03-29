@@ -22,7 +22,7 @@ request.interceptors.request.use(
 export default request;
 
 export const sideMenuRequest =
-  "http://localhost:5000/api/CategoryMenus/GetAllCategories";
+  "https://modulemenus.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
 
 export const bookingRequest = "http://ibusinessbooking.azurewebsites.net/api";
 

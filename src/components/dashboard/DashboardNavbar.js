@@ -13,7 +13,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
   return (
     <main className="w-full p-1 md:p-4 bg-bg flex sticky top-0 z-10 items-center h-[40px] box-border text-navColor">
       <section className=" w-full flex items-center justify-between">
-        <article className="hidden md:flex items-center gap-2">
+        <article className="hidden md:flex items-center gap-5">
           <RiMenuUnfoldFill
             onClick={onMenuClick}
             className=" opacity-50 cursor-pointer"

@@ -10,7 +10,7 @@ const MobileMenus = ({ onMenuClick, menus }) => {
         className="p-1.5 md:hidden cursor-pointer z-40"
       >
         <RiMenuUnfoldFill
-          fontSize={24}
+          fontSize={18}
           className=" opacity-50 cursor-pointer"
         />
       </div>
@@ -19,7 +19,7 @@ const MobileMenus = ({ onMenuClick, menus }) => {
           {menus.map((menu) => (
             <li
               key={menu.id}
-              className="flex items-center gap-1  text-sm text-menu px-5 py-1.5 cursor-pointer hover:bg-bgLight"
+              className="flex items-center gap-1  text-xs text-menu px-5 py-1.5 cursor-pointer hover:bg-bgLight"
               onClick={() => onMenuClick(menu.title)}
             >
               {menu.icon}
