@@ -18,7 +18,7 @@ import ConfirmMessage from "./ConfirmMessage";
 
 // Table component
 
-export const Table = ({ data, count, setMessage, setModalMessage }) => {
+export const Table = ({ data, count, setMessage, loading }) => {
   const gridRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -254,6 +254,12 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       onRowUpdating={handleRowUpdated}
       showRowLines={true}
       onKeyDown={handleKeyPress}
+      loadPanel={{
+          enabled: true,
+          text: "Loading data...",
+          visible: loading,
+          showPane: true,
+        }}
       onRowRemoving={handleRowRemoving}
       columnHidingEnabled={true}
       onRowInserting={handleRowInserted}

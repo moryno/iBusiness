@@ -30,6 +30,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     orderNumber: 0
   });
   const { id } = useParams();
+  const [loading, setLoading] = useState(false)
   // eslint-disable-next-line})
   const [data, setData] = useState(new DataSource());
   const [dataToSubmit, setSubmitData] = useState();
@@ -40,25 +41,22 @@ export const PurchaseOrder = ({ orderstate }) => {
 
   useEffect(() => {
     if (orderstate === 0) {
-      async function getdata() {
-        const user = {
-          userid: currentUser?.email,
-        };
+      async function getData() {
+        setLoading(true);
         try {
-          const response = await request.post(
-            "/PurchaseOrder/getorderitems",
-            user
-          );
+          const response = await request.get(`/PurchaseOrder/getorderitems?userid=${currentUser?.email}`);
           response.data.map((item) => {
             return data.store().insert(item);
           });
           data.reload();
+          setLoading(false);          
         } catch (e) {
           console.log(e);
+          getData();
         }
       }
 
-      getdata();
+      getData();
     } else if (orderstate === 1) {
       const getUpdateData = async () => {
         try {
@@ -160,6 +158,7 @@ export const PurchaseOrder = ({ orderstate }) => {
             count={count}
             setMessage={setMessage}
             setModalMessage={setModalMessage}
+            loading={loading}
           />
         </div>
       </section>
