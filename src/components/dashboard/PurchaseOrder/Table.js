@@ -55,13 +55,8 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
     }
     console.log(rowIndex.data)
     const item = items.find((x) => x.name === rowIndex.data.item);
-    let itemtoupdate = null;
-    try {
-      itemtoupdate = data.store()._array.find((x) => x.item === item.name);
-      console.log(itemtoupdate);
-    } catch(e){
-      console.log(e);
-    }
+    const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
+
 
     if (typeof itemtoupdate === "undefined") {
       let extendedCost = item.amount * rowIndex.data.quantity;
@@ -83,22 +78,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       gridRef.current.instance.focus();
 
       try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.put(
-          "PurchaseOrder/updateorderitem",
-          data
-        );
+        const response = await request.post("PurchaseOrder/insertorderitems", rowIndex.data);
         console.log(response);
       } catch (e) {
         console.log(e);
@@ -129,22 +109,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       gridRef.current.instance.focus();
 
       try {
-        const data = {
-          item: rowIndex.data.name,
-          quantity: rowIndex.data.quantity,
-          unitCost: rowIndex.data.amount,
-          extendedCost: rowIndex.data.extendedCost,
-          taxAmount: rowIndex.data.taxAmount,
-          discountAmount: rowIndex.data.discountAmount,
-          lineTotal: rowIndex.data.lineTotal,
-          partitionKey: rowIndex.data.partitionKey,
-          id: rowIndex.data.id,
-        };
-        console.log(data);
-        const response = await request.post(
-          "PurchaseOrder/insertorderitems",
-          data
-        );
+        const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.data);
         console.log(response);
       } catch (e) {
         console.log(e);
@@ -153,6 +118,7 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         // data.reload();
         // console.log(e);
       }
+
     }
   };
 
