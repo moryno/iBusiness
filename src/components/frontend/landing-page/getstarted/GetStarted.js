@@ -19,7 +19,7 @@ export const GetStarted = () => {
   const dispatch = useDispatch();
 
   // Get the user graphInfo and token sent from login page
-  const { user, token } = location.state;
+  const { user, token } = location?.state;
 
   // Set the input values from user information received from Microsoft Identity
   const [inputs, setInputs] = useState({

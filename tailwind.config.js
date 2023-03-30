@@ -27,6 +27,7 @@ module.exports = {
         dropPointer: "#fff",
         bgDropDown: "#fff",
         bb: "#7AB8EB",
+        portal: "#7F7F7F",
       },
       colors: {
         text: "#556b86",
@@ -40,8 +41,6 @@ module.exports = {
         menuText: "#0176d3",
         menuHeading: "#282828",
         heading: "#fff",
-        menuText: "#0176d3",
-        menuHeading: "#282828",
         sideColor: "#282828",
         statusBar: "#fff",
         navColor: "#FFFFFF",

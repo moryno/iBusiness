@@ -24,7 +24,7 @@ const New = ({
 }) => {
   // Define state to store the change in the input field
   // Code starts here
-  console.log(singleBooking);
+
   const [fullName, setFullName] = useState(
     statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
   );
@@ -90,9 +90,7 @@ const New = ({
     statusMode === "EditBooking" ? singleBooking.booking?.courseDate : today
   );
   const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditBooking"
-      ? singleBooking.booking?.paymentMode
-      : "INHOUSE"
+    statusMode === "EditBooking" ? singleBooking.booking?.paymentMode : "Cheque"
   );
   // Code ends here
 
@@ -214,7 +212,7 @@ const New = ({
             save.
           </p>
         </article>
-        <article className="h-full px-2 md:border md:border-gray-300 overflow-y-auto">
+        <article className="h-full px-2 md:border md: overflow-y-auto">
           <div>
             <form className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
               <section className="flex flex-col md:flex-row w-full gap-2">
@@ -225,12 +223,13 @@ const New = ({
                     </label>
 
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="fullName"
                       name="fullName"
                       onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
+                      height={26}
+                      className=" border  text-xs text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
@@ -238,12 +237,13 @@ const New = ({
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="idNumber"
                       name="idNumber"
                       onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -251,12 +251,13 @@ const New = ({
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="email"
                       name="email"
                       onValueChanged={(e) => setEmail(e.value)}
                       value={email}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
@@ -267,12 +268,13 @@ const New = ({
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="telephone"
                       name="telephone"
                       onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -283,12 +285,13 @@ const New = ({
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="employerName"
                       name="employerName"
                       onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -299,12 +302,12 @@ const New = ({
                       Experience:<sup className=" text-red-600">*</sup>
                     </label>
                     <NumberBox
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                      height={28}
                       id="experience"
                       name="experience"
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
@@ -321,8 +324,8 @@ const New = ({
                       onValueChanged={(e) => setSelectedCountry(e.value)}
                       value={selectedCountry}
                       placeholder="Select a Country"
-                      height={28}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -330,12 +333,13 @@ const New = ({
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="position"
                       name="position"
                       onValueChanged={(e) => setPosition(e.value)}
                       value={position}
+                      height={26}
+                      className=" border h-7  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
@@ -346,12 +350,13 @@ const New = ({
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
                       onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
+                      height={26}
+                      className=" border h-7  text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
@@ -366,10 +371,10 @@ const New = ({
                       searchEnabled={true}
                       name="disabilityStatus"
                       placeholder="Select Status"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
                       value={selectedStatus}
-                      className="rounded-[3px] text-center border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
+                      className=" text-center border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
                   <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
@@ -384,10 +389,10 @@ const New = ({
                       dataSource={retirementSchemeOptions}
                       searchEnabled={true}
                       placeholder="Select an option"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
                       value={schemeOptions}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
@@ -406,10 +411,10 @@ const New = ({
                       searchEnabled={true}
                       name="bookingType"
                       placeholder="Select a Scheme Name"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setBookingType(e.value)}
                       value={bookingType}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -420,12 +425,13 @@ const New = ({
                       Sch Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] h-7 border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="schemePosition"
                       name="schemePosition"
                       onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
+                      height={26}
+                      className=" h-7 border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -440,10 +446,10 @@ const New = ({
                       searchEnabled={true}
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
                       value={trainingVenue}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
 
@@ -458,10 +464,10 @@ const New = ({
                     <DateBox
                       id="courseDate"
                       name="courseDate"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setCourseDate(e.value)}
                       value={courseDate}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -476,10 +482,10 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={paymentMode}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -491,12 +497,13 @@ const New = ({
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
                       onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
+                      height={26}
+                      className=" border h-7  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                 </article>
@@ -509,7 +516,7 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className="rounded-[3px] border border-gray-300  resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    className=" border   resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
