@@ -14,17 +14,21 @@ import DataGrid, {
   Export,
 } from "devextreme-react/data-grid";
 import { ContextMenu } from "devextreme-react/context-menu";
-import { getDataGridRef } from "../../helpers/datagridFunctions";
+import {
+  getDataGridRef,
+  handleExporting,
+} from "../../helpers/datagridFunctions";
 
-function DataTable({ data, startEdit, columns, keyExpr, loading }) {
+const DataTable = ({ data, startEdit, columns, keyExpr, loading }) => {
   const [collapsed, setCollapsed] = useState(false);
   // Define a state variable to hold the context menu target element
-  const [contextMenuTarget, setContextMenuTarget] = useState(null);
-  const [contextMenuRow, setContextMenuRow] = useState(null);
+  const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
 
   // Define a dataGridRef variable to hold the reference to the datagrid
-  const dataGridRef = useRef();
+  const dataGridRef = useRef(null);
+
   const exportFormats = ["xlsx", "pdf"];
+
   const pageSizes = [10, 25, 50, 100];
 
   function onContentReady(e) {
@@ -37,59 +41,54 @@ function DataTable({ data, startEdit, columns, keyExpr, loading }) {
     }
   }
 
-  // const handleRowClick = (e) => {
-  //   setContextMenuVisible(true);
-  // };
-
-  function handleContextMenuHiding() {
-    setContextMenuTarget(null);
-  }
-
-  function handleContextMenuShowing(e) {
-    console.log(e);
-    console.log("Function was called");
-    const rowIndex = contextMenuTarget.dataset.rowKey;
-    const columnIndex = contextMenuTarget.dataset.columnIndex;
-    const dataGrid = dataGridRef.current.instance;
-    const cellElement = dataGrid.getCellElement(rowIndex, columnIndex);
-    dataGrid.showContextMenuAt(cellElement);
-  }
-
-  const contextMenuRef = useRef();
   // Define a function to handle the context menu event
   const handleContextMenu = (e) => {
-    e.event.preventDefault();
-    console.log(e.row.key);
-    setContextMenuRow(e.row.key);
-    contextMenuRef.current.instance.show(e.event.pageY, e.event.pageX);
+    e.preventDefault();
+    setContextMenuCoords({ x: e.clientX, y: e.clientY });
   };
 
-  const onContextMenuItemClick = (e) => {
-    console.log(e.itemData.text + "function to handle the context menu event");
-    // e.itemData.onItemClick(e);
-  };
-
-  const handleContextMenuItemClick = (e) => {
-    switch (e.itemData.text) {
-      case "Edit":
-        handleEdit(contextMenuRow);
-        break;
-      default:
-        break;
+  // Define a function to handle when a row or cell is right clicked
+  const handleContextMenuPreparing = (e) => {
+    if (e.row && e.row.rowType === "data") {
+      if (!e.items) e.items = [];
+      e.items.push(
+        {
+          text: "Edit",
+          icon: "edit",
+          onItemClick: () => {
+            startEdit(e.row);
+          },
+        },
+        {
+          text: "Export",
+          icon: "export",
+          items: [
+            {
+              text: "Export all data to Excel",
+              icon: "exportxlsx",
+              onItemClick: () => {
+                handleExporting("Export all data to Excel");
+              },
+            },
+            {
+              text: "Export all data to PDF",
+              icon: "exportpdf",
+              onItemClick: () => {
+                handleExporting("Export all data to PDF");
+              },
+            },
+          ],
+        },
+        {
+          text: "Delete",
+          icon: "trash",
+          onItemClick: () => {
+            // Logic goes here
+          },
+        }
+      );
     }
   };
-
-  const handleEdit = (row) => {
-    console.log(row);
-  };
-  const handleExport = () => {
-    console.log("Export function called");
-  };
-
-  const contextMenuItems = [
-    { text: "Edit", onClick: handleEdit },
-    { text: "Export", onClick: handleExport },
-  ];
 
   return (
     <main>
@@ -98,7 +97,10 @@ function DataTable({ data, startEdit, columns, keyExpr, loading }) {
         className={"dx-card wide-card"}
         dataSource={data}
         columns={columns}
-        onCellContextMenu={handleContextMenu}
+        onContextMenu={handleContextMenu}
+        onContextMenuPreparing={(e) => {
+          handleContextMenuPreparing(e);
+        }}
         showBorders={false}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
@@ -124,14 +126,13 @@ function DataTable({ data, startEdit, columns, keyExpr, loading }) {
           formats={exportFormats}
           allowExportSelectedData={true}
         />
-        <Editing mode="popup" />
+        <Editing mode="row" />
         <Selection mode="single" />
         <Toolbar>
           <Item name="groupPanel" />
           <Item name="columnChooserButton" />
           <Item name="searchPanel" />
         </Toolbar>
-
         <FilterRow visible={true} />
         <FilterPanel visible={true} />
         <FilterBuilderPopup
@@ -148,20 +149,15 @@ function DataTable({ data, startEdit, columns, keyExpr, loading }) {
           allowedPageSizes={pageSizes}
         />
       </DataGrid>
-      <ContextMenu
-        dataSource={contextMenuItems}
-        ref={contextMenuRef}
-        target={"#bookingGrid"}
-        showEvent="dxcontextmenu"
-        onItemClick={handleContextMenuItemClick}
-        // onShowing={handleContextMenuShowing}
-        // onHiding={handleContextMenuHiding}
-      >
-        <Item disabled={true} />
-      </ContextMenu>
+      {contextMenuCoords && (
+        <ContextMenu
+          coords={contextMenuCoords}
+          onHiding={() => setContextMenuCoords(null)}
+        />
+      )}
     </main>
   );
-}
+};
 
 const filterBuilderPopupPosition = {
   of: window,

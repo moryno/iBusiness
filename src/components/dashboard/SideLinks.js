@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import { RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
-import axios from "axios";
+
 import { sideMenuRequest } from "../../helpers/requestMethod";
 import { useSelector } from "react-redux";
+import WebService from "../../utils/webService";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
@@ -40,13 +41,13 @@ const SideLinks = () => {
   // Hook to fetch module menus from Cosmos DB
   useEffect(() => {
     const getModuleMenus = async () => {
-      const { data } = await axios.get(
+      const response = await WebService.get(
         // Check if different module options was selected then fetch using their partion key
         partitionKey
           ? sideMenuRequest + `?moduleName=${partitionKey}`
           : sideMenuRequest
       );
-      setModuleMenus(data);
+      setModuleMenus(response);
     };
     getModuleMenus();
   }, [partitionKey]);

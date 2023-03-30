@@ -1,26 +1,27 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import "./getstarted.css";
-import data from "../../../../data/pages/getstarted";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import data from "../../../../data/pages/getstarted";
 import { setupLogin } from "../../../../helpers/auth";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../redux/userSlice";
 import { msSingleSign } from "../../../../helpers/requestMethod";
-import { toast } from "react-toastify";
 
 export const GetStarted = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
-  const { user, token } = location.state;
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
   const dispatch = useDispatch();
 
+  // Get the user graphInfo and token sent from login page
+  const { user, token } = location?.state;
+
+  // Set the input values from user information received from Microsoft Identity
   const [inputs, setInputs] = useState({
     fullName: user?.displayName,
     userName: user?.givenName,
@@ -32,30 +33,18 @@ export const GetStarted = () => {
     confirmPassword: "",
   });
 
-  const [error, setError] = useState(null);
+  // Set Authorization header with token to use when registering a new user
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
+  // Get use info entered in the register form
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInputs({ ...inputs, [name]: value });
   };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     if (inputs.password === inputs.confirmPassword) {
-  //       await axios.post(
-  //         "https://bookingapptrial.azurewebsites.net/register",
-  //         inputs
-  //       );
-  //       navigate("/sign-in");
-  //     } else {
-  //       setError("Password does not match.");
-  //     }
-  //   } catch (error) {
-  //     setError(error.response.data.Message);
-  //   }
-  // };
-
+  // Register form submission function
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -64,7 +53,9 @@ export const GetStarted = () => {
       setLoading(false);
       toast.success("Registered successfully");
       setupLogin(data?.token);
+      // Set the user state to redux/ userSlice
       dispatch(loginSuccess(data));
+      // navigate to dashboard on successful login
       navigate("/dashboard");
     } catch (error) {
       setLoading(false);

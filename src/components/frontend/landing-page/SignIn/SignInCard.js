@@ -1,55 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import "./signin.css";
-import data from "../../../../data/pages/signin";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import "./signin.css";
+
+import data from "../../../../data/pages/signin";
 import { msSingleSign } from "../../../../helpers/requestMethod";
 import { setupLogin } from "../../../../helpers/auth";
 import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
-import axios from "axios";
+import WebService from "../../../../utils/webService";
 
 export const Card = () => {
-  const { search } = useLocation();
   const [inputs, setInputs] = useState({
     userName: "",
     password: "",
   });
 
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
-
   const dispatch = useDispatch();
+  // Get the search params from the browser address
+  const { search } = useLocation();
 
+  // Get user information from the form
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInputs({ ...inputs, [name]: value });
   };
 
+  // Login user function the set their state using redux
   const handleLogin = async (event) => {
     event.preventDefault();
     login(dispatch, inputs);
   };
 
+  // Function to call on endpoint that will redirect user to Microsoft platform to log in
   const handleMsLogin = async (event) => {
     event.preventDefault();
     window.location.href = msSingleSign;
   };
 
+  // Get user information the send to API to check if user is registered
   useEffect(() => {
     const getUserInformation = async () => {
-      const { data } = await axios.get(msSingleSign + search);
+      let action = msSingleSign + search;
+      // perform get user information
+      const data = await WebService.get(action);
 
+      // A check to see if user is registered
       if (data?.registered) {
         setupLogin(data?.token);
         dispatch(loginSuccess(data));
         navigate("/dashboard");
       } else {
+        // Send unregistered user to register page where they can perform registration
         navigate("/get-started", {
           state: { user: data?.graphinfo, token: data?.token },
         });
       }
     };
+
     if (search) getUserInformation();
   }, [search, dispatch]);
 

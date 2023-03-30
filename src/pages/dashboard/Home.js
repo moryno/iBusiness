@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import DateBox from "devextreme-react/date-box";
 
 import DataTable from "../../components/dashboard/DataTable";
 import Statusbar from "../../components/dashboard/Statusbar";
@@ -10,33 +9,21 @@ import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import request from "../../helpers/requestMethod";
 import New from "./New";
-
-import { setupLogin } from "../../helpers/auth";
-import { loginSuccess } from "../../redux/userSlice";
-
 import { bookingColumns } from "../../data/PurchaseOrderData";
+
+// Get todays day to use in the filter date fields of the datagrid
+const today = new Date().toISOString().slice(0, 10);
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [selectedBookingId, setSelectedBookingId] = useState(null);
-  const [input, setInput] = useState(null);
+  const [fromDate, setFromDate] = useState(today);
+  const [toDate, setToDate] = useState(today);
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const { hash } = useLocation();
-  const dispatch = useDispatch();
-  const token = hash.split("=")[1];
-
-  const today = new Date().toISOString().slice(0, 10);
-
-  // Fuction to get date change
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInput({ ...input, [name]: value });
-  };
 
   // Fuction to close the Create || update form
   const handleClose = () => {
@@ -50,21 +37,7 @@ const Home = () => {
     setSelectedBookingId(selectedRow.data.bookingId);
   };
 
-  // This Hook is to fetch user information after successfully login
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await request.get("/User");
-
-      dispatch(loginSuccess(data));
-    };
-
-    if (token) {
-      setupLogin(token);
-      getUser();
-    }
-  }, [token, dispatch]);
-
-  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid is double clicked
+  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {
     try {
       const getData = async () => {
@@ -94,13 +67,13 @@ const Home = () => {
     if (selectedBookingId) getSingleBooking();
   }, [selectedBookingId]);
 
-  // This fucntion is used to toggle between each menu botton clicks
+  // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
-        input === null && date === ""
-          ? setDate({ startdate: today, enddate: today })
-          : setDate(input);
+        fromDate === null && toDate && date === ""
+          ? setDate({ startdate: fromDate, enddate: toDate })
+          : setDate({ startdate: fromDate, enddate: toDate });
         break;
       case "New":
         setStatusMode("CreateBooking");
@@ -143,13 +116,14 @@ const Home = () => {
                   >
                     From Date:
                   </label>
-                  <input
-                    className="border text-sm border-gray-300 w-1/2 outline-none rounded-sm"
-                    type="date"
-                    id="fromDate"
-                    onChange={handleChange}
-                    name="startdate"
-                    defaultValue={today}
+
+                  <DateBox
+                    id="courseDate"
+                    name="courseDate"
+                    onValueChanged={(e) => setFromDate(e.value)}
+                    value={fromDate}
+                    height={26}
+                    className=" border  text-xs pl-1 w-full md:w-1/2  outline-none"
                   />
                 </div>
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
@@ -159,20 +133,19 @@ const Home = () => {
                   >
                     To Date:
                   </label>
-                  <input
-                    className="border text-sm border-gray-300 w-1/2 outline-none rounded-sm"
-                    type="date"
-                    id="toDate"
-                    onChange={handleChange}
-                    name="enddate"
-                    defaultValue={today}
+                  <DateBox
+                    id="courseDate"
+                    name="courseDate"
+                    onValueChanged={(e) => setToDate(e.value)}
+                    value={toDate}
+                    height={26}
+                    className=" border  text-xs pl-1 w-full md:w-1/2  outline-none"
                   />
                 </div>
               </div>
             </article>
           </article>
         </section>
-
         <section className="mt-5">
           <DataTable
             data={data}
@@ -183,6 +156,7 @@ const Home = () => {
           />
         </section>
       </section>
+
       {statusMode === "CreateBooking" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New

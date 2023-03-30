@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
@@ -7,11 +8,9 @@ import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
-import { Validator, RequiredRule } from "devextreme-react/validator";
+
 import request from "../../helpers/requestMethod";
 import services from "../../helpers/formDataSource";
-import { useSelector } from "react-redux";
-import { ValidationGroup } from "devextreme-react";
 
 const New = ({
   handleClose,
@@ -25,7 +24,7 @@ const New = ({
 }) => {
   // Define state to store the change in the input field
   // Code starts here
-  console.log(singleBooking);
+
   const [fullName, setFullName] = useState(
     statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
   );
@@ -91,19 +90,12 @@ const New = ({
     statusMode === "EditBooking" ? singleBooking.booking?.courseDate : today
   );
   const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditBooking"
-      ? singleBooking.booking?.paymentMode
-      : "INHOUSE"
+    statusMode === "EditBooking" ? singleBooking.booking?.paymentMode : "Cheque"
   );
   // Code ends here
 
+  // Get our current user using redux to update booking when creating or updating
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
-  const validationGroupRef = useRef(null);
-  const validationRules = {
-    required: true,
-    // add more validation rules as needed
-  };
 
   // A function to save the booking details to the backend then populate the datagrid
   const save = async () => {
@@ -165,26 +157,27 @@ const New = ({
     // Check to save depending on the current mode
     if (statusMode === "CreateBooking") {
       try {
+        // perform form submission on creating new booking
         const { data } = await request.post("/Booking/Create", formData);
 
+        // Append the new booking to the top of the datagrid
         setBookings([data?.Booking?.booking, ...bookings]);
         handleClose();
-
-        // perform form submission
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
+        // perform form submission on updating existing booking
         const { data } = await request.put("/Booking/UpdateBooking", editData);
 
+        // Append the updated booking to the top of the datagrid
         const newBooking = bookings.map((booking) => {
           if (booking.bookingId === data?.Booking.bookingId) {
             return data?.Booking;
           }
           return booking;
         });
-
         setBookings(newBooking);
         handleClose();
       } catch (error) {
@@ -219,7 +212,7 @@ const New = ({
             save.
           </p>
         </article>
-        <article className="h-full px-2 md:border md:border-gray-300 overflow-y-auto">
+        <article className="h-full px-2 md:border md: overflow-y-auto">
           <div>
             <form className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
               <section className="flex flex-col md:flex-row w-full gap-2">
@@ -230,13 +223,13 @@ const New = ({
                     </label>
 
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="fullName"
                       name="fullName"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
+                      height={26}
+                      className=" border  text-xs text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
@@ -244,13 +237,13 @@ const New = ({
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="idNumber"
                       name="idNumber"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -258,13 +251,13 @@ const New = ({
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none "
                       type="text"
                       id="email"
                       name="email"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setEmail(e.value)}
                       value={email}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
@@ -275,13 +268,13 @@ const New = ({
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="telephone"
                       name="telephone"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -292,13 +285,13 @@ const New = ({
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                       type="text"
                       id="employerName"
                       name="employerName"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -309,13 +302,12 @@ const New = ({
                       Experience:<sup className=" text-red-600">*</sup>
                     </label>
                     <NumberBox
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                      height={28}
                       id="experience"
                       name="experience"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
@@ -329,12 +321,11 @@ const New = ({
                       dataSource={countriesOptions}
                       searchEnabled={true}
                       name="originCountry"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setSelectedCountry(e.value)}
                       value={selectedCountry}
                       placeholder="Select a Country"
-                      height={28}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      height={26}
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -342,13 +333,13 @@ const New = ({
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                       type="text"
                       id="position"
                       name="position"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setPosition(e.value)}
                       value={position}
+                      height={26}
+                      className=" border h-7  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
@@ -359,13 +350,13 @@ const New = ({
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                       type="text"
                       id="physicalAddress"
                       name="physicalAddress"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
+                      height={26}
+                      className=" border h-7  text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
@@ -379,12 +370,11 @@ const New = ({
                       dataSource={diabilityStatusOptions}
                       searchEnabled={true}
                       name="disabilityStatus"
-                      validationRules={validationRules}
                       placeholder="Select Status"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
                       value={selectedStatus}
-                      className="rounded-[3px] text-center border border-gray-300 text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
+                      className=" text-center border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
                   <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
@@ -398,12 +388,11 @@ const New = ({
                     <SelectBox
                       dataSource={retirementSchemeOptions}
                       searchEnabled={true}
-                      validationRules={validationRules}
                       placeholder="Select an option"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
                       value={schemeOptions}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
@@ -421,12 +410,11 @@ const New = ({
                       dataSource={bookingTypeOptions}
                       searchEnabled={true}
                       name="bookingType"
-                      validationRules={validationRules}
                       placeholder="Select a Scheme Name"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setBookingType(e.value)}
                       value={bookingType}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -437,13 +425,13 @@ const New = ({
                       Sch Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] h-7 border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="schemePosition"
                       name="schemePosition"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
+                      height={26}
+                      className=" h-7 border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -457,12 +445,11 @@ const New = ({
                       dataSource={trainingVenuesOptions}
                       searchEnabled={true}
                       name="trainingVenue"
-                      validationRules={validationRules}
                       placeholder="Select a Training Venue"
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
                       value={trainingVenue}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
 
@@ -477,11 +464,10 @@ const New = ({
                     <DateBox
                       id="courseDate"
                       name="courseDate"
-                      validationRules={validationRules}
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setCourseDate(e.value)}
                       value={courseDate}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -496,11 +482,10 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
-                      validationRules={validationRules}
-                      height={28}
+                      height={26}
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={paymentMode}
-                      className="rounded-[3px] border border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -512,13 +497,13 @@ const New = ({
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      className="rounded-[3px] border h-7 border-gray-300 text-xs pl-1 w-full md:w-[70%]  outline-none"
                       type="text"
                       id="externalSchemeAdmin"
                       name="externalSchemeAdmin"
-                      validationRules={validationRules}
                       onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
+                      height={26}
+                      className=" border h-7  text-xs pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                 </article>
@@ -531,7 +516,7 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className="rounded-[3px] border border-gray-300  resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    className=" border   resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
@@ -569,7 +554,7 @@ const New = ({
   );
 };
 
-// COntrols Options
+// Controls Options
 
 const countriesOptions = services.getCountries();
 
