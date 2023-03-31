@@ -7,6 +7,9 @@ import SelectBox from "devextreme-react/select-box";
 import TextBox from "devextreme-react/text-box";
 import DateBox from "devextreme-react/date-box";
 import TextArea from "devextreme-react/text-area";
+import NumberBox from "devextreme-react/number-box";
+import { useSelector } from "react-redux";
+import request from "../../../helpers/tempRequest";
 
 // Getting date today
 
@@ -31,10 +34,12 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
   const [deliveryPeriod, setDeliveryPeriod] = useState();
   const [driverDetails, setdriverDetails] = useState();
   const [orderNumber, setOrderNumber] = useState(0);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   useEffect(() => {
-    if (orderState === 1) {
-      console.log(formUpdateData.orderDate);
+      if (typeof formUpdateData === "undefined"){
+        return;
+      }
       setCostCenter(formUpdateData.costCenter);
       setSupplier(formUpdateData.supplier);
       setShipsTo(formUpdateData.shipsTo);
@@ -42,25 +47,29 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
       setOrderAmount(formUpdateData.orderAmount);
       setDeliveryPeriod(formUpdateData.deliveryPeriod);
       setfirstDeliveryDate(dateString);
-      setdriverDetails(formUpdateData.driverDetails);
+      setdriverDetails(formUpdateData.vehicleDetails);
       setNarration(formUpdateData.narration);
       setOrderNumber(formUpdateData.orderNumber);
-    }
+    
   }, [formUpdateData]);
 
   useEffect(() => {
-    setSubmitData({
-      costCenter: costCenter,
-      supplier: supplier,
-      shipsTo: shipsTo,
-      orderDate: orderDate,
-      orderAmount: parseInt(orderAmount),
-      deliveryPeriod: parseInt(deliveryPeriod),
-      firstDeliveryDate: firstDeliveryDate,
-      vehicleDetails: driverDetails,
-      narration: narration,
-      orderNumber: orderNumber
-    });
+    const data = {
+      costCenter: costCenter ?? "",
+      supplier: supplier ?? "",
+      shipsTo: shipsTo ?? "",
+      orderDate: orderDate ?? dateString,
+      orderAmount: orderAmount ?? 0,
+      deliveryPeriod: deliveryPeriod ?? 0,
+      firstDeliveryDate: firstDeliveryDate ?? dateString,
+      vehicleDetails: driverDetails ?? "",
+      narration: narration ?? "",
+      orderNumber: orderNumber ?? 0,
+      id: currentUser.email ?? ""
+    }
+    console.log(data);
+    setSubmitData(data);
+
   }, [
     costCenter,
     supplier,
@@ -73,6 +82,29 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
     driverDetails,
     setSubmitData,
   ]);
+
+  const updateToCosmos = async() => {
+    try {
+      const data = {
+        costCenter: costCenter ?? "",
+        supplier: supplier ?? "",
+        shipsTo: shipsTo ?? "",
+        orderDate: orderDate ?? dateString,
+        orderAmount: orderAmount ?? 0,
+        deliveryPeriod: deliveryPeriod ?? 0,
+        firstDeliveryDate: firstDeliveryDate ?? dateString,
+        vehicleDetails: driverDetails ?? "",
+        narration: narration ?? "",
+        orderNumber: orderNumber ?? 0,
+        id: currentUser.email ?? ""
+      }
+      await request.put("/PurchaseOrder/updateorderinfo", data);
+      console.log("Updated");
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div className="po-form">
@@ -89,6 +121,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={costCenter}
             onValueChanged={(e) => {
               setCostCenter(e.value);
+              updateToCosmos();
             }}
           />
         </div>
@@ -103,17 +136,19 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={shipsTo}
             onValueChanged={(e) => {
               setShipsTo(e.value);
+              updateToCosmos();
             }}
           />
         </div>
         <div className="select-control">
           <label className="label-control">Order Amount:</label>
-          <TextBox
+          <NumberBox
             width="68%"
             height="4vh"
             value={orderAmount}
             onValueChanged={(e) => {
               setOrderAmount(e.value);
+              updateToCosmos();
             }}
           />
         </div>
@@ -126,6 +161,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={firstDeliveryDate}
             onValueChanged={(e) => {
               setfirstDeliveryDate(e.value);
+              updateToCosmos();
             }}
           />
         </div>
@@ -142,6 +178,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={supplier}
             onValueChanged={(e) => {
               setSupplier(e.value);
+              updateToCosmos();
             }}
           />
         </div>
@@ -154,17 +191,19 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={orderDate}
             onValueChanged={(e) => {
               setOrderDate(e.value);
+              updateToCosmos();
             }}
           />
         </div>
         <div className="select-control">
           <label className="label-control">Delivery Period (Days):</label>
-          <TextBox
+          <NumberBox
             width="79%"
             height="4vh"
             value={deliveryPeriod}
             onValueChanged={(e) => {
               setDeliveryPeriod(e.value);
+              updateToCosmos();
             }}
           />
         </div>
@@ -176,6 +215,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={driverDetails}
             onValueChanged={(e) => {
               setdriverDetails(e.value);
+              updateToCosmos();
             }}
           />
         </div>
@@ -192,6 +232,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
           value={narration}
           onValueChanged={(e) => {
             setNarration(e.value);
+            updateToCosmos();
           }}
         />
       </div>

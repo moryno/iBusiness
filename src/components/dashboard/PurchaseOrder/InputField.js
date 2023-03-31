@@ -13,7 +13,7 @@ import request from "../../../helpers/tempRequest";
 
 // Input section component
 
-export const InputField = ({ count, data, setMessage, orderstate }) => {
+export const InputField = ({ count, data, setMessage, setModalMessage }) => {
   const [quantity, setQuantity] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const numberBoxRef = useRef(null);
@@ -64,7 +64,6 @@ export const InputField = ({ count, data, setMessage, orderstate }) => {
 
       data.store().insert(itemtoadd.data());
       data.reload();
-      count.current++;
       setMessage(`${item.name} has been added successfully.`);
       setSelectedOption(null);
       setQuantity();
@@ -158,7 +157,7 @@ export const InputField = ({ count, data, setMessage, orderstate }) => {
   // Clears the table field
 
   const handleClearData = () => {
-    ConfirmMessage("", function (result) {
+    ConfirmMessage("Hello", function (result) {
       if (result) {
         data.store().clear();
         setMessage("Table successfully cleared. You can add new items.");
