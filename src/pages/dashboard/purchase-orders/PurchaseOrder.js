@@ -14,6 +14,7 @@ import request from "../../../helpers/tempRequest";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import { useSelector } from "react-redux";
 import { LoadPanel } from "devextreme-react/load-panel";
+import dateToday from "../../../utils/dateToday";
 
 // Main Function
 export const PurchaseOrder = ({ orderstate }) => {
@@ -24,7 +25,21 @@ export const PurchaseOrder = ({ orderstate }) => {
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line})
   const [data, setData] = useState(new DataSource());
-  const [dataToSubmit, setSubmitData] = useState();
+  const [dataToSubmit, setSubmitData] = useState(
+    {
+        costCenter: "",
+        supplier: "",
+        shipsTo: "",
+        orderDate: dateToday,
+        orderAmount: 0,
+        deliveryPeriod: 0,
+        firstDeliveryDate: dateToday,
+        vehicleDetails: "",
+        narration: "",
+        orderNumber: 0,
+        id: currentUser.email ?? ""
+      }
+  );
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState("Are you sure you want to clear the table?");
   const navigate = useNavigate();
@@ -42,9 +57,9 @@ export const PurchaseOrder = ({ orderstate }) => {
           data.reload();
           console.log("Data to submit")
           console.log(dataToSubmit);
-          if (typeof response.data.orderInformation[0] !== "undefined"){
-            setFormUpdateData(response.data.orderInformation[0]);
-          }
+          // if (typeof response.data.orderInformation[0] !== "undefined"){
+          //   setFormUpdateData(response.data.orderInformation[0]);
+          // }
           setLoading(false);          
         } catch (e) {
           console.log(e);
@@ -163,6 +178,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           setSubmitData={setSubmitData}
           orderState={orderstate}
           formUpdateData={formUpdateData}
+          dataToSubmit={dataToSubmit}
         />
       </div>
       <section className="mt-2">

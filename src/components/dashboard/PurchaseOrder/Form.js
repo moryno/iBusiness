@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, memo } from "react";
 import "../../../pages/dashboard/purchase-orders/PurchaseOrder.css";
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
@@ -23,7 +23,7 @@ const dateString = `${year}-${month}-${day}`;
 
 // Form Component
 
-const Form = ({ formUpdateData, setSubmitData, orderState }) => {
+const Form = ({ formUpdateData, setSubmitData, dataToSubmit }) => {
   const [costCenter, setCostCenter] = useState();
   const [supplier, setSupplier] = useState();
   const [shipsTo, setShipsTo] = useState();
@@ -35,6 +35,19 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
   const [driverDetails, setdriverDetails] = useState();
   const [orderNumber, setOrderNumber] = useState(0);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  var dataToCosmos = {
+      costCenter: "",
+      supplier: "",
+      shipsTo: "",
+      orderDate: dateString,
+      orderAmount: 0,
+      deliveryPeriod: 0,
+      firstDeliveryDate: dateString,
+      vehicleDetails: "",
+      narration: "",
+      orderNumber: 0,
+      id: currentUser.email ?? ""
+    }
 
   useEffect(() => {
       if (typeof formUpdateData === "undefined"){
@@ -54,50 +67,38 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
   }, [formUpdateData]);
 
   useEffect(() => {
-    const data = {
-      costCenter: costCenter ?? "",
-      supplier: supplier ?? "",
-      shipsTo: shipsTo ?? "",
-      orderDate: orderDate ?? dateString,
-      orderAmount: orderAmount ?? 0,
-      deliveryPeriod: deliveryPeriod ?? 0,
-      firstDeliveryDate: firstDeliveryDate ?? dateString,
-      vehicleDetails: driverDetails ?? "",
-      narration: narration ?? "",
-      orderNumber: orderNumber ?? 0,
-      id: currentUser.email ?? ""
-    }
-    console.log(data);
-    setSubmitData(data);
+    // const data = {
+    //   costCenter: costCenter ?? "",
+    //   supplier: supplier ?? "",
+    //   shipsTo: shipsTo ?? "",
+    //   orderDate: orderDate ?? dateString,
+    //   orderAmount: orderAmount ?? 0,
+    //   deliveryPeriod: deliveryPeriod ?? 0,
+    //   firstDeliveryDate: firstDeliveryDate ?? dateString,
+    //   vehicleDetails: driverDetails ?? "",
+    //   narration: narration ?? "",
+    //   orderNumber: orderNumber ?? 0,
+    //   id: currentUser.email ?? ""
+    // }
+    console.log(dataToSubmit);
+    updateToCosmos(dataToSubmit);
+    // setSubmitData({...data, [name]});
 
   }, [
-    costCenter,
-    supplier,
-    shipsTo,
-    orderDate,
-    orderAmount,
-    firstDeliveryDate,
-    narration,
-    deliveryPeriod,
-    driverDetails,
-    setSubmitData,
+    // costCenter,
+    // supplier,
+    // shipsTo,
+    // orderDate,
+    // orderAmount,
+    // firstDeliveryDate,
+    // narration,
+    // deliveryPeriod,
+    // driverDetails,
+    dataToSubmit,
   ]);
 
-  const updateToCosmos = async() => {
+  const updateToCosmos = async(data) => {
     try {
-      const data = {
-        costCenter: costCenter ?? "",
-        supplier: supplier ?? "",
-        shipsTo: shipsTo ?? "",
-        orderDate: orderDate ?? dateString,
-        orderAmount: orderAmount ?? 0,
-        deliveryPeriod: deliveryPeriod ?? 0,
-        firstDeliveryDate: firstDeliveryDate ?? dateString,
-        vehicleDetails: driverDetails ?? "",
-        narration: narration ?? "",
-        orderNumber: orderNumber ?? 0,
-        id: currentUser.email ?? ""
-      }
       await request.put("/PurchaseOrder/updateorderinfo", data);
       console.log("Updated");
     }
@@ -121,7 +122,9 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={costCenter}
             onValueChanged={(e) => {
               setCostCenter(e.value);
-              updateToCosmos();
+              setSubmitData({...dataToSubmit, costCenter: e.value});
+              dataToCosmos = {...dataToSubmit, costCenter: e.value};
+              console.log(dataToCosmos);
             }}
           />
         </div>
@@ -136,6 +139,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={shipsTo}
             onValueChanged={(e) => {
               setShipsTo(e.value);
+              setSubmitData({...dataToSubmit, shipsTo: e.value});
               updateToCosmos();
             }}
           />
@@ -148,6 +152,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={orderAmount}
             onValueChanged={(e) => {
               setOrderAmount(e.value);
+              setSubmitData({...dataToSubmit, orderAmount: e.value});
               updateToCosmos();
             }}
           />
@@ -161,6 +166,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={firstDeliveryDate}
             onValueChanged={(e) => {
               setfirstDeliveryDate(e.value);
+              setSubmitData({...dataToSubmit, firstDeliveryDate: e.value});
               updateToCosmos();
             }}
           />
@@ -178,6 +184,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={supplier}
             onValueChanged={(e) => {
               setSupplier(e.value);
+              setSubmitData({...dataToSubmit, supplier: e.value});
               updateToCosmos();
             }}
           />
@@ -191,6 +198,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={orderDate}
             onValueChanged={(e) => {
               setOrderDate(e.value);
+              setSubmitData({...dataToSubmit, orderDate: e.value});
               updateToCosmos();
             }}
           />
@@ -203,6 +211,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={deliveryPeriod}
             onValueChanged={(e) => {
               setDeliveryPeriod(e.value);
+              setSubmitData({...dataToSubmit, deliveryPeriod: e.value});
               updateToCosmos();
             }}
           />
@@ -215,6 +224,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
             value={driverDetails}
             onValueChanged={(e) => {
               setdriverDetails(e.value);
+              setSubmitData({...dataToSubmit, driverDetails: e.value});
               updateToCosmos();
             }}
           />
@@ -232,6 +242,7 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
           value={narration}
           onValueChanged={(e) => {
             setNarration(e.value);
+            setSubmitData({...dataToSubmit, narration: e.value});
             updateToCosmos();
           }}
         />
@@ -242,4 +253,4 @@ const Form = ({ formUpdateData, setSubmitData, orderState }) => {
 
 // End of component code
 
-export default Form;
+export default memo(Form);

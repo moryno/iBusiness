@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { orderColumns } from "../../data/PurchaseOrderData";
 import DataTable from "../../components/dashboard/DataTable";
@@ -11,7 +11,7 @@ import request from "../../helpers/tempRequest";
 
 const Orders = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const loadingRef = useRef(true);
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Orders = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-          setLoading(true);
+          
           const response = await request.get("PurchaseOrder/orders");
           // response.data.map(order => {
           //   console.log(order);
@@ -45,7 +45,7 @@ const Orders = () => {
           // })
           console.log(response.data);
           setData(response.data);
-          setLoading(false);
+          loadingRef.current = false;
         }
       catch (error) {
         console.log(error);
@@ -87,7 +87,7 @@ const Orders = () => {
         console.log("Delete was clicked");
         break;
       case "Close":
-        navigate("/");
+        navigate("/dashboard");
         break;
       case "Help":
         console.log("Help was clicked");
@@ -156,14 +156,14 @@ const Orders = () => {
             columns={orderColumns}
             keyExpr="orderNumber"
             startEdit={startEdit}
-            loading={loading}
+            loading={loadingRef.current}
           />
         </section>
-        {/* <LoadPanel visible={loading}/> */}
+        
       </section>
       <Statusbar heading="Purchase Orders" company="iBusiness" />
     </main>
   );
 };
 
-export default Orders;
+export default memo(Orders);
