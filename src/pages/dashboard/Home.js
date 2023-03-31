@@ -32,8 +32,6 @@ const Home = () => {
   };
   // Fuction to edit row
   const startEdit = (selectedRow) => {
-    setStatusMode("EditBooking");
-    setOpen((isOpen) => !isOpen);
     setSelectedBookingId(selectedRow.data.bookingId);
   };
 
@@ -63,6 +61,8 @@ const Home = () => {
         `Booking?bookingID=${selectedBookingId}`
       );
       setSingleBooking(data);
+      setStatusMode("EditBooking");
+      setOpen((isOpen) => !isOpen);
     };
     if (selectedBookingId) getSingleBooking();
   }, [selectedBookingId]);
