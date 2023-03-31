@@ -18,18 +18,8 @@ import { LoadPanel } from "devextreme-react/load-panel";
 // Main Function
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
-  const [formUpdateData, setFormUpdateData] = useState({
-    costCenter: "",
-    supplier: "",
-    shipsTo: "",
-    orderDate: "",
-    orderAmount: 0,
-    deliveryPeriod: 0,
-    firstDeliveryDate: "",
-    vehicleDetails: "",
-    narration: "",
-    orderNumber: 0
-  });
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const [formUpdateData, setFormUpdateData] = useState();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line})
@@ -38,26 +28,31 @@ export const PurchaseOrder = ({ orderstate }) => {
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState("Are you sure you want to clear the table?");
   const navigate = useNavigate();
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+
 
   useEffect(() => {
+    setLoading(true);
     if (orderstate === 0) {
-      async function getData() {
-        setLoading(true);
+      async function getData(){
         try {
           const response = await request.get(`/PurchaseOrder/getorderitems?userid=${currentUser?.email}`);
-          response.data.map((item) => {
+          response.data.orderItems.map((item) => {
             return data.store().insert(item);
           });
           data.reload();
+          console.log("Data to submit")
+          console.log(dataToSubmit);
+          if (typeof response.data.orderInformation[0] !== "undefined"){
+            setFormUpdateData(response.data.orderInformation[0]);
+          }
           setLoading(false);          
         } catch (e) {
           console.log(e);
           getData();
         }
       }
-
       getData();
+
     } else if (orderstate === 1) {
       const getUpdateData = async () => {
         try {
@@ -67,6 +62,7 @@ export const PurchaseOrder = ({ orderstate }) => {
             data.reload();
           });
           setFormUpdateData(response.data.formInfo);
+          setLoading(false);
         } catch (e) {
           console.log(e);
         }
@@ -74,6 +70,22 @@ export const PurchaseOrder = ({ orderstate }) => {
 
       getUpdateData();
     }
+
+    const handleKeyUp = (e) => {
+        if (e.code === "KeyS" && (e.ctrlKey)){
+          e.preventDefault();
+          console.log("Key pressed");
+          submitData();
+        }
+      
+    };
+  
+    document.addEventListener("keydown", handleKeyUp);
+  
+    // Cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyUp);
+    };
   }, []);
 
   const submitData = async () => {
@@ -85,12 +97,13 @@ export const PurchaseOrder = ({ orderstate }) => {
       tableData: data.store()._array,
       user: user
     };
+    console.log(confirmedData);
 
     setMessage("Submitting data...");
     try {
       const { data } = await request.post(
         "/PurchaseOrder/createpurchaseorder",
-        confirmedData
+        user
       );
       console.log(data);
       if (orderstate === 0){
@@ -108,6 +121,19 @@ export const PurchaseOrder = ({ orderstate }) => {
     }
   };
 
+  // useEffect(() => {
+  //   const updateData = async() => {
+  //     try {
+  //       await request.put("/PurchaseOrder/updateorderinfo", dataToSubmit);
+  //       console.log("Updated");
+  //     }
+  //     catch(e) {
+  //       console.log(e);
+  //     }
+  //   }
+  //   updateData();
+  // }, [dataToSubmit])
+
   const handleClick = (menu) => {
     switch (menu) {
       case "Submit Order":
@@ -124,7 +150,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   };
 
   return (
-    <main className="w-full min-h-full relative h-full px-3 md:px-5 py-1.5">
+    <main className="purchase-order-page w-full min-h-full relative h-full px-3 md:px-5 py-1.5">
       <section>
         <MenuButtonsGroup
           heading= {orderstate === 0 ? "Purchase Order Entry" : "Update Purchase Order"}
