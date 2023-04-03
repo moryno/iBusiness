@@ -19,10 +19,12 @@ import dateToday from "../../../utils/dateToday";
 // Main Function
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
+  const [order, setOrder] = useState(0);
   const [updateData, setUpdateData] = useState({
     formData: "",
     tableData: ""
   })
+  const [james, setJames] = useState(0);
   const [initialRender, setInitialRender] = useState(true);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formUpdateData, setFormUpdateData] = useState([]);
@@ -61,7 +63,7 @@ export const PurchaseOrder = ({ orderstate }) => {
 
         } catch (e) {
           console.log(e);
-          getData();
+          // getData();
         }
       }
       getData();
@@ -76,6 +78,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           });
           setFormUpdateData(response.data.formInfo);
           setUpdateData({...updateData, "formData": response.data.formInfo})
+          setOrder(response.data.formInfo.orderNumber)
           console.log(updateData)
         } catch (e) {
           console.log(e);
@@ -88,8 +91,8 @@ export const PurchaseOrder = ({ orderstate }) => {
     const handleKeyUp = (e) => {
         if (e.code === "KeyS" && (e.ctrlKey)){
           e.preventDefault();
-          console.log("Key pressed");
           submitOrder();
+          document.removeEventListener("keydown", handleKeyUp);
         }
       
     };
@@ -97,59 +100,72 @@ export const PurchaseOrder = ({ orderstate }) => {
     document.addEventListener("keydown", handleKeyUp);
   
     // Cleanup function to remove the event listener
-    return () => {
-      document.removeEventListener("keydown", handleKeyUp);
-    };
+    // return () => {
+    //   document.removeEventListener("keydown", handleKeyUp);
+    // };
   }, [orderstate]);
 
   const submitOrder = async () => {
-    const user = {
-      userid: currentUser?.email,
-    };
-
-    setMessage("Submitting data...");
+    setLoading(true)
     try {
-      const { data } = await request.post(
-        "/PurchaseOrder/createpurchaseorder",
-        user
-      );
-      console.log(data);
       if (orderstate === 0){
-        setMessage("Data submitted successfully.");
-      }
-      else {
+        const user = {
+          userid: currentUser?.email,
+        };
+        const { data } = await request.post(
+          "/PurchaseOrder/createpurchaseorder",
+          user
+        );
+        console.log(data);
+        setMessage("Order submitted successfully.");
+        setLoading(false)
+
+      } else {
+        const dataToUpdate = {
+          "formData" : updateData.formData,
+          "tableData" : data.store()._array,
+        }
+        await request.put("/PurchaseOrder/updateorder", dataToUpdate);
         setMessage("Order has been updated successfully.");
+        setLoading(false)
+
       }
       setTimeout(() => {
         navigate("/dashboard/orders");
       }, 1500);
     } catch (e) {
       console.log(e);
+      setLoading(false)
       return setMessage("There was an error trying to submit your request.");
+      
     }
   };
 
 
-    const updateOrder = () => {
-      // try {
-      //   await request.put("/PurchaseOrder/updateorder", updateData);
-      //   console.log("Updated");
-      // }
-      // catch(e) {
-      //   console.log(e);
-      // }
-    }
+    // const updateOrder = async() => {
+    //   if (orderstate === 1){
+    //     const dataToUpdate = {
+    //       "formData" : updateData.formData,
+    //       "tableData" : updateData.tableData,
+    //       "orderid" : formUpdateData.orderNumber
+    //     }
+    //     try {
+    //       await request.put("/PurchaseOrder/updateorder", updateData);
+
+    //     }
+    //     catch(e) {
+    //       console.log(e);
+    //     }
+    //   }
+
+    // }
 
   
 
   const handleClick = (menu) => {
     switch (menu) {
       case "Submit Order":
-        if (orderstate == 0){
-          submitOrder();
-        } else {
-          updateOrder();
-        }
+        submitOrder();
         break;
 
       case "Close":
@@ -189,8 +205,9 @@ export const PurchaseOrder = ({ orderstate }) => {
               <InputField
                 data={data}
                 count={count}
+                order={order}
                 setMessage={setMessage}
-                orderState={orderstate}
+                orderstate={orderstate}
               />
               <MessageDiv message={currentmessage} />
             </div>
@@ -200,6 +217,9 @@ export const PurchaseOrder = ({ orderstate }) => {
             count={count}
             setMessage={setMessage}
             setModalMessage={setModalMessage}
+            order={order}
+            updateData={updateData}
+            setUpdateData={setUpdateData}
           />
           <LoadPanel visible={loading} messageText="Checking for unsubmitted orders..."/>
         </div>

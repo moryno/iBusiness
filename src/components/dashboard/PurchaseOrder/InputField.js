@@ -13,7 +13,7 @@ import request from "../../../helpers/tempRequest";
 
 // Input section component
 
-export const InputField = ({ count, data, setMessage, setModalMessage }) => {
+export const InputField = ({ count, data, setMessage, order, orderstate }) => {
   const [quantity, setQuantity] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const numberBoxRef = useRef(null);
@@ -26,8 +26,8 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
   };
 
   const handleItemPopulation = async () => {
-    // Data validation
 
+    // Data validation
     if (selectedOption === null) {
       setMessage("Please select an item.");
       return null;
@@ -41,11 +41,11 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       setMessage("Quantity cannot be none.");
       return 0;
     }
-
     // End of validation
 
     const item = items.find((x) => x.key === selectedOption);
     const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
+
 
     if (typeof itemtoupdate === "undefined") {
       let extendedCost = item.amount * quantity;
@@ -58,7 +58,7 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        currentUser?.email ?? "None",
+        order !== 0 ? order : currentUser?.email,
         `${currentUser?.email}.${item.name}` ?? "None"
       );
 
@@ -70,31 +70,21 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       selectboxRef.current.instance.focus();
       console.log(itemtoadd);
       
-      try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.post(
-          "PurchaseOrder/insertorderitems",
-          data
-        );
-        console.log(response);
-      } catch (e) {
-        const itemtoremove = data
-          .store()
-          ._array.find((x) => x.item === item.name);
-        data.store().remove(itemtoremove);
-        data.reload();
-        console.log(e);
+      if (orderstate == 0){
+        try {
+          const response = await request.post(
+            "PurchaseOrder/insertorderitems",
+            itemtoadd.data()
+          );
+          console.log(response);
+        } catch (e) {
+          const itemtoremove = data
+            .store()
+            ._array.find((x) => x.item === item.name);
+          data.store().remove(itemtoremove);
+          data.reload();
+          console.log(e);
+        }
       }
     } else if (itemtoupdate.item === item.name) {
       let newquantity = quantity + itemtoupdate.quantity;
@@ -108,10 +98,11 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        currentUser?.email ?? "None",
+        order ?? currentUser?.email,
         `${currentUser?.email}.${item.name}` ?? "None"
       );
 
+      console.log("Item to add")
       data.store().remove(itemtoupdate);
       data.store().insert(itemtoadd.data());
       data.reload();
@@ -121,32 +112,24 @@ export const InputField = ({ count, data, setMessage, setModalMessage }) => {
       setQuantity();
       selectboxRef.current.instance.focus();
 
+      if (orderstate == 0){
       try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.put(
-          "PurchaseOrder/updateorderitem",
-          data
-        );
-        console.log(response);
-      } catch (e) {
-        const itemtoremove = data
-          .store()
-          ._array.find((x) => x.item === item.name);
-        data.store().remove(itemtoremove);
-        data.store().insert(itemtoupdate);
-        data.reload();
-        console.log(e);
+        if (orderstate == 0){
+          const response = await request.put(
+            "PurchaseOrder/updateorderitem",
+            itemtoadd.data()
+          );
+          console.log(response);
+        }
+        } catch (e) {
+          const itemtoremove = data
+            .store()
+            ._array.find((x) => x.item === item.name);
+          data.store().remove(itemtoremove);
+          data.store().insert(itemtoupdate);
+          data.reload();
+          console.log(e);
+        }
       }
 
     }

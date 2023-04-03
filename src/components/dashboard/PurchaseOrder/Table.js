@@ -18,7 +18,7 @@ import ConfirmMessage from "./ConfirmMessage";
 
 // Table component
 
-export const Table = ({ data, count, setMessage }) => {
+export const Table = ({ data, count, setMessage, orderstate, updateData, setUpdateData }) => {
   const gridRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -69,7 +69,7 @@ export const Table = ({ data, count, setMessage }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        currentUser?.email,
+        order ?? currentUser?.email,
         `${currentUser?.email}.${rowIndex.data.item}`
       );
       data.reload();
@@ -77,15 +77,17 @@ export const Table = ({ data, count, setMessage }) => {
       setMessage(`${item.name} has been added successfully.`);
       gridRef.current.instance.focus();
 
-      try {
-        const response = await request.post("PurchaseOrder/insertorderitems", rowIndex.data);
-        console.log(response);
-      } catch (e) {
-        console.log(e);
-        // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-        // data.store().remove(itemtoremove);
-        // data.reload();
-        // console.log(e);
+      if (orderstate === 0){
+        try {
+          const response = await request.post("PurchaseOrder/insertorderitems", rowIndex.data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+          // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+          // data.store().remove(itemtoremove);
+          // data.reload();
+          // console.log(e);
+        }
       }
 
     } else {
@@ -99,25 +101,27 @@ export const Table = ({ data, count, setMessage }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        currentUser?.email,
+        order ?? currentUser?.email,
         `${currentUser?.email}.${rowIndex.data.item}`
       );
 
       data.store().remove(itemtoupdate);
       data.reload();
       setMessage(`${item.name} has been updated successfully.`);
-      gridRef.current.instance.focus();
 
-      try {
-        const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.data);
-        console.log(response);
-      } catch (e) {
-        console.log(e);
-        // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-        // data.store().remove(itemtoremove);
-        // data.reload();
-        // console.log(e);
+      if(orderstate === 0){
+        try {
+          const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+          // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
+          // data.store().remove(itemtoremove);
+          // data.reload();
+          // console.log(e);
+        }
       }
+      return gridRef.current.instance.focus();
 
     }
   };
@@ -137,7 +141,7 @@ export const Table = ({ data, count, setMessage }) => {
         extendedCost * 0.25,
         discountAmount,
         extendedCost - discountAmount,
-        currentUser?.email,
+        rowIndex.oldData.partitionKey,
         `${currentUser?.email}.${rowIndex.oldData.item}`
       );
       rowIndex.component.saveEditData();
@@ -156,7 +160,7 @@ export const Table = ({ data, count, setMessage }) => {
         rowIndex.oldData.taxAmount,
         discountAmount,
         rowIndex.oldData.extendedCost - discountAmount,
-        currentUser?.email,
+        rowIndex.oldData.partitionKey,
         `${currentUser?.email}.${rowIndex.oldData.item}`
       );
       rowIndex.component.saveEditData();
@@ -169,18 +173,21 @@ export const Table = ({ data, count, setMessage }) => {
 
     }
 
+    if (orderstate === 0){
+      try {
+        console.log(rowIndex.newData);
+        const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.newData);
+        console.log(response);
+      } catch (e) {
+        console.log(e);
+        // data.store().remove(rowIndex.key);
+        // data.store().insert(rowIndex.data);
+        // data.reload();
+        // console.log(e);
+      }} else {
+        setUpdateData({...updateData, "tableData": data.store()._array})
+      }
 
-    try {
-      console.log(rowIndex.newData);
-      const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.newData);
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-      // data.store().remove(rowIndex.key);
-      // data.store().insert(rowIndex.data);
-      // data.reload();
-      // console.log(e);
-    }
   };
 
   // End of function
@@ -188,6 +195,7 @@ export const Table = ({ data, count, setMessage }) => {
   const handleRowRemoving = async (e) => {
     console.log(e.data);
     e.cancel = !window.confirm(confirmDeleteMessage(e.data));
+    if (orderstate === 0){
     if (!e.cancel) {
       try {
         const response = await request.delete(
@@ -195,11 +203,13 @@ export const Table = ({ data, count, setMessage }) => {
           {data: e.data}
         );
         console.log(response);
-      } catch (e) {
-        console.log(e);
+      } catch (ex) {
+        console.log(ex);
         data.store().insert(e.data);
-        setMessage("Server error. Item was not removed.");
+        data.reload()
+        return setMessage("Server error. Item was not removed.");
       }
+    }
     }
   };
 

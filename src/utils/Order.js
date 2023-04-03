@@ -16,15 +16,15 @@ class dataitem {
 
     data() {
       return {
-        item: this.item,
-        quantity: this.quantity,
-        unitCost: this.unitCost,
-        extendedCost: this.extendedCost,
-        taxAmount: this.taxAmount,
-        discountAmount: this.discountAmount,
-        lineTotal: this.lineTotal,
-        partitionKey: this.partitionKey,
-        id: this.id
+        "item": this.item,
+        "quantity": this.quantity,
+        "unitCost": this.unitCost,
+        "extendedCost": this.extendedCost,
+        "taxAmount": this.taxAmount,
+        "discountAmount": this.discountAmount,
+        "lineTotal": this.lineTotal,
+        "partitionKey": this.partitionKey,
+        "id": this.id
       }
     }
   }
