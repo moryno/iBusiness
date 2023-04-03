@@ -7,9 +7,9 @@ import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
-import request from "../../helpers/requestMethod";
 import New from "./New";
 import { bookingColumns } from "../../data/PurchaseOrderData";
+import webService from "../../utils/webService";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -17,7 +17,8 @@ const today = new Date().toISOString().slice(0, 10);
 const Home = () => {
   const [data, setData] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
-  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
+  const [onRowClickBookingId, setRowClickBookingId] = useState(null);
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
   const [date, setDate] = useState("");
@@ -30,9 +31,13 @@ const Home = () => {
     setStatusMode("");
     setOpen(false);
   };
-  // Fuction to edit row
-  const startEdit = (selectedRow) => {
-    setSelectedBookingId(selectedRow.data.bookingId);
+  // Define a function to get the instance of selected row
+  const startEdit = ({ data }) => {
+    if (data) {
+      setRowDblClickBookingId(data.bookingId);
+    } else {
+      setRowDblClickBookingId(null);
+    }
   };
 
   // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
@@ -40,13 +45,12 @@ const Home = () => {
     try {
       const getData = async () => {
         setLoading(true);
-        const { data } = await request.get(
-          date
-            ? `Booking/GetbyDate?startdate=${date.startdate}&enddate=${date.enddate}`
-            : "Booking"
-        );
+        const response = date
+          ? await webService.Request.getByDate(date.startdate, date.enddate)
+          : await webService.Request.get();
+
         setLoading(false);
-        setData(data);
+        setData(response);
       };
       getData();
     } catch (error) {
@@ -57,15 +61,21 @@ const Home = () => {
   // This Hook is to fetch single booking when a row in the datagrid is double clicked
   useEffect(() => {
     const getSingleBooking = async () => {
-      const { data } = await request.get(
-        `Booking?bookingID=${selectedBookingId}`
-      );
-      setSingleBooking(data);
+      const response = await webService.Request.getById(onRowDblClickBookingId);
+      setSingleBooking(response);
       setStatusMode("EditBooking");
       setOpen((isOpen) => !isOpen);
     };
-    if (selectedBookingId) getSingleBooking();
-  }, [selectedBookingId]);
+    if (onRowDblClickBookingId) getSingleBooking();
+  }, [onRowDblClickBookingId]);
+
+  const handleDelete = async () => {
+    if (onRowClickBookingId === null) {
+      console.log("Please select a booking");
+    } else {
+      await webService.Request.delete(onRowClickBookingId);
+    }
+  };
 
   // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
@@ -80,7 +90,7 @@ const Home = () => {
         setOpen((isOpen) => !isOpen);
         break;
       case "Delete":
-        console.log("Delete was clicked");
+        handleDelete();
         break;
       case "Close":
         console.log("Close was clicked");
@@ -153,6 +163,7 @@ const Home = () => {
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
             loading={loading}
+            setRowClickBookingId={setRowClickBookingId}
           />
         </section>
       </section>

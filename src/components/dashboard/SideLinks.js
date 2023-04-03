@@ -6,9 +6,9 @@ import { RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
 
-import { sideMenuRequest } from "../../helpers/requestMethod";
 import { useSelector } from "react-redux";
-import WebService from "../../utils/webService";
+import axios from "axios";
+import { sideMenuRequest } from "../../utils/webService";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
@@ -41,13 +41,13 @@ const SideLinks = () => {
   // Hook to fetch module menus from Cosmos DB
   useEffect(() => {
     const getModuleMenus = async () => {
-      const response = await WebService.get(
+      const { data } = await axios.get(
         // Check if different module options was selected then fetch using their partion key
         partitionKey
           ? sideMenuRequest + `?moduleName=${partitionKey}`
           : sideMenuRequest
       );
-      setModuleMenus(response);
+      setModuleMenus(data);
     };
     getModuleMenus();
   }, [partitionKey]);

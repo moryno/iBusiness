@@ -19,8 +19,16 @@ import {
   handleExporting,
 } from "../../helpers/datagridFunctions";
 
-const DataTable = ({ data, startEdit, columns, keyExpr, loading }) => {
+const DataTable = ({
+  data,
+  startEdit,
+  setRowClickBookingId,
+  columns,
+  keyExpr,
+  loading,
+}) => {
   const [collapsed, setCollapsed] = useState(false);
+
   // Define a state variable to hold the context menu target element
   const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
 
@@ -31,6 +39,7 @@ const DataTable = ({ data, startEdit, columns, keyExpr, loading }) => {
 
   const pageSizes = [10, 25, 50, 100];
 
+  // Get the datagrid instance once the datagrid is loaded
   function onContentReady(e) {
     getDataGridRef(dataGridRef.current);
     if (!collapsed) {
@@ -106,6 +115,7 @@ const DataTable = ({ data, startEdit, columns, keyExpr, loading }) => {
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
+        onRowClick={(e) => setRowClickBookingId(e.data.bookingId)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -127,7 +137,7 @@ const DataTable = ({ data, startEdit, columns, keyExpr, loading }) => {
           allowExportSelectedData={true}
         />
         <Editing mode="row" />
-        <Selection mode="single" />
+        <Selection mode="none" />
         <Toolbar>
           <Item name="groupPanel" />
           <Item name="columnChooserButton" />

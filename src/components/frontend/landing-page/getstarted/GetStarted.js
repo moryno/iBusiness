@@ -10,7 +10,7 @@ import data from "../../../../data/pages/getstarted";
 import { setupLogin } from "../../../../helpers/auth";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../redux/userSlice";
-import { msSingleSign } from "../../../../helpers/requestMethod";
+import { msSingleSign } from "../../../../utils/webService";
 
 export const GetStarted = () => {
   const [loading, setLoading] = useState(false);

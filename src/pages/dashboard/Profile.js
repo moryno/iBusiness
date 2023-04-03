@@ -2,12 +2,12 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import request from "../../helpers/requestMethod";
 import { updateUserProfile } from "../../redux/userSlice";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { updateMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Statusbar from "../../components/dashboard/Statusbar";
+import axios from "axios";
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -24,7 +24,7 @@ const Profile = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await request.put("/User", formInputs);
+      const { data } = await axios.put("/User", formInputs);
 
       dispatch(updateUserProfile(data));
     } catch (error) {

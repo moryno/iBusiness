@@ -4,11 +4,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./signin.css";
 
 import data from "../../../../data/pages/signin";
-import { msSingleSign } from "../../../../helpers/requestMethod";
 import { setupLogin } from "../../../../helpers/auth";
 import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
-import WebService from "../../../../utils/webService";
+import WebService, { msSingleSign } from "../../../../utils/webService";
 
 export const Card = () => {
   const [inputs, setInputs] = useState({

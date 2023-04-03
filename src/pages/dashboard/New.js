@@ -9,8 +9,8 @@ import SelectBox from "devextreme-react/select-box";
 import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
 
-import request from "../../helpers/requestMethod";
 import services from "../../helpers/formDataSource";
+import webService from "../../utils/webService";
 
 const New = ({
   handleClose,
@@ -158,10 +158,10 @@ const New = ({
     if (statusMode === "CreateBooking") {
       try {
         // perform form submission on creating new booking
-        const { data } = await request.post("/Booking/Create", formData);
+        const response = await webService.Request.create(formData);
 
         // Append the new booking to the top of the datagrid
-        setBookings([data?.Booking?.booking, ...bookings]);
+        setBookings([response?.Booking?.booking, ...bookings]);
         handleClose();
       } catch (error) {
         console.log(error);
@@ -169,12 +169,12 @@ const New = ({
     } else {
       try {
         // perform form submission on updating existing booking
-        const { data } = await request.put("/Booking/UpdateBooking", editData);
+        const response = await webService.Request.update(editData);
 
         // Append the updated booking to the top of the datagrid
         const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === data?.Booking.bookingId) {
-            return data?.Booking;
+          if (booking.bookingId === response?.Booking.bookingId) {
+            return response?.Booking;
           }
           return booking;
         });
@@ -187,7 +187,7 @@ const New = ({
   };
 
   return (
-    <main className="bg-white w-full md:w-[70%] lg:w-[80%] xl:w-[70%] xxl:w-[50%]  mx-auto h-screen md:h-fit items-stretch overflow-y-scroll md:overflow-visible">
+    <main className="bg-white w-full md:w-[80%] xl:w-[70%] xxl:w-[60%] xxxl-[50%]  mx-auto h-screen md:h-fit items-stretch overflow-y-scroll md:overflow-visible">
       <section className="sticky inset-x-0 top-0 z-50">
         <article className="bg-formHeading flex items-center justify-between">
           <div className="flex items-center py-1 px:2 md:px-5 w-full gap-1 text-formHeadingColor">
