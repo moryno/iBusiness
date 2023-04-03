@@ -26,6 +26,7 @@ const DataTable = ({
   columns,
   keyExpr,
   loading,
+  deleteSelectedRow,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -92,7 +93,7 @@ const DataTable = ({
           text: "Delete",
           icon: "trash",
           onItemClick: () => {
-            // Logic goes here
+            deleteSelectedRow();
           },
         }
       );

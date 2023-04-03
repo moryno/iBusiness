@@ -15,7 +15,7 @@ import webService from "../../utils/webService";
 const today = new Date().toISOString().slice(0, 10);
 
 const Home = () => {
-  const [data, setData] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [onRowClickBookingId, setRowClickBookingId] = useState(null);
@@ -31,6 +31,7 @@ const Home = () => {
     setStatusMode("");
     setOpen(false);
   };
+
   // Define a function to get the instance of selected row
   const startEdit = ({ data }) => {
     if (data) {
@@ -50,7 +51,7 @@ const Home = () => {
           : await webService.Request.get();
 
         setLoading(false);
-        setData(response);
+        setBookings(response);
       };
       getData();
     } catch (error) {
@@ -73,7 +74,13 @@ const Home = () => {
     if (onRowClickBookingId === null) {
       toast.warning("Please select a booking to delete");
     } else {
-      await webService.Request.delete(onRowClickBookingId);
+      const response = await webService.Request.delete(onRowClickBookingId);
+      setBookings([
+        ...bookings.filter(
+          (booking) => booking.bookingId !== onRowClickBookingId
+        ),
+      ]);
+      toast.success(response.message);
     }
   };
 
@@ -158,12 +165,13 @@ const Home = () => {
         </section>
         <section className="mt-5">
           <DataTable
-            data={data}
+            data={bookings}
             columns={bookingColumns}
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
             loading={loading}
             setRowClickBookingId={setRowClickBookingId}
+            deleteSelectedRow={handleDelete}
           />
         </section>
       </section>
@@ -171,9 +179,9 @@ const Home = () => {
       {statusMode === "CreateBooking" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
-            bookings={data}
+            bookings={bookings}
             singleBooking={singleBooking}
-            setBookings={setData}
+            setBookings={setBookings}
             handleClose={handleClose}
             title={"Create New Booking"}
             heading={"Booking Item Management"}
@@ -185,9 +193,9 @@ const Home = () => {
         statusMode === "EditBooking" && (
           <Portal isOpen={isOpen} setOpen={setOpen}>
             <New
-              bookings={data}
+              bookings={bookings}
               singleBooking={singleBooking}
-              setBookings={setData}
+              setBookings={setBookings}
               handleClose={handleClose}
               title={"Update A Booking Item"}
               heading={"Booking Item Management"}

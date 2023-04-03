@@ -7,7 +7,8 @@ import data from "../../../../data/pages/signin";
 import { setupLogin } from "../../../../helpers/auth";
 import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
-import WebService, { msSingleSign } from "../../../../utils/webService";
+import { msSingleSign } from "../../../../utils/webService";
+import axios from "axios";
 
 export const Card = () => {
   const [inputs, setInputs] = useState({
@@ -41,9 +42,8 @@ export const Card = () => {
   // Get user information the send to API to check if user is registered
   useEffect(() => {
     const getUserInformation = async () => {
-      let action = msSingleSign + search;
       // perform get user information
-      const data = await WebService.get(action);
+      const { data } = await axios.get(msSingleSign + search);
 
       // A check to see if user is registered
       if (data?.registered) {

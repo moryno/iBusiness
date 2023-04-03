@@ -172,13 +172,12 @@ const New = ({
         const response = await webService.Request.update(editData);
 
         // Append the updated booking to the top of the datagrid
-        const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === response?.Booking.bookingId) {
-            return response?.Booking;
-          }
-          return booking;
-        });
-        setBookings(newBooking);
+        setBookings([
+          response?.Booking,
+          ...bookings.filter(
+            (booking) => booking.bookingId !== response?.Booking.bookingId
+          ),
+        ]);
         handleClose();
       } catch (error) {
         console.log(error);
