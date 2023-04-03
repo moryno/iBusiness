@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DateBox from "devextreme-react/date-box";
-
+import { toast } from "react-toastify";
 import DataTable from "../../components/dashboard/DataTable";
 import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
@@ -71,7 +71,7 @@ const Home = () => {
 
   const handleDelete = async () => {
     if (onRowClickBookingId === null) {
-      console.log("Please select a booking");
+      toast.warning("Please select a booking to delete");
     } else {
       await webService.Request.delete(onRowClickBookingId);
     }
