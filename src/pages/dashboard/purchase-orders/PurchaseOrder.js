@@ -99,10 +99,10 @@ export const PurchaseOrder = ({ orderstate }) => {
   
     document.addEventListener("keydown", handleKeyUp);
   
-    // Cleanup function to remove the event listener
-    // return () => {
-    //   document.removeEventListener("keydown", handleKeyUp);
-    // };
+    //Cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyUp);
+    };
   }, [orderstate]);
 
   const submitOrder = async () => {
