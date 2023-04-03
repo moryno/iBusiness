@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, memo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { orderColumns } from "../../data/PurchaseOrderData";
 import DataTable from "../../components/dashboard/DataTable";
@@ -7,12 +6,12 @@ import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
-
+import { LoadPanel } from "devextreme-react/load-panel";
 import request from "../../helpers/tempRequest";
 
 const Orders = () => {
   const [data, setData] = useState([]);
-
+  const loadingRef = useRef(true);
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
   const navigate = useNavigate();
@@ -35,21 +34,27 @@ const Orders = () => {
 
   // This Hook is to fetch all orders
   useEffect(() => {
-    try {
-      const getData = async () => {
-        const response = await request.get("PurchaseOrder/orders");
-        // response.data.map(order => {
-        //   console.log(order);
-        //   return data.store().insert(order);
+    const getData = async () => {
+      try {
+          
+          const response = await request.get("PurchaseOrder/orders");
+          // response.data.map(order => {
+          //   console.log(order);
+          //   return data.store().insert(order);
 
-        // })
-        console.log(response.data);
-        setData(response.data);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
+          // })
+          console.log(response.data);
+          setData(response.data);
+          loadingRef.current = false;
+        }
+      catch (error) {
+        console.log(error);
+        getData();
+      }
+
     }
+
+    getData();
   }, []);
 
   const startEdit = (e) => {
@@ -82,7 +87,7 @@ const Orders = () => {
         console.log("Delete was clicked");
         break;
       case "Close":
-        navigate("/");
+        navigate("/dashboard");
         break;
       case "Help":
         console.log("Help was clicked");
@@ -151,12 +156,14 @@ const Orders = () => {
             columns={orderColumns}
             keyExpr="orderNumber"
             startEdit={startEdit}
+            loading={loadingRef.current}
           />
         </section>
+        
       </section>
       <Statusbar heading="Purchase Orders" company="iBusiness" />
     </main>
   );
 };
 
-export default Orders;
+export default memo(Orders);

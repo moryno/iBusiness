@@ -18,7 +18,7 @@ import ConfirmMessage from "./ConfirmMessage";
 
 // Table component
 
-export const Table = ({ data, count, setMessage, setModalMessage }) => {
+export const Table = ({ data, count, setMessage }) => {
   const gridRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -47,25 +47,21 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
 
   const handleRowInserted = async (rowIndex) => {
     if (
-      rowIndex.data.quantity === "" ||
-      isNaN(rowIndex.data.quantity) ||
-      rowIndex.data.item === ""
+      typeof rowIndex.data.quantity === "undefined" ||
+      typeof rowIndex.data.item === "undefined"
     ) {
-      data.store().remove(rowIndex.key);
-      data.reload();
-      return;
+      rowIndex.cancel = true;
+      return data.reload();
     }
-
+    console.log(rowIndex.data)
     const item = items.find((x) => x.name === rowIndex.data.item);
-    const itemtoupdate = data
-      .store()
-      ._array.find((x) => x.itemNumber === item.key);
-    console.log(itemtoupdate);
+    const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
+
 
     if (typeof itemtoupdate === "undefined") {
       let extendedCost = item.amount * rowIndex.data.quantity;
       let discountAmount = extendedCost * 0.05;
-      let itemtoadd = new dataitem(
+      rowIndex.data = new dataitem(
         item.name,
         rowIndex.data.quantity,
         item.amount,
@@ -76,44 +72,26 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         currentUser?.email,
         `${currentUser?.email}.${rowIndex.data.item}`
       );
-      data.store().remove(rowIndex.key);
-      data.store().insert(itemtoadd.data());
       data.reload();
       count.current++;
       setMessage(`${item.name} has been added successfully.`);
       gridRef.current.instance.focus();
 
       try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.put(
-          "PurchaseOrder/insertorderitems",
-          data
-        );
+        const response = await request.post("PurchaseOrder/insertorderitems", rowIndex.data);
         console.log(response);
       } catch (e) {
+        console.log(e);
         // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
         // data.store().remove(itemtoremove);
         // data.reload();
         // console.log(e);
       }
 
-    } else if (itemtoupdate.item === rowIndex.data.item) {
-      console.log(rowIndex.data.quantity);
-      let extendedCost =
-        item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
+    } else {
+      let extendedCost = item.amount * (rowIndex.data.quantity + itemtoupdate.quantity);
       let discountAmount = extendedCost * 0.05;
-      let itemtoadd = new dataitem(
+      rowIndex.data = new dataitem(
         item.name,
         rowIndex.data.quantity + itemtoupdate.quantity,
         item.amount,
@@ -122,88 +100,86 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
         extendedCost * 0.16,
         extendedCost - discountAmount,
         currentUser?.email,
-        currentUser?.fullname + item.name
+        `${currentUser?.email}.${rowIndex.data.item}`
       );
 
       data.store().remove(itemtoupdate);
-      data.store().remove(rowIndex.key);
-      data.store().insert(itemtoadd.data());
       data.reload();
-      count.current++;
-      setMessage(`${item.name} has been added successfully.`);
+      setMessage(`${item.name} has been updated successfully.`);
       gridRef.current.instance.focus();
 
       try {
-        const data = {
-          item: item.name,
-          quantity: itemtoadd.quantity,
-          unitCost: item.amount,
-          extendedCost: itemtoadd.extendedCost,
-          taxAmount: itemtoadd.taxAmount,
-          discountAmount: itemtoadd.discountAmount,
-          lineTotal: itemtoadd.lineTotal,
-          partitionKey: itemtoadd.partitionKey,
-          id: itemtoadd.id,
-        };
-        console.log(data);
-        const response = await request.post(
-          "PurchaseOrder/insertorderitems",
-          data
-        );
+        const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.data);
         console.log(response);
       } catch (e) {
+        console.log(e);
         // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
         // data.store().remove(itemtoremove);
         // data.reload();
         // console.log(e);
       }
+
     }
   };
+
   // Recalculates values after row info is updated
   const handleRowUpdated = async (rowIndex) => {
-    let unitCost = rowIndex.data.unitCost;
-    let extendedCost = unitCost * parseInt(rowIndex.data.quantity);
-    let discountAmount = rowIndex.data.discountAmount;
-    let itemtoadd = new dataitem(
-      rowIndex.data.item,
-      parseInt(rowIndex.data.quantity),
-      unitCost,
-      extendedCost,
-      extendedCost * 0.25,
-      discountAmount,
-      extendedCost - discountAmount,
-      currentUser?.email,
-      `${currentUser?.email}.${rowIndex.data.item}`
-    );
-    const itemtoremove = data
-      .store()
-      ._array.find((x) => x.item === rowIndex.data.item);
-    data.store().remove(itemtoremove);
-    data.store().insert(itemtoadd.data());
-    data.reload();
-    setMessage(`${rowIndex.data.item} has been updated.`);
-    console.log(data.store()._array);
+    console.log(rowIndex); 
+    let unitCost = rowIndex.oldData.unitCost;
+    if (typeof rowIndex.newData.quantity !== "undefined"){
+      let extendedCost = unitCost * parseInt(rowIndex.newData.quantity);
+      let discountAmount = extendedCost * 0.05;
+      rowIndex.newData = new dataitem(
+        rowIndex.oldData.item,
+        parseInt(rowIndex.newData.quantity),
+        unitCost,
+        extendedCost,
+        extendedCost * 0.25,
+        discountAmount,
+        extendedCost - discountAmount,
+        currentUser?.email,
+        `${currentUser?.email}.${rowIndex.oldData.item}`
+      );
+      rowIndex.component.saveEditData();
+      data.reload();
+      console.log(rowIndex.newData);
+      setMessage(`${rowIndex.oldData.item} has been updated.`);
+      
+    } 
+    else if(typeof rowIndex.newData.discountAmount !== "undefined"){
+      let discountAmount = parseInt(rowIndex.newData.discountAmount);
+      rowIndex.newData = new dataitem(
+        rowIndex.oldData.item,
+        rowIndex.oldData.quantity,
+        unitCost,
+        rowIndex.oldData.extendedCost,
+        rowIndex.oldData.taxAmount,
+        discountAmount,
+        rowIndex.oldData.extendedCost - discountAmount,
+        currentUser?.email,
+        `${currentUser?.email}.${rowIndex.oldData.item}`
+      );
+      rowIndex.component.saveEditData();
+      data.reload();
+      setMessage(`${rowIndex.oldData.item} has been updated.`);
+
+    }
+    else if(typeof rowIndex.newData.item !== "undefined"){
+      console.log("Item changed");
+
+    }
+
 
     try {
-      const data = {
-        item: rowIndex.data.item,
-        quantity: itemtoadd.quantity,
-        unitCost: itemtoadd.unitCost,
-        extendedCost: itemtoadd.extendedCost,
-        taxAmount: itemtoadd.taxAmount,
-        discountAmount: itemtoadd.discountAmount,
-        lineTotal: itemtoadd.lineTotal,
-        partitionKey: itemtoadd.partitionKey,
-        id: itemtoadd.id,
-      };
-      console.log(data);
-      const response = await request.put("PurchaseOrder/updateorderitem", data);
+      console.log(rowIndex.newData);
+      const response = await request.put("PurchaseOrder/updateorderitem", rowIndex.newData);
       console.log(response);
     } catch (e) {
-      data.store().remove(rowIndex.key);
-      data.store().insert(rowIndex.data);
-      data.reload();
-      console.log(e.response.data);
+      console.log(e);
+      // data.store().remove(rowIndex.key);
+      // data.store().insert(rowIndex.data);
+      // data.reload();
+      // console.log(e);
     }
   };
 
@@ -272,15 +248,16 @@ export const Table = ({ data, count, setMessage, setModalMessage }) => {
       }}
       showBorders={true}
       dataSource={data}
-      onRowUpdating={handleRowUpdating}
+      //onRowUpdating={handleRowUpdating}
       hoverStateEnabled={true}
       reshapeOnPush={true}
-      onRowUpdated={handleRowUpdated}
+      onRowUpdating={handleRowUpdated}
       showRowLines={true}
       onKeyDown={handleKeyPress}
       onRowRemoving={handleRowRemoving}
       columnHidingEnabled={true}
-      onRowInserted={handleRowInserted}
+      onRowInserting={handleRowInserted}
+      // onRowInserted={handleRowInserted}
       allowColumnResizing={true}
       columnMinWidth={70}
       summary={summary}

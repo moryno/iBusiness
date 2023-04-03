@@ -8,7 +8,7 @@ const Statusbar = ({ heading, company }) => {
         </article>
         <article className="flex gap-1">
           <p className=" text-sm font-medium text-statusBar">{company}</p>
-          <p className=" text-sm font-medium text-statusBar">©{year}</p>
+          <p className=" text-sm font-medium text-statusBar">©&nbsp;{year}</p>
         </article>
       </section>
     </main>
