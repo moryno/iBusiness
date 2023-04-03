@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "https://ibusinessaccountservice.azurewebsites.net/api";
 
-let request = axios.create({ baseURL: BASE_URL });
+let request = axios.create({ baseURL: BASE_URL, timeout: 8000 });
 
 request.interceptors.request.use(
   (config) => {
