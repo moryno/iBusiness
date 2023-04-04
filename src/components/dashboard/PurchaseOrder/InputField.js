@@ -58,8 +58,9 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        order !== 0 ? order : currentUser?.email,
-        `${currentUser?.email}.${item.name}` ?? "None"
+        order,
+        `${currentUser?.email}.${item.name}` ?? "None",
+        currentUser?.email
       );
 
       data.store().insert(itemtoadd.data());
@@ -98,8 +99,9 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        order ?? currentUser?.email,
-        `${currentUser?.email}.${item.name}` ?? "None"
+        order,
+        `${currentUser?.email}.${item.name}` ?? "None",
+        currentUser?.email
       );
 
       console.log("Item to add")

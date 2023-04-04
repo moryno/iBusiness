@@ -220,6 +220,7 @@ export const PurchaseOrder = ({ orderstate }) => {
             order={order}
             updateData={updateData}
             setUpdateData={setUpdateData}
+            orderstate={orderstate}
           />
           <LoadPanel visible={loading} messageText="Checking for unsubmitted orders..."/>
         </div>

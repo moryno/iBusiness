@@ -18,7 +18,7 @@ import ConfirmMessage from "./ConfirmMessage";
 
 // Table component
 
-export const Table = ({ data, count, setMessage, orderstate, updateData, setUpdateData }) => {
+export const Table = ({ data, count, setMessage, orderstate, updateData, setUpdateData, order }) => {
   const gridRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -69,8 +69,9 @@ export const Table = ({ data, count, setMessage, orderstate, updateData, setUpda
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        order ?? currentUser?.email,
-        `${currentUser?.email}.${rowIndex.data.item}`
+        order,
+        `${currentUser?.email}.${rowIndex.data.item}`, 
+        currentUser?.email
       );
       data.reload();
       count.current++;
@@ -101,8 +102,9 @@ export const Table = ({ data, count, setMessage, orderstate, updateData, setUpda
         extendedCost * 0.25,
         extendedCost * 0.16,
         extendedCost - discountAmount,
-        order ?? currentUser?.email,
-        `${currentUser?.email}.${rowIndex.data.item}`
+        order,
+        `${currentUser?.email}.${rowIndex.data.item}`,
+        currentUser?.email
       );
 
       data.store().remove(itemtoupdate);
@@ -142,7 +144,8 @@ export const Table = ({ data, count, setMessage, orderstate, updateData, setUpda
         discountAmount,
         extendedCost - discountAmount,
         rowIndex.oldData.partitionKey,
-        `${currentUser?.email}.${rowIndex.oldData.item}`
+        `${currentUser?.email}.${rowIndex.oldData.item}`,
+        rowIndex.oldData.createdBy
       );
       rowIndex.component.saveEditData();
       data.reload();
@@ -161,7 +164,8 @@ export const Table = ({ data, count, setMessage, orderstate, updateData, setUpda
         discountAmount,
         rowIndex.oldData.extendedCost - discountAmount,
         rowIndex.oldData.partitionKey,
-        `${currentUser?.email}.${rowIndex.oldData.item}`
+        `${currentUser?.email}.${rowIndex.oldData.item}`,
+        rowIndex.oldData.createdBy
       );
       rowIndex.component.saveEditData();
       data.reload();
