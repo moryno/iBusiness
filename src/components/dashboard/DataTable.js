@@ -101,6 +101,7 @@ const DataTable = ({
     }
   };
 
+  // onvert the filter values to filterBuilder object
   const filterBuilder = {
     logic: "and",
     filters: filterValues.map(([field, operator, value]) => ({

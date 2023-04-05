@@ -240,7 +240,8 @@ const New = ({
                       onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
                       height={26}
-                      className=" border  text-xs text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" border text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                     >
                       <Validator>
                         <RequiredRule message="Name is required" />
@@ -262,7 +263,8 @@ const New = ({
                       onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     >
                       <Validator>
                         <RequiredRule message="ID is required" />
@@ -280,7 +282,8 @@ const New = ({
                       onValueChanged={(e) => setEmail(e.value)}
                       value={email}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     >
                       {" "}
                       <Validator>
@@ -303,7 +306,8 @@ const New = ({
                       onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     >
                       {" "}
                       <Validator>
@@ -325,7 +329,8 @@ const New = ({
                       onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     >
                       {" "}
                       <Validator>
@@ -346,7 +351,8 @@ const New = ({
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     >
                       {" "}
                       <Validator>
@@ -369,7 +375,8 @@ const New = ({
                       value={selectedCountry}
                       placeholder="Select a Country"
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -383,7 +390,8 @@ const New = ({
                       onValueChanged={(e) => setPosition(e.value)}
                       value={position}
                       height={26}
-                      className=" border h-7  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                      style={{ fontSize: "12px" }}
+                      className=" border h-7  pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
                     >
                       {" "}
                       <Validator>
@@ -405,7 +413,8 @@ const New = ({
                       onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
                       height={26}
-                      className=" border h-7  text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
+                      style={{ fontSize: "12px" }}
+                      className=" border h-7 pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
                     >
                       {" "}
                       <Validator>
@@ -426,9 +435,10 @@ const New = ({
                       name="disabilityStatus"
                       placeholder="Select Status"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
                       value={selectedStatus}
-                      className=" text-center border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
+                      className=" text-center border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
                   <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
@@ -444,9 +454,10 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
                       value={schemeOptions}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
@@ -455,7 +466,7 @@ const New = ({
                 <article className="w-full flex flex-wrap lg:w-[80%] box-border justify-between  gap-2">
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
-                      className="text-xs   text-gray-600"
+                      className="text-xs  text-gray-600"
                       htmlFor="bookingType"
                     >
                       Booking Type:<sup className=" text-red-600">*</sup>
@@ -466,9 +477,10 @@ const New = ({
                       name="bookingType"
                       placeholder="Select a Scheme Name"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setBookingType(e.value)}
                       value={bookingType}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -485,7 +497,8 @@ const New = ({
                       onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
                       height={26}
-                      className=" h-7 border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" h-7 border pl-1 w-full md:w-[70%]  outline-none"
                     >
                       {" "}
                       <Validator>
@@ -506,9 +519,10 @@ const New = ({
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
                       value={trainingVenue}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
 
@@ -524,9 +538,10 @@ const New = ({
                       id="courseDate"
                       name="courseDate"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setCourseDate(e.value)}
                       value={courseDate}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -542,9 +557,10 @@ const New = ({
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={paymentMode}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -562,7 +578,8 @@ const New = ({
                       onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
                       height={26}
-                      className=" border h-7  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" border h-7 pl-1 w-full md:w-[70%]  outline-none"
                     >
                       {" "}
                       <Validator>
@@ -580,7 +597,7 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className=" border   resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
