@@ -13,6 +13,8 @@ import { orderFilterValues } from "../../helpers/datatableSource";
 const Orders = () => {
   const [data, setData] = useState([]);
   const loadingRef = useRef(true);
+  const [onRowClickItem, setRowClickItem] = useState(null);
+  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [input, setInput] = useState(null);
   const [date, setDate] = useState("");
   const navigate = useNavigate();
@@ -55,9 +57,20 @@ const Orders = () => {
     getData();
   }, []);
 
-  const startEdit = (e) => {
-    navigate(`/dashboard/updateorder/${e.data.orderNumber}`);
+  const startEdit = ({ data }) => {
+    // navigate(`/dashboard/updateorder/${e.data.orderNumber}`);
+    if (data) {
+      setRowDblClickBookingId(data.orderNumber);
+    } else {
+      setRowDblClickBookingId(null);
+    }
   };
+
+  useEffect(() => {
+    if (onRowDblClickBookingId){
+      navigate(`/dashboard/updateorder/${onRowDblClickBookingId}`);
+    } 
+  }, [onRowDblClickBookingId]);
 
   // // This Hook is to fetch single booking when a row in the datagrid is double clicked
   // useEffect(() => {
@@ -74,9 +87,9 @@ const Orders = () => {
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
-        input === null && date === ""
-          ? setDate({ startdate: today, enddate: today })
-          : setDate(input);
+        // input === null && date === ""
+        //   ? setDate({ startdate: today, enddate: today })
+        //   : setDate(input);
         break;
       case "New":
         navigate("/dashboard/purchase-order");
@@ -155,6 +168,7 @@ const Orders = () => {
             keyExpr="orderNumber"
             startEdit={startEdit}
             loading={loadingRef.current}
+            setRowClickItem={setRowClickItem}
             filterValues={orderFilterValues}
           />
         </section>
