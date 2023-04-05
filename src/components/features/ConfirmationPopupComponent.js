@@ -36,7 +36,7 @@ const ConfirmationPopupComponent = ({
   };
 
   return (
-    <main className="bg-white w-full md:w-[600px]  mx-auto h-screen md:h-fit">
+    <main className="bg-white w-full md:w-[600px]  mx-auto h-fit">
       <section className="sticky w-full inset-x-0 top-0 z-50">
         <article className="bg-formHeading flex items-center justify-between">
           <div className="flex items-center py-1 px:2 md:px-5 w-full gap-1 text-formHeadingColor">

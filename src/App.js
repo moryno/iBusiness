@@ -52,7 +52,7 @@ function App() {
         },
         {
           path: "/dashboard/purchase-order",
-          element: <PurchaseOrder orderstate={0}/>,
+          element: <PurchaseOrder orderstate={0} />,
         },
         {
           path: "/dashboard/profile",

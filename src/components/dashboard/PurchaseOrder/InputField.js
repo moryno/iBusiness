@@ -26,7 +26,6 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
   };
 
   const handleItemPopulation = async () => {
-
     // Data validation
     if (selectedOption === null) {
       setMessage("Please select an item.");
@@ -45,7 +44,6 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
 
     const item = items.find((x) => x.key === selectedOption);
     const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
-
 
     if (typeof itemtoupdate === "undefined") {
       let extendedCost = item.amount * quantity;
@@ -70,8 +68,8 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
       setQuantity();
       selectboxRef.current.instance.focus();
       console.log(itemtoadd);
-      
-      if (orderstate == 0){
+
+      if (orderstate === 0) {
         try {
           const response = await request.post(
             "PurchaseOrder/insertorderitems",
@@ -104,7 +102,7 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
         currentUser?.email
       );
 
-      console.log("Item to add")
+      console.log("Item to add");
       data.store().remove(itemtoupdate);
       data.store().insert(itemtoadd.data());
       data.reload();
@@ -114,15 +112,15 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
       setQuantity();
       selectboxRef.current.instance.focus();
 
-      if (orderstate == 0){
-      try {
-        if (orderstate == 0){
-          const response = await request.put(
-            "PurchaseOrder/updateorderitem",
-            itemtoadd.data()
-          );
-          console.log(response);
-        }
+      if (orderstate === 0) {
+        try {
+          if (orderstate === 0) {
+            const response = await request.put(
+              "PurchaseOrder/updateorderitem",
+              itemtoadd.data()
+            );
+            console.log(response);
+          }
         } catch (e) {
           const itemtoremove = data
             .store()
@@ -133,7 +131,6 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
           console.log(e);
         }
       }
-
     }
   };
 
