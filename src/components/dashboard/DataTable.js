@@ -26,7 +26,7 @@ const DataTable = ({
   columns,
   keyExpr,
   loading,
-  deleteSelectedRow,
+  openConfirmationPopup,
   filterValues,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -94,7 +94,7 @@ const DataTable = ({
           text: "Delete",
           icon: "trash",
           onItemClick: () => {
-            deleteSelectedRow();
+            openConfirmationPopup();
           },
         }
       );

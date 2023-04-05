@@ -11,6 +11,7 @@ import New from "./New";
 import { bookingColumns } from "../../data/PurchaseOrderData";
 import webService from "../../utils/webService";
 import { bookingFilterValues } from "../../helpers/datatableSource";
+import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -67,25 +68,19 @@ const Home = () => {
     const getSingleBooking = async () => {
       const response = await webService.Request.getById(onRowDblClickBookingId);
       setSingleBooking(response);
-      setStatusMode("EditBooking");
+      setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
     if (onRowDblClickBookingId) getSingleBooking();
   }, [onRowDblClickBookingId]);
 
-  const handleDelete = async () => {
+  // Function to open ConfirmationPopupComponent
+  const openConfirmationPopup = async () => {
     if (onRowClickItem === null) {
       toast.warning("Please select a booking to delete");
     } else {
-      const response = await webService.Request.delete(
-        onRowClickItem.data.bookingId
-      );
-      setBookings([
-        ...bookings.filter(
-          (booking) => booking.bookingId !== onRowClickItem.data.bookingId
-        ),
-      ]);
-      toast.success(response.message);
+      setStatusMode("DeleteMode");
+      setOpen((isOpen) => !isOpen);
     }
   };
 
@@ -98,11 +93,11 @@ const Home = () => {
           : setDate({ startdate: fromDate, enddate: toDate });
         break;
       case "New":
-        setStatusMode("CreateBooking");
+        setStatusMode("CreateMode");
         setOpen((isOpen) => !isOpen);
         break;
       case "Delete":
-        handleDelete();
+        openConfirmationPopup();
         break;
       case "Close":
         console.log("Close was clicked");
@@ -176,13 +171,13 @@ const Home = () => {
             startEdit={(e) => startEdit(e)}
             loading={loading}
             setRowClickItem={setRowClickItem}
-            deleteSelectedRow={handleDelete}
+            openConfirmationPopup={openConfirmationPopup}
             filterValues={bookingFilterValues}
           />
         </section>
       </section>
 
-      {statusMode === "CreateBooking" ? (
+      {statusMode === "CreateMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
             bookings={bookings}
@@ -195,17 +190,29 @@ const Home = () => {
             statusMode={statusMode}
           />
         </Portal>
+      ) : statusMode === "EditMode" ? (
+        <Portal isOpen={isOpen} setOpen={setOpen}>
+          <New
+            bookings={bookings}
+            singleBooking={singleBooking}
+            setBookings={setBookings}
+            handleClose={handleClose}
+            title={"Update A Booking Item"}
+            heading={"Booking Item Management"}
+            statusBarText={"Updating Booking Item"}
+            statusMode={statusMode}
+          />
+        </Portal>
       ) : (
-        statusMode === "EditBooking" && (
+        statusMode === "DeleteMode" && (
           <Portal isOpen={isOpen} setOpen={setOpen}>
-            <New
+            <ConfirmationPopupComponent
+              item={onRowClickItem}
               bookings={bookings}
-              singleBooking={singleBooking}
               setBookings={setBookings}
               handleClose={handleClose}
-              title={"Update A Booking Item"}
-              heading={"Booking Item Management"}
-              statusBarText={"Updating Booking Item"}
+              title={"Delete A Booking Item"}
+              statusBarText={"Delete Booking Item"}
               statusMode={statusMode}
             />
           </Portal>

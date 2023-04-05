@@ -33,71 +33,67 @@ const New = ({
   const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
+    statusMode === "EditMode" ? singleBooking.user?.fullName : ""
   );
   const [idNumber, setIdNumber] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.idNumber : ""
+    statusMode === "EditMode" ? singleBooking.user?.idNumber : ""
   );
   const [email, setEmail] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.email : ""
+    statusMode === "EditMode" ? singleBooking.user?.email : ""
   );
   const [telephone, setTelephone] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.telephone : ""
+    statusMode === "EditMode" ? singleBooking.user?.telephone : ""
   );
   const [physicalAddress, setPhysicalAddress] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.physicalAddress : ""
+    statusMode === "EditMode" ? singleBooking.user?.physicalAddress : ""
   );
   const [employerName, setEmployerName] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.employerName : ""
+    statusMode === "EditMode" ? singleBooking.user?.employerName : ""
   );
   const [position, setPosition] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.position : ""
+    statusMode === "EditMode" ? singleBooking.user?.position : ""
   );
   const [schemePosition, setSchemePosition] = useState(
-    statusMode === "EditBooking" ? singleBooking.booking?.schemePosition : ""
+    statusMode === "EditMode" ? singleBooking.booking?.schemePosition : ""
   );
   const [additionalRequirements, setAdditionalRequirements] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.booking?.additionalRequirements
       : ""
   );
   const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
-    statusMode === "EditBooking"
-      ? singleBooking.booking?.externalSchemeAdmin
-      : ""
+    statusMode === "EditMode" ? singleBooking.booking?.externalSchemeAdmin : ""
   );
 
   const [experience, setExperience] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.experience : 0
+    statusMode === "EditMode" ? singleBooking.user?.experience : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.originCountry : "Kenya"
+    statusMode === "EditMode" ? singleBooking.user?.originCountry : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.user?.disabilityStatus
       : "Not Disabled"
   );
   const [schemeOptions, setSchemeOptions] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.booking?.retirementSchemeName
       : "A I C KIJABE PRINTING"
   );
   const [bookingType, setBookingType] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.booking?.bookingType
       : "First Time"
   );
   const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditBooking"
-      ? singleBooking.booking?.trainingVenue
-      : "INHOUSE"
+    statusMode === "EditMode" ? singleBooking.booking?.trainingVenue : "INHOUSE"
   );
   const [courseDate, setCourseDate] = useState(
-    statusMode === "EditBooking" ? singleBooking.booking?.courseDate : today
+    statusMode === "EditMode" ? singleBooking.booking?.courseDate : today
   );
   const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditBooking" ? singleBooking.booking?.paymentMode : "Cheque"
+    statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
   );
   // Code ends here
 
@@ -163,7 +159,7 @@ const New = ({
     };
 
     // Check to save depending on the current mode
-    if (statusMode === "CreateBooking") {
+    if (statusMode === "CreateMode") {
       try {
         // perform form submission on creating new booking
         const response = await webService.Request.create(formData);
@@ -241,7 +237,7 @@ const New = ({
                       value={fullName}
                       height={26}
                       style={{ fontSize: "12px" }}
-                      className=" border text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className=" border  text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                     >
                       <Validator>
                         <RequiredRule message="Name is required" />
@@ -619,7 +615,7 @@ const New = ({
             <FcAddDatabase fontSize={20} />
             {loading ? (
               <LoadingIndicator />
-            ) : statusMode === "CreateBooking" ? (
+            ) : statusMode === "CreateMode" ? (
               "Save"
             ) : (
               "Update"
