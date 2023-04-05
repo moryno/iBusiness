@@ -140,7 +140,8 @@ const Home = () => {
                     onValueChanged={(e) => setFromDate(e.value)}
                     value={fromDate}
                     height={26}
-                    className=" border  text-xs pl-1 w-full md:w-1/2  outline-none"
+                    style={{ fontSize: "12px" }}
+                    className=" border pl-1 w-full md:w-1/2  outline-none"
                   />
                 </div>
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
@@ -156,7 +157,8 @@ const Home = () => {
                     onValueChanged={(e) => setToDate(e.value)}
                     value={toDate}
                     height={26}
-                    className=" border  text-xs pl-1 w-full md:w-1/2  outline-none"
+                    style={{ fontSize: "12px" }}
+                    className=" border pl-1 w-full md:w-1/2  outline-none"
                   />
                 </div>
               </div>
