@@ -10,6 +10,8 @@ import Portal from "../../components/dashboard/Portal";
 import New from "./New";
 import { bookingColumns } from "../../data/PurchaseOrderData";
 import webService from "../../utils/webService";
+import { bookingFilterValues } from "../../helpers/datatableSource";
+import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -18,7 +20,7 @@ const Home = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
-  const [onRowClickBookingId, setRowClickBookingId] = useState(null);
+  const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
   const [date, setDate] = useState("");
@@ -28,6 +30,8 @@ const Home = () => {
 
   // Fuction to close the Create || update form
   const handleClose = () => {
+    setRowDblClickBookingId(null);
+    setSingleBooking({});
     setStatusMode("");
     setOpen(false);
   };
@@ -64,23 +68,19 @@ const Home = () => {
     const getSingleBooking = async () => {
       const response = await webService.Request.getById(onRowDblClickBookingId);
       setSingleBooking(response);
-      setStatusMode("EditBooking");
+      setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
     if (onRowDblClickBookingId) getSingleBooking();
   }, [onRowDblClickBookingId]);
 
-  const handleDelete = async () => {
-    if (onRowClickBookingId === null) {
+  // Function to open ConfirmationPopupComponent
+  const openConfirmationPopup = async () => {
+    if (onRowClickItem === null) {
       toast.warning("Please select a booking to delete");
     } else {
-      const response = await webService.Request.delete(onRowClickBookingId);
-      setBookings([
-        ...bookings.filter(
-          (booking) => booking.bookingId !== onRowClickBookingId
-        ),
-      ]);
-      toast.success(response.message);
+      setStatusMode("DeleteMode");
+      setOpen((isOpen) => !isOpen);
     }
   };
 
@@ -93,11 +93,11 @@ const Home = () => {
           : setDate({ startdate: fromDate, enddate: toDate });
         break;
       case "New":
-        setStatusMode("CreateBooking");
+        setStatusMode("CreateMode");
         setOpen((isOpen) => !isOpen);
         break;
       case "Delete":
-        handleDelete();
+        openConfirmationPopup();
         break;
       case "Close":
         console.log("Close was clicked");
@@ -140,7 +140,8 @@ const Home = () => {
                     onValueChanged={(e) => setFromDate(e.value)}
                     value={fromDate}
                     height={26}
-                    className=" border  text-xs pl-1 w-full md:w-1/2  outline-none"
+                    style={{ fontSize: "12px" }}
+                    className=" border pl-1 w-full md:w-1/2  outline-none"
                   />
                 </div>
                 <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
@@ -156,7 +157,8 @@ const Home = () => {
                     onValueChanged={(e) => setToDate(e.value)}
                     value={toDate}
                     height={26}
-                    className=" border  text-xs pl-1 w-full md:w-1/2  outline-none"
+                    style={{ fontSize: "12px" }}
+                    className=" border pl-1 w-full md:w-1/2  outline-none"
                   />
                 </div>
               </div>
@@ -170,13 +172,14 @@ const Home = () => {
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
             loading={loading}
-            setRowClickBookingId={setRowClickBookingId}
-            deleteSelectedRow={handleDelete}
+            setRowClickItem={setRowClickItem}
+            openConfirmationPopup={openConfirmationPopup}
+            filterValues={bookingFilterValues}
           />
         </section>
       </section>
 
-      {statusMode === "CreateBooking" ? (
+      {statusMode === "CreateMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
             bookings={bookings}
@@ -189,17 +192,29 @@ const Home = () => {
             statusMode={statusMode}
           />
         </Portal>
+      ) : statusMode === "EditMode" ? (
+        <Portal isOpen={isOpen} setOpen={setOpen}>
+          <New
+            bookings={bookings}
+            singleBooking={singleBooking}
+            setBookings={setBookings}
+            handleClose={handleClose}
+            title={"Update A Booking Item"}
+            heading={"Booking Item Management"}
+            statusBarText={"Updating Booking Item"}
+            statusMode={statusMode}
+          />
+        </Portal>
       ) : (
-        statusMode === "EditBooking" && (
+        statusMode === "DeleteMode" && (
           <Portal isOpen={isOpen} setOpen={setOpen}>
-            <New
+            <ConfirmationPopupComponent
+              item={onRowClickItem}
               bookings={bookings}
-              singleBooking={singleBooking}
               setBookings={setBookings}
               handleClose={handleClose}
-              title={"Update A Booking Item"}
-              heading={"Booking Item Management"}
-              statusBarText={"Updating Booking Item"}
+              title={"Delete A Booking Item"}
+              statusBarText={"Delete Booking Item"}
               statusMode={statusMode}
             />
           </Portal>

@@ -18,36 +18,10 @@ export const bookingColumns = [
   { dataField: "additionalRequirements", width: 150 },
 ];
 
-export const bookingRows = [
-  {
-    id: 1,
-    bookingId: 1879,
-    bookingType: "First Time",
-    idNumber: "89908878",
-    fullName: "John Doe",
-    email: "johndoe@email.com",
-    telephone: "0789909987",
-    retirementSchemeName: "KOKI-KOKI",
-    schemePosition: "Certified",
-    externalSchemeAdmin: "Truste Development",
-    fromDate: "06/02/2023",
-    toDate: "09/04/2026",
-    trainingVenue: "IN-HOUSE",
-  },
+export const bookingFilterValues = [
+  ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
+];
 
-  {
-    id: 2,
-    bookingId: 1279,
-    bookingType: "Retake",
-    idNumber: "99088798",
-    fullName: "David Doe",
-    email: "davedoe@email.com",
-    telephone: "0989909987",
-    retirementSchemeName: "KINGS LANDING",
-    schemePosition: "Verified",
-    externalSchemeAdmin: "Software Engineering",
-    fromDate: "06/02/2020",
-    toDate: "09/04/2022",
-    trainingVenue: "Mombasa",
-  },
+export const orderFilterValues = [
+  ["supplier", "anyof", ["Eldoret", "Mombasa", "Nyeri", "Kisumu"]],
 ];

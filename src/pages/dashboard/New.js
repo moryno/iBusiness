@@ -8,9 +8,15 @@ import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
+import Validator, {
+  RequiredRule,
+  PatternRule,
+  EmailRule,
+} from "devextreme-react/validator";
 
 import services from "../../helpers/formDataSource";
 import webService from "../../utils/webService";
+import LoadingIndicator from "../../components/features/LoadingIndicator";
 
 const New = ({
   handleClose,
@@ -24,73 +30,70 @@ const New = ({
 }) => {
   // Define state to store the change in the input field
   // Code starts here
+  const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
+    statusMode === "EditMode" ? singleBooking.user?.fullName : ""
   );
   const [idNumber, setIdNumber] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.idNumber : ""
+    statusMode === "EditMode" ? singleBooking.user?.idNumber : ""
   );
   const [email, setEmail] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.email : ""
+    statusMode === "EditMode" ? singleBooking.user?.email : ""
   );
   const [telephone, setTelephone] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.telephone : ""
+    statusMode === "EditMode" ? singleBooking.user?.telephone : ""
   );
   const [physicalAddress, setPhysicalAddress] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.physicalAddress : ""
+    statusMode === "EditMode" ? singleBooking.user?.physicalAddress : ""
   );
   const [employerName, setEmployerName] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.employerName : ""
+    statusMode === "EditMode" ? singleBooking.user?.employerName : ""
   );
   const [position, setPosition] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.position : ""
+    statusMode === "EditMode" ? singleBooking.user?.position : ""
   );
   const [schemePosition, setSchemePosition] = useState(
-    statusMode === "EditBooking" ? singleBooking.booking?.schemePosition : ""
+    statusMode === "EditMode" ? singleBooking.booking?.schemePosition : ""
   );
   const [additionalRequirements, setAdditionalRequirements] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.booking?.additionalRequirements
       : ""
   );
   const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
-    statusMode === "EditBooking"
-      ? singleBooking.booking?.externalSchemeAdmin
-      : ""
+    statusMode === "EditMode" ? singleBooking.booking?.externalSchemeAdmin : ""
   );
 
   const [experience, setExperience] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.experience : 0
+    statusMode === "EditMode" ? singleBooking.user?.experience : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditBooking" ? singleBooking.user?.originCountry : "Kenya"
+    statusMode === "EditMode" ? singleBooking.user?.originCountry : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.user?.disabilityStatus
       : "Not Disabled"
   );
   const [schemeOptions, setSchemeOptions] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.booking?.retirementSchemeName
       : "A I C KIJABE PRINTING"
   );
   const [bookingType, setBookingType] = useState(
-    statusMode === "EditBooking"
+    statusMode === "EditMode"
       ? singleBooking.booking?.bookingType
       : "First Time"
   );
   const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditBooking"
-      ? singleBooking.booking?.trainingVenue
-      : "INHOUSE"
+    statusMode === "EditMode" ? singleBooking.booking?.trainingVenue : "INHOUSE"
   );
   const [courseDate, setCourseDate] = useState(
-    statusMode === "EditBooking" ? singleBooking.booking?.courseDate : today
+    statusMode === "EditMode" ? singleBooking.booking?.courseDate : today
   );
   const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditBooking" ? singleBooking.booking?.paymentMode : "Cheque"
+    statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
   );
   // Code ends here
 
@@ -99,6 +102,7 @@ const New = ({
 
   // A function to save the booking details to the backend then populate the datagrid
   const save = async () => {
+    setLoading(true);
     // Create Booking information
     const formData = {
       user: {
@@ -155,15 +159,16 @@ const New = ({
     };
 
     // Check to save depending on the current mode
-    if (statusMode === "CreateBooking") {
+    if (statusMode === "CreateMode") {
       try {
         // perform form submission on creating new booking
         const response = await webService.Request.create(formData);
-
         // Append the new booking to the top of the datagrid
         setBookings([response?.Booking?.booking, ...bookings]);
+        setLoading(false);
         handleClose();
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     } else {
@@ -178,10 +183,11 @@ const New = ({
           }
           return booking;
         });
-
         setBookings(newBooking);
         handleClose();
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -230,8 +236,17 @@ const New = ({
                       onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
                       height={26}
-                      className=" border  text-xs text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border  text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    >
+                      <Validator>
+                        <RequiredRule message="Name is required" />
+                        <PatternRule
+                          message="Do not use digits in the Name"
+                          pattern={/^[^0-9]+$/}
+                        />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
                     <label className="text-xs text-gray-600" htmlFor="idNumber">
@@ -244,8 +259,13 @@ const New = ({
                       onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                    >
+                      <Validator>
+                        <RequiredRule message="ID is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label className="text-xs text-gray-600" htmlFor="email">
@@ -258,8 +278,15 @@ const New = ({
                       onValueChanged={(e) => setEmail(e.value)}
                       value={email}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Email is required" />
+                        <EmailRule message="Email is invalid" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
                     <label
@@ -275,8 +302,14 @@ const New = ({
                       onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Telephone is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label
@@ -292,8 +325,14 @@ const New = ({
                       onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Employer Name is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
                     <label
@@ -308,8 +347,14 @@ const New = ({
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Experience is required" />
+                      </Validator>
+                    </NumberBox>
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
                     <label
@@ -326,7 +371,8 @@ const New = ({
                       value={selectedCountry}
                       placeholder="Select a Country"
                       height={26}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
@@ -340,8 +386,14 @@ const New = ({
                       onValueChanged={(e) => setPosition(e.value)}
                       value={position}
                       height={26}
-                      className=" border h-7  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border h-7  pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Position is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
                     <label
@@ -357,8 +409,14 @@ const New = ({
                       onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
                       height={26}
-                      className=" border h-7  text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border h-7 pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Address is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
                     <label
@@ -373,9 +431,10 @@ const New = ({
                       name="disabilityStatus"
                       placeholder="Select Status"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setSelectedStatus(e.value)}
                       value={selectedStatus}
-                      className=" text-center border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
+                      className=" text-center border pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%]"
                     />
                   </div>
                   <div className="flex flex-col gap-3  md:flex-row justify-between w-full md:w-7/12">
@@ -391,9 +450,10 @@ const New = ({
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setSchemeOptions(e.value)}
                       value={schemeOptions}
-                      className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
@@ -402,7 +462,7 @@ const New = ({
                 <article className="w-full flex flex-wrap lg:w-[80%] box-border justify-between  gap-2">
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
-                      className="text-xs   text-gray-600"
+                      className="text-xs  text-gray-600"
                       htmlFor="bookingType"
                     >
                       Booking Type:<sup className=" text-red-600">*</sup>
@@ -413,9 +473,10 @@ const New = ({
                       name="bookingType"
                       placeholder="Select a Scheme Name"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setBookingType(e.value)}
                       value={bookingType}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -432,8 +493,14 @@ const New = ({
                       onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
                       height={26}
-                      className=" h-7 border  text-xs pl-1 w-full md:w-[70%]  outline-none"
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" h-7 border pl-1 w-full md:w-[70%]  outline-none"
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Scheme Position is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
@@ -448,9 +515,10 @@ const New = ({
                       name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setTrainingVenue(e.value)}
                       value={trainingVenue}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
 
@@ -466,9 +534,10 @@ const New = ({
                       id="courseDate"
                       name="courseDate"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setCourseDate(e.value)}
                       value={courseDate}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
@@ -484,9 +553,10 @@ const New = ({
                       placeholder="Select a Payment Mode"
                       name="paymentMode"
                       height={26}
+                      style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setPaymentMode(e.value)}
                       value={paymentMode}
-                      className=" border  text-xs pl-1 w-full md:w-[70%]  outline-none"
+                      className=" border  pl-1 w-full md:w-[70%]  outline-none"
                     />
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
@@ -504,8 +574,14 @@ const New = ({
                       onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
                       height={26}
-                      className=" border h-7  text-xs pl-1 w-full md:w-[70%]  outline-none"
-                    />
+                      style={{ fontSize: "12px" }}
+                      className=" border h-7 pl-1 w-full md:w-[70%]  outline-none"
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Scheme admin is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                 </article>
                 <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -517,7 +593,7 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <textarea
-                    className=" border   resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                    className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     type="text"
                     id="additionalRequirements"
                     name="additionalRequirements"
@@ -537,7 +613,13 @@ const New = ({
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <FcAddDatabase fontSize={20} />
-            {statusMode === "CreateBooking" ? "Save" : "Update"}
+            {loading ? (
+              <LoadingIndicator />
+            ) : statusMode === "CreateMode" ? (
+              "Save"
+            ) : (
+              "Update"
+            )}
           </button>
           <button
             onClick={handleClose}

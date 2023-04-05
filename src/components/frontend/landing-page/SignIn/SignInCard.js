@@ -9,8 +9,10 @@ import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
 import { msSingleSign } from "../../../../utils/webService";
 import axios from "axios";
+import LoadingIndicator from "../../../features/LoadingIndicator";
 
 export const Card = () => {
+  const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState({
     userName: "",
     password: "",
@@ -42,24 +44,32 @@ export const Card = () => {
   // Get user information the send to API to check if user is registered
   useEffect(() => {
     const getUserInformation = async () => {
-      // perform get user information
-      const { data } = await axios.get(msSingleSign + search);
+      setLoading(true);
+      try {
+        // perform get user information
+        const { data } = await axios.get(msSingleSign + search);
 
-      // A check to see if user is registered
-      if (data?.registered) {
-        setupLogin(data?.token);
-        dispatch(loginSuccess(data));
-        navigate("/dashboard");
-      } else {
-        // Send unregistered user to register page where they can perform registration
-        navigate("/get-started", {
-          state: { user: data?.graphinfo, token: data?.token },
-        });
+        // A check to see if user is registered
+        if (data?.registered) {
+          setupLogin(data?.token);
+          dispatch(loginSuccess(data));
+          setLoading(false);
+          navigate("/dashboard");
+        } else {
+          // Send unregistered user to register page where they can perform registration
+          setLoading(false);
+          navigate("/get-started", {
+            state: { user: data?.graphinfo, token: data?.token },
+          });
+        }
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
       }
     };
 
     if (search) getUserInformation();
-  }, [search, dispatch]);
+  }, [search, dispatch, navigate]);
 
   return (
     <main className="card-container">
@@ -88,6 +98,7 @@ export const Card = () => {
               />
             ))}
             <button
+              disabled
               value="Submit"
               onClick={handleLogin}
               className="signin-button"
@@ -96,12 +107,18 @@ export const Card = () => {
             </button>
             <p className="signin-text-center">or</p>
             <button onClick={handleMsLogin} className="login-microsoft">
-              <img
-                src="https://www.freepnglogos.com/uploads/microsoft-window-logo-emblem-0.png"
-                className="signin-btn-logo"
-                alt=""
-              />{" "}
-              &nbsp; Log in with Microsoft
+              {loading ? (
+                <LoadingIndicator />
+              ) : (
+                <div className="flex items-center gap-1">
+                  <img
+                    src="https://www.freepnglogos.com/uploads/microsoft-window-logo-emblem-0.png"
+                    className="signin-btn-logo"
+                    alt=""
+                  />
+                  <p>Log in with Microsoft</p>
+                </div>
+              )}
             </button>
           </div>
         </div>

@@ -5,9 +5,18 @@ import { jsPDF } from "jspdf";
 import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
 
 let dataGridInstance;
-
+// Function to get the instance of the datagrid onLoad
 export const getDataGridRef = (dataGrid) => {
   return (dataGridInstance = dataGrid);
+};
+
+// Function to get the row that was doubled clicked in the datagrid
+export const getRowDblClickItem = ({ data }) => {
+  if (data) {
+    return data;
+  } else {
+    return null;
+  }
 };
 
 // Function to export row as excel or pdf
@@ -43,6 +52,7 @@ export const onExporting = (exportValue) => {
   }
 };
 
+// Define function to switch between different export format in Excel or Pdf
 export const handleExportFormat = (title) => {
   let format;
   let selectedRowsOnly;
@@ -72,6 +82,7 @@ export const handleExportFormat = (title) => {
   return { format, selectedRowsOnly };
 };
 
+// Define a function that calls on OnExporting function and pass the format to export
 export const handleExporting = (exportFormat) => {
   const exportValue = handleExportFormat(exportFormat);
   onExporting(exportValue);

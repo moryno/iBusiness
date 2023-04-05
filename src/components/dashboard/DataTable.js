@@ -22,11 +22,12 @@ import {
 const DataTable = ({
   data,
   startEdit,
-  setRowClickBookingId,
+  setRowClickItem,
   columns,
   keyExpr,
   loading,
-  deleteSelectedRow,
+  openConfirmationPopup,
+  filterValues,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -93,11 +94,21 @@ const DataTable = ({
           text: "Delete",
           icon: "trash",
           onItemClick: () => {
-            deleteSelectedRow();
+            openConfirmationPopup();
           },
         }
       );
     }
+  };
+
+  // onvert the filter values to filterBuilder object
+  const filterBuilder = {
+    logic: "and",
+    filters: filterValues.map(([field, operator, value]) => ({
+      field,
+      operator,
+      value,
+    })),
   };
 
   return (
@@ -116,7 +127,7 @@ const DataTable = ({
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onRowClick={(e) => setRowClickBookingId(e.data.bookingId)}
+        onRowClick={(e) => setRowClickItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -176,9 +187,5 @@ const filterBuilderPopupPosition = {
   my: "center",
   offset: { y: 10 },
 };
-
-const filterBuilder = [
-  ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
-];
 
 export default DataTable;
