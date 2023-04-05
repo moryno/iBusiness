@@ -28,6 +28,8 @@ const Home = () => {
 
   // Fuction to close the Create || update form
   const handleClose = () => {
+    setRowDblClickBookingId(null);
+    setSingleBooking({});
     setStatusMode("");
     setOpen(false);
   };

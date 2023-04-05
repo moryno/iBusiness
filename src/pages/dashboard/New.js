@@ -8,9 +8,15 @@ import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
+import Validator, {
+  RequiredRule,
+  PatternRule,
+  EmailRule,
+} from "devextreme-react/validator";
 
 import services from "../../helpers/formDataSource";
 import webService from "../../utils/webService";
+import LoadingIndicator from "../../components/features/LoadingIndicator";
 
 const New = ({
   handleClose,
@@ -24,6 +30,7 @@ const New = ({
 }) => {
   // Define state to store the change in the input field
   // Code starts here
+  const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState(
     statusMode === "EditBooking" ? singleBooking.user?.fullName : ""
@@ -99,6 +106,7 @@ const New = ({
 
   // A function to save the booking details to the backend then populate the datagrid
   const save = async () => {
+    setLoading(true);
     // Create Booking information
     const formData = {
       user: {
@@ -159,11 +167,12 @@ const New = ({
       try {
         // perform form submission on creating new booking
         const response = await webService.Request.create(formData);
-
         // Append the new booking to the top of the datagrid
         setBookings([response?.Booking?.booking, ...bookings]);
+        setLoading(false);
         handleClose();
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     } else {
@@ -178,10 +187,11 @@ const New = ({
           }
           return booking;
         });
-
         setBookings(newBooking);
         handleClose();
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -231,7 +241,15 @@ const New = ({
                       value={fullName}
                       height={26}
                       className=" border  text-xs text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                    />
+                    >
+                      <Validator>
+                        <RequiredRule message="Name is required" />
+                        <PatternRule
+                          message="Do not use digits in the Name"
+                          pattern={/^[^0-9]+$/}
+                        />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-4/12">
                     <label className="text-xs text-gray-600" htmlFor="idNumber">
@@ -245,7 +263,11 @@ const New = ({
                       value={idNumber}
                       height={26}
                       className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                    >
+                      <Validator>
+                        <RequiredRule message="ID is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label className="text-xs text-gray-600" htmlFor="email">
@@ -259,7 +281,13 @@ const New = ({
                       value={email}
                       height={26}
                       className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Email is required" />
+                        <EmailRule message="Email is invalid" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3  md:flex-row w-full md:w-4/12">
                     <label
@@ -276,7 +304,12 @@ const New = ({
                       value={telephone}
                       height={26}
                       className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Telephone is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                     <label
@@ -293,7 +326,12 @@ const New = ({
                       value={employerName}
                       height={26}
                       className=" border  text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Employer Name is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-4/12">
                     <label
@@ -309,7 +347,12 @@ const New = ({
                       value={experience}
                       height={26}
                       className=" border  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Experience is required" />
+                      </Validator>
+                    </NumberBox>
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-7/12">
                     <label
@@ -341,7 +384,12 @@ const New = ({
                       value={position}
                       height={26}
                       className=" border h-7  text-xs pl-1 w-full md:w-1/2 lg:w-[60%] xl:w-[65%] outline-none "
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Position is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-7/12">
                     <label
@@ -358,7 +406,12 @@ const New = ({
                       value={physicalAddress}
                       height={26}
                       className=" border h-7  text-xs pl-1 w-full md:w-[70%] lg:w-[80%]  outline-none "
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Address is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-4/12">
                     <label
@@ -433,7 +486,12 @@ const New = ({
                       value={schemePosition}
                       height={26}
                       className=" h-7 border  text-xs pl-1 w-full md:w-[70%]  outline-none"
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Scheme Position is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                   <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
                     <label
@@ -505,7 +563,12 @@ const New = ({
                       value={externalSchemeAdmin}
                       height={26}
                       className=" border h-7  text-xs pl-1 w-full md:w-[70%]  outline-none"
-                    />
+                    >
+                      {" "}
+                      <Validator>
+                        <RequiredRule message="Scheme admin is required" />
+                      </Validator>
+                    </TextBox>
                   </div>
                 </article>
                 <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -544,7 +607,7 @@ const New = ({
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <ImUndo2 fontSize={18} />
-            Cancel
+            {loading ? <LoadingIndicator /> : "Cancel"}
           </button>
         </article>
         <article className="flex bg-formTitle text-formHeadingColor py-1 px:2 md:px-5 w-full">
