@@ -177,8 +177,17 @@ const filterBuilderPopupPosition = {
   offset: { y: 10 },
 };
 
-const filterBuilder = [
+const filterValues = [
   ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
 ];
+
+const filterBuilder = {
+  logic: "and",
+  filters: filterValues.map(([field, operator, value]) => ({
+    field,
+    operator,
+    value,
+  })),
+};
 
 export default DataTable;

@@ -29,7 +29,7 @@ const SearchCategories = ({ searchInput, setSearchInput }) => {
       <div
         className={`absolute ${
           searchInput === "" && !isExpanded ? "hidden" : "block"
-        } search z-50 w-[380px] bg-white top-9 shadow-xl`}
+        } search z-50 w-[90%] md:w-[380px] bg-white top-9 left-6 md:left-0  shadow-xl`}
       >
         <ul className="text-left cursor-pointer group">
           {searchResult.map((category) => (
