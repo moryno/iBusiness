@@ -22,7 +22,7 @@ import {
 const DataTable = ({
   data,
   startEdit,
-  setRowClickBookingId,
+  setRowClickItem,
   columns,
   keyExpr,
   loading,
@@ -116,7 +116,7 @@ const DataTable = ({
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onRowClick={(e) => setRowClickBookingId(e.data.bookingId)}
+        onRowClick={(e) => setRowClickItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}

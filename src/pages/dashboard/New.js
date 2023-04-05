@@ -600,14 +600,20 @@ const New = ({
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <FcAddDatabase fontSize={20} />
-            {statusMode === "CreateBooking" ? "Save" : "Update"}
+            {loading ? (
+              <LoadingIndicator />
+            ) : statusMode === "CreateBooking" ? (
+              "Save"
+            ) : (
+              "Update"
+            )}
           </button>
           <button
             onClick={handleClose}
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <ImUndo2 fontSize={18} />
-            {loading ? <LoadingIndicator /> : "Cancel"}
+            Cancel
           </button>
         </article>
         <article className="flex bg-formTitle text-formHeadingColor py-1 px:2 md:px-5 w-full">

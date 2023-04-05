@@ -18,7 +18,7 @@ const Home = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
-  const [onRowClickBookingId, setRowClickBookingId] = useState(null);
+  const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
   const [date, setDate] = useState("");
@@ -73,13 +73,15 @@ const Home = () => {
   }, [onRowDblClickBookingId]);
 
   const handleDelete = async () => {
-    if (onRowClickBookingId === null) {
+    if (onRowClickItem === null) {
       toast.warning("Please select a booking to delete");
     } else {
-      const response = await webService.Request.delete(onRowClickBookingId);
+      const response = await webService.Request.delete(
+        onRowClickItem.data.bookingId
+      );
       setBookings([
         ...bookings.filter(
-          (booking) => booking.bookingId !== onRowClickBookingId
+          (booking) => booking.bookingId !== onRowClickItem.data.bookingId
         ),
       ]);
       toast.success(response.message);
@@ -172,7 +174,7 @@ const Home = () => {
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
             loading={loading}
-            setRowClickBookingId={setRowClickBookingId}
+            setRowClickItem={setRowClickItem}
             deleteSelectedRow={handleDelete}
           />
         </section>
