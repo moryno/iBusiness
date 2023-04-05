@@ -19,51 +19,51 @@ import dateToday from "../../../utils/dateToday";
 // Main Function
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
+  const [order, setOrder] = useState(0);
+  const [updateData, setUpdateData] = useState({
+    formData: "",
+    tableData: ""
+  })
+  const [james, setJames] = useState(0);
+  const [initialRender, setInitialRender] = useState(true);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
-  const [formUpdateData, setFormUpdateData] = useState();
+  const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   // eslint-disable-next-line})
   const [data, setData] = useState(new DataSource());
-  const [dataToSubmit, setSubmitData] = useState(
-    {
-        costCenter: "",
-        supplier: "",
-        shipsTo: "",
-        orderDate: dateToday,
-        orderAmount: 0,
-        deliveryPeriod: 0,
-        firstDeliveryDate: dateToday,
-        vehicleDetails: "",
-        narration: "",
-        orderNumber: 0,
-        id: currentUser.email ?? ""
-      }
-  );
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState("Are you sure you want to clear the table?");
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     if (orderstate === 0) {
       async function getData(){
         try {
           const response = await request.get(`/PurchaseOrder/getorderitems?userid=${currentUser?.email}`);
+          data.store().clear();
           response.data.orderItems.map((item) => {
             return data.store().insert(item);
           });
+          // console.log(response.data.orderInformation);
+
+          if (response.data.orderInformation.length === 0){
+            setInitialRender(false);
+            setLoading(false);
+            console.log("Form is empty.")
+          } else {
+            setFormUpdateData(response.data.orderInformation[0]);
+          }
           data.reload();
-          console.log("Data to submit")
-          console.log(dataToSubmit);
           // if (typeof response.data.orderInformation[0] !== "undefined"){
           //   setFormUpdateData(response.data.orderInformation[0]);
           // }
-          setLoading(false);          
+
         } catch (e) {
           console.log(e);
-          getData();
+          // getData();
         }
       }
       getData();
@@ -77,7 +77,9 @@ export const PurchaseOrder = ({ orderstate }) => {
             data.reload();
           });
           setFormUpdateData(response.data.formInfo);
-          setLoading(false);
+          setUpdateData({...updateData, "formData": response.data.formInfo})
+          setOrder(response.data.formInfo.orderNumber)
+          console.log(updateData)
         } catch (e) {
           console.log(e);
         }
@@ -89,70 +91,81 @@ export const PurchaseOrder = ({ orderstate }) => {
     const handleKeyUp = (e) => {
         if (e.code === "KeyS" && (e.ctrlKey)){
           e.preventDefault();
-          console.log("Key pressed");
-          submitData();
+          submitOrder();
+          document.removeEventListener("keydown", handleKeyUp);
         }
       
     };
   
     document.addEventListener("keydown", handleKeyUp);
   
-    // Cleanup function to remove the event listener
+    //Cleanup function to remove the event listener
     return () => {
       document.removeEventListener("keydown", handleKeyUp);
     };
-  }, []);
+  }, [orderstate]);
 
-  const submitData = async () => {
-    const user = {
-      userid: currentUser?.email,
-    };
-    const confirmedData = {
-      formData: dataToSubmit,
-      tableData: data.store()._array,
-      user: user
-    };
-    console.log(confirmedData);
-
-    setMessage("Submitting data...");
+  const submitOrder = async () => {
+    setLoading(true)
     try {
-      const { data } = await request.post(
-        "/PurchaseOrder/createpurchaseorder",
-        user
-      );
-      console.log(data);
       if (orderstate === 0){
-        setMessage("Data submitted successfully.");
-      }
-      else {
+        const user = {
+          userid: currentUser?.email,
+        };
+        const { data } = await request.post(
+          "/PurchaseOrder/createpurchaseorder",
+          user
+        );
+        console.log(data);
+        setMessage("Order submitted successfully.");
+        setLoading(false)
+
+      } else {
+        const dataToUpdate = {
+          "formData" : updateData.formData,
+          "tableData" : data.store()._array,
+        }
+        await request.put("/PurchaseOrder/updateorder", dataToUpdate);
         setMessage("Order has been updated successfully.");
+        setLoading(false)
+
       }
       setTimeout(() => {
         navigate("/dashboard/orders");
       }, 1500);
     } catch (e) {
       console.log(e);
+      setLoading(false)
       return setMessage("There was an error trying to submit your request.");
+      
     }
   };
 
-  // useEffect(() => {
-  //   const updateData = async() => {
-  //     try {
-  //       await request.put("/PurchaseOrder/updateorderinfo", dataToSubmit);
-  //       console.log("Updated");
-  //     }
-  //     catch(e) {
-  //       console.log(e);
-  //     }
-  //   }
-  //   updateData();
-  // }, [dataToSubmit])
+
+    // const updateOrder = async() => {
+    //   if (orderstate === 1){
+    //     const dataToUpdate = {
+    //       "formData" : updateData.formData,
+    //       "tableData" : updateData.tableData,
+    //       "orderid" : formUpdateData.orderNumber
+    //     }
+    //     try {
+    //       await request.put("/PurchaseOrder/updateorder", updateData);
+
+    //     }
+    //     catch(e) {
+    //       console.log(e);
+    //     }
+    //   }
+
+    // }
+
+  
 
   const handleClick = (menu) => {
     switch (menu) {
       case "Submit Order":
-        submitData();
+        submitOrder();
         break;
 
       case "Close":
@@ -175,10 +188,14 @@ export const PurchaseOrder = ({ orderstate }) => {
       </section>
       <div className="mt-3 w-full">
         <Form
-          setSubmitData={setSubmitData}
           orderState={orderstate}
           formUpdateData={formUpdateData}
-          dataToSubmit={dataToSubmit}
+          initialRender={initialRender}
+          orderstate={orderstate}
+          setInitialRender={setInitialRender}
+          setLoading={setLoading}
+          setUpdateData={setUpdateData}
+          updateData={updateData}
         />
       </div>
       <section className="mt-2">
@@ -188,8 +205,9 @@ export const PurchaseOrder = ({ orderstate }) => {
               <InputField
                 data={data}
                 count={count}
+                order={order}
                 setMessage={setMessage}
-                orderState={orderstate}
+                orderstate={orderstate}
               />
               <MessageDiv message={currentmessage} />
             </div>
@@ -199,6 +217,10 @@ export const PurchaseOrder = ({ orderstate }) => {
             count={count}
             setMessage={setMessage}
             setModalMessage={setModalMessage}
+            order={order}
+            updateData={updateData}
+            setUpdateData={setUpdateData}
+            orderstate={orderstate}
           />
           <LoadPanel visible={loading} messageText="Checking for unsubmitted orders..."/>
         </div>
