@@ -27,6 +27,7 @@ const DataTable = ({
   keyExpr,
   loading,
   deleteSelectedRow,
+  filterValues,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -98,6 +99,15 @@ const DataTable = ({
         }
       );
     }
+  };
+
+  const filterBuilder = {
+    logic: "and",
+    filters: filterValues.map(([field, operator, value]) => ({
+      field,
+      operator,
+      value,
+    })),
   };
 
   return (
@@ -175,19 +185,6 @@ const filterBuilderPopupPosition = {
   at: "center",
   my: "center",
   offset: { y: 10 },
-};
-
-const filterValues = [
-  ["bookingType", "anyof", ["First Time", "Retake", "Resit"]],
-];
-
-const filterBuilder = {
-  logic: "and",
-  filters: filterValues.map(([field, operator, value]) => ({
-    field,
-    operator,
-    value,
-  })),
 };
 
 export default DataTable;

@@ -8,6 +8,7 @@ import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import { LoadPanel } from "devextreme-react/load-panel";
 import request from "../../helpers/tempRequest";
+import { orderFilterValues } from "../../helpers/datatableSource";
 
 const Orders = () => {
   const [data, setData] = useState([]);
@@ -36,23 +37,20 @@ const Orders = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-          
-          const response = await request.get("PurchaseOrder/orders");
-          // response.data.map(order => {
-          //   console.log(order);
-          //   return data.store().insert(order);
+        const response = await request.get("PurchaseOrder/orders");
+        // response.data.map(order => {
+        //   console.log(order);
+        //   return data.store().insert(order);
 
-          // })
-          console.log(response.data);
-          setData(response.data);
-          loadingRef.current = false;
-        }
-      catch (error) {
+        // })
+        console.log(response.data);
+        setData(response.data);
+        loadingRef.current = false;
+      } catch (error) {
         console.log(error);
         getData();
       }
-
-    }
+    };
 
     getData();
   }, []);
@@ -157,9 +155,9 @@ const Orders = () => {
             keyExpr="orderNumber"
             startEdit={startEdit}
             loading={loadingRef.current}
+            filterValues={orderFilterValues}
           />
         </section>
-        
       </section>
       <Statusbar heading="Purchase Orders" company="iBusiness" />
     </main>

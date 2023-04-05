@@ -10,6 +10,7 @@ import Portal from "../../components/dashboard/Portal";
 import New from "./New";
 import { bookingColumns } from "../../data/PurchaseOrderData";
 import webService from "../../utils/webService";
+import { bookingFilterValues } from "../../helpers/datatableSource";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -176,6 +177,7 @@ const Home = () => {
             loading={loading}
             setRowClickItem={setRowClickItem}
             deleteSelectedRow={handleDelete}
+            filterValues={bookingFilterValues}
           />
         </section>
       </section>
