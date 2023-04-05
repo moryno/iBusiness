@@ -200,20 +200,38 @@ export const Table = ({ data, count, setMessage, orderstate, updateData, setUpda
     console.log(e.data);
     e.cancel = !window.confirm(confirmDeleteMessage(e.data));
     if (orderstate === 0){
-    if (!e.cancel) {
-      try {
-        const response = await request.delete(
-          "PurchaseOrder/removeorderitem",
-          {data: e.data}
-        );
-        console.log(response);
-      } catch (ex) {
-        console.log(ex);
-        data.store().insert(e.data);
-        data.reload()
-        return setMessage("Server error. Item was not removed.");
+      if (!e.cancel) {
+        try {
+          const response = await request.delete(
+            "PurchaseOrder/removeorderitem",
+            {data: e.data}
+          );
+          console.log(response);
+        } catch (ex) {
+          console.log(ex);
+          data.store().insert(e.data);
+          data.reload()
+          return setMessage("Server error. Item was not removed.");
+        }
       }
-    }
+    } else {
+      if (!e.cancel) {
+        try {
+          const response = await request.delete(
+            "PurchaseOrder/deleteorderitem",
+            {data: {
+              "itemid" : e.data.id,
+              "orderNo" : e.data.partitionKey
+            }}
+          );
+          console.log(response);
+        } catch (ex) {
+          console.log(ex);
+          data.store().insert(e.data);
+          data.reload()
+          return setMessage("Server error. Item was not removed.");
+        }
+      }
     }
   };
 
