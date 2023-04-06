@@ -24,6 +24,8 @@ In the project directory, you can run:
 
 #### USING NPM
 
+`UnZip the project`
+
 `npm install`
 
 `npm run start`
@@ -33,6 +35,10 @@ In the project directory, you can run:
 ## Instructions
 
 ### To have the admin privileges then you have to do the following.
+
+Use this admin credentials to login as admin:
+   -  email: ibizsample123@outlook.com
+   -  password: pass123@1
 
 - If you are in the landing page  click on the signin buttton and that will take you to the login page.
 
@@ -68,8 +74,12 @@ the user can click on the 'New' button on top of the table to create a purchase 
 
 - **.NET Core** - This is used as the API for the app.
 
+## Login feature
+Only supported login/registration endpoint is loggin with Microsoft. It supports the following.
+1. First time login in: When a user tries to access the system via Microsoft for the first time, they are redirected to a window with outfilled graph information. They are then requried to provide additional information that the system can use to full understand them. In this prototype, such information include physical address, phone number and country of origin. Such information may or may not be provided from Microsoft graph (user profile)
+2. In subsquent login, a user is simply logged in to the application without further restrictions. 
 
-
+Another key feature implemented is token encryption. The backend system uses JWT token, however, the token is encrypted before it can be sent to the front end. when received from front-end it will be decrypted before it can be verified then used. The importance of encryption is to add another layer of security. Since JWt token contains senstive information but can be viewed by any JWt token viewer, it is recommendable to obsecure it.
 
 ### Live Link
 
