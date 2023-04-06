@@ -1,5 +1,5 @@
 import { RiMenuUnfoldFill } from "react-icons/ri";
-
+import { MdOutlineClose } from "react-icons/md";
 import { MdOutlineSearch } from "react-icons/md";
 import NavMenus from "./NavMenus";
 import SearchCategories from "./SearchCategories";
@@ -62,16 +62,20 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
         {searchMode ? (
           <form
             onSubmit={handleSubmit}
-            className="md:hidden w-full  border border-gray-300 overflow-hidden"
+            className="md:hidden w-full rounded-md border border-gray-300 overflow-hidden"
           >
             <div className="flex w-full items-center  justify-between ">
-              <MdOutlineSearch fontSize={20} />
               <input
                 type="text"
                 className="py-1.5 px-2 w-full outline-none bg-transparent text-xs  placeholder:text-gray-200 placeholder:text-xs"
                 placeholder="Search for..."
                 name="search"
                 onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <MdOutlineClose
+                onClick={() => setSearchMode(false)}
+                fontSize={18}
+                className="opacity-60 cursor-pointer"
               />
             </div>
 

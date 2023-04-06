@@ -55,7 +55,14 @@
 /* DataGrid Styling */
 #bookingGrid{
   height: 75vh;
-  font-size: 0.7rem !important;;
+  font-size: 0.7rem !important;
+}
+
+#orderGrid{
+  height: 50vh;
+  border-style: solid;
+  margin-top: 1rem;
+  font-size: 0.7rem !important;
 }
 
 .dx-datagrid-headers {
@@ -132,6 +139,10 @@ background: linear-gradient(90deg, rgba(0,111,201,1) 0%, rgba(59,150,221,1) 84%,
     #bookingGrid{
       height: 60vh;
     
+    }
+
+    #orderGrid{
+      height: 40vh;
     }
    
 }

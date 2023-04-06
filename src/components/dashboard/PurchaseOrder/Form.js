@@ -23,7 +23,15 @@ const dateString = `${year}-${month}-${day}`;
 
 // Form Component
 
-const Form = ({ formUpdateData, setLoading, updateData, setUpdateData, initialRender, setInitialRender, orderstate }) => {
+const Form = ({
+  formUpdateData,
+  setLoading,
+  updateData,
+  setUpdateData,
+  initialRender,
+  setInitialRender,
+  orderstate,
+}) => {
   const [costCenter, setCostCenter] = useState();
   const [supplier, setSupplier] = useState();
   const [shipsTo, setShipsTo] = useState();
@@ -37,20 +45,18 @@ const Form = ({ formUpdateData, setLoading, updateData, setUpdateData, initialRe
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   useEffect(() => {
-      setCostCenter(formUpdateData.costCenter);
-      setSupplier(formUpdateData.supplier);
-      setShipsTo(formUpdateData.shipsTo);
-      setOrderDate(dateString);
-      setOrderAmount(formUpdateData.orderAmount);
-      setDeliveryPeriod(formUpdateData.deliveryPeriod);
-      setfirstDeliveryDate(dateString);
-      setdriverDetails(formUpdateData.vehicleDetails);
-      setNarration(formUpdateData.narration);
-      setOrderNumber(formUpdateData.orderNumber);
-      setInitialRender(false);
-      setLoading(false);
-
-    
+    setCostCenter(formUpdateData.costCenter);
+    setSupplier(formUpdateData.supplier);
+    setShipsTo(formUpdateData.shipsTo);
+    setOrderDate(dateString);
+    setOrderAmount(formUpdateData.orderAmount);
+    setDeliveryPeriod(formUpdateData.deliveryPeriod);
+    setfirstDeliveryDate(dateString);
+    setdriverDetails(formUpdateData.vehicleDetails);
+    setNarration(formUpdateData.narration);
+    setOrderNumber(formUpdateData.orderNumber);
+    setInitialRender(false);
+    setLoading(false);
   }, [formUpdateData]);
 
   useEffect(() => {
@@ -65,21 +71,18 @@ const Form = ({ formUpdateData, setLoading, updateData, setUpdateData, initialRe
       vehicleDetails: driverDetails ?? "",
       narration: narration ?? "",
       orderNumber: orderNumber ?? 0,
-      id: currentUser.email ?? ""
-    }
-    console.log(data);
-    console.log(initialRender)
-    if (initialRender === true){
-      return
-    }
-    else if (orderstate === 1) {
-      setUpdateData({...updateData, "formData": data})
-      console.log("Update data")
-      console.log(updateData)
-      return
-    }
-    updateToCosmos(data)
+      id: currentUser.email ?? "",
+    };
 
+    if (initialRender === true) {
+      return;
+    } else if (orderstate === 1) {
+      setUpdateData({ ...updateData, formData: data });
+      console.log("Update data");
+      console.log(updateData);
+      return;
+    }
+    updateToCosmos(data);
   }, [
     costCenter,
     supplier,
@@ -92,144 +95,161 @@ const Form = ({ formUpdateData, setLoading, updateData, setUpdateData, initialRe
     driverDetails,
   ]);
 
-  const updateToCosmos = async(data) => {
+  const updateToCosmos = async (data) => {
     try {
       await request.put("/PurchaseOrder/updateorderinfo", data);
       console.log("Updated");
-    }
-    catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   return (
     <div className="po-form">
-      <div className="po-left">
-        <div className="select-control">
-          <label className="label-control">Cost Center:</label>
+      <div className="w-full flex flex-wrap lg:w-[75%] box-border justify-between  gap-2">
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Cost Center:
+          </label>
           <SelectBox
             items={centerOptions}
             searchEnabled={true}
             valueExpr="text"
             displayExpr="text"
-            width="68%"
-            height="4.5vh"
+            height={26}
             value={costCenter}
             onValueChanged={(e) => {
               setCostCenter(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-        <div className="select-control">
-          <label className="label-control">Ships to:</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Ships to:
+          </label>
           <SelectBox
             items={centerOptions}
             valueExpr="text"
             displayExpr="text"
-            width="68%"
-            height="4.5vh"
+            height={26}
             value={shipsTo}
             onValueChanged={(e) => {
               setShipsTo(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-        <div className="select-control">
-          <label className="label-control">Order Amount:</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Order Amount:
+          </label>
           <NumberBox
-            width="68%"
-            height="4vh"
+            height={26}
             value={orderAmount}
             onValueChanged={(e) => {
               setOrderAmount(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-        <div className="select-control">
-          <label className="label-control">First Delivery Date:</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            First Delivery Date:
+          </label>
           <DateBox
             defaultValue={dateString}
-            width="68%"
-            height="4vh"
+            height={26}
             value={firstDeliveryDate}
             onValueChanged={(e) => {
               setfirstDeliveryDate(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-      </div>
-      <div className="po-right">
-        <div className="select-control">
-          <label className="label-control">Supplier:</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Supplier:
+          </label>
           <SelectBox
             items={centerOptions}
             valueExpr="text"
             displayExpr="text"
-            width="68%"
-            height="4.5vh"
+            height={26}
             value={supplier}
             onValueChanged={(e) => {
               setSupplier(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-        <div className="select-control">
-          <label className="label-control">Order Date:</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Order Date:
+          </label>
           <DateBox
             defaultValue={dateString}
-            width="68%"
-            height="4vh"
+            height={26}
             value={orderDate}
+            placeholder="Type order amount here"
             onValueChanged={(e) => {
               setOrderDate(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-        <div className="select-control">
-          <label className="label-control">Delivery Period (Days):</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Delivery Period (Days):
+          </label>
           <NumberBox
-            width="79%"
-            height="4vh"
+            height={26}
             value={deliveryPeriod}
+            placeholder="Type delivery period here"
             onValueChanged={(e) => {
               setDeliveryPeriod(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
-        <div className="select-control">
-          <label className="label-control">Vehicle/Driver Details:</label>
+        <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
+          <label className="label-control text-xs text-gray-600">
+            Vehicle/Driver Details:
+          </label>
           <TextBox
-            width="79%"
-            height="4vh"
+            height={26}
             value={driverDetails}
+            placeholder="Type vehicle/driver here"
             onValueChanged={(e) => {
               setdriverDetails(e.value);
-              
             }}
+            style={{ fontSize: "12px" }}
+            className=" border pl-1 w-full md:w-[70%]  outline-none"
           />
         </div>
       </div>
-      <div className="select-control">
-        <label className="label-control">Narration:</label>
+
+      <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-[55%]">
+        <label className="label-control text-xs text-gray-600">
+          Narration:
+        </label>
         <TextArea
           type="text"
-          width="40vw"
-          height="9vh"
+          height="5vh"
           placeholder="Type narration here"
-          style={{ marginLeft: "3.3rem" }}
-          className="select-control-input"
           value={narration}
           onValueChanged={(e) => {
             setNarration(e.value);
-            
           }}
+          style={{ fontSize: "12px" }}
+          className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
         />
       </div>
     </div>

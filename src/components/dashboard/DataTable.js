@@ -94,6 +94,7 @@ const DataTable = ({
           text: "Delete",
           icon: "trash",
           onItemClick: () => {
+            setRowClickItem(e.row);
             openConfirmationPopup();
           },
         }

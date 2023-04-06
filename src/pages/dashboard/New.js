@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbBrandBooking } from "react-icons/tb";
 import { TextBox } from "devextreme-react/text-box";
+import TextArea from "devextreme-react/text-area";
 import SelectBox from "devextreme-react/select-box";
 import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
@@ -232,12 +233,12 @@ const New = ({
                     <TextBox
                       type="text"
                       id="fullName"
-                      name="fullName"
+                      placeholder="Type full name here"
                       onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
                       height={26}
                       style={{ fontSize: "12px" }}
-                      className=" border  text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                      className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                     >
                       <Validator>
                         <RequiredRule message="Name is required" />
@@ -255,7 +256,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="idNumber"
-                      name="idNumber"
+                      placeholder="Type id number here"
                       onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
                       height={26}
@@ -274,7 +275,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="email"
-                      name="email"
+                      placeholder="Type email here"
                       onValueChanged={(e) => setEmail(e.value)}
                       value={email}
                       height={26}
@@ -298,7 +299,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="telephone"
-                      name="telephone"
+                      placeholder="Type phone number here"
                       onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
                       height={26}
@@ -321,7 +322,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="employerName"
-                      name="employerName"
+                      placeholder="Type employer name here"
                       onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
                       height={26}
@@ -343,7 +344,6 @@ const New = ({
                     </label>
                     <NumberBox
                       id="experience"
-                      name="experience"
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
                       height={26}
@@ -366,7 +366,6 @@ const New = ({
                     <SelectBox
                       dataSource={countriesOptions}
                       searchEnabled={true}
-                      name="originCountry"
                       onValueChanged={(e) => setSelectedCountry(e.value)}
                       value={selectedCountry}
                       placeholder="Select a Country"
@@ -382,7 +381,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="position"
-                      name="position"
+                      placeholder="Type position here"
                       onValueChanged={(e) => setPosition(e.value)}
                       value={position}
                       height={26}
@@ -405,7 +404,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="physicalAddress"
-                      name="physicalAddress"
+                      placeholder="Type physical address here"
                       onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
                       height={26}
@@ -428,7 +427,6 @@ const New = ({
                     <SelectBox
                       dataSource={diabilityStatusOptions}
                       searchEnabled={true}
-                      name="disabilityStatus"
                       placeholder="Select Status"
                       height={26}
                       style={{ fontSize: "12px" }}
@@ -470,7 +468,6 @@ const New = ({
                     <SelectBox
                       dataSource={bookingTypeOptions}
                       searchEnabled={true}
-                      name="bookingType"
                       placeholder="Select a Scheme Name"
                       height={26}
                       style={{ fontSize: "12px" }}
@@ -489,7 +486,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="schemePosition"
-                      name="schemePosition"
+                      placeholder="Type scheme position here"
                       onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
                       height={26}
@@ -512,7 +509,6 @@ const New = ({
                     <SelectBox
                       dataSource={trainingVenuesOptions}
                       searchEnabled={true}
-                      name="trainingVenue"
                       placeholder="Select a Training Venue"
                       height={26}
                       style={{ fontSize: "12px" }}
@@ -532,7 +528,6 @@ const New = ({
 
                     <DateBox
                       id="courseDate"
-                      name="courseDate"
                       height={26}
                       style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setCourseDate(e.value)}
@@ -551,7 +546,6 @@ const New = ({
                       dataSource={paymentModeOptions}
                       searchEnabled={true}
                       placeholder="Select a Payment Mode"
-                      name="paymentMode"
                       height={26}
                       style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setPaymentMode(e.value)}
@@ -570,7 +564,7 @@ const New = ({
                     <TextBox
                       type="text"
                       id="externalSchemeAdmin"
-                      name="externalSchemeAdmin"
+                      placeholder="Type external scheme admin here"
                       onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
                       height={26}
@@ -592,14 +586,16 @@ const New = ({
                     Requirements:
                     <sup className=" text-red-600">*</sup>
                   </label>
-                  <textarea
-                    className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                  <TextArea
                     type="text"
+                    height="5vh"
+                    placeholder="Type additional requirements here"
                     id="additionalRequirements"
-                    name="additionalRequirements"
-                    onChange={(e) => setAdditionalRequirements(e.target.value)}
+                    onValueChanged={(e) => setAdditionalRequirements(e.value)}
                     value={additionalRequirements}
-                  ></textarea>
+                    style={{ fontSize: "12px" }}
+                    className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
+                  />
                 </div>
               </section>
             </form>
@@ -609,6 +605,7 @@ const New = ({
       <section className="sticky   inset-x-0 bottom-0 ">
         <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">
           <button
+            type="submit"
             onClick={save}
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
