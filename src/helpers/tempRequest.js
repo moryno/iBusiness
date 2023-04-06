@@ -9,7 +9,11 @@ request.interceptors.request.use(
     const TOKEN = localStorage.getItem("token");
 
     if (TOKEN) {
-      config.headers = { Authorization: `Bearer ${TOKEN}`, 'Access-Control-Allow-Origin' : 'https://ibusiness-git-main-moryno.vercel.app' };
+      config.headers = {
+        Authorization: `Bearer ${TOKEN}`,
+        "Access-Control-Allow-Origin":
+          "https://ibusiness-git-main-moryno.vercel.app",
+      };
     }
 
     return config;

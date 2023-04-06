@@ -1,70 +1,102 @@
 # iBussiness Design
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## By Maurice Nganga
+## By James Maina
+## By Joseph Mwita
+
+
+
+![Medicine](./src/assests/medication-land.png)
+
+## Table of Content
+
+- [Description](#description)
+- [Features](#features)
+- [Development](#development)
+- [Live Link](#live-link)
+- [Setup Instructions and Technology](#technology-used)
+- [License](#license)
+
+
+
+### Technology Used
+
+---
+
+- **React** - help in creating interactive website
+
+- **DevExtreme** - framework was used to add basic tables and data tables in the admin dashboard to display the products, users and orders. As well as adding icons in the website.
+
+- **Redux** - to help persist a logged in user and modules across all pages in the website and enable them with accessibility privilages.
+
+- **SQL Server** - 
+
+## Instructions
+
+### To have the admin privileges then you have to do the following.
+
+- If you are in the landing page and you are logged in the click on the signin buttton and that will take you to the login page.
+- If you are already signed in as a different user then signout the click on the signin button.
+- Enter **admin** as username and **123456** as the password and this will take you to the landing page.
+- You'll see a button labeled dashboard which you can click and this will send you to the admin dashboard.
+- While here you'll have access to the sidebar where you can view users and products.
+- Click on products and this will take you to a page with all the products filtered in 5 per page.
+- If you click on the **View** button on any product this will take you to a single page where you see more details about the product. It also provides you with a form where you can update the product.
+- In the procucts page at the top right corner there is a **Add New** button that will take you to a new page where you can create a new product.
+- Also in the products page you can delete a product by clicking the **Delete** button.
+- Clicking in the logo will take you back to the landing page.
+
+### To have the user privileges then you have to do the following.
+
+- In the landing page click the signin button at the navbar or the signup button in the filter component section.
+- This will take you to **register** page where you can enter your details.
+- After successfully login then you can click the profile avatar at navbar and this will take you to **settings** page where you can enter your profile details including image, address and phone number.
+- A user has privilege to leave a review in single product.
+
+## Development
+
+---
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### USING NPM
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`npm install`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+`npm run start`
 
-### `npm test`
+`npm run build`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Live Link
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+\- Click this link to see the live website [iBusiness](https://ibusiness-git-main-moryno.vercel.app/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## License
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+MIT License
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Copyright (c) [2023] [Maurice Nganga]
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
