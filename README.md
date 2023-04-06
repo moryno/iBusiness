@@ -4,18 +4,45 @@
 ## By James Maina
 ## By Joseph Mwita
 
-
-
-![Medicine](./src/assests/medication-land.png)
+![iBusiness](./src/assets/ibusiness.png)
 
 ## Table of Content
 
-- [Description](#description)
-- [Features](#features)
+
 - [Development](#development)
+- [Instructions](#instructions)
 - [Live Link](#live-link)
 - [Setup Instructions and Technology](#technology-used)
 - [License](#license)
+
+## Development
+
+
+### Available Scripts
+
+In the project directory, you can run:
+
+#### USING NPM
+
+`npm install`
+
+`npm run start`
+
+`npm run build`
+
+## Instructions
+
+### To have the admin privileges then you have to do the following.
+
+- If you are in the landing page  click on the signin buttton and that will take you to the login page.
+
+- Click on Login with Microsoft and this will redirect you to login in with from microsoft platform.
+
+- On successful login you'll find yourself in the dashboard where all the bookings will be loaded in the grid.
+
+- Here you can create new booking and update a booking and also edit the data on the datagrid. Right cliking on a row on the grid will display contect menu where you can chose commands to purform.
+
+- On the sidebar under Proccess Menu the 'Purchase Order' menu will redirect you to the orderpage.
 
 
 
@@ -25,49 +52,13 @@
 
 - **React** - help in creating interactive website
 
-- **DevExtreme** - framework was used to add basic tables and data tables in the admin dashboard to display the products, users and orders. As well as adding icons in the website.
+- **DevExtreme** - component was used to add basic tables and data grids in the dashboard to display the bookings, order items  and purchase orders. As well as adding form controls in the website.
 
 - **Redux** - to help persist a logged in user and modules across all pages in the website and enable them with accessibility privilages.
 
 - **SQL Server** - 
 
-## Instructions
 
-### To have the admin privileges then you have to do the following.
-
-- If you are in the landing page and you are logged in the click on the signin buttton and that will take you to the login page.
-- If you are already signed in as a different user then signout the click on the signin button.
-- Enter **admin** as username and **123456** as the password and this will take you to the landing page.
-- You'll see a button labeled dashboard which you can click and this will send you to the admin dashboard.
-- While here you'll have access to the sidebar where you can view users and products.
-- Click on products and this will take you to a page with all the products filtered in 5 per page.
-- If you click on the **View** button on any product this will take you to a single page where you see more details about the product. It also provides you with a form where you can update the product.
-- In the procucts page at the top right corner there is a **Add New** button that will take you to a new page where you can create a new product.
-- Also in the products page you can delete a product by clicking the **Delete** button.
-- Clicking in the logo will take you back to the landing page.
-
-### To have the user privileges then you have to do the following.
-
-- In the landing page click the signin button at the navbar or the signup button in the filter component section.
-- This will take you to **register** page where you can enter your details.
-- After successfully login then you can click the profile avatar at navbar and this will take you to **settings** page where you can enter your profile details including image, address and phone number.
-- A user has privilege to leave a review in single product.
-
-## Development
-
----
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### USING NPM
-
-`npm install`
-
-`npm run start`
-
-`npm run build`
 
 ### Live Link
 
