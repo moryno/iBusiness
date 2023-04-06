@@ -67,15 +67,13 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
       setSelectedOption(null);
       setQuantity();
       selectboxRef.current.instance.focus();
-      console.log(itemtoadd);
 
       if (orderstate === 0) {
         try {
-          const response = await request.post(
+          await request.post(
             "PurchaseOrder/insertorderitems",
             itemtoadd.data()
           );
-          console.log(response);
         } catch (e) {
           const itemtoremove = data
             .store()
@@ -102,7 +100,6 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
         currentUser?.email
       );
 
-      console.log("Item to add");
       data.store().remove(itemtoupdate);
       data.store().insert(itemtoadd.data());
       data.reload();
@@ -115,11 +112,10 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
       if (orderstate === 0) {
         try {
           if (orderstate === 0) {
-            const response = await request.put(
+              await request.put(
               "PurchaseOrder/updateorderitem",
               itemtoadd.data()
             );
-            console.log(response);
           }
         } catch (e) {
           const itemtoremove = data

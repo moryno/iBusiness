@@ -23,8 +23,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   const [updateData, setUpdateData] = useState({
     formData: "",
     tableData: ""
-  })
-  const [james, setJames] = useState(0);
+  }) 
   const [initialRender, setInitialRender] = useState(true);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formUpdateData, setFormUpdateData] = useState([]);
@@ -47,23 +46,17 @@ export const PurchaseOrder = ({ orderstate }) => {
           response.data.orderItems.map((item) => {
             return data.store().insert(item);
           });
-          // console.log(response.data.orderInformation);
-
           if (response.data.orderInformation.length === 0){
             setInitialRender(false);
             setLoading(false);
-            console.log("Form is empty.")
           } else {
             setFormUpdateData(response.data.orderInformation[0]);
           }
           data.reload();
-          // if (typeof response.data.orderInformation[0] !== "undefined"){
-          //   setFormUpdateData(response.data.orderInformation[0]);
-          // }
+
 
         } catch (e) {
           console.log(e);
-          // getData();
         }
       }
       getData();
@@ -79,7 +72,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           setFormUpdateData(response.data.formInfo);
           setUpdateData({...updateData, "formData": response.data.formInfo})
           setOrder(response.data.formInfo.orderNumber)
-          console.log(updateData)
+
         } catch (e) {
           console.log(e);
         }
@@ -112,11 +105,11 @@ export const PurchaseOrder = ({ orderstate }) => {
         const user = {
           userid: currentUser?.email,
         };
-        const { data } = await request.post(
+        await request.post(
           "/PurchaseOrder/createpurchaseorder",
           user
         );
-        console.log(data);
+
         setMessage("Order submitted successfully.");
         setLoading(false)
 
@@ -140,25 +133,6 @@ export const PurchaseOrder = ({ orderstate }) => {
       
     }
   };
-
-
-    // const updateOrder = async() => {
-    //   if (orderstate === 1){
-    //     const dataToUpdate = {
-    //       "formData" : updateData.formData,
-    //       "tableData" : updateData.tableData,
-    //       "orderid" : formUpdateData.orderNumber
-    //     }
-    //     try {
-    //       await request.put("/PurchaseOrder/updateorder", updateData);
-
-    //     }
-    //     catch(e) {
-    //       console.log(e);
-    //     }
-    //   }
-
-    // }
 
   
 

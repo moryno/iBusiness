@@ -40,16 +40,10 @@ const Orders = () => {
     const getData = async () => {
       try {
         const response = await request.get("PurchaseOrder/orders");
-        // response.data.map(order => {
-        //   console.log(order);
-        //   return data.store().insert(order);
-
-        // })
-        console.log(response.data);
         setData(response.data);
         loadingRef.current = false;
       } catch (error) {
-        console.log(error);
+        console.log(error)
         getData();
       }
     };
@@ -72,24 +66,11 @@ const Orders = () => {
     } 
   }, [onRowDblClickBookingId]);
 
-  // // This Hook is to fetch single booking when a row in the datagrid is double clicked
-  // useEffect(() => {
-  //   const getSingleBooking = async () => {
-  //     const { data } = await request.get(
-  //       `Booking?bookingID=${selectedBookingId}`
-  //     );
-  //     setSingleBooking(data);
-  //   };
-  //   if (selectedBookingId) getSingleBooking();
-  // }, [selectedBookingId]);
 
   // This fucntion is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
-        // input === null && date === ""
-        //   ? setDate({ startdate: today, enddate: today })
-        //   : setDate(input);
         break;
       case "New":
         navigate("/dashboard/purchase-order");

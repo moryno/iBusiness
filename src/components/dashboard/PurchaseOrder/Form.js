@@ -78,8 +78,6 @@ const Form = ({
       return;
     } else if (orderstate === 1) {
       setUpdateData({ ...updateData, formData: data });
-      console.log("Update data");
-      console.log(updateData);
       return;
     }
     updateToCosmos(data);
@@ -98,7 +96,6 @@ const Form = ({
   const updateToCosmos = async (data) => {
     try {
       await request.put("/PurchaseOrder/updateorderinfo", data);
-      console.log("Updated");
     } catch (e) {
       console.log(e);
     }
