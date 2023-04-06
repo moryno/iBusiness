@@ -61,7 +61,6 @@ export const Table = ({
       rowIndex.cancel = true;
       return data.reload();
     }
-    console.log(rowIndex.data);
     const item = items.find((x) => x.name === rowIndex.data.item);
     const itemtoupdate = data.store()._array.find((x) => x.item === item.name);
 
@@ -87,17 +86,12 @@ export const Table = ({
 
       if (orderstate === 0) {
         try {
-          const response = await request.post(
+          await request.post(
             "PurchaseOrder/insertorderitems",
             rowIndex.data
           );
-          console.log(response);
         } catch (e) {
           console.log(e);
-          // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-          // data.store().remove(itemtoremove);
-          // data.reload();
-          // console.log(e);
         }
       }
     } else {
@@ -129,10 +123,6 @@ export const Table = ({
           );
         } catch (e) {
           console.log(e);
-          // const itemtoremove = data.store()._array.find((x) => x.item === item.name);
-          // data.store().remove(itemtoremove);
-          // data.reload();
-          // console.log(e);
         }
       }
       return gridRef.current.instance.focus();
@@ -159,7 +149,6 @@ export const Table = ({
       );
       rowIndex.component.saveEditData();
       data.reload();
-      console.log(rowIndex.newData);
       setMessage(`${rowIndex.oldData.item} has been updated.`);
     } else if (typeof rowIndex.newData.discountAmount !== "undefined") {
       let discountAmount = parseInt(rowIndex.newData.discountAmount);
@@ -184,18 +173,13 @@ export const Table = ({
 
     if (orderstate === 0) {
       try {
-        console.log(rowIndex.newData);
-        const response = await request.put(
+
+        await request.put(
           "PurchaseOrder/updateorderitem",
           rowIndex.newData
         );
-        console.log(response);
       } catch (e) {
         console.log(e);
-        // data.store().remove(rowIndex.key);
-        // data.store().insert(rowIndex.data);
-        // data.reload();
-        // console.log(e);
       }
     } else {
       setUpdateData({ ...updateData, tableData: data.store()._array });
@@ -205,16 +189,14 @@ export const Table = ({
   // End of function
 
   const handleRowRemoving = async (e) => {
-    console.log(e.data);
     e.cancel = !window.confirm(confirmDeleteMessage(e.data));
     if (orderstate === 0) {
       if (!e.cancel) {
         try {
-          const response = await request.delete(
+          await request.delete(
             "PurchaseOrder/removeorderitem",
             { data: e.data }
           );
-          console.log(response);
         } catch (ex) {
           console.log(ex);
           data.store().insert(e.data);
@@ -225,7 +207,7 @@ export const Table = ({
     } else {
       if (!e.cancel) {
         try {
-          const response = await request.delete(
+          await request.delete(
             "PurchaseOrder/deleteorderitem",
             {
               data: {
@@ -234,7 +216,6 @@ export const Table = ({
               },
             }
           );
-          console.log(response);
         } catch (ex) {
           console.log(ex);
           data.store().insert(e.data);
@@ -271,14 +252,6 @@ export const Table = ({
     }
   };
 
-  const handleRowUpdating = (e) => {
-    console.log(e);
-    if (e.oldData.discountAmount === e.newData.discountAmount) {
-      console.log("Same");
-    } else {
-      console.log("Updating");
-    }
-  };
 
   return (
     <DataGrid
