@@ -42,8 +42,14 @@ In the project directory, you can run:
 
 - Here you can create new booking and update a booking and also edit the data on the datagrid. Right cliking on a row on the grid will display contect menu where you can chose commands to purform.
 
-- On the sidebar under Proccess Menu the 'Purchase Order' menu will redirect you to the orderpage.
+- On the sidebar under Proccess Menu the 'Purchase Order' menu will redirect you to the Orders page.
 
+- On the orders page, you can double click on an order to redirect you to the purchase order's editing page. Also while on the orders page
+the user can click on the 'New' button on top of the table to create a purchase order.
+
+- The purchase order entry page persists data incase the user exits the page unexpectedly, perhaps he/she logged out or the device went offline, the user will still access the order information inputed before submission even on another device. This feature is complemented by the use of Azure CosmosDB.
+
+- On completion of entering the order information, the user can click 'Submit Order' to submit the order, or click 'Close' to go back to the orders page.
 
 
 ### Technology Used
@@ -56,7 +62,12 @@ In the project directory, you can run:
 
 - **Redux** - to help persist a logged in user and modules across all pages in the website and enable them with accessibility privilages.
 
-- **SQL Server** - 
+- **Azure SQL Server** - We used Azure SQL Server as the database.
+
+- **Azure CosmosDB** - Azure CosmosDB is used to store temporary purchase order form data and also to fetch menus from the web.
+
+- **.NET Core** - This is used as the API for the app.
+
 
 
 
