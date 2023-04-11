@@ -82,7 +82,7 @@ export const Navbar = () => {
           </Link>
           <Link to={data.actionbutton.to} id="br-link">
             {" "}
-            <button className="nav-styled-button">
+            <button disabled className="nav-styled-button">
               {data.actionbutton.value}
             </button>
           </Link>

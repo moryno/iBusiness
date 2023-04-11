@@ -75,8 +75,8 @@ const Home = () => {
   }, [onRowDblClickBookingId]);
 
   // Function to open ConfirmationPopupComponent
-  const openConfirmationPopup = async () => {
-    if (onRowClickItem === null) {
+  const openConfirmationPopup = async (rowItem) => {
+    if (rowItem === null) {
       toast.warning("Please select a booking to delete");
     } else {
       setStatusMode("DeleteMode");
@@ -97,7 +97,7 @@ const Home = () => {
         setOpen((isOpen) => !isOpen);
         break;
       case "Delete":
-        openConfirmationPopup();
+        openConfirmationPopup(onRowClickItem);
         break;
       case "Close":
         console.log("Close was clicked");
@@ -135,8 +135,7 @@ const Home = () => {
                   </label>
 
                   <DateBox
-                    id="courseDate"
-                    name="courseDate"
+                    id="fromDate"
                     onValueChanged={(e) => setFromDate(e.value)}
                     value={fromDate}
                     height={26}
@@ -152,8 +151,7 @@ const Home = () => {
                     To Date:
                   </label>
                   <DateBox
-                    id="courseDate"
-                    name="courseDate"
+                    id="toDate"
                     onValueChanged={(e) => setToDate(e.value)}
                     value={toDate}
                     height={26}
