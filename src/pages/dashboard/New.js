@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
@@ -14,10 +14,12 @@ import Validator, {
   PatternRule,
   EmailRule,
 } from "devextreme-react/validator";
+import ValidationSummary from "devextreme-react/validation-summary";
 
 import services from "../../helpers/formDataSource";
 import webService from "../../utils/webService";
 import LoadingIndicator from "../../components/features/LoadingIndicator";
+import { Button, ValidationGroup } from "devextreme-react";
 
 const New = ({
   handleClose,
@@ -100,6 +102,10 @@ const New = ({
 
   // Get our current user using redux to update booking when creating or updating
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const nameRef = useRef(null);
+  const handleCheck = () => {
+    // console.log(nameRef.current.instance.validate().isValid);
+  };
 
   // A function to save the booking details to the backend then populate the datagrid
   const save = async () => {
@@ -221,7 +227,7 @@ const New = ({
           </p>
         </article>
         <article className="h-full px-2 md:border md: overflow-y-auto">
-          <div>
+          <div ref={nameRef}>
             <form className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
               <section className="flex flex-col md:flex-row w-full gap-2">
                 <article className="w-full flex flex-wrap box-border justify-between  gap-2">
@@ -602,13 +608,14 @@ const New = ({
           </div>
         </article>
       </section>
-      <section className="sticky   inset-x-0 bottom-0 ">
+      <section className="sticky  inset-x-0 bottom-0 ">
         <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">
-          <button
-            type="submit"
-            onClick={save}
-            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
+          <Button
+            onClick={handleCheck}
+            id="submitButton"
+            useSubmitBehavior={true}
           >
+            {" "}
             <FcAddDatabase fontSize={20} />
             {loading ? (
               <LoadingIndicator />
@@ -617,7 +624,7 @@ const New = ({
             ) : (
               "Update"
             )}
-          </button>
+          </Button>
           <button
             onClick={handleClose}
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"

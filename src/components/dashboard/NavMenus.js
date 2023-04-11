@@ -38,7 +38,7 @@ const NavMenus = () => {
                   <article className="bg-bg h-16"></article>
                   <article className="rounded-full overflow-hidden  w-20 h-20 flex items-center justify-center cursor-pointer absolute top-6 right-0 left-0 m-auto">
                     <img
-                      className="w-full object-cover"
+                      className="w-full h-full object-cover"
                       src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
                       alt="profile"
                     />
