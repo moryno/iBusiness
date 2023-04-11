@@ -129,7 +129,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     } catch (e) {
       console.log(e);
       setLoading(false)
-      return setMessage("There was an error trying to submit your request.");
+      return setMessage(e.response.data['error']);
       
     }
   };
@@ -170,6 +170,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           setLoading={setLoading}
           setUpdateData={setUpdateData}
           updateData={updateData}
+          setMessage={setMessage}
         />
       </div>
       <section className="mt-2">

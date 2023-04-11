@@ -31,6 +31,7 @@ const Form = ({
   initialRender,
   setInitialRender,
   orderstate,
+  setMessage
 }) => {
   const [costCenter, setCostCenter] = useState();
   const [supplier, setSupplier] = useState();
@@ -94,11 +95,14 @@ const Form = ({
   ]);
 
   const updateToCosmos = async (data) => {
+    setMessage('Updating...');
     try {
       await request.put("/PurchaseOrder/updateorderinfo", data);
     } catch (e) {
       console.log(e);
+      setMessage('Network problem')
     }
+    setMessage();
   };
 
   return (

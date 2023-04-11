@@ -13,7 +13,7 @@ import request from "../../../helpers/tempRequest";
 
 // Input section component
 
-export const InputField = ({ count, data, setMessage, order, orderstate }) => {
+export const InputField = ({ data, setMessage, order, orderstate }) => {
   const [quantity, setQuantity] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const numberBoxRef = useRef(null);
@@ -103,7 +103,6 @@ export const InputField = ({ count, data, setMessage, order, orderstate }) => {
       data.store().remove(itemtoupdate);
       data.store().insert(itemtoadd.data());
       data.reload();
-      count.current++;
       setMessage(`${item.name} has been added successfully.`);
       setSelectedOption(null);
       setQuantity();

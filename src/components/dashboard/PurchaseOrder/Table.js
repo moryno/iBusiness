@@ -14,7 +14,6 @@ import dataitem from "../../../utils/Order";
 import { getDataGridRef } from "../../../helpers/datagridFunctions";
 import { useSelector } from "react-redux";
 import request from "../../../helpers/tempRequest";
-import ConfirmMessage from "./ConfirmMessage";
 
 // Table component
 
