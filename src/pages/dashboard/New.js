@@ -102,13 +102,10 @@ const New = ({
 
   // Get our current user using redux to update booking when creating or updating
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
-  const nameRef = useRef(null);
-  const handleCheck = () => {
-    // console.log(nameRef.current.instance.validate().isValid);
-  };
 
   // A function to save the booking details to the backend then populate the datagrid
-  const save = async () => {
+  const submitForm = async (e) => {
+    e.preventDefault();
     setLoading(true);
     // Create Booking information
     const formData = {
@@ -226,9 +223,12 @@ const New = ({
             save.
           </p>
         </article>
-        <article className="h-full px-2 md:border md: overflow-y-auto">
-          <div ref={nameRef}>
-            <form className="flex w-full mt-1 py-4 md:py-3  items-stretch rounded-sm flex-wrap justify-between gap-2">
+        <article className="h-full px-2 md:border md:overflow-y-auto">
+          <div>
+            <form
+              onSubmit={submitForm}
+              className="flex w-full mt-1 py-1  items-stretch rounded-sm flex-wrap justify-between gap-2"
+            >
               <section className="flex flex-col md:flex-row w-full gap-2">
                 <article className="w-full flex flex-wrap box-border justify-between  gap-2">
                   <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
@@ -604,35 +604,27 @@ const New = ({
                   />
                 </div>
               </section>
+              <section className="w-full sticky inset-x-0 bottom-0 ">
+                <article className="flex bg-white px-2 pt-1 justify-center items-center gap-4">
+                  <Button id="submitButton" useSubmitBehavior={true}>
+                    {" "}
+                    <FcAddDatabase fontSize={20} />
+                    {statusMode === "CreateMode" ? "Save" : "Update"}
+                  </Button>
+                  <button
+                    onClick={handleClose}
+                    className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
+                  >
+                    <ImUndo2 fontSize={18} />
+                    Cancel
+                  </button>
+                </article>
+              </section>
             </form>
           </div>
         </article>
       </section>
       <section className="sticky  inset-x-0 bottom-0 ">
-        <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">
-          <Button
-            onClick={handleCheck}
-            id="submitButton"
-            useSubmitBehavior={true}
-          >
-            {" "}
-            <FcAddDatabase fontSize={20} />
-            {loading ? (
-              <LoadingIndicator />
-            ) : statusMode === "CreateMode" ? (
-              "Save"
-            ) : (
-              "Update"
-            )}
-          </Button>
-          <button
-            onClick={handleClose}
-            className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
-          >
-            <ImUndo2 fontSize={18} />
-            Cancel
-          </button>
-        </article>
         <article className="flex bg-formTitle text-formHeadingColor py-1 px:2 md:px-5 w-full">
           <p className="text-xs opacity-90">{statusBarText}</p>
         </article>
