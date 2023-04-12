@@ -95,7 +95,7 @@ const Form = ({
   ]);
 
   const updateToCosmos = async (data) => {
-    setMessage('Updating...');
+    setMessage('Saving...');
     try {
       await request.put("/PurchaseOrder/updateorderinfo", data);
     } catch (e) {
