@@ -44,7 +44,6 @@ const Orders = () => {
         loadingRef.current = false;
       } catch (error) {
         console.log(error)
-        getData();
       }
     };
 
