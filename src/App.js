@@ -14,6 +14,7 @@ import "./assets/styles.css";
 import { LandingPage } from "./pages/landing-page/LandingPage";
 import { SignUp } from "./pages/landing-page/GetStarted";
 import { SignIn } from "./pages/landing-page/SignIn";
+import { ReportViewer } from "./pages/dashboard/reports/ReportViewer";
 
 function App() {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -61,6 +62,10 @@ function App() {
         {
           path: "/dashboard/orders",
           element: <Orders />,
+        },
+        {
+          path: "/dashboard/report",
+          element: <ReportViewer />,
         },
         {
           path: "/dashboard/updateorder/:id",

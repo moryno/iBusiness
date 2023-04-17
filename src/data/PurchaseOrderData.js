@@ -84,6 +84,23 @@ export const summary = {
 
 // End of definition
 
+// Describes the format for DevExtreme to create a summary of the table
+export const reportSummary = {
+  totalItems: [
+    {
+      column: "Order Amount",
+      summaryType: "sum",
+      valueFormat: {
+        type: "fixedPoint",
+        precision: 2,
+        currency: "KES",
+        useGrouping: true,
+      },
+      displayFormat: "{0}",
+    }
+  ],
+};
+
 // Sample center options
 
 export const centerOptions = [
@@ -132,6 +149,24 @@ export const orderColumns = [
   { dataField: "deliveryPeriod", alignment:'left' },
   { dataField: "firstDeliveryDate" },
   { dataField: "vehicleDetails", alignment:'left' }
+
+];
+
+//
+
+// Defines columns used by orders grid
+
+export const reportColumns = [
+  { dataField: "orderNumber", alignment:'left' },
+  { dataField: "orderDate" },
+  { dataField: "deliveryPeriod", alignment:'left' },
+  { dataField: "vehicleDetails", alignment:'left' },
+  { dataField: "orderAmount", alignment:'left', format: {
+    type: "fixedPoint",
+    precision: 2,
+    currency: "KES",
+    useGrouping: true,
+  } }
 
 ];
 
