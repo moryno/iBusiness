@@ -3,6 +3,7 @@ import { GetStarted } from "../../components/frontend/landing-page/getstarted/Ge
 import { Navbar } from "../../components/frontend/navbar/Navbar";
 import { Copyright } from "../../components/frontend/copyright/Copyright";
 
+
 export const SignUp = () => {
   return (
     <>

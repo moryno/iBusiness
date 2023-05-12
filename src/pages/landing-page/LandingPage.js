@@ -5,6 +5,7 @@ import { About } from "../../components/frontend//about/About";
 import { Testimonial } from "../../components/frontend/testimonial/Testimonial";
 import { Footer } from "../../components/frontend/footer/Footer";
 import { Navbar } from "../../components/frontend/navbar/Navbar";
+import { Copyright } from "../../components/frontend/copyright/Copyright";
 
 export const LandingPage = () => {
   return (
@@ -15,6 +16,7 @@ export const LandingPage = () => {
       <About />
       <Testimonial />
       <Footer />
+      <Copyright />
     </>
   );
 };
