@@ -5,10 +5,10 @@ import { Navbar } from "../../components/frontend/navbar/Navbar";
 
 export const Support = () => {
   return (
-    <>
+    <div className="s-form-parent">
       <Navbar />
       <SupportForm />
       <Footer />
-    </>
+    </div>
   );
 };
