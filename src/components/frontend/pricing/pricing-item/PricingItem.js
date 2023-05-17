@@ -37,7 +37,7 @@ const PricingItem = ({ pricing }) => {
             ))}
           </ul>
           <button className="w-full my-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
-            Sign Up
+            {pricing?.button}
           </button>
         </article>
       </section>
