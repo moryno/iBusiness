@@ -42,7 +42,7 @@ function App() {
       element: <SignUp />,
     },
     {
-      path: "/products",
+      path: "/pricing",
       element: <ProductsView />,
     },
     {

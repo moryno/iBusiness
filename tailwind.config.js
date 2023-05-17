@@ -11,6 +11,7 @@ module.exports = {
         light: "#eeedec",
         bgxLight: "#E3EFFF",
         button: "#0D6EFD",
+        buttonBg: "#1B6EC2",
         bgxxLight: "#f3f3f3",
         section: "#F1F1F4",
         sidebarHeading: "#489AEE",
@@ -31,6 +32,7 @@ module.exports = {
       },
       colors: {
         text: "#556b86",
+        headingBlue: "#0088ff",
         blueLight: "#0096FF",
         darkBlue: "#0176d3",
         gn: "#27AE60",
@@ -47,6 +49,9 @@ module.exports = {
         col: "#006FC9",
         formHeadingColor: "#ffffff",
         dropDown: "#282828",
+      },
+      boxShadow: {
+        "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
       },
       fontSize: {},
       height: {},
