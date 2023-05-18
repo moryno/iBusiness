@@ -49,11 +49,11 @@ const Home = () => {
 
   useEffect(() => {
     try {
-      const { data } = axios.get('https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/user-info');
-      console.log(data);
+      const response = axios.get('https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/user-info');
+      console.log(response);
 
-    } catch {
-
+    } catch(e) {
+      console.log(e)
     }
   }, [])
 
