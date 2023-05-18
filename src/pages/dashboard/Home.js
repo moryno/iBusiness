@@ -12,6 +12,7 @@ import { bookingColumns } from "../../data/PurchaseOrderData";
 import webService from "../../utils/webService";
 import { bookingFilterValues } from "../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
+import axios from "axios";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -27,6 +28,7 @@ const Home = () => {
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userInfo, setuserInfo] = useState(null);
 
   // Fuction to close the Create || update form
   const handleClose = () => {
@@ -44,6 +46,16 @@ const Home = () => {
       setRowDblClickBookingId(null);
     }
   };
+
+  useEffect(() => {
+    try {
+      const { data } = axios.get('');
+      console.log("hello");
+
+    } catch {
+
+    }
+  }, [])
 
   // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {
