@@ -74,12 +74,12 @@ export const Navbar = () => {
           ))}
         </div>
         <div className="brand-links">
-          <Link to={data.signuptext.to}>
+          <a href={data.signuptext.to}>
             <button className="nav-button">
               <FontAwesomeIcon icon={faUser} />
               &nbsp; {data.signuptext.value}
             </button>
-          </Link>
+          </a>
           <Link to={data.actionbutton.to} id="br-link">
             {" "}
             <button disabled className="nav-styled-button">

@@ -63,8 +63,8 @@ export default { Request };
 export const sideMenuRequest =
   "https://modulemenus.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
 
-export const msSingleSign =
-  "https://ibusinessaccountservice.azurewebsites.net/login/Loginwithmicrosoft";
+export const msSingleSign = "https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn"
+  // "https://ibusinessaccountservice.azurewebsites.net/login/Loginwithmicrosoft";
 // "https://login.microsoftonline.com/429eb2c8-ad5d-4e03-b326-a26d27a067f7/oauth2/authorize?client_id=fd6d9002-4eb4-4b56-b3a4-29f9cf05141f&response_type=token&redirect_uri=http://localhost:3000/login&resource=fd6d9002-4eb4-4b56-b3a4-29f9cf05141f&scope=openid&response_mode=fragment&state=12345&nonce=678910";
 
 // URL to our homepage
