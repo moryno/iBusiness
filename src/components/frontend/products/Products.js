@@ -20,6 +20,9 @@ export const Products = () => {
 
   let slides = chunks.length * 100;
 
+  console.log(slides);
+  console.log(chunks.length);
+
   const handleCarouselRight = () => {
     console.log(carousel);
     console.log(slides);

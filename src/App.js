@@ -14,6 +14,9 @@ import "./assets/styles.css";
 import { LandingPage } from "./pages/landing-page/LandingPage";
 import { SignUp } from "./pages/landing-page/GetStarted";
 import { SignIn } from "./pages/landing-page/SignIn";
+import { Company } from "./pages/landing-page/Company";
+import { ProductsView } from "./pages/landing-page/ProductsView";
+import { Support } from "./pages/landing-page/Support";
 
 function App() {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -37,6 +40,18 @@ function App() {
     {
       path: "/get-started",
       element: <SignUp />,
+    },
+    {
+      path: "/pricing",
+      element: <ProductsView />,
+    },
+    {
+      path: "/company",
+      element: <Company />,
+    },
+    {
+      path: "/support",
+      element: <Support />,
     },
     {
       path: "/",
