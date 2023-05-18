@@ -20,7 +20,7 @@ const Feature = () => {
               key={item.key}
               className="w-full px-5 box-border md:w-1/2 mt-4"
             >
-              <div className="flex p-3 gap-5 xl:h-28 bg-white rounded-md shadow-2xl">
+              <div className="flex p-3 gap-5  bg-white rounded-md shadow-2xl">
                 <LazyLoadImage
                   src={item.icon}
                   className="w-12 h-12"
