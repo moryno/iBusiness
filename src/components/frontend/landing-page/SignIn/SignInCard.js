@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./signin.css";
 
 import data from "../../../../data/pages/signin";
-import { setupLogin } from "../../../../helpers/auth";
+import { setUpToken } from "../../../../helpers/auth";
 import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
 import { msSingleSign } from "../../../../utils/webService";
@@ -51,7 +51,7 @@ export const Card = () => {
 
         // A check to see if user is registered
         if (data?.registered) {
-          setupLogin(data?.token);
+          setUpToken(data?.token);
           dispatch(loginSuccess(data));
           setLoading(false);
           navigate("/dashboard");

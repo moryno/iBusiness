@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import data from "../../../../data/pages/getstarted";
-import { setupLogin } from "../../../../helpers/auth";
+import { setUpToken } from "../../../../helpers/auth";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../redux/userSlice";
 import { msSingleSign } from "../../../../utils/webService";
@@ -52,7 +52,7 @@ export const GetStarted = () => {
       const { data } = await axios.post(msSingleSign, inputs, config);
       setLoading(false);
       toast.success("Registered successfully");
-      setupLogin(data?.token);
+      setUpToken(data?.token);
       // Set the user state to redux/ userSlice
       dispatch(loginSuccess(data));
       // navigate to dashboard on successful login
