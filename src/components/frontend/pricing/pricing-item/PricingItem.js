@@ -9,13 +9,13 @@ const PricingItem = ({ pricing }) => {
           <h4 className="font-semibold capitalize text-gray-400 text-center text-xl m-3">
             {pricing.title}
           </h4>
-          <h6 className="text-center text-2xl md:text-4xl font-bold">
+          <h6 className="text-center text-2xl md:text-4xl xl:text-5xl font-bold">
             {pricing.currency}
             {pricing.price}
             <span className="font-medium text-sm">/{pricing.period}</span>
           </h6>
           <hr className="h-[1px] text-gray-200 my-5" />
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-4">
             {pricing?.items.map((item) => (
               <li key={item?.id} className="flex gap-1 items-center">
                 {item?.check === true ? (
@@ -36,7 +36,7 @@ const PricingItem = ({ pricing }) => {
               </li>
             ))}
           </ul>
-          <button className="w-full my-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
+          <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
             {pricing?.button}
           </button>
         </article>
