@@ -48,17 +48,21 @@ const Home = () => {
   };
 
   useEffect(() => {
-    try {
-      const api = axios.create({
-        baseURL: 'https://saas-app-asdk-ecdf-a6tx.azurewebsites.net', // Replace with your API's base URL
-        withCredentials: true, // Include credentials in the request
-      });
-      const response = api.get('/user-info');
-      console.log(response);
+    const fetchUserInfo = async() => {
+      try {
+        const api = axios.create({
+          baseURL: 'https://saas-app-asdk-ecdf-a6tx.azurewebsites.net', // Replace with your API's base URL
+          withCredentials: true, // Include credentials in the request
+        });
+        const response = await api.get('/user-info');
+        console.log(response);
 
-    } catch(e) {
-      console.log(e)
+      } catch(e) {
+        console.log(e)
+      }
     }
+
+    fetchUserInfo();
   }, [])
 
   // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
