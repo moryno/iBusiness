@@ -19,13 +19,13 @@ import { ProductsView } from "./pages/landing-page/ProductsView";
 import { Support } from "./pages/landing-page/Support";
 
 function App() {
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  // const currentUser = useSelector((state) => state.user?.currentUser?.user);
   console.log(useSelector((state) => state.user));
 
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to="/" />;
-    }
+    // if (!currentUser) {
+    //   return <Navigate to="/" />;
+    // }
     return children;
   };
 
