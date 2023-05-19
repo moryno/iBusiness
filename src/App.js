@@ -20,7 +20,7 @@ import { Support } from "./pages/landing-page/Support";
 
 function App() {
   // const currentUser = useSelector((state) => state.user?.currentUser?.user);
-  console.log(useSelector((state) => state.user));
+  console.log(useSelector((state) => state.user?.currentUser));
 
   const ProtectedRoute = ({ children }) => {
     // if (!currentUser) {

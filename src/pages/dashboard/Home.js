@@ -55,7 +55,8 @@ const Home = () => {
   useEffect(() => {
     try {
       const { data } = ErpService.get("/user-info");
-      dispatch(loginSuccess(data.user));
+      console.log(data);
+      dispatch(loginSuccess(data?.user));
     } catch (e) {
       console.log(e);
     }
