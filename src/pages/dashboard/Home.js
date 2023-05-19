@@ -12,7 +12,10 @@ import { bookingColumns } from "../../data/PurchaseOrderData";
 import webService from "../../utils/webService";
 import { bookingFilterValues } from "../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
-import axios from "axios";
+import ErpService from "../../utils/erpService";
+import { setUpToken } from "../../helpers/auth";
+import { loginSuccess } from "../../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -29,6 +32,8 @@ const Home = () => {
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userInfo, setuserInfo] = useState(null);
+
+  const dispatch = useDispatch();
 
   // Fuction to close the Create || update form
   const handleClose = () => {
@@ -49,17 +54,12 @@ const Home = () => {
 
   useEffect(() => {
     try {
-      const api = axios.create({
-        baseURL: 'https://saas-app-asdk-ecdf-a6tx.azurewebsites.net', // Replace with your API's base URL
-        withCredentials: true, // Include credentials in the request
-      });
-      const response = api.get('/user-info');
-      console.log(response);
-
-    } catch(e) {
-      console.log(e)
+      const { data } = ErpService.get("/user-info");
+      dispatch(loginSuccess(data));
+    } catch (e) {
+      console.log(e);
     }
-  }, [])
+  }, []);
 
   // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {

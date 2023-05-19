@@ -3,7 +3,7 @@ export const logoutFunc = () => {
   window.location.href = "/";
 };
 
-export const setupLogin = (token) => {
+export const setUpToken = (token) => {
   localStorage.setItem("token", token);
 };
 
