@@ -9,7 +9,7 @@ const PricingItem = ({ pricing }) => {
           <h4 className="font-semibold capitalize text-gray-400 text-center text-xl m-3">
             {pricing.title}
           </h4>
-          <h6 className="text-center text-2xl md:text-4xl xl:text-5xl font-bold">
+          <h6 className="text-center text-2xl md:text-4xl xxl:text-5xl font-bold">
             {pricing.currency}
             {pricing.price}
             <span className="font-medium text-sm">/{pricing.period}</span>
