@@ -53,14 +53,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    try {
-      const { data } = ErpService.get("/user-info");
-      console.log(data);
-      dispatch(loginSuccess(data?.user));
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
+    // const getUserInfo = async () => {
+    //   try {
+    //     const { data } = await ErpService.get("/user-info");
+    //     dispatch(loginSuccess(data?.user));
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // };
+    // getUserInfo();
+  }, [dispatch]);
 
   // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {
