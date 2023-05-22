@@ -132,7 +132,7 @@
 
 }
 
-.testimony-item i{
+.testimony-item i {
     color: var(--blue);
 }
 
@@ -178,7 +178,6 @@
     }
 
     .t-item-description {
-        color: var(--blue);
         font-size: .6rem;
         font-weight: 700;
     }
