@@ -2,13 +2,11 @@
 
 
 .copyright {
-    color: var(--blue);
+    background-color: var(--bgColor);
     font-size: 0.9rem;
     font-weight: bold;
     height: 2rem; 
-    border-width: 1px;
-    border-color: var(--grey);
-    background-color: var(--cream);
+   color: var(--cream);
     position: sticky;
     bottom: 0;
     z-index: 1;
@@ -17,8 +15,6 @@
     align-items: center;
     padding-left: 2rem;
     padding-right: 2rem;
-    border-top-style: solid;
-    border-color: var(--blue);
 
 }
 
@@ -28,7 +24,7 @@
 }
 
 .copyright-link {
-    color: var(--blue);
+    color: var(--cream);
 
    
 }

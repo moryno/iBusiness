@@ -62,7 +62,7 @@ const Home = () => {
     //   }
     // };
     // getUserInfo();
-  }, [dispatch]);
+  }, []);
 
   // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {

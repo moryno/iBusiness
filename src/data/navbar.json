@@ -15,7 +15,7 @@
                     { "key" : "3", "to" : "/support", "value" : "Support"} 
                  ],
     "actionbutton" : { "to" : "/get-started", "value" : "Get started" },
-    "signuptext" : { "to": "https://saas-app-asdk-test-576y.azurewebsites.net/MicrosoftIdentity/Account/SignIn", "value" : "Sign in" },
+    "signuptext" : { "to": "http://localhost:5066/MicrosoftIdentity/Account/SignIn", "value" : "Sign in" },
     "brand" : "iBusiness"
 }
 
