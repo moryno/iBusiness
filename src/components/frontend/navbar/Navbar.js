@@ -55,13 +55,6 @@ export const Navbar = () => {
       </div>
       <div
         className="navbar"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignContent: "center",
-          paddingTop: "1.2rem",
-        }}
       >
         <div className="brand">
           <Link to="/" className="brand-logo">
@@ -74,10 +67,9 @@ export const Navbar = () => {
           ))}
         </div>
         <div className="brand-links">
-          <FontAwesomeIcon icon={faUser} />
           <a href={data.signuptext.to}>
-            <button className="nav-button">
-              &nbsp; {data.signuptext.value}
+            <button className="nav-signin-button">
+              {data.signuptext.value}
             </button>
           </a>
           <FontAwesomeIcon

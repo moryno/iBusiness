@@ -1,18 +1,15 @@
 /* Navbar Styling */
 .navbar {
-    margin-top: 1rem;
     padding-left: 3rem;
     padding-right: 3rem;
     z-index: 2;
-    height: 1.5rem;
-   
+    height: 75px;   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 
 }
-
-
-
-
-
 
 .brand-links {
     display: flex;
@@ -38,11 +35,11 @@
 
 .brand {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
     width: max-content;
+    height: max-content;
 }
 
 
@@ -58,7 +55,24 @@
     transition: all 0.5s;
     cursor: pointer;
     
-    
+     
+}
+
+.nav-signin-button {
+    background-color: var(--blue);
+    border-style: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 4px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    width: 120px;
+    align-items: center;
+    transition: all 0.5s;
+    cursor: pointer;
+
 }
 
 

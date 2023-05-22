@@ -27,13 +27,16 @@
     flex: 1;
     height: max-content;
     flex-shrink: 1;
+    gap: 1rem;
 
 }
 
 
 .s-header {
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--blue);
 }
 
 .s-subheader {
@@ -56,7 +59,7 @@
     outline: none;
     border-width: 1px;
     border-color: var(--blue);
-    box-shadow: 1.5px 1.5px 1.5px var(--blue);
+
 }
 
 .s-inputs {
@@ -95,7 +98,6 @@
     outline: none;
     border-width: 1px;
     border-color: var(--blue);
-    box-shadow: 1.5px 1.5px 1.5px var(--blue);
 }
 
 .s-textbox {
@@ -107,7 +109,6 @@
     outline: none;
     border-width: 1px;
     border-color: var(--blue);
-    box-shadow: 1.5px 1.5px 1.5px var(--blue);
     resize: none;
 }
 
