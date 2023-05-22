@@ -7,7 +7,7 @@
   --buttonblue: #0088ff;
   --darkblue: #1063b3;
   --grey: #575757;
-  --maroon: #ea0208;
+  --maroon: #0088ff;
   --cream: #f9fcfe;
   --bgColor: #006FC9;
 
@@ -24,7 +24,7 @@
   margin-bottom: 10px;
 }
 
-#submitButton{
+#submitButton {
   display: flex;
   align-items: center;
   font-weight: 500;

@@ -1,12 +1,9 @@
-
-
-
 .copyright {
     background-color: var(--bgColor);
     font-size: 0.9rem;
     font-weight: bold;
     height: 2rem; 
-   color: var(--cream);
+    color: var(--cream);
     position: sticky;
     bottom: 0;
     z-index: 1;
@@ -15,6 +12,7 @@
     align-items: center;
     padding-left: 2rem;
     padding-right: 2rem;
+    opacity: 0.95;
 
 }
 
@@ -23,11 +21,6 @@
     gap: 1rem;
 }
 
-.copyright-link {
-    color: var(--cream);
-
-   
-}
 
 .copyright-link:hover {
     color: var(--maroon);

@@ -4,7 +4,7 @@ import features from "../../../data/products.json";
 
 const Feature = () => {
   return (
-    <main className="py-3 px-8 md:py-8 md:px-20 bg-bg">
+    <main className="py-3 px-8 md:py-8 md:px-20 bg-bgSection">
       <section>
         <article className="text-center">
           <h2 className="text-white text-xl md:text-3xl font-semibold">
