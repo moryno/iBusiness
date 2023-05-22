@@ -55,13 +55,6 @@ export const Navbar = () => {
       </div>
       <div
         className="navbar"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignContent: "center",
-          paddingTop: "1.2rem",
-        }}
       >
         <div className="brand">
           <Link to="/" className="brand-logo">

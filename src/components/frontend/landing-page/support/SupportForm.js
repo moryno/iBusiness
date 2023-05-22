@@ -7,7 +7,7 @@ export const SupportForm = () => {
   return (
     <div className="support-form">
       <div className="s-form">
-        <p className="hero-header s-header">{data.header}</p>
+        <p className="s-header">{data.header}</p>
         <p className="s-subheader">{data.subheader}</p>
 
         <div className="s-inputs">
