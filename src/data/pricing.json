@@ -10,7 +10,7 @@
                 "currency":"Ksh",
                 "period" : "month",
                 "button" : "Sign Up For Free",
-                "link" : "http://localhost:5066/MicrosoftIdentity/Account/SignIn",
+                "link" : "https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn",
                 "items":[
                     {
                         "id": "1",
@@ -36,7 +36,7 @@
                 "currency":"Ksh",
                 "period" : "month",
                 "button" : "Sign Up",
-                "link" : "http://localhost:5066/MicrosoftIdentity/Account/SignIn",
+                "link" : "https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn",
                 "items":[
                     {
                         "id": "1",
@@ -62,7 +62,7 @@
                 "currency":"Ksh",
                 "period" : "month",
                 "button" : "Sign Up",
-                "link" : "http://localhost:5066/MicrosoftIdentity/Account/SignIn",
+                "link" : "https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn",
                 "items":[
                     {
                         "id": "1",
@@ -88,7 +88,7 @@
                 "currency":"Ksh",
                 "period" : "month",
                 "button" : "Sign Up",
-                "link" : "http://localhost:5066/MicrosoftIdentity/Account/SignIn",
+                "link" : "https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn",
                 "items":[
                     {
                         "id": "1",

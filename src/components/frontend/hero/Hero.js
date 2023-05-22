@@ -12,7 +12,7 @@ export const Hero = () => {
       <div className="info">
         <h1 className="landing-header">{data.title}</h1>
         <p className="lander-page-subtitle">{data.subtitle}</p>
-        <form>
+        {/* <form>
           <input
             type="email"
             className="hero-form-control"
@@ -24,7 +24,7 @@ export const Hero = () => {
           <Link to="/get-started" className="hero-landing-btn">
             <Landingbutton value="Sign up" />
           </Link>
-        </form>
+        </form> */}
       </div>
       <div className="hero-image-div">
         <LazyLoadImage
