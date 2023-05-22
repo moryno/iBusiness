@@ -15,3 +15,14 @@ export const login = async (dispatch, user) => {
     logoutFunc();
   }
 };
+
+export const B2CLogin = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5066/MicrosoftIdentity/Account/SignIn"
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
