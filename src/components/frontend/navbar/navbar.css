@@ -131,7 +131,7 @@ button .nav-button{
 }
 
 .nav-signin-button {
-    background-color: var(--blue);
+    background-color: var(--buttonblue);
     border-style: none;
     color: white;
     font-weight: 500;
