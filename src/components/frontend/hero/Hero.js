@@ -25,6 +25,11 @@ export const Hero = () => {
             <Landingbutton value="Sign up" />
           </Link>
         </form> */}
+        <button className="heroGetStarted">
+          <Link to="https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn">
+            Get Started
+          </Link>
+        </button>
       </div>
       <div className="hero-image-div">
         <LazyLoadImage

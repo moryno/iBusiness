@@ -25,6 +25,22 @@
   line-height: normal;
 }
 
+.heroGetStarted{
+  background-color: var(--blue);
+  border-style: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: 4px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  width: 120px;
+  align-items: center;
+  transition: all 0.5s;
+  cursor: pointer;
+
+}
 
 .info {
     display: flex;

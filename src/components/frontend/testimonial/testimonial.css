@@ -21,10 +21,12 @@
     position: absolute;
     font-size: 1.2rem;
     transition: all 0.3s;
+    opacity: 0.8;
 }
 
 .testimony-prev:hover, .testimony-next:hover {
     transform: scale(1.8);
+    opacity: 1;
 }
 
 .testimony-prev {
@@ -40,6 +42,7 @@
     font-weight: 600;
     font-size: 1.8rem;
     letter-spacing: 1px;
+ 
 }
 
 .testimonial-content {
@@ -48,6 +51,7 @@
     color: var(--cream);
     width: 80%;
     font-size: 1.1rem;
+  
 }
 
 .testimony-btn:hover {
@@ -128,19 +132,20 @@
 
 }
 
-.testimony-item i{
+.testimony-item i {
     color: var(--blue);
 }
 
 .t-item-description {
     color: var(--cream);
     font-size: 0.9rem;
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .t-item-name, .t-item-role {
     color: var(--cream);
     font-size: .9rem;
+    opacity: 0.9;
 }
 
 
@@ -173,7 +178,6 @@
     }
 
     .t-item-description {
-        color: var(--blue);
         font-size: .6rem;
         font-weight: 700;
     }
