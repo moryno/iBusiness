@@ -4,7 +4,8 @@
     font-weight: bold;
     height: 2rem; 
     color: var(--cream);
-    position: sticky;
+    position: fixed;
+    width: 100%;
     bottom: 0;
     z-index: 1;
     display: flex;
@@ -30,6 +31,8 @@
 @media screen and (max-width: 767px) {
     .copyright {
         gap: 1rem;
+        font-size: 0.8rem;
+        font-weight: 600;
         
     }
 
