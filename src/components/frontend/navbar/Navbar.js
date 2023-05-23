@@ -18,13 +18,13 @@ export const Navbar = () => {
   const handleToggle = () => {
     if (toggleSidebar === false) {
       setTimeout(() => {
-        document.getElementById("nav-mobile").style.right = "0";
+        document.getElementById("nav-mobile").style.left = "0";
       });
       document.getElementById("nav-mobile").style.display = "";
 
       setToggleNav(true);
     } else {
-      document.getElementById("nav-mobile").style.right = "100vw";
+      document.getElementById("nav-mobile").style.left = "100vw";
       setTimeout(() => {
         document.getElementById("nav-mobile").style.display = "none";
       }, 500);

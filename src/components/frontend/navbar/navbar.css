@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 1rem;
 }
 
 .brandname {
@@ -41,6 +42,16 @@
     height: max-content;
 }
 
+.nav-mobile-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-top: 5rem;
+    width: 100%;
+    gap: .8rem;
+
+
+}
 
 .nav-button {
     background-color: var(--cream);
@@ -120,12 +131,16 @@ button .nav-button{
 }
 
 .nav-mobile {
-    display: none;
-    right: 100vw;
+    left: 100vw;
+    position: absolute;
+    width: 100%;
+    background-color: var(--cream);
+    color: var(--blue);
 }
 
 #burger {
-    display: none;
+    display: block;
+    font-size: 1.4rem;
 }
 
 
@@ -234,8 +249,6 @@ button .nav-button{
 }
 
 .navbar {
-    padding: 30px 3rem;
-    height: 1rem;
     justify-items: center;
     height: 60px;
 
