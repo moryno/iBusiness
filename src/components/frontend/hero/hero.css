@@ -2,8 +2,7 @@
 .hero-content {
   padding-left: 4rem;
   padding-right: 4rem;
-  padding-top: 4rem;
-  height: max-content;
+  height: 400px;
   justify-content: flex-start;
   display: flex;
   align-items: center;
@@ -36,11 +35,12 @@
 
 .hero-image-div {
   flex: 1;
+  height: 400px;
 }
 
 .hero-image {
   width: 40vw;
-  height: 55vh;
+  height: 400px;
   margin-bottom: 2rem;
   margin-left: 2rem;
   transform: rotate();

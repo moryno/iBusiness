@@ -12,7 +12,6 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--blue);
-    box-shadow: 1.5px 1.5px 1.5px var(--blue);
     background-color: rgba(237, 237, 237, 0.364);
     width: 70vw;
     height: 600px;
