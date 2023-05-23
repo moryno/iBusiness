@@ -23,7 +23,7 @@
 
 
 .copyright-link:hover {
-    color: var(--maroon);
+    text-decoration-line: underline;
 
 }
 

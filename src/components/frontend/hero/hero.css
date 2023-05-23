@@ -26,9 +26,9 @@
 }
 
 .heroGetStarted{
-  background-color: var(--blue);
-  border-style: none;
-  color: white;
+
+  border: solid 1px var(--blue);
+  color: var(--blue);
   font-weight: 500;
   font-size: 1rem;
   border-radius: 4px;
@@ -94,7 +94,7 @@
   }
   
   .lander-page-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: var(--grey);
     margin-top: -.5rem;
   }
@@ -113,7 +113,22 @@
   }
 
 
-@media screen and (max-width:767px) {
+@media screen and (max-width:1130px) { 
+  .hero-content {
+    height: 600px;
+  }
+
+
+}
+
+@media screen and (max-width:900px) {
+  .hero-image-div {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width:500px) {
 
   .hero-image-div {
     display: none;
@@ -121,8 +136,8 @@
 
   .hero-content {
     padding-left: .2rem;
+    height: 600px;
     transform: scale(0.8);
-    margin-top: -5vh;
   }
   
   form {
