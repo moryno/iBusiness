@@ -60,11 +60,13 @@ export const Navbar = () => {
           <Link to="/" className="brand-logo">
             <Brand className="brand-logo" />
           </Link>
-          {data.navlinks.map((link) => (
-            <Link to={link.to} key={link.key}>
-              <Navbutton className="brand-left" value={link.value} />
-            </Link>
-          ))}
+          <div className="brand-nav-links">
+            {data.navlinks.map((link) => (
+              <Link to={link.to} key={link.key} className="brand-nav-link">
+                <Navbutton className="brand-left" value={link.value} />
+              </Link>
+            ))}
+          </div>
         </div>
         <div className="brand-links">
           <a href={data.signuptext.to}>

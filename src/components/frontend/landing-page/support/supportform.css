@@ -117,14 +117,30 @@
 
 
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 576px) {
     .support-form {
         flex-direction: column;
+        height: auto;
+        width: auto;
+        margin-top: 1rem;
         
     }
 
-    .name-control {
-        width: 28vw;
+    .s-subheader {
+        margin-bottom: .5rem;
+    }
 
+    .name-control {
+        width: auto;
+
+    }
+
+    .s-button {
+        height: 50px;
+        width: 70%;
+    }
+
+    .s-input-names {
+        gap: .5rem;
     }
 }

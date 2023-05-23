@@ -19,16 +19,15 @@
 
 .landing-header {
   color: var(--blue);
-  font-size: 3.1rem;
+  font-size: 2.8rem;
   font-weight: 700;
   word-spacing: 2px;
   line-height: normal;
 }
 
-.heroGetStarted{
-
-  border: solid 1px var(--blue);
-  color: var(--blue);
+.heroGetStarted {
+  background-color: var(--blue);
+  color: var(--cream);
   font-weight: 500;
   font-size: 1rem;
   border-radius: 4px;
@@ -37,8 +36,13 @@
   justify-content: center;
   width: 120px;
   align-items: center;
-  transition: all 0.5s;
+  transition: all 0.1s;
   cursor: pointer;
+
+}
+
+.heroGetStarted:hover {
+  background-color: var(--bluehover);
 
 }
 
@@ -128,10 +132,14 @@
 }
 
 
-@media screen and (max-width:500px) {
+@media screen and (max-width:576px) {
 
   .hero-image-div {
     display: none;
+  }
+
+  .landing-header {
+    font-size: 2rem;
   }
 
   .hero-content {
