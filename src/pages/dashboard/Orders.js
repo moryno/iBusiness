@@ -6,17 +6,16 @@ import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
-import { LoadPanel } from "devextreme-react/load-panel";
 import request from "../../helpers/tempRequest";
 import { orderFilterValues } from "../../helpers/datatableSource";
 
 const Orders = () => {
   const [data, setData] = useState([]);
   const loadingRef = useRef(true);
+  // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [input, setInput] = useState(null);
-  const [date, setDate] = useState("");
   const navigate = useNavigate();
 
   const today = new Date().toISOString().slice(0, 10);
@@ -63,7 +62,7 @@ const Orders = () => {
     if (onRowDblClickBookingId){
       navigate(`/dashboard/updateorder/${onRowDblClickBookingId}`);
     } 
-  }, [onRowDblClickBookingId]);
+  }, [onRowDblClickBookingId, navigate]);
 
 
   // This fucntion is used to toggle between each menu botton clicks

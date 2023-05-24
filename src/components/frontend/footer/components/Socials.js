@@ -5,10 +5,10 @@ import { faFacebook, faGooglePlusG, faTwitter, faLinkedin  } from '@fortawesome/
 export const Socials = () => {
   return (
       <div className='socials-icons'>
-          <FontAwesomeIcon icon={faFacebook} className='social-icon' />
-          <FontAwesomeIcon icon={faTwitter} className='social-icon' />
+          <a href="https://www.facebook.com/profile.php?id=100092993799371"><FontAwesomeIcon icon={faFacebook} className='social-icon' /></a>
+          <a href="https://twitter.com/BusinessCl55620"><FontAwesomeIcon icon={faTwitter} className='social-icon' /></a>
           <FontAwesomeIcon icon={faGooglePlusG} className='social-icon' />
-          <FontAwesomeIcon icon={faLinkedin} className='social-icon' />
+          <a href="https://www.linkedin.com/company/businesscloud-limited/?viewAsMember=true"><FontAwesomeIcon icon={faLinkedin} className='social-icon' /></a>
       </div>
   )
 }

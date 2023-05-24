@@ -13,6 +13,7 @@ import { loginSuccess } from "../../../../redux/userSlice";
 import { msSingleSign } from "../../../../utils/webService";
 
 export const GetStarted = () => {
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

@@ -4,7 +4,6 @@ import { Navbutton } from "../UI/Button";
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUser,
   faBars,
   faTimes,
   faAngleRight,

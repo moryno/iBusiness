@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 3rem;
+    gap: 4rem;
     height: max-content;
     align-items: center;
     margin-top: 1rem;
@@ -41,7 +41,7 @@
     font-size: 1.3rem;
     color: var(--grey);
     width: 35vw;
-    text-align: end;
+    text-align: left;
     word-spacing: 1px;
 }
 
