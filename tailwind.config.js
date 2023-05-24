@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         // bg: "#0096FF",
-        bg: "#006FC9",         
+        bg: "#006FC9",
         bgSection: "#006FC9",
         darkBlue: "#0176d3",
         bgDark: "#3B96DD",
@@ -13,6 +13,7 @@ module.exports = {
         light: "#eeedec",
         bgxLight: "#E3EFFF",
         button: "#0D6EFD",
+        buttonBlue: "#0088ff",
         buttonBg: "#1B6EC2",
         bgxxLight: "#f3f3f3",
         section: "#F1F1F4",
