@@ -5,7 +5,7 @@
     gap: 3rem;
     height: max-content;
     align-items: center;
-    margin-top: 2.5rem;
+    margin-top: 1rem;
 }
 
 .company-info {
@@ -60,10 +60,6 @@
 @media screen and (max-width: 767px) {
     .company-illustration {
         display: none;
-    }
-
-    .company {
-        margin-top: -1rem;
     }
 
     .company-info {

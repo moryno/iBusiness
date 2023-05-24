@@ -2,8 +2,7 @@
 .hero-content {
   padding-left: 4rem;
   padding-right: 4rem;
-  padding-top: 4rem;
-  height: max-content;
+  height: 400px;
   justify-content: flex-start;
   display: flex;
   align-items: center;
@@ -20,16 +19,15 @@
 
 .landing-header {
   color: var(--blue);
-  font-size: 3.1rem;
+  font-size: 2.8rem;
   font-weight: 700;
   word-spacing: 2px;
   line-height: normal;
 }
 
-.heroGetStarted{
+.heroGetStarted {
   background-color: var(--blue);
-  border-style: none;
-  color: white;
+  color: var(--cream);
   font-weight: 500;
   font-size: 1rem;
   border-radius: 4px;
@@ -38,8 +36,13 @@
   justify-content: center;
   width: 120px;
   align-items: center;
-  transition: all 0.5s;
+  transition: all 0.1s;
   cursor: pointer;
+
+}
+
+.heroGetStarted:hover {
+  background-color: var(--bluehover);
 
 }
 
@@ -52,11 +55,12 @@
 
 .hero-image-div {
   flex: 1;
+  height: 400px;
 }
 
 .hero-image {
   width: 40vw;
-  height: 55vh;
+  height: 400px;
   margin-bottom: 2rem;
   margin-left: 2rem;
   transform: rotate();
@@ -94,7 +98,7 @@
   }
   
   .lander-page-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: var(--grey);
     margin-top: -.5rem;
   }
@@ -113,16 +117,36 @@
   }
 
 
-@media screen and (max-width:767px) {
+@media screen and (max-width:1130px) { 
+  .hero-content {
+    height: 600px;
+  }
+
+
+}
+
+@media screen and (max-width:900px) {
+  .hero-image-div {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width:576px) {
 
   .hero-image-div {
     display: none;
   }
 
+  .landing-header {
+    font-size: 2rem;
+  }
+
   .hero-content {
     padding-left: .2rem;
+    padding-right: 0;
+    height: 400px;
     transform: scale(0.8);
-    margin-top: -5vh;
   }
   
   form {

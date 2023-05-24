@@ -18,13 +18,13 @@ export const Navbar = () => {
   const handleToggle = () => {
     if (toggleSidebar === false) {
       setTimeout(() => {
-        document.getElementById("nav-mobile").style.right = "0";
+        document.getElementById("nav-mobile").style.left = "0";
       });
       document.getElementById("nav-mobile").style.display = "";
 
       setToggleNav(true);
     } else {
-      document.getElementById("nav-mobile").style.right = "100vw";
+      document.getElementById("nav-mobile").style.left = "100vw";
       setTimeout(() => {
         document.getElementById("nav-mobile").style.display = "none";
       }, 500);
@@ -60,11 +60,13 @@ export const Navbar = () => {
           <Link to="/" className="brand-logo">
             <Brand className="brand-logo" />
           </Link>
-          {data.navlinks.map((link) => (
-            <Link to={link.to} key={link.key}>
-              <Navbutton className="brand-left" value={link.value} />
-            </Link>
-          ))}
+          <div className="brand-nav-links">
+            {data.navlinks.map((link) => (
+              <Link to={link.to} key={link.key} className="brand-nav-link">
+                <Navbutton className="brand-left" value={link.value} />
+              </Link>
+            ))}
+          </div>
         </div>
         <div className="brand-links">
           <a href={data.signuptext.to}>

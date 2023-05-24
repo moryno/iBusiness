@@ -1,12 +1,14 @@
 /* Navbar Styling */
 .navbar {
-    padding: 35px 3rem;
-    z-index: 2;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    z-index: 6;
     height: 50px;   
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -14,6 +16,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 1rem;
+
+}
+
+.brand-nav-links {
+    display: flex;
+    gap: 2rem;
 }
 
 .brandname {
@@ -37,17 +46,25 @@
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
-    width: max-content;
-    height: max-content;
+
 }
 
+.nav-mobile-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    gap: .8rem;
+
+
+}
 
 .nav-button {
     background-color: var(--cream);
     border-style: none;
     color: var(--grey);
-    font-weight: 900;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1rem;
     height: max-content;
     width: max-content;
     align-content: center;
@@ -62,16 +79,22 @@
     border-style: none;
     color: white;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.9rem;
     border-radius: 4px;
-    height: 45px;
+    height: 38px;
     display: flex;
     justify-content: center;
-    width: 120px;
+    width: 100px;
     align-items: center;
     transition: all 0.5s;
     cursor: pointer;
 
+}
+
+.nav-signin-button:hover {
+    background-color: var(--bluehover);
+    /* color: var(--blue);
+    border: solid 1px var(--blue); */
 }
 
 
@@ -95,8 +118,7 @@ button .nav-button{
     border-width: 2px;
     border-radius: 25rem;
     height: 7vh;
-    width: 8vw;
-    margin-left: 1rem;
+    width: 50px;
     transition: all 0.3s;
     cursor: pointer;
 }
@@ -115,31 +137,36 @@ button .nav-button{
 
 .nav-mobile {
     display: none;
-    right: 100vw;
 }
 
 #burger {
     display: none;
+    color: var(--blue);
 }
 
 
 /* Mobile styling */
 
-@media screen and (max-width:767px){
+@media screen and (max-width: 576px){
 .brand-logo {
     transform: scale(0.95);
 }
+
+.brand-left, .nav-button, .brand-nav-links {
+    display: none;
+}
+
+
 
 .nav-signin-button {
     background-color: var(--buttonblue);
     border-style: none;
     color: white;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     border-radius: 4px;
     height: 40px;
     display: flex;
-    margin-right: 1rem;
     justify-content: center;
     width: 100px;
     align-items: center;
@@ -148,16 +175,21 @@ button .nav-button{
 
 }
 
+/* .brand-links {
+    margin-right: 1rem;
+} */
+
 
 .nav-mobile {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     right: 100vw;
     position: absolute;
     background-color: var(--cream);
+    margin-top: 65px;
     display: block;
     z-index: 1;
-    transition: right 0.5s ease-in-out;
+    transition: all 0.1s;
 
 }
 
@@ -167,7 +199,6 @@ button .nav-button{
     display: flex;
     flex-direction: column;
     height: 100vh;
-    margin-top: 5rem;
     width: 100%;
     gap: .8rem;
 
@@ -217,24 +248,20 @@ button .nav-button{
     text-decoration-line: none;
 }
 
-.nav-styled-button {
-    width: max-content;
-    margin-left: -10px;
-    margin-right: 1rem;
-    height: 3rem; 
-    font-size: .9rem;
-    
-    
-}
+
 
 .navbar {
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 1rem;
-    height: 1rem;
     justify-items: center;
-
+    height: 60px;
+    width: auto;
+    z-index: 2;
     
+}
+
+.brand {
+    flex: 0 0;
 }
 
 #burger {

@@ -4,7 +4,8 @@
     font-weight: bold;
     height: 2rem; 
     color: var(--cream);
-    position: sticky;
+    position: fixed;
+    width: 100%;
     bottom: 0;
     z-index: 1;
     display: flex;
@@ -13,23 +14,27 @@
     padding-left: 2rem;
     padding-right: 2rem;
     opacity: 0.95;
+    width: 100%;
 
 }
 
 .copyright-left {
     display: flex;
     gap: 1rem;
+    flex-grow: 1;
 }
 
 
 .copyright-link:hover {
-    color: var(--maroon);
+    text-decoration-line: underline;
 
 }
 
 @media screen and (max-width: 767px) {
     .copyright {
         gap: 1rem;
+        font-size: 0.8rem;
+        font-weight: 600;
         
     }
 

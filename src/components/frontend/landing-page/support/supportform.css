@@ -12,7 +12,6 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--blue);
-    box-shadow: 1.5px 1.5px 1.5px var(--blue);
     background-color: rgba(237, 237, 237, 0.364);
     width: 70vw;
     height: 600px;
@@ -118,14 +117,30 @@
 
 
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 576px) {
     .support-form {
         flex-direction: column;
+        height: auto;
+        width: auto;
+        margin-top: 1rem;
         
     }
 
-    .name-control {
-        width: 28vw;
+    .s-subheader {
+        margin-bottom: .5rem;
+    }
 
+    .name-control {
+        width: auto;
+
+    }
+
+    .s-button {
+        height: 50px;
+        width: 70%;
+    }
+
+    .s-input-names {
+        gap: .5rem;
     }
 }
