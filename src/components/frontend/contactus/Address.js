@@ -46,7 +46,7 @@ export const Address = () => {
       <div className="support-info-header">
         <h2 className="support-info-header-title">iBusiness</h2>
         <p className="support-info-header-subtitle">
-          Power your business, effortlessly
+          Power your business, effortlessly.
         </p>
       </div>
       <div className="support-info-description">
