@@ -53,9 +53,7 @@ export const Navbar = () => {
           ))}
         </div>
       </div>
-      <div
-        className="navbar"
-      >
+      <div className="navbar">
         <div className="brand">
           <Link to="/" className="brand-logo">
             <Brand className="brand-logo" />
