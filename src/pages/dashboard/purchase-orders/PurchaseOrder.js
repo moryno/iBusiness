@@ -14,7 +14,6 @@ import request from "../../../helpers/tempRequest";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import { useSelector } from "react-redux";
 import { LoadPanel } from "devextreme-react/load-panel";
-import dateToday from "../../../utils/dateToday";
 
 // Main Function
 export const PurchaseOrder = ({ orderstate }) => {
@@ -29,7 +28,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line})
+  // eslint-disable-next-line
   const [data, setData] = useState(new DataSource());
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState("Are you sure you want to clear the table?");
@@ -67,7 +66,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           const response = await request.get(`/PurchaseOrder/getorder?orderNumber=${id}`);
           response.data.tableData.map((item) => {
             data.store().insert(item);
-            data.reload();
+            return data.reload();
           });
           setFormUpdateData(response.data.formInfo);
           setUpdateData({...updateData, "formData": response.data.formInfo})
@@ -96,6 +95,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyUp);
     };
+    // eslint-disable-next-line
   }, [orderstate]);
 
   const submitOrder = async () => {

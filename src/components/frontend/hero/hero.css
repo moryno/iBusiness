@@ -56,14 +56,15 @@
 .hero-image-div {
   flex: 1;
   height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-image {
-  width: 40vw;
-  height: 400px;
-  margin-bottom: 2rem;
+  width: 650px;
+  height: 330px;
   margin-left: 2rem;
-  transform: rotate();
   border-radius: .1rem;
 }
 

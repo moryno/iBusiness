@@ -3,7 +3,6 @@ import "./hero.css";
 import illustration from "../../../assets/illustrations/1.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import data from "../../../data/hero";
-import { Landingbutton } from "../UI/Button";
 import { Link } from "react-router-dom";
 
 export const Hero = () => {

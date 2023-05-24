@@ -1,6 +1,6 @@
 import React from "react";
 import "./company.css";
-import illustration from "../../../../assets/ill3.png";
+import illustration from "../../../../assets/illustrations/3.png";
 import data from "../../../../data/pages/company";
 
 export const Header = () => {
