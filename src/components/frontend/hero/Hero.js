@@ -4,6 +4,7 @@ import illustration from "../../../assets/illustrations/1.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import data from "../../../data/hero";
 import { Link } from "react-router-dom";
+import { msSingleSign } from "../../../utils/webService";
 
 export const Hero = () => {
   return (
@@ -25,7 +26,7 @@ export const Hero = () => {
           </Link>
         </form> */}
         <button className="heroGetStarted">
-          <Link to="https://saas-app-asdk-ecdf-a6tx.azurewebsites.net/MicrosoftIdentity/Account/SignIn">
+          <Link to={msSingleSign}>
             Get Started
           </Link>
         </button>

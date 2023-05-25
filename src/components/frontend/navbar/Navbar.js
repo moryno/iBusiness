@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
+import { msSingleSign } from "../../../utils/webService";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
@@ -52,9 +53,7 @@ export const Navbar = () => {
           ))}
         </div>
       </div>
-      <div
-        className="navbar"
-      >
+      <div className="navbar">
         <div className="brand">
           <Link to="/" className="brand-logo">
             <Brand className="brand-logo" />
@@ -68,9 +67,9 @@ export const Navbar = () => {
           </div>
         </div>
         <div className="brand-links">
-          <a href={data.signuptext.to}>
+          <a href={msSingleSign}>
             <button className="nav-signin-button">
-              {data.signuptext.value}
+              Sign Up/In
             </button>
           </a>
           <FontAwesomeIcon

@@ -21,7 +21,6 @@
 
 }
     
-
 .s-form {
     flex: 1;
     height: max-content;
@@ -29,7 +28,6 @@
     gap: 1rem;
 
 }
-
 
 .s-header {
     text-align: center;
@@ -42,6 +40,7 @@
     color: var(--blue);
     text-align: center;
     font-size: 1rem;
+    margin-bottom: 1rem;
 }
 
 .s-input-names {
