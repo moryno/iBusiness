@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
-  RouterProvider,
-  Navigate,
+  RouterProvider
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 
