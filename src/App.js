@@ -1,7 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Profile from "./pages/dashboard/Profile";
@@ -16,6 +13,7 @@ import { ProductsView } from "./pages/landing-page/ProductsView";
 import { Support } from "./pages/landing-page/Support";
 import Onboarding from "./pages/landing-page/Onboarding";
 import FrontendLayout from "./layout/FrontendLayout";
+import Booking from "./pages/dashboard/Booking";
 
 function App() {
   // const currentUser = useSelector((state) => state.user?.currentUser?.user);
@@ -66,6 +64,10 @@ function App() {
         {
           path: "/dashboard",
           element: <Home />,
+        },
+        {
+          path: "/dashboard/bookings",
+          element: <Booking />,
         },
         {
           path: "/dashboard/purchase-order",

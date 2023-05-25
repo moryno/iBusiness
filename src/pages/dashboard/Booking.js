@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import DateBox from "devextreme-react/date-box";
 import { toast } from "react-toastify";
+import DataTable from "../../components/dashboard/DataTable";
 import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import New from "./New";
+import { bookingColumns } from "../../data/PurchaseOrderData";
 import webService from "../../utils/webService";
-
+import { bookingFilterValues } from "../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
-
+import ErpService from "../../utils/erpService";
+import { setUpToken } from "../../helpers/auth";
+import { loginSuccess } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
 
-const Home = () => {
+const Booking = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
@@ -27,6 +31,9 @@ const Home = () => {
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userInfo, setuserInfo] = useState(null);
+
+  const dispatch = useDispatch();
 
   // Fuction to close the Create || update form
   const handleClose = () => {
@@ -45,6 +52,7 @@ const Home = () => {
     }
   };
 
+  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
   useEffect(() => {
     try {
       const getData = async () => {
@@ -163,9 +171,16 @@ const Home = () => {
           </article>
         </section>
         <section className="mt-5">
-          <h1 className="font-bold text-2xl md:text-3xl  text-headingBlue">
-            Home page
-          </h1>
+          <DataTable
+            data={bookings}
+            columns={bookingColumns}
+            keyExpr="bookingId"
+            startEdit={(e) => startEdit(e)}
+            //loading={loading}
+            setRowClickItem={setRowClickItem}
+            openConfirmationPopup={openConfirmationPopup}
+            filterValues={bookingFilterValues}
+          />
         </section>
       </section>
 
@@ -216,4 +231,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Booking;
