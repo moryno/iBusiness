@@ -2,8 +2,11 @@
 .navbar {
     padding-left: 3rem;
     padding-right: 3rem;
-    z-index: 6;
+    background-color: var(--cream);
+    z-index: 2;
     height: 50px;   
+    position: sticky;
+    top: 0;
     width: auto;
     display: flex;
     align-items: center;
@@ -60,7 +63,6 @@
 }
 
 .nav-button {
-    background-color: var(--cream);
     border-style: none;
     color: var(--grey);
     font-weight: 600;

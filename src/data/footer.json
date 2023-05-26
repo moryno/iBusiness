@@ -10,7 +10,7 @@
     
     "copyright" : {
         "title" : "Copyright",
-        "subtitle" : "2023 All Rights Reserved | BusinessCloud Ltd. and/or its affiliates."
+        "subtitle" : "2023 BusinessCloud Ltd."
     },
 
     "navlinks" : {
@@ -23,7 +23,7 @@
 
                     ],
          "title" : "Links",
-         "copy" : "2023 BusinessCloud Limited. All Rights Reserved."
+         "copy" : "2023 BusinessCloud Ltd. and/or its affiliates | All Rights Reserved."
     }
 
 }
