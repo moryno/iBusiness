@@ -7,7 +7,7 @@ const PricingItem = ({ pricing }) => {
   return (
     <main className="w-full px-5 box-border md:w-1/2 lg:w-1/3 xl:w-1/4 mt-4 md:hover:-translate-y-1">
       <section>
-        <article className="py-3 px-5  bg-white rounded-lg shadow-2xl hover:shadow-3xl box-border">
+        <article className="py-3 px-5  bg-white rounded-lg shadow-2xl hover:shadow-3xl box-border transition-all duration-500">
           <h4 className="font-semibold capitalize text-gray-400 text-center text-xl m-3">
             {pricing.title}
           </h4>

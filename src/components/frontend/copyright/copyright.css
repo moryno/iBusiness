@@ -1,8 +1,8 @@
 .copyright {
     background-color: var(--bgColor);
-    font-size: 0.9rem;
-    font-weight: bold;
-    height: 2rem; 
+    font-size: 0.7rem;
+    font-weight: 500;
+    height: 1.3rem; 
     color: var(--cream);
     position: fixed;
     width: 100%;

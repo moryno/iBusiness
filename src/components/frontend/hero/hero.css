@@ -2,7 +2,7 @@
 .hero-content {
   padding-left: 4rem;
   padding-right: 4rem;
-  height: 400px;
+  height: 370px;
   justify-content: flex-start;
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@
 
 .hero-image-div {
   flex: 1;
-  height: 400px;
+  height: 395px;
   display: flex;
   align-items: center;
   justify-content: center;

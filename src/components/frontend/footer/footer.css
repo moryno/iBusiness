@@ -15,6 +15,39 @@
 
 }
 
+.navigation-area {
+    display: flex;
+    
+}
+
+.nav-area {
+    flex: 1 1;
+}
+
+.nav-area h3 {
+    color: var(--blue);
+    margin-bottom: .8rem;
+    font-weight: 600;
+}
+
+.nav-area ul {
+    gap: .8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-area ul li {
+    color: var(--grey);
+    font-size: 0.85rem;
+}
+
+.nav-area ul li:hover {
+    text-decoration-line: underline;
+    cursor: pointer;
+
+}
+
+
 .about-sec {
     flex: 1;
 }
@@ -65,6 +98,7 @@
 .footer-header {
     color: var(--blue);
     font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .nav-copy {
