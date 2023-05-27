@@ -36,6 +36,7 @@ module.exports = {
       colors: {
         text: "#556b86",
         headingBlue: "#0088ff",
+        buttonHover: "#0267c1",
         blueLight: "#0096FF",
         darkBlue: "#0176d3",
         gn: "#27AE60",

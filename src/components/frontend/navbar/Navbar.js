@@ -7,6 +7,7 @@ import {
   faBars,
   faTimes,
   faAngleRight,
+  faComments
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
@@ -78,6 +79,10 @@ export const Navbar = () => {
             onClick={handleToggle}
           />
         </div>
+      </div>
+      <div className="contact-section">
+        <p className="contact-section-text">Chat with us</p>
+        <FontAwesomeIcon icon={faComments} className="contact-section-icon"/>
       </div>
     </>
   );

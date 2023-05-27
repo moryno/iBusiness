@@ -5,7 +5,7 @@ import { msSingleSign } from "../../../../utils/webService";
 
 const PricingItem = ({ pricing }) => {
   return (
-    <main className="w-full px-5 box-border transition-all duration-[0.1s] md:w-1/2 lg:w-1/3 xl:w-1/4 mt-4 md:hover:-translate-y-1.5">
+    <main className="w-full px-5 box-border transition-all duration-[0.1s] md:w-1/2 lg:w-1/3 xl:w-1/4 mt-4 md:hover:-translate-y-1">
       <section>
         <article className="py-3 px-5  bg-white rounded-lg shadow-2xl hover:shadow-3xl box-border">
           <h4 className="font-semibold capitalize text-gray-400 text-center text-xl m-3">
@@ -38,7 +38,7 @@ const PricingItem = ({ pricing }) => {
               </li>
             ))}
           </ul>
-          <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
+          <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-headingBlue text-white capitalize transition-all duration-400 hover:bg-buttonHover active:bg-headingBlue">
             <Link to={msSingleSign}>{pricing?.button}</Link>
           </button>
         </article>
