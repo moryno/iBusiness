@@ -67,10 +67,9 @@ export const Navbar = () => {
           </div>
         </div>
         <div className="brand-links">
+          <h1 className="text-gray-600 font-medium">Maurice Nganga</h1>
           <a href={msSingleSign}>
-            <button className="nav-signin-button">
-              Sign Up/In
-            </button>
+            <button className="nav-signin-button">Sign Up/In</button>
           </a>
           <FontAwesomeIcon
             icon={toggleSidebar ? faTimes : faBars}
