@@ -17,8 +17,14 @@ import axios from "axios";
 const Onboarding = () => {
   const [loading, setLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
-  const [organizationCategory, setOrganizationCategory] = useState(null);
+  const [organizationCategory, setOrganizationCategory] = useState("");
+  const [organizationCategoryNumber, setOrganizationCategoryNumber] =
+    useState(null);
   const [servicePlan, setServicePlan] = useState("");
+  const [servicePlanNumber, setServicePlanNumber] = useState(null);
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    "(UTC+03:00) Nairobi"
+  );
   const [timezone, setTimezone] = useState("(UTC+03:00) Nairobi");
   const [onboardingQuestions, setOnboardingQuestions] = useState("");
   const [answer, setAnswer] = useState("");
@@ -26,18 +32,23 @@ const Onboarding = () => {
   // Set the industry for the organisation according to what the user selects
   const handleCategorySelection = (category) => {
     const selectedCategory = handleCategory(category);
-    setOrganizationCategory(selectedCategory);
+    setOrganizationCategory(selectedCategory.name);
+    setOrganizationCategoryNumber(selectedCategory.key);
   };
+
   // Set the service plan otpions according to what the user selects
   const handleServicePlanSelection = (servicePlan) => {
     const selectedService = handleServicePlan(servicePlan);
-    setServicePlan(selectedService);
+    setServicePlan(selectedService.name);
+    setServicePlanNumber(selectedService.key);
   };
+
   // Set the timezone according to what the user selects
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = services.getAllTimezones();
     allTimezones.filter((timezone) => {
       if (timezone.text === selectedTimeZone) {
+        setSelectedTimezone(timezone.text);
         setTimezone(timezone.value);
       }
     });
@@ -56,12 +67,12 @@ const Onboarding = () => {
     setLoading(true);
 
     const formData = {
-      organizationName,
-      organizationCategory,
+      company: organizationName,
+      profession: organizationCategoryNumber,
       timezone,
-      onboardingQuestions,
+      question: onboardingQuestions,
       answer,
-      servicePlan,
+      servicePlanNumber,
     };
 
     try {
@@ -71,7 +82,7 @@ const Onboarding = () => {
         formData,
         { withCredentials: true }
       );
-      console.log(data);
+      console.log(formData);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -196,7 +207,7 @@ const Onboarding = () => {
                     dataSource={timezonesOptions}
                     searchEnabled={true}
                     onValueChanged={(e) => handleTimeZone(e.value)}
-                    value={timezone}
+                    value={selectedTimezone}
                     placeholder="Select Organization Category"
                     height={30}
                     style={{ fontSize: "12px" }}
