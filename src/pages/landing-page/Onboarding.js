@@ -17,17 +17,20 @@ import axios from "axios";
 const Onboarding = () => {
   const [loading, setLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
-  const [organizationCategory, setOrganizationCategory] = useState("");
+  const [organizationCategory, setOrganizationCategory] = useState("Software");
   const [organizationCategoryNumber, setOrganizationCategoryNumber] =
     useState(null);
-  const [servicePlan, setServicePlan] = useState("");
-  const [servicePlanNumber, setServicePlanNumber] = useState(null);
+
   const [selectedTimezone, setSelectedTimezone] = useState(
     "(UTC+03:00) Nairobi"
   );
   const [timezone, setTimezone] = useState("(UTC+03:00) Nairobi");
   const [onboardingQuestions, setOnboardingQuestions] = useState("");
   const [answer, setAnswer] = useState("");
+  const [servicePlan, setServicePlan] = useState(
+    "Standard (Ksh10,000, Free 14 Days Trial)"
+  );
+  const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
   // Set the industry for the organisation according to what the user selects
   const handleCategorySelection = (category) => {
