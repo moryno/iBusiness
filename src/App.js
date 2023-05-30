@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Profile from "./pages/dashboard/Profile";
@@ -16,13 +20,12 @@ import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/Booking";
 
 function App() {
-  // const currentUser = useSelector((state) => state.user?.currentUser?.user);
-  console.log(useSelector((state) => state.user?.currentUser));
+  const currentUser = useSelector((state) => state.user?.currentUser);
 
   const ProtectedRoute = ({ children }) => {
-    // if (!currentUser) {
-    //   return <Navigate to="/" />;
-    // }
+    if (!currentUser) {
+      return <Navigate to="/" />;
+    }
     return children;
   };
 

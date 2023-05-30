@@ -46,31 +46,30 @@ const Home = () => {
   };
 
   useEffect(() => {
-    try {
-      const getData = async () => {
-        setLoading(true);
-        const response = date
-          ? await webService.Request.getByDate(date.startdate, date.enddate)
-          : await webService.Request.get();
-
-        setLoading(false);
-        setBookings(response);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const getData = async () => {
+    //     setLoading(true);
+    //     const response = date
+    //       ? await webService.Request.getByDate(date.startdate, date.enddate)
+    //       : await webService.Request.get();
+    //     setLoading(false);
+    //     setBookings(response);
+    //   };
+    //   getData();
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }, [date]);
 
   // This Hook is to fetch single booking when a row in the datagrid is double clicked
   useEffect(() => {
-    const getSingleBooking = async () => {
-      const response = await webService.Request.getById(onRowDblClickBookingId);
-      setSingleBooking(response);
-      setStatusMode("EditMode");
-      setOpen((isOpen) => !isOpen);
-    };
-    if (onRowDblClickBookingId) getSingleBooking();
+    // const getSingleBooking = async () => {
+    //   const response = await webService.Request.getById(onRowDblClickBookingId);
+    //   setSingleBooking(response);
+    //   setStatusMode("EditMode");
+    //   setOpen((isOpen) => !isOpen);
+    // };
+    // if (onRowDblClickBookingId) getSingleBooking();
   }, [onRowDblClickBookingId]);
 
   // Function to open ConfirmationPopupComponent
@@ -85,29 +84,28 @@ const Home = () => {
 
   // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
-    switch (menu) {
-      case "Find":
-        fromDate === null && toDate && date === ""
-          ? setDate({ startdate: fromDate, enddate: toDate })
-          : setDate({ startdate: fromDate, enddate: toDate });
-        break;
-      case "New":
-        setStatusMode("CreateMode");
-        setOpen((isOpen) => !isOpen);
-        break;
-      case "Delete":
-        openConfirmationPopup(onRowClickItem);
-        break;
-      case "Close":
-        console.log("Close was clicked");
-        break;
-      case "Help":
-        console.log("Help was clicked");
-        break;
-
-      default:
-        break;
-    }
+    // switch (menu) {
+    //   case "Find":
+    //     fromDate === null && toDate && date === ""
+    //       ? setDate({ startdate: fromDate, enddate: toDate })
+    //       : setDate({ startdate: fromDate, enddate: toDate });
+    //     break;
+    //   case "New":
+    //     setStatusMode("CreateMode");
+    //     setOpen((isOpen) => !isOpen);
+    //     break;
+    //   case "Delete":
+    //     openConfirmationPopup(onRowClickItem);
+    //     break;
+    //   case "Close":
+    //     console.log("Close was clicked");
+    //     break;
+    //   case "Help":
+    //     console.log("Help was clicked");
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
 
   return (

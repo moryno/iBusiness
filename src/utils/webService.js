@@ -4,24 +4,24 @@ import { toast } from "react-toastify";
 axios.defaults.baseURL = "https://ibusinessbooking.azurewebsites.net/api";
 
 axios.interceptors.response.use(undefined, (error) => {
-  const { status, config } = error.response;
-  if (status === 404) {
-    toast.error("Not found");
-  }
-  if (status === 400 && config.method === "get") {
-    toast.error("Not found");
-  }
-  if (
-    status === 400 &&
-    (config.method === "post" ||
-      config.method === "put" ||
-      config.method === "delete")
-  ) {
-    toast.error("Multiple fields are required.");
-  }
-  if (status === 500) {
-    toast.error("Server error - check the terminal for more info!");
-  }
+  // const { status, config } = error.response;
+  // if (status === 404) {
+  //   toast.error("Not found");
+  // }
+  // if (status === 400 && config.method === "get") {
+  //   toast.error("Not found");
+  // }
+  // if (
+  //   status === 400 &&
+  //   (config.method === "post" ||
+  //     config.method === "put" ||
+  //     config.method === "delete")
+  // ) {
+  //   toast.error("Multiple fields are required.");
+  // }
+  // if (status === 500) {
+  //   toast.error("Server error - check the terminal for more info!");
+  // }
 });
 
 const responseBody = (response) => response.data;

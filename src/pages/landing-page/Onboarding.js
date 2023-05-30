@@ -1,18 +1,26 @@
+import { useEffect, useState } from "react";
 import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
+import Validator, { RequiredRule } from "devextreme-react/validator";
+import { Button } from "devextreme-react";
+import { LoadIndicator } from "devextreme-react";
+import { FcAddDatabase } from "react-icons/fc";
+
 import {
   onboardingQuestionsOptions,
   organizationCategoryOptions,
   servicePlanOptions,
 } from "../../helpers/onBoardingSource";
-import { useEffect, useState } from "react";
-import { LoadIndicator } from "devextreme-react";
+
 import services from "../../helpers/timezones";
 import {
   handleCategory,
   handleServicePlan,
 } from "../../utils/onBoardingServices";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import request from "../../utils/requestService";
+import { getUserInformation } from "../../redux/userService";
 
 const Onboarding = () => {
   const [loading, setLoading] = useState(false);
@@ -24,13 +32,16 @@ const Onboarding = () => {
   const [selectedTimezone, setSelectedTimezone] = useState(
     "(UTC+03:00) Nairobi"
   );
-  const [timezone, setTimezone] = useState("(UTC+03:00) Nairobi");
+  const [timeZone, setTimezone] = useState("(UTC+03:00) Nairobi");
   const [onboardingQuestions, setOnboardingQuestions] = useState("");
   const [answer, setAnswer] = useState("");
   const [servicePlan, setServicePlan] = useState(
     "Standard (Ksh10,000, Free 14 Days Trial)"
   );
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Set the industry for the organisation according to what the user selects
   const handleCategorySelection = (category) => {
@@ -57,13 +68,12 @@ const Onboarding = () => {
     });
   };
 
+  // Fetch user information the first time signing in
   useEffect(() => {
-    const getUserInfo = async () => {
-      const response = await axios.get("https://192.168.1.5/user-info");
-      console.log(response);
-    };
-    getUserInfo();
-  }, []);
+    const url = "https://192.168.1.5/user-info";
+    getUserInformation(dispatch, url);
+  }, [dispatch]);
+
   // Submit the tenant info to be processed and added to the database
   const submitForm = async (e) => {
     e.preventDefault();
@@ -71,22 +81,20 @@ const Onboarding = () => {
 
     const formData = {
       company: organizationName,
-      profession: organizationCategoryNumber,
-      timezone,
+      // profession: organizationCategoryNumber,
+      timeZone,
       question: onboardingQuestions,
       answer,
-      servicePlanNumber,
+      // servicePlanNumber,
     };
 
     try {
-      //TO DO: send a request to check if tenant exist and if not create on
-      const { data } = await axios.post(
-        "https://192.168.1.5:7041/api/SadUser",
-        formData,
-        { withCredentials: true }
-      );
-      console.log(formData);
-      setLoading(false);
+      const { data } = await request.post("/SadUser", formData);
+
+      if (data) {
+        setLoading(false);
+        navigate("/dashboard");
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -129,7 +137,11 @@ const Onboarding = () => {
                     height={30}
                     style={{ fontSize: "12px" }}
                     className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  ></TextBox>
+                  >
+                    <Validator>
+                      <RequiredRule message="Organisation name is required" />
+                    </Validator>
+                  </TextBox>
                 </div>
                 <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
@@ -194,7 +206,11 @@ const Onboarding = () => {
                     height={30}
                     style={{ fontSize: "12px" }}
                     className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  ></TextBox>
+                  >
+                    <Validator>
+                      <RequiredRule message="An answer is required" />
+                    </Validator>
+                  </TextBox>
                 </div>
                 <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
@@ -241,9 +257,11 @@ const Onboarding = () => {
                 </div>
               </article>
               <article>
-                <button className="flex border-none py-2 rounded-sm px-4 w-fit bg-buttonBlue text-white items-center font-semibold  cursor-pointer  text-xs">
-                  {loading ? <LoadIndicator /> : "Submit"}
-                </button>
+                <Button id="onBoardingButton" useSubmitBehavior={true}>
+                  {" "}
+                  <FcAddDatabase className="text-white" fontSize={20} />
+                  Submit
+                </Button>
               </article>
             </form>
           </article>

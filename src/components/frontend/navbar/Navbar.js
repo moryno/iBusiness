@@ -11,9 +11,12 @@ import {
 import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
 import { msSingleSign } from "../../../utils/webService";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
+
+  const currentUser = useSelector((state) => state.user?.currentUser);
 
   const handleToggle = () => {
     if (toggleSidebar === false) {
@@ -67,7 +70,9 @@ export const Navbar = () => {
           </div>
         </div>
         <div className="brand-links">
-          <h1 className="text-gray-600 font-medium">Maurice Nganga</h1>
+          <h1 className="text-gray-600 font-medium">
+            {currentUser?.givenName}
+          </h1>
           <a href={msSingleSign}>
             <button className="nav-signin-button">Sign Up/In</button>
           </a>

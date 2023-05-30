@@ -14,12 +14,10 @@ import Validator, {
   PatternRule,
   EmailRule,
 } from "devextreme-react/validator";
-import ValidationSummary from "devextreme-react/validation-summary";
+import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
 import webService from "../../utils/webService";
-import LoadingIndicator from "../../components/features/LoadingIndicator";
-import { Button, ValidationGroup } from "devextreme-react";
 
 const New = ({
   handleClose,
