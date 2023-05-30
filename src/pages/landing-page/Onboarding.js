@@ -66,6 +66,12 @@ const Onboarding = () => {
 
     try {
       //TO DO: send a request to check if tenant exist and if not create on
+      const { data } = await axios.post(
+        "https://192.168.1.5:7041/api/SadUser",
+        formData,
+        { withCredentials: true }
+      );
+      console.log(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
