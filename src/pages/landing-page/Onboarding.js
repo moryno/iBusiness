@@ -40,7 +40,6 @@ const Onboarding = () => {
   );
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Set the industry for the organisation according to what the user selects
@@ -67,12 +66,6 @@ const Onboarding = () => {
       }
     });
   };
-
-  // Fetch user information the first time signing in
-  useEffect(() => {
-    const url = "https://192.168.1.5/user-info";
-    getUserInformation(dispatch, url);
-  }, [dispatch]);
 
   // Submit the tenant info to be processed and added to the database
   const submitForm = async (e) => {

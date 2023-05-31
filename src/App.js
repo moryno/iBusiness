@@ -3,7 +3,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Profile from "./pages/dashboard/Profile";
 import Home from "./pages/dashboard/Home";
@@ -18,9 +18,18 @@ import { Support } from "./pages/landing-page/Support";
 import Onboarding from "./pages/landing-page/Onboarding";
 import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/Booking";
+import { useEffect } from "react";
+import { getUserInformation } from "./redux/userService";
 
 function App() {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user?.currentUser);
+
+  // Fetch user information the first time signing in
+  useEffect(() => {
+    const url = "https://192.168.1.13/user-info";
+    getUserInformation(dispatch, url);
+  }, [dispatch]);
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {

@@ -12,6 +12,7 @@ import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
 import { msSingleSign } from "../../../utils/webService";
 import { useSelector } from "react-redux";
+import UserProfileMenu from "../UserProfileMenu";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
@@ -70,12 +71,26 @@ export const Navbar = () => {
           </div>
         </div>
         <div className="brand-links">
-          <h1 className="text-gray-600 font-medium">
-            {currentUser?.givenName}
-          </h1>
-          <a href={msSingleSign}>
-            <button className="nav-signin-button">Sign Up/In</button>
-          </a>
+          {currentUser ? (
+            <>
+              <article className="flex items-center font-medium">
+                <article className="flex items-center gap-1">
+                  <h1 className="text-gray-600 font-medium">
+                    Hello, {currentUser?.givenName}
+                  </h1>
+                  <UserProfileMenu />
+                </article>
+              </article>
+              <a href={msSingleSign}>
+                <button className="nav-signin-button">Dashboard</button>
+              </a>
+            </>
+          ) : (
+            <a href={msSingleSign}>
+              <button className="nav-signin-button">Sign Up/In</button>
+            </a>
+          )}
+
           <FontAwesomeIcon
             icon={toggleSidebar ? faTimes : faBars}
             id="burger"
