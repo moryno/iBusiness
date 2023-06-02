@@ -20,6 +20,7 @@ import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/Booking";
 import { useEffect } from "react";
 import { getUserInformation } from "./redux/userService";
+import { makeRequest } from "./utils/axios";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function App() {
 
   // Fetch user information the first time signing in
   useEffect(() => {
-    const url = "https://192.168.1.13/api/user-info";
+    const url = makeRequest + "/api/user-info";
     getUserInformation(dispatch, url);
   }, [dispatch]);
 

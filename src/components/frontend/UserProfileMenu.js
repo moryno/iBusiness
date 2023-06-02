@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../redux/userSlice";
 import { userMenus } from "../../helpers/userProfileLinks";
+import { logoutFunc } from "../../helpers/auth";
 
 const UserProfileMenu = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const UserProfileMenu = () => {
 
   // Handle logout and remove token from persist
   const handleLogOut = () => {
-    localStorage.removeItem("token");
+    logoutFunc();
   };
 
   // Function when menu is clicked

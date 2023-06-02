@@ -4,13 +4,11 @@ import { setUpToken } from "../helpers/auth";
 
 export const getUserInformation = async (dispatch, url) => {
   try {
-    const { data } = await axios.get(url, {
-      withCredentials: true,
-    });
+    const response = await axios.get(url);
 
-    if (data) {
-      dispatch(loginSuccess(data));
-      setUpToken(data?.accessToken);
+    if (response.data) {
+      dispatch(loginSuccess(response.data));
+      setUpToken(response.data?.accessToken);
     }
   } catch (error) {
     console.log(error);

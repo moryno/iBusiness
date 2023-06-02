@@ -1,6 +1,11 @@
+import { makeRequest } from "../utils/axios";
+
 export const logoutFunc = () => {
   localStorage.removeItem("token");
-  window.location.href = "/";
+  const response = makeRequest.get("/Microsoftidentity/Account/SignOut");
+  // if(response){
+  //   window.location.href = "/";
+  // }
 };
 
 export const setUpToken = (token) => {
