@@ -61,7 +61,7 @@ axios.interceptors.request.use(
 export default { Request };
 
 export const sideMenuRequest =
-  "http://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
+  "https://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
 
 export const msSingleSign =
   "https://192.168.1.13/MicrosoftIdentity/Account/SignIn";
