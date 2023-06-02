@@ -43,7 +43,6 @@ const SideLinks = () => {
     const getModuleMenus = async () => {
       try {
         const { data } = await axios.get(
-          // Check if different module options was selected then fetch using their partion key
           partitionKey
             ? sideMenuRequest + `?moduleName=${partitionKey}`
             : sideMenuRequest

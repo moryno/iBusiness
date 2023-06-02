@@ -27,7 +27,7 @@ function App() {
 
   // Fetch user information the first time signing in
   useEffect(() => {
-    const url = "https://192.168.1.13/user-info";
+    const url = "https://192.168.1.13/api/user-info";
     getUserInformation(dispatch, url);
   }, [dispatch]);
 
