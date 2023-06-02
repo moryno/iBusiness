@@ -4,7 +4,9 @@ import { setUpToken } from "../helpers/auth";
 
 export const getUserInformation = async (dispatch, url) => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      withCredentials: true,
+    });
 
     if (response.data) {
       dispatch(loginSuccess(response.data));
