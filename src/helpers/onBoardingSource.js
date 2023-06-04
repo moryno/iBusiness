@@ -14,3 +14,10 @@ export const servicePlanOptions = [
   "Basic (Ksh3,000, Free 7 Days Trial)",
   "Standard (Ksh10,000, Free 14 Days Trial)",
 ];
+
+export const onboardingQuestionsOptions = [
+  "Where is your organisation located?",
+  "What year was the organisation founded?",
+  "Which city were you born?",
+  "In which industry is your organisation?",
+];

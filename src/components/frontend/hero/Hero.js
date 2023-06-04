@@ -26,9 +26,7 @@ export const Hero = () => {
           </Link>
         </form> */}
         <button className="heroGetStarted">
-          <Link to={msSingleSign}>
-            Get Started
-          </Link>
+          <Link to={msSingleSign}>Get Started</Link>
         </button>
       </div>
       <div className="hero-image-div">

@@ -40,14 +40,18 @@ const SideLinks = () => {
 
   // Hook to fetch module menus from Cosmos DB
   useEffect(() => {
+
     const getModuleMenus = async () => {
-      const { data } = await axios.get(
-        // Check if different module options was selected then fetch using their partion key
-        partitionKey
-          ? sideMenuRequest + `?moduleName=${partitionKey}`
-          : sideMenuRequest
-      );
-      setModuleMenus(data);
+      try {
+        const { data } = await axios.get(
+          partitionKey
+            ? sideMenuRequest + `?moduleName=${partitionKey}`
+            : sideMenuRequest
+        );
+        setModuleMenus(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getModuleMenus();
   }, [partitionKey]);

@@ -1,87 +1,93 @@
+import { useEffect, useState } from "react";
 import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
+import Validator, { RequiredRule } from "devextreme-react/validator";
+import { Button } from "devextreme-react";
+import { LoadIndicator } from "devextreme-react";
+import { FcAddDatabase } from "react-icons/fc";
+
 import {
+  onboardingQuestionsOptions,
   organizationCategoryOptions,
   servicePlanOptions,
 } from "../../helpers/onBoardingSource";
-import { useState } from "react";
-import { LoadIndicator } from "devextreme-react";
+
+import services from "../../helpers/timezones";
+import {
+  handleCategory,
+  handleServicePlan,
+} from "../../utils/onBoardingServices";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import request from "../../utils/requestService";
+import { getUserInformation } from "../../redux/userService";
 
 const Onboarding = () => {
   const [loading, setLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
-  const [organizationCategory, setOrganizationCategory] = useState(null);
-  const [tenantRoute, setTenantRoute] = useState("");
-  const [servicePlan, setServicePlan] = useState("");
+  const [organizationCategory, setOrganizationCategory] = useState("Software");
+  const [organizationCategoryNumber, setOrganizationCategoryNumber] =
+    useState(null);
 
-  const handleCategory = (category) => {
-    switch (category) {
-      case "Automotive, Mobility & Transportation":
-        setOrganizationCategory(1);
-        break;
-      case "Energy & Sustainability":
-        setOrganizationCategory(2);
-        break;
-      case "Finance Services":
-        setOrganizationCategory(3);
-        break;
-      case "Healthcare & Life Sciences":
-        setOrganizationCategory(4);
-        break;
-      case "Manufacturing & Supply Chain":
-        setOrganizationCategory(5);
-        break;
-      case "Media & Communications":
-        setOrganizationCategory(6);
-        break;
-      case "Public Sector":
-        setOrganizationCategory(7);
-        break;
-      case "Retail & Consumer Goods":
-        setOrganizationCategory(8);
-        break;
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    "(UTC+03:00) Nairobi"
+  );
+  const [timeZone, setTimezone] = useState("(UTC+03:00) Nairobi");
+  const [onboardingQuestions, setOnboardingQuestions] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [servicePlan, setServicePlan] = useState(
+    "Standard (Ksh10,000, Free 14 Days Trial)"
+  );
+  const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
-      case "Software":
-        setOrganizationCategory(9);
-        break;
+  const navigate = useNavigate();
 
-      default:
-        setOrganizationCategory(9);
-        break;
-    }
+  // Set the industry for the organisation according to what the user selects
+  const handleCategorySelection = (category) => {
+    const selectedCategory = handleCategory(category);
+    setOrganizationCategory(selectedCategory.name);
+    setOrganizationCategoryNumber(selectedCategory.key);
   };
 
-  const handleServicePlan = (servicePlan) => {
-    switch (servicePlan) {
-      case "Free (Free Forever)":
-        setServicePlan(5);
-        break;
-      case "Basic (Ksh3,000, Free 7 Days Trial)":
-        setServicePlan(6);
-        break;
-      case "Standard (Ksh10,000, Free 14 Days Trial)":
-        setServicePlan(7);
-        break;
-
-      default:
-        setServicePlan(7);
-        break;
-    }
+  // Set the service plan otpions according to what the user selects
+  const handleServicePlanSelection = (servicePlan) => {
+    const selectedService = handleServicePlan(servicePlan);
+    setServicePlan(selectedService.name);
+    setServicePlanNumber(selectedService.key);
   };
+
+  // Set the timezone according to what the user selects
+  const handleTimeZone = (selectedTimeZone) => {
+    const allTimezones = services.getAllTimezones();
+    allTimezones.filter((timezone) => {
+      if (timezone.text === selectedTimeZone) {
+        setSelectedTimezone(timezone.text);
+        setTimezone(timezone.value);
+      }
+    });
+  };
+
+  // Submit the tenant info to be processed and added to the database
   const submitForm = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const formData = {
-      organizationName,
-      organizationCategory,
-      tenantRoute,
-      servicePlan,
+      company: organizationName,
+      // profession: organizationCategoryNumber,
+      timeZone,
+      question: onboardingQuestions,
+      answer,
+      // servicePlanNumber,
     };
 
     try {
-      //TO DO: send a request to check if tenant exist and if not create on
-      setLoading(false);
+      const { data } = await request.post("/SadUser", formData);
+
+      if (data) {
+        setLoading(false);
+        navigate("/dashboard");
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -106,7 +112,7 @@ const Onboarding = () => {
               className="flex flex-col md:items-start items-center"
             >
               <article className="flex flex-wrap">
-                <div className="flex justify-between box-border flex-col gap-2  w-full mb-5">
+                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationName"
@@ -124,9 +130,13 @@ const Onboarding = () => {
                     height={30}
                     style={{ fontSize: "12px" }}
                     className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  ></TextBox>
+                  >
+                    <Validator>
+                      <RequiredRule message="Organisation name is required" />
+                    </Validator>
+                  </TextBox>
                 </div>
-                <div className="flex justify-between box-border flex-col gap-2  w-full mb-5">
+                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationCategory"
@@ -141,7 +151,7 @@ const Onboarding = () => {
                   <SelectBox
                     dataSource={organizationCategoryOptions}
                     searchEnabled={true}
-                    onValueChanged={(e) => handleCategory(e.value)}
+                    onValueChanged={(e) => handleCategorySelection(e.value)}
                     value={organizationCategory}
                     placeholder="Select Organization Category"
                     height={30}
@@ -149,27 +159,74 @@ const Onboarding = () => {
                     className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                   />
                 </div>
-                <div className="flex justify-between box-border flex-col gap-2  w-full mb-5">
+                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
                     className="text-lg text-gray-800 font-medium"
-                    htmlFor="tenantRoute"
+                    htmlFor="question"
                   >
-                    Please choose a name for your custom Tenant Route
+                    Please choose question category
                   </label>
                   <span className="text-xs">
-                    Choose a unique route to use when accessing your tenant. You
+                    Choose any security question that is suitable for you. You
                     can change this later.
+                  </span>
+                  <SelectBox
+                    dataSource={onboardingQuestionsOptions}
+                    searchEnabled={true}
+                    onValueChanged={(e) => setOnboardingQuestions(e.value)}
+                    value={onboardingQuestions}
+                    placeholder="Select a Service Plan"
+                    height={30}
+                    style={{ fontSize: "12px" }}
+                    className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                  />
+                </div>
+                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                  <label
+                    className="text-lg text-gray-800 font-medium"
+                    htmlFor="organizationName"
+                  >
+                    What is your answer to the question you have selected?:
+                  </label>
+                  <span className="text-xs">
+                    The answer should be familiar to you and would not be hard
+                    to remember.
                   </span>
                   <TextBox
                     placeholder="Type here.."
-                    onValueChanged={(e) => setTenantRoute(e.value)}
-                    value={tenantRoute}
+                    onValueChanged={(e) => setAnswer(e.value)}
+                    value={answer}
                     height={30}
                     style={{ fontSize: "12px" }}
                     className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  ></TextBox>
+                  >
+                    <Validator>
+                      <RequiredRule message="An answer is required" />
+                    </Validator>
+                  </TextBox>
                 </div>
-                <div className="flex justify-between box-border flex-col gap-2  w-full mb-5">
+                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                  <label
+                    className="text-lg text-gray-800 font-medium"
+                    htmlFor="organizationCategory"
+                  >
+                    Please choose your time zone
+                  </label>
+                  <span className="text-xs">
+                    Choose the timezone that you are curretly at
+                  </span>
+                  <SelectBox
+                    dataSource={timezonesOptions}
+                    searchEnabled={true}
+                    onValueChanged={(e) => handleTimeZone(e.value)}
+                    value={selectedTimezone}
+                    placeholder="Select Organization Category"
+                    height={30}
+                    style={{ fontSize: "12px" }}
+                    className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                  />
+                </div>
+                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
                     className="text-lg   text-gray-800 font-medium"
                     htmlFor="originCountry"
@@ -183,7 +240,7 @@ const Onboarding = () => {
                   <SelectBox
                     dataSource={servicePlanOptions}
                     searchEnabled={true}
-                    onValueChanged={(e) => handleServicePlan(e.value)}
+                    onValueChanged={(e) => handleServicePlanSelection(e.value)}
                     value={servicePlan}
                     placeholder="Select a Service Plan"
                     height={30}
@@ -193,9 +250,11 @@ const Onboarding = () => {
                 </div>
               </article>
               <article>
-                <button className="flex border-none py-2 rounded-sm px-4 w-fit bg-buttonBlue text-white items-center font-semibold  cursor-pointer  text-xs">
-                  {loading ? <LoadIndicator /> : "Submit"}
-                </button>
+                <Button id="onBoardingButton" useSubmitBehavior={true}>
+                  {" "}
+                  <FcAddDatabase className="text-white" fontSize={20} />
+                  Submit
+                </Button>
               </article>
             </form>
           </article>
@@ -204,5 +263,7 @@ const Onboarding = () => {
     </main>
   );
 };
+
+const timezonesOptions = services.getTimezoneText();
 
 export default Onboarding;
