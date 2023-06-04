@@ -1,13 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import { logout } from "../../redux/userSlice";
+import { useSelector } from "react-redux";
 import { userMenus } from "../../helpers/userProfileLinks";
 import { logoutFunc } from "../../helpers/auth";
 
 const UserProfileMenu = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Get current user

@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
 import DateBox from "devextreme-react/date-box";
-import { toast } from "react-toastify";
 import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import New from "./New";
-import webService from "../../utils/webService";
-
 import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
-
-import { useDispatch } from "react-redux";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -20,13 +15,15 @@ const Home = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
+   // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
+   // eslint-disable-next-line
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+
 
   // Fuction to close the Create || update form
   const handleClose = () => {
@@ -37,13 +34,13 @@ const Home = () => {
   };
 
   // Define a function to get the instance of selected row
-  const startEdit = ({ data }) => {
-    if (data) {
-      setRowDblClickBookingId(data.bookingId);
-    } else {
-      setRowDblClickBookingId(null);
-    }
-  };
+  // const startEdit = ({ data }) => {
+  //   if (data) {
+  //     setRowDblClickBookingId(data.bookingId);
+  //   } else {
+  //     setRowDblClickBookingId(null);
+  //   }
+  // };
 
   useEffect(() => {
     // try {
@@ -73,14 +70,14 @@ const Home = () => {
   }, [onRowDblClickBookingId]);
 
   // Function to open ConfirmationPopupComponent
-  const openConfirmationPopup = async (rowItem) => {
-    if (rowItem === null) {
-      toast.warning("Please select a booking to delete");
-    } else {
-      setStatusMode("DeleteMode");
-      setOpen((isOpen) => !isOpen);
-    }
-  };
+  // const openConfirmationPopup = async (rowItem) => {
+  //   if (rowItem === null) {
+  //     toast.warning("Please select a booking to delete");
+  //   } else {
+  //     setStatusMode("DeleteMode");
+  //     setOpen((isOpen) => !isOpen);
+  //   }
+  // };
 
   // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {

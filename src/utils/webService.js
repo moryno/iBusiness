@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 axios.defaults.baseURL = "https://ibusinessbooking.azurewebsites.net/api";
 
@@ -58,6 +57,7 @@ axios.interceptors.request.use(
   }
 );
 
+// eslint-disable-next-line
 export default { Request };
 
 export const sideMenuRequest =

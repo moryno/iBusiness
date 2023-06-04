@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 const Portal = ({ isOpen, setOpen, children }) => {
   // Add an event listener when the component is mounted
@@ -9,7 +9,10 @@ const Portal = ({ isOpen, setOpen, children }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  
+  },
+  // eslint-disable-next-line
+  []);
 
   // Handle the keydown event
   function handleKeyDown(event) {

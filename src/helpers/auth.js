@@ -2,6 +2,7 @@ import { makeRequest } from "../utils/axios";
 
 export const logoutFunc = () => {
   localStorage.removeItem("token");
+  // eslint-disable-next-line
   const response = makeRequest.get("/Microsoftidentity/Account/SignOut", {
     withCredentials: true,
   });
