@@ -7,6 +7,7 @@ import { FcAddDatabase } from "react-icons/fc";
 import {
   onboardingQuestionsOptions,
   organizationCategoryOptions,
+  professionalOptions,
   servicePlanOptions,
 } from "../../helpers/onBoardingSource";
 
@@ -26,7 +27,9 @@ const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
-  const [organizationCategory, setOrganizationCategory] = useState("Software");
+  const [profession, setProfession] = useState(
+    "Accounting, finance, banking, insuarance"
+  );
   // eslint-disable-next-line
   const [organizationCategoryNumber, setOrganizationCategoryNumber] =
     useState(null);
@@ -51,21 +54,19 @@ const Onboarding = () => {
     getUserInformation(dispatch, url);
   }, [dispatch]);
 
-  // Set the industry for the organisation according to what the user selects
-  const handleCategorySelection = (category) => {
-    const selectedCategory = handleCategory(category);
-    setOrganizationCategory(selectedCategory.name);
-    setOrganizationCategoryNumber(selectedCategory.key);
-  };
+  // // Set the industry for the organisation according to what the user selects
+  // const handleCategorySelection = (category) => {
+  //   const selectedCategory = handleCategory(category);
+  //   setOrganizationCategory(selectedCategory.name);
+  //   setOrganizationCategoryNumber(selectedCategory.key);
+  // };
 
-  // Set the service plan otpions according to what the user selects
   const handleServicePlanSelection = (servicePlan) => {
     const selectedService = handleServicePlan(servicePlan);
     setServicePlan(selectedService.name);
     setServicePlanNumber(selectedService.key);
   };
 
-  // Set the timezone according to what the user selects
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = services.getAllTimezones();
     allTimezones.filter((timezone) => {
@@ -84,7 +85,7 @@ const Onboarding = () => {
     setLoading(true);
     const formData = {
       company: organizationName,
-      // profession: organizationCategoryNumber,
+      profession,
       timeZone,
       question: onboardingQuestions,
       answer,
@@ -153,7 +154,7 @@ const Onboarding = () => {
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationCategory"
                   >
-                    In what industry is your organization?
+                    What is your profession?
                   </label>
                   <span className="text-xs">
                     Identifying your industry will help people find you in
@@ -161,10 +162,10 @@ const Onboarding = () => {
                     later.
                   </span>
                   <SelectBox
-                    dataSource={organizationCategoryOptions}
+                    dataSource={professionalOptions}
                     searchEnabled={true}
-                    onValueChanged={(e) => handleCategorySelection(e.value)}
-                    value={organizationCategory}
+                    onValueChanged={(e) => setProfession(e.value)}
+                    value={profession}
                     placeholder="Select Organization Category"
                     height={30}
                     style={{ fontSize: "12px" }}
