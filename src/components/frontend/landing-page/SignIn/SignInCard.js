@@ -7,9 +7,10 @@ import data from "../../../../data/pages/signin";
 import { setUpToken } from "../../../../helpers/auth";
 import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
-import { msSingleSign } from "../../../../utils/webService";
+
 import axios from "axios";
 import LoadingIndicator from "../../../features/LoadingIndicator";
+import { signUpInURL } from "../../../../axios/webService";
 
 export const Card = () => {
   const [loading, setLoading] = useState(false);
@@ -38,7 +39,7 @@ export const Card = () => {
   // Function to call on endpoint that will redirect user to Microsoft platform to log in
   const handleMsLogin = async (event) => {
     event.preventDefault();
-    window.location.href = msSingleSign;
+    window.location.href = signUpInURL;
   };
 
   // Get user information the send to API to check if user is registered
@@ -47,7 +48,7 @@ export const Card = () => {
       setLoading(true);
       try {
         // perform get user information
-        const { data } = await axios.get(msSingleSign + search);
+        const { data } = await axios.get(signUpInURL + search);
 
         // A check to see if user is registered
         if (data?.registered) {

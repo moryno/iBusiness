@@ -1,7 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = "https://ibusinessbooking.azurewebsites.net/api";
+const BASE_URL = "https://ibusinessbooking.azurewebsites.net/api";
+
+const webService = axios.create({ baseURL: BASE_URL });
 
 axios.interceptors.response.use(undefined, (error) => {
   // const { status, config } = error.response;
@@ -43,7 +45,7 @@ const Request = {
   delete: (id) => request.del(`booking?bookingID=${id}`),
 };
 
-axios.interceptors.request.use(
+webService.interceptors.request.use(
   (config) => {
     const TOKEN = localStorage.getItem("token");
 
@@ -54,19 +56,11 @@ axios.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error);
+    return Promise.reject(error);
   }
 );
 
 export default { Request };
 
-export const sideMenuRequest =
-  "http://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
-
-export const msSingleSign =
+export const signUpInURL =
   "https://192.168.1.13/MicrosoftIdentity/Account/SignIn";
-// "https://ibusinessaccountservice.azurewebsites.net/login/Loginwithmicrosoft";
-// "https://login.microsoftonline.com/429eb2c8-ad5d-4e03-b326-a26d27a067f7/oauth2/authorize?client_id=fd6d9002-4eb4-4b56-b3a4-29f9cf05141f&response_type=token&redirect_uri=http://localhost:3000/login&resource=fd6d9002-4eb4-4b56-b3a4-29f9cf05141f&scope=openid&response_mode=fragment&state=12345&nonce=678910";
-
-// URL to our homepage
-export const homeWebsite = "https://ibusiness-git-main-moryno.vercel.app/";

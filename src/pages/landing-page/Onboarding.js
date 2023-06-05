@@ -19,8 +19,9 @@ import {
 } from "../../utils/onBoardingServices";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import request from "../../utils/requestService";
+
 import { getUserInformation } from "../../redux/userService";
+import requestService from "../../axios/requestService";
 
 const Onboarding = () => {
   const [loading, setLoading] = useState(false);
@@ -82,7 +83,7 @@ const Onboarding = () => {
     };
 
     try {
-      const { data } = await request.post("/SadUser", formData);
+      const { data } = await requestService.post("/SadUser", formData);
 
       if (data) {
         setLoading(false);

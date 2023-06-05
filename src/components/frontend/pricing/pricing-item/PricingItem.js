@@ -1,7 +1,8 @@
 import { FaCheck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
-import { msSingleSign } from "../../../../utils/webService";
+
+import { signUpInURL } from "../../../../axios/webService";
 
 const PricingItem = ({ pricing }) => {
   return (
@@ -39,7 +40,7 @@ const PricingItem = ({ pricing }) => {
             ))}
           </ul>
           <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
-            <Link to={msSingleSign}>{pricing?.button}</Link>
+            <Link to={signUpInURL}>{pricing?.button}</Link>
           </button>
         </article>
       </section>

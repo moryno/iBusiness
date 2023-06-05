@@ -17,7 +17,7 @@ import Validator, {
 import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
-import webService from "../../utils/webService";
+import webService from "../../axios/webService";
 
 const New = ({
   handleClose,

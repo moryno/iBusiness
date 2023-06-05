@@ -10,7 +10,7 @@ import data from "../../../../data/pages/getstarted";
 import { setUpToken } from "../../../../helpers/auth";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../redux/userSlice";
-import { msSingleSign } from "../../../../utils/webService";
+import signUpInService from "../../../../axios/signupService";
 
 export const GetStarted = () => {
   // eslint-disable-next-line
@@ -50,7 +50,7 @@ export const GetStarted = () => {
     event.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(msSingleSign, inputs, config);
+      const { data } = await axios.post(signUpInService, inputs, config);
       setLoading(false);
       toast.success("Registered successfully");
       setUpToken(data?.token);

@@ -10,9 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
 import { Link, useNavigate } from "react-router-dom";
-import { msSingleSign } from "../../../utils/webService";
 import { useSelector } from "react-redux";
 import UserProfileMenu from "../UserProfileMenu";
+import { signUpInURL } from "../../../axios/webService";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
@@ -96,7 +96,7 @@ export const Navbar = () => {
               </button>
             </>
           ) : (
-            <a href={msSingleSign}>
+            <a href={signUpInURL}>
               <button className="nav-signin-button">Sign Up/In</button>
             </a>
           )}

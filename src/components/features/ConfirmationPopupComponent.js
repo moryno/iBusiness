@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { MdOutlineClose, MdOutlineDeleteOutline } from "react-icons/md";
 import { TbBrandBooking } from "react-icons/tb";
 import { ImUndo2 } from "react-icons/im";
-import webService from "../../utils/webService";
+
 import { toast } from "react-toastify";
 import LoadingIndicator from "./LoadingIndicator";
+import webService from "../../axios/webService";
 
 const ConfirmationPopupComponent = ({
   item,

@@ -7,9 +7,10 @@ import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import { bookingColumns } from "../../data/PurchaseOrderData";
-import webService from "../../utils/webService";
+
 import { bookingFilterValues } from "../../helpers/datatableSource";
 import { useDispatch } from "react-redux";
+import webService from "../../axios/webService";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);

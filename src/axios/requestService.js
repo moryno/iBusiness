@@ -2,9 +2,9 @@ import axios from "axios";
 
 const BASE_URL = "https://192.168.1.13:7041/api";
 
-let request = axios.create({ baseURL: BASE_URL });
+const requestService = axios.create({ baseURL: BASE_URL });
 
-request.interceptors.request.use(
+requestService.interceptors.request.use(
   (config) => {
     const TOKEN = localStorage.getItem("token");
 
@@ -15,8 +15,8 @@ request.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error);
+    return Promise.reject(error);
   }
 );
 
-export default request;
+export default requestService;

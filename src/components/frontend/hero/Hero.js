@@ -4,7 +4,8 @@ import illustration from "../../../assets/illustrations/1.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import data from "../../../data/hero";
 import { Link } from "react-router-dom";
-import { msSingleSign } from "../../../utils/webService";
+
+import { signUpInURL } from "../../../axios/webService";
 
 export const Hero = () => {
   return (
@@ -26,7 +27,7 @@ export const Hero = () => {
           </Link>
         </form> */}
         <button className="heroGetStarted">
-          <Link to={msSingleSign}>Get Started</Link>
+          <Link to={signUpInURL}>Get Started</Link>
         </button>
       </div>
       <div className="hero-image-div">

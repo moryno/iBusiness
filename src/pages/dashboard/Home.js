@@ -7,7 +7,6 @@ import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import New from "./New";
-import webService from "../../utils/webService";
 
 import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
 

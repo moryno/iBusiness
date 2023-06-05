@@ -8,7 +8,7 @@ import { FaTools } from "react-icons/fa";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { sideMenuRequest } from "../../utils/webService";
+import sideMenuRequest from "../../axios/menuRequest";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
