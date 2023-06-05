@@ -9,7 +9,7 @@ import { login } from "../../../../redux/apiCall";
 import { loginSuccess } from "../../../../redux/userSlice";
 
 import axios from "axios";
-import LoadingIndicator from "../../../features/LoadingIndicator";
+import LoadingIndicator from "../../../dashboard/LoadingIndicator";
 import { signUpInURL } from "../../../../axios/webService";
 
 export const Card = () => {

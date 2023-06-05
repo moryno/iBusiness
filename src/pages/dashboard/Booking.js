@@ -7,13 +7,13 @@ import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
-import New from "./New";
+import New from "../../components/dashboard/New";
 import { bookingColumns } from "../../data/PurchaseOrderData";
 
 import { bookingFilterValues } from "../../helpers/datatableSource";
-import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
 
 import webService from "../../axios/webService";
+import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);

@@ -8,7 +8,7 @@ import { FaTools } from "react-icons/fa";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
-import sideMenuRequest from "../../axios/menuRequest";
+import { sideMenuRequest } from "../../axios/webService";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
@@ -40,7 +40,6 @@ const SideLinks = () => {
 
   // Hook to fetch module menus from Cosmos DB
   useEffect(() => {
-
     const getModuleMenus = async () => {
       try {
         const { data } = await axios.get(

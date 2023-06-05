@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginSuccess } from "./userSlice";
+import { loginSuccess } from "../redux/userSlice";
 import { setUpToken } from "../helpers/auth";
 
 export const getUserInformation = async (dispatch, url) => {

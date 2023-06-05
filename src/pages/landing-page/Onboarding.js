@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import Validator, { RequiredRule } from "devextreme-react/validator";
@@ -17,9 +17,14 @@ import {
 } from "../../utils/onBoardingServices";
 import { useNavigate } from "react-router-dom";
 import requestService from "../../axios/requestService";
+import Portal from "../../components/dashboard/Portal";
+import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
+import { useDispatch } from "react-redux";
+import { getUserInformation } from "../../services/userService";
 
 const Onboarding = () => {
-  // const [loading, setLoading] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
   const [organizationCategory, setOrganizationCategory] = useState("Software");
   // eslint-disable-next-line
@@ -39,6 +44,12 @@ const Onboarding = () => {
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const url = "https://192.168.1.13/api/user-info";
+    getUserInformation(dispatch, url);
+  }, [dispatch]);
 
   // Set the industry for the organisation according to what the user selects
   const handleCategorySelection = (category) => {
@@ -69,8 +80,8 @@ const Onboarding = () => {
   // Submit the tenant info to be processed and added to the database
   const submitForm = async (e) => {
     e.preventDefault();
-    // setLoading(true);
-
+    setOpen(true);
+    setLoading(true);
     const formData = {
       company: organizationName,
       // profession: organizationCategoryNumber,
@@ -84,11 +95,13 @@ const Onboarding = () => {
       const { data } = await requestService.post("/SadUser", formData);
 
       if (data) {
-        // setLoading(false);
+        setOpen(false);
+        setLoading(false);
         navigate("/dashboard");
       }
     } catch (error) {
-      // setLoading(false);
+      setOpen(false);
+      setLoading(false);
       console.log(error);
     }
   };
@@ -259,6 +272,14 @@ const Onboarding = () => {
           </article>
         </section>
       </section>
+      <Portal isOpen={isOpen} setOpen={setOpen}>
+        <section className="bg-white w-full md:w-[600px]  mx-auto p-5 h-20 gap-2 rounded-sm flex flex-col items-center justify-center">
+          <h2 className="text-lg">
+            Please wait as we process your information.
+          </h2>
+          {loading && <LoadingIndicator />}
+        </section>
+      </Portal>
     </main>
   );
 };

@@ -5,8 +5,10 @@ import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
-import New from "./New";
-import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
+import New from "../../components/dashboard/New";
+import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
+import { useDispatch } from "react-redux";
+import { getUserInformation } from "../../services/userService";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -14,6 +16,7 @@ const today = new Date().toISOString().slice(0, 10);
 const Home = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
+  // eslint-disable-next-line
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
@@ -24,7 +27,13 @@ const Home = () => {
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
 
-  // Fuction to close the Create || update form
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const url = "https://192.168.1.13/api/user-info";
+    getUserInformation(dispatch, url);
+  }, [dispatch]);
+
   const handleClose = () => {
     setRowDblClickBookingId(null);
     setSingleBooking({});
@@ -32,76 +41,29 @@ const Home = () => {
     setOpen(false);
   };
 
-  // Define a function to get the instance of selected row
-  // const startEdit = ({ data }) => {
-  //   if (data) {
-  //     setRowDblClickBookingId(data.bookingId);
-  //   } else {
-  //     setRowDblClickBookingId(null);
-  //   }
-  // };
-
-  useEffect(() => {
-    // try {
-    //   const getData = async () => {
-    //     setLoading(true);
-    //     const response = date
-    //       ? await webService.Request.getByDate(date.startdate, date.enddate)
-    //       : await webService.Request.get();
-    //     setLoading(false);
-    //     setBookings(response);
-    //   };
-    //   getData();
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  }, [date]);
-
-  // This Hook is to fetch single booking when a row in the datagrid is double clicked
-  useEffect(() => {
-    // const getSingleBooking = async () => {
-    //   const response = await webService.Request.getById(onRowDblClickBookingId);
-    //   setSingleBooking(response);
-    //   setStatusMode("EditMode");
-    //   setOpen((isOpen) => !isOpen);
-    // };
-    // if (onRowDblClickBookingId) getSingleBooking();
-  }, [onRowDblClickBookingId]);
-
-  // Function to open ConfirmationPopupComponent
-  // const openConfirmationPopup = async (rowItem) => {
-  //   if (rowItem === null) {
-  //     toast.warning("Please select a booking to delete");
-  //   } else {
-  //     setStatusMode("DeleteMode");
-  //     setOpen((isOpen) => !isOpen);
-  //   }
-  // };
-
-  // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
-    // switch (menu) {
-    //   case "Find":
-    //     fromDate === null && toDate && date === ""
-    //       ? setDate({ startdate: fromDate, enddate: toDate })
-    //       : setDate({ startdate: fromDate, enddate: toDate });
-    //     break;
-    //   case "New":
-    //     setStatusMode("CreateMode");
-    //     setOpen((isOpen) => !isOpen);
-    //     break;
-    //   case "Delete":
-    //     openConfirmationPopup(onRowClickItem);
-    //     break;
-    //   case "Close":
-    //     console.log("Close was clicked");
-    //     break;
-    //   case "Help":
-    //     console.log("Help was clicked");
-    //     break;
-    //   default:
-    //     break;
-    // }
+    switch (menu) {
+      case "Find":
+        fromDate === null && toDate && date === ""
+          ? setDate({ startdate: fromDate, enddate: toDate })
+          : setDate({ startdate: fromDate, enddate: toDate });
+        break;
+      case "New":
+        setStatusMode("CreateMode");
+        setOpen((isOpen) => !isOpen);
+        break;
+      case "Delete":
+        break;
+      case "Close":
+        console.log("Close was clicked");
+        break;
+      case "Help":
+        console.log("Help was clicked");
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (

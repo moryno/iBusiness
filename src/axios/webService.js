@@ -64,3 +64,6 @@ export default { Request };
 
 export const signUpInURL =
   "https://192.168.1.13/MicrosoftIdentity/Account/SignIn";
+
+export const sideMenuRequest =
+  "http://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
