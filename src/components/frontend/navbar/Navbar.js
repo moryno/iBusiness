@@ -9,24 +9,16 @@ import {
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import UserProfileMenu from "../UserProfileMenu";
 import { signUpInURL } from "../../../axios/webService";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
 
   const currentUser = useSelector((state) => state.user?.currentUser);
-  const navigate = useNavigate();
 
-  const handleRedirect = () => {
-    if (currentUser?.isRegistered) {
-      navigate("/dashboard");
-    } else {
-      navigate("/onboarding");
-    }
-  };
+  const handleLogOut = () => {};
 
   const handleToggle = () => {
     if (toggleSidebar === false) {
@@ -87,12 +79,10 @@ export const Navbar = () => {
                   <h1 className="text-gray-600 font-medium">
                     Hello, {currentUser?.givenName}
                   </h1>
-                  <UserProfileMenu />
                 </article>
               </article>
-
-              <button onClick={handleRedirect} className="nav-signin-button">
-                Dashboard
+              <button onClick={handleLogOut} className="nav-signin-button">
+                Sign Out
               </button>
             </>
           ) : (
