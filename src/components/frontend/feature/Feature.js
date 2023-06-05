@@ -1,6 +1,8 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import features from "../../../data/products.json";
+import { Link } from "react-router-dom";
+import { signUpInURL } from "../../../axios/webService";
 
 const Feature = () => {
   return (
@@ -35,9 +37,11 @@ const Feature = () => {
           ))}
         </article>
         <article className="mt-8 flex items-center justify-center">
-          <div className="w-fit px-3 py-2 cursor-pointer rounded-sm bg-bgDark text-white">
-            Get Started Free
-          </div>
+          <Link to={signUpInURL}>
+            <div className="w-fit px-3 py-2 cursor-pointer rounded-sm bg-bgDark text-white">
+              Get Started Free
+            </div>
+          </Link>
         </article>
       </section>
     </main>

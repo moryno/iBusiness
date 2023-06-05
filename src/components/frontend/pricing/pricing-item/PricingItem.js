@@ -39,9 +39,12 @@ const PricingItem = ({ pricing }) => {
               </li>
             ))}
           </ul>
-          <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
-            <Link to={signUpInURL}>{pricing?.button}</Link>
-          </button>
+          <Link to={signUpInURL}>
+            {" "}
+            <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
+              {pricing?.button}
+            </button>
+          </Link>
         </article>
       </section>
     </main>

@@ -1,6 +1,5 @@
 export const logoutFunc = () => {
   localStorage.removeItem("token");
-
   window.location.href = "/";
 };
 

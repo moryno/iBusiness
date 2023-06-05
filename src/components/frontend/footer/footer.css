@@ -50,6 +50,15 @@
 
 .about-sec {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.about-top{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .abt-description {
@@ -102,7 +111,7 @@
 }
 
 .nav-copy {
-    margin-top: 7vw;
+    margin-top: 30px;
     
 }
 
