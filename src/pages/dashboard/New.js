@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
@@ -31,6 +31,7 @@ const New = ({
 }) => {
   // Define state to store the change in the input field
   // Code starts here
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState(

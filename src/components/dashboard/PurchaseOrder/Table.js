@@ -120,6 +120,7 @@ export const Table = ({
             "PurchaseOrder/updateorderitem",
             rowIndex.data
           );
+          console.log(response.status)
         } catch (e) {
           console.log(e);
         }

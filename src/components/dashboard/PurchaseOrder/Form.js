@@ -58,7 +58,9 @@ const Form = ({
     setOrderNumber(formUpdateData.orderNumber);
     setInitialRender(false);
     setLoading(false);
-  }, [formUpdateData]);
+  }, 
+  // eslint-disable-next-line
+  [formUpdateData]);
 
   useEffect(() => {
     const data = {
@@ -82,7 +84,9 @@ const Form = ({
       return;
     }
     updateToCosmos(data);
-  }, [
+  }, 
+  // eslint-disable-next-line
+  [
     costCenter,
     supplier,
     shipsTo,

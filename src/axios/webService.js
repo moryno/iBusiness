@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const BASE_URL = "https://ibusinessbooking.azurewebsites.net/api";
 
@@ -60,6 +59,7 @@ webService.interceptors.request.use(
   }
 );
 
+// eslint-disable-next-line
 export default { Request };
 
 export const signUpInURL =

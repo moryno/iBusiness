@@ -40,6 +40,7 @@ const SideLinks = () => {
 
   // Hook to fetch module menus from Cosmos DB
   useEffect(() => {
+
     const getModuleMenus = async () => {
       try {
         const { data } = await axios.get(

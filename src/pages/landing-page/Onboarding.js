@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { Button } from "devextreme-react";
-import { LoadIndicator } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
-
 import {
   onboardingQuestionsOptions,
   organizationCategoryOptions,
@@ -18,15 +16,13 @@ import {
   handleServicePlan,
 } from "../../utils/onBoardingServices";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
-import { getUserInformation } from "../../redux/userService";
 import requestService from "../../axios/requestService";
 
 const Onboarding = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
   const [organizationCategory, setOrganizationCategory] = useState("Software");
+  // eslint-disable-next-line
   const [organizationCategoryNumber, setOrganizationCategoryNumber] =
     useState(null);
 
@@ -39,6 +35,7 @@ const Onboarding = () => {
   const [servicePlan, setServicePlan] = useState(
     "Standard (Ksh10,000, Free 14 Days Trial)"
   );
+  // eslint-disable-next-line
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
   const navigate = useNavigate();
@@ -65,13 +62,14 @@ const Onboarding = () => {
         setSelectedTimezone(timezone.text);
         setTimezone(timezone.value);
       }
+      return 0;
     });
   };
 
   // Submit the tenant info to be processed and added to the database
   const submitForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     const formData = {
       company: organizationName,
@@ -86,11 +84,11 @@ const Onboarding = () => {
       const { data } = await requestService.post("/SadUser", formData);
 
       if (data) {
-        setLoading(false);
+        // setLoading(false);
         navigate("/dashboard");
       }
     } catch (error) {
-      setLoading(false);
+      // setLoading(false);
       console.log(error);
     }
   };

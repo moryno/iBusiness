@@ -13,9 +13,6 @@ import { bookingColumns } from "../../data/PurchaseOrderData";
 import { bookingFilterValues } from "../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
 
-import { setUpToken } from "../../helpers/auth";
-import { loginSuccess } from "../../redux/userSlice";
-import { useDispatch } from "react-redux";
 import webService from "../../axios/webService";
 
 // Get todays day to use in the filter date fields of the datagrid
@@ -31,10 +28,8 @@ const Booking = () => {
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
-  const [userInfo, setuserInfo] = useState(null);
-
-  const dispatch = useDispatch();
 
   // Fuction to close the Create || update form
   const handleClose = () => {
