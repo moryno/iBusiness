@@ -6,24 +6,19 @@ import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
 import {
   onboardingQuestionsOptions,
-  organizationCategoryOptions,
   professionalOptions,
   servicePlanOptions,
 } from "../../helpers/onBoardingSource";
 
 import services from "../../helpers/timezones";
-import {
-  handleCategory,
-  handleServicePlan,
-} from "../../utils/onBoardingServices";
+import { handleServicePlan } from "../../utils/onBoardingServices";
 import { useNavigate } from "react-router-dom";
 import requestService from "../../axios/requestService";
 import Portal from "../../components/dashboard/Portal";
 import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { setUpToken } from "../../helpers/auth";
-import { loginSuccess } from "../../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getCurrentUser } from "../../services/userService";
 
 const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
@@ -48,7 +43,7 @@ const Onboarding = () => {
   // eslint-disable-next-line
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
-  const [currentUser, setCurrentUser] = useState({});
+  const currentUser = useSelector((state) => state.user?.currentUser);
 
   const [organizationName, setOrganizationName] = useState(
     currentUser?.organizationName
@@ -57,33 +52,9 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const getOnboardingInfo = async () => {
-    const getTokenUrl = "https://localhost:5001/api/GetAuthUser";
-    const getUserURL = "https://localhost:7041/api/user";
-
-    try {
-      const { data } = await axios.get(getTokenUrl, {
-        withCredentials: true,
-      });
-
-      setUpToken(data?.accessToken);
-
-      const config = {
-        headers: { Authorization: `Bearer ${data?.accessToken}` },
-      };
-
-      const response = await axios.get(getUserURL, config);
-
-      setCurrentUser(response?.data);
-      dispatch(loginSuccess(response?.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getOnboardingInfo();
-  }, []);
+    getCurrentUser(dispatch);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   const url = "https://localhost:7041/api/user";
