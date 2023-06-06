@@ -70,15 +70,15 @@ const Onboarding = () => {
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = services.getAllTimezones();
     allTimezones.filter((timezone) => {
-      // Check the changes below
-      if (timezone.value === selectedTimeZone) {
-        setSelectedTimezone(timezone.value);
-        setTimezone(timezone.value);
-      }
-      // if (timezone.text === selectedTimeZone) {
-      //   setSelectedTimezone(timezone.text);
+      // // Check the changes below
+      // if (timezone.value === selectedTimeZone) {
+      //   setSelectedTimezone(timezone.value);
       //   setTimezone(timezone.value);
       // }
+      if (timezone.text === selectedTimeZone) {
+        setSelectedTimezone(timezone.text);
+        setTimezone(timezone.value);
+      }
       return 0;
     });
   };
@@ -234,10 +234,10 @@ const Onboarding = () => {
                     You can set your preffered timezone here.
                   </span>
                   <SelectBox
-                    dataSource={timezonesOptions.v}
+                    dataSource={timezonesOptions}
                     searchEnabled={true}
                     onValueChanged={(e) => handleTimeZone(e.value)}
-                    value={selectedTimezone.value}
+                    value={selectedTimezone}
                     placeholder="Preffered timezone"
                     height={30}
                     style={{ fontSize: "12px" }}
