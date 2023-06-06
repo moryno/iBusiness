@@ -118,6 +118,21 @@ const Onboarding = () => {
   //     return 0;
   //   });
   // };
+  const handleTimeZone = (selectedTimeZone) => {
+    const allTimezones = services.getAllTimezones();
+    allTimezones.filter((timezone) => {
+      // // Check the changes below
+      // if (timezone.value === selectedTimeZone) {
+      //   setSelectedTimezone(timezone.value);
+      //   setTimezone(timezone.value);
+      // }
+      if (timezone.text === selectedTimeZone) {
+        setSelectedTimezone(timezone.text);
+        setTimezone(timezone.value);
+      }
+      return 0;
+    });
+  };
 
   // Submit the tenant info to be processed and added to the database
   const onboardingFormData = {
