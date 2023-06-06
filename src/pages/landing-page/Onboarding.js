@@ -51,7 +51,7 @@ const Onboarding = () => {
   const [currentUser, setCurrentUser] = useState({});
 
   const [organizationName, setOrganizationName] = useState(
-    currentUser.organizationName
+    currentUser?.organizationName
   );
 
   const navigate = useNavigate();
@@ -103,33 +103,15 @@ const Onboarding = () => {
     setServicePlanNumber(selectedService.key);
   };
 
-  // const handleTimeZone = (selectedTimeZone) => {
-  //   const allTimezones = services.getAllTimezones();
-  //   allTimezones.filter((timezone) => {
-  //     // Check the changes below
-  //     if (timezone.value === selectedTimeZone) {
-  //       setSelectedTimezone(timezone.value);
-  //       setTimezone(timezone.value);
-  //     }
-  //     // if (timezone.text === selectedTimeZone) {
-  //     //   setSelectedTimezone(timezone.text);
-  //     //   setTimezone(timezone.value);
-  //     // }
-  //     return 0;
-  //   });
-  // };
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = services.getAllTimezones();
     allTimezones.filter((timezone) => {
-      // // Check the changes below
-      // if (timezone.value === selectedTimeZone) {
-      //   setSelectedTimezone(timezone.value);
-      //   setTimezone(timezone.value);
-      // }
+      // Check the changes below
       if (timezone.text === selectedTimeZone) {
         setSelectedTimezone(timezone.text);
         setTimezone(timezone.value);
       }
+
       return 0;
     });
   };
@@ -179,7 +161,7 @@ const Onboarding = () => {
             </p>
           </article>
           <article>
-            {currentUser && (
+            {currentUser.organizationName && (
               <form
                 onSubmit={submitForm}
                 className="flex flex-col md:items-start items-center"
@@ -291,8 +273,8 @@ const Onboarding = () => {
                     <SelectBox
                       dataSource={timezonesOptions}
                       searchEnabled={true}
-                      onValueChanged={(e) => setTimezone(e.value)}
-                      value={selectedTimezone.value}
+                      onValueChanged={(e) => handleTimeZone(e.value)}
+                      value={selectedTimezone}
                       placeholder="Preffered timezone"
                       height={30}
                       style={{ fontSize: "12px" }}
