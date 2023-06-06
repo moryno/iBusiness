@@ -77,7 +77,7 @@ export const Navbar = () => {
               <article className="flex items-center font-medium">
                 <article className="flex items-center gap-1">
                   <h1 className="text-gray-600 font-medium">
-                    Hello, {currentUser?.givenName}
+                    Hello, {currentUser?.name}
                   </h1>
                 </article>
               </article>
