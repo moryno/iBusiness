@@ -1,723 +1,573 @@
 const timezonesOptions = [
   {
-    value: "Dateline Standard Time",
-    abbr: "DST",
-    offset: -12,
-    isdst: false,
-    text: "(UTC-12:00) International Date Line West",
+    "value": "Azores Standard Time",
+    "offset": "+00:00"
   },
   {
-    value: "UTC-11",
-    abbr: "U",
-    offset: -11,
-    isdst: false,
-    text: "(UTC-11:00) Coordinated Universal Time-11",
+    "value": "Greenwich Standard Time",
+    "offset": "+00:00"
   },
   {
-    value: "Hawaiian Standard Time",
-    abbr: "HST",
-    offset: -10,
-    isdst: false,
-    text: "(UTC-10:00) Hawaii",
+    "value": "Sao Tome Standard Time",
+    "offset": "+00:00"
   },
   {
-    value: "Alaskan Standard Time",
-    abbr: "AKDT",
-    offset: -8,
-    isdst: true,
-    text: "(UTC-09:00) Alaska",
+    "value": "UTC",
+    "offset": "+00:00"
   },
   {
-    value: "Pacific Standard Time (Mexico)",
-    abbr: "PDT",
-    offset: -7,
-    isdst: true,
-    text: "(UTC-08:00) Baja California",
+    "value": "GMT Standard Time",
+    "offset": "+01:00"
   },
   {
-    value: "Pacific Standard Time",
-    abbr: "PDT",
-    offset: -7,
-    isdst: true,
-    text: "(UTC-08:00) Pacific Time (US & Canada)",
+    "value": "Morocco Standard Time",
+    "offset": "+01:00"
   },
   {
-    value: "US Mountain Standard Time",
-    abbr: "UMST",
-    offset: -7,
-    isdst: false,
-    text: "(UTC-07:00) Arizona",
+    "value": "W. Central Africa Standard Time",
+    "offset": "+01:00"
   },
   {
-    value: "Mountain Standard Time (Mexico)",
-    abbr: "MDT",
-    offset: -6,
-    isdst: true,
-    text: "(UTC-07:00) Chihuahua, La Paz, Mazatlan",
+    "value": "W. Europe Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Mountain Standard Time",
-    abbr: "MDT",
-    offset: -6,
-    isdst: true,
-    text: "(UTC-07:00) Mountain Time (US & Canada)",
+    "value": "Central Europe Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Central America Standard Time",
-    abbr: "CAST",
-    offset: -6,
-    isdst: false,
-    text: "(UTC-06:00) Central America",
+    "value": "Romance Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Central Standard Time",
-    abbr: "CDT",
-    offset: -5,
-    isdst: true,
-    text: "(UTC-06:00) Central Time (US & Canada)",
+    "value": "Central European Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Central Standard Time (Mexico)",
-    abbr: "CDT",
-    offset: -5,
-    isdst: true,
-    text: "(UTC-06:00) Guadalajara, Mexico City, Monterrey",
+    "value": "South Africa Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Canada Central Standard Time",
-    abbr: "CCST",
-    offset: -6,
-    isdst: false,
-    text: "(UTC-06:00) Saskatchewan",
+    "value": "South Sudan Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "SA Pacific Standard Time",
-    abbr: "SPST",
-    offset: -5,
-    isdst: false,
-    text: "(UTC-05:00) Bogota, Lima, Quito",
+    "value": "Kaliningrad Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Eastern Standard Time",
-    abbr: "EDT",
-    offset: -4,
-    isdst: true,
-    text: "(UTC-05:00) Eastern Time (US & Canada)",
+    "value": "Sudan Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "US Eastern Standard Time",
-    abbr: "UEDT",
-    offset: -4,
-    isdst: true,
-    text: "(UTC-05:00) Indiana (East)",
+    "value": "Libya Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Venezuela Standard Time",
-    abbr: "VST",
-    offset: -4.5,
-    isdst: false,
-    text: "(UTC-04:30) Caracas",
+    "value": "Namibia Standard Time",
+    "offset": "+02:00"
   },
   {
-    value: "Paraguay Standard Time",
-    abbr: "PST",
-    offset: -4,
-    isdst: false,
-    text: "(UTC-04:00) Asuncion",
+    "value": "Jordan Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Atlantic Standard Time",
-    abbr: "ADT",
-    offset: -3,
-    isdst: true,
-    text: "(UTC-04:00) Atlantic Time (Canada)",
+    "value": "Arabic Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Central Brazilian Standard Time",
-    abbr: "CBST",
-    offset: -4,
-    isdst: false,
-    text: "(UTC-04:00) Cuiaba",
+    "value": "Turkey Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "SA Western Standard Time",
-    abbr: "SWST",
-    offset: -4,
-    isdst: false,
-    text: "(UTC-04:00) Georgetown, La Paz, Manaus, San Juan",
+    "value": "Arab Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Pacific SA Standard Time",
-    abbr: "PSST",
-    offset: -4,
-    isdst: false,
-    text: "(UTC-04:00) Santiago",
+    "value": "Belarus Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Newfoundland Standard Time",
-    abbr: "NDT",
-    offset: -2.5,
-    isdst: true,
-    text: "(UTC-03:30) Newfoundland",
+    "value": "Russian Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "E. South America Standard Time",
-    abbr: "ESAST",
-    offset: -3,
-    isdst: false,
-    text: "(UTC-03:00) Brasilia",
+    "value": "E. Africa Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Argentina Standard Time",
-    abbr: "AST",
-    offset: -3,
-    isdst: false,
-    text: "(UTC-03:00) Buenos Aires",
+    "value": "Volgograd Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "SA Eastern Standard Time",
-    abbr: "SEST",
-    offset: -3,
-    isdst: false,
-    text: "(UTC-03:00) Cayenne, Fortaleza",
+    "value": "FLE Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Greenland Standard Time",
-    abbr: "GDT",
-    offset: -2,
-    isdst: true,
-    text: "(UTC-03:00) Greenland",
+    "value": "Israel Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Montevideo Standard Time",
-    abbr: "MST",
-    offset: -3,
-    isdst: false,
-    text: "(UTC-03:00) Montevideo",
+    "value": "GTB Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Bahia Standard Time",
-    abbr: "BST",
-    offset: -3,
-    isdst: false,
-    text: "(UTC-03:00) Salvador",
+    "value": "Middle East Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "UTC-02",
-    abbr: "U",
-    offset: -2,
-    isdst: false,
-    text: "(UTC-02:00) Coordinated Universal Time-02",
+    "value": "Egypt Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Mid-Atlantic Standard Time",
-    abbr: "MDT",
-    offset: -1,
-    isdst: true,
-    text: "(UTC-02:00) Mid-Atlantic - Old",
+    "value": "E. Europe Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Azores Standard Time",
-    abbr: "ADT",
-    offset: 0,
-    isdst: true,
-    text: "(UTC-01:00) Azores",
+    "value": "Syria Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Cape Verde Standard Time",
-    abbr: "CVST",
-    offset: -1,
-    isdst: false,
-    text: "(UTC-01:00) Cape Verde Is.",
+    "value": "West Bank Standard Time",
+    "offset": "+03:00"
   },
   {
-    value: "Morocco Standard Time",
-    abbr: "MDT",
-    offset: 1,
-    isdst: true,
-    text: "(UTC) Casablanca",
+    "value": "Iran Standard Time",
+    "offset": "+03:30"
   },
   {
-    value: "UTC",
-    abbr: "CUT",
-    offset: 0,
-    isdst: false,
-    text: "(UTC) Coordinated Universal Time",
+    "value": "Arabian Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "GMT Standard Time",
-    abbr: "GDT",
-    offset: 1,
-    isdst: true,
-    text: "(UTC) Dublin, Edinburgh, Lisbon, London",
+    "value": "Astrakhan Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "Greenwich Standard Time",
-    abbr: "GST",
-    offset: 0,
-    isdst: false,
-    text: "(UTC) Monrovia, Reykjavik",
+    "value": "Azerbaijan Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "W. Europe Standard Time",
-    abbr: "WEDT",
-    offset: 2,
-    isdst: true,
-    text: "(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
+    "value": "Russia Time Zone 3",
+    "offset": "+04:00"
   },
   {
-    value: "Central Europe Standard Time",
-    abbr: "CEDT",
-    offset: 2,
-    isdst: true,
-    text: "(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague",
+    "value": "Mauritius Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "Romance Standard Time",
-    abbr: "RDT",
-    offset: 2,
-    isdst: true,
-    text: "(UTC+01:00) Brussels, Copenhagen, Madrid, Paris",
+    "value": "Saratov Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "Central European Standard Time",
-    abbr: "CEDT",
-    offset: 2,
-    isdst: true,
-    text: "(UTC+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
+    "value": "Georgian Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "W. Central Africa Standard Time",
-    abbr: "WCAST",
-    offset: 1,
-    isdst: false,
-    text: "(UTC+01:00) West Central Africa",
+    "value": "Caucasus Standard Time",
+    "offset": "+04:00"
   },
   {
-    value: "Namibia Standard Time",
-    abbr: "NST",
-    offset: 1,
-    isdst: false,
-    text: "(UTC+01:00) Windhoek",
+    "value": "Afghanistan Standard Time",
+    "offset": "+04:30"
   },
   {
-    value: "GTB Standard Time",
-    abbr: "GDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) Athens, Bucharest",
+    "value": "West Asia Standard Time",
+    "offset": "+05:00"
   },
   {
-    value: "Middle East Standard Time",
-    abbr: "MEDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) Beirut",
+    "value": "Ekaterinburg Standard Time",
+    "offset": "+05:00"
   },
   {
-    value: "Egypt Standard Time",
-    abbr: "EST",
-    offset: 2,
-    isdst: false,
-    text: "(UTC+02:00) Cairo",
+    "value": "Pakistan Standard Time",
+    "offset": "+05:00"
   },
   {
-    value: "Syria Standard Time",
-    abbr: "SDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) Damascus",
+    "value": "Qyzylorda Standard Time",
+    "offset": "+05:00"
   },
   {
-    value: "E. Europe Standard Time",
-    abbr: "EEDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) E. Europe",
+    "value": "India Standard Time",
+    "offset": "+05:30"
   },
   {
-    value: "South Africa Standard Time",
-    abbr: "SAST",
-    offset: 2,
-    isdst: false,
-    text: "(UTC+02:00) Harare, Pretoria",
+    "value": "Sri Lanka Standard Time",
+    "offset": "+05:30"
   },
   {
-    value: "FLE Standard Time",
-    abbr: "FDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius",
+    "value": "Nepal Standard Time",
+    "offset": "+05:45"
   },
   {
-    value: "Turkey Standard Time",
-    abbr: "TDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) Istanbul",
+    "value": "Central Asia Standard Time",
+    "offset": "+06:00"
   },
   {
-    value: "Israel Standard Time",
-    abbr: "JDT",
-    offset: 3,
-    isdst: true,
-    text: "(UTC+02:00) Jerusalem",
+    "value": "Bangladesh Standard Time",
+    "offset": "+06:00"
   },
   {
-    value: "Libya Standard Time",
-    abbr: "LST",
-    offset: 2,
-    isdst: false,
-    text: "(UTC+02:00) Tripoli",
+    "value": "Omsk Standard Time",
+    "offset": "+06:00"
   },
   {
-    value: "Jordan Standard Time",
-    abbr: "JST",
-    offset: 3,
-    isdst: false,
-    text: "(UTC+03:00) Amman",
+    "value": "Myanmar Standard Time",
+    "offset": "+06:30"
   },
   {
-    value: "Arabic Standard Time",
-    abbr: "AST",
-    offset: 3,
-    isdst: false,
-    text: "(UTC+03:00) Baghdad",
+    "value": "SE Asia Standard Time",
+    "offset": "+07:00"
   },
   {
-    value: "Kaliningrad Standard Time",
-    abbr: "KST",
-    offset: 3,
-    isdst: false,
-    text: "(UTC+03:00) Kaliningrad, Minsk",
+    "value": "Altai Standard Time",
+    "offset": "+07:00"
   },
   {
-    value: "Arab Standard Time",
-    abbr: "AST",
-    offset: 3,
-    isdst: false,
-    text: "(UTC+03:00) Kuwait, Riyadh",
+    "value": "W. Mongolia Standard Time",
+    "offset": "+07:00"
   },
   {
-    value: "E. Africa Standard Time",
-    abbr: "EAST",
-    offset: 3,
-    isdst: false,
-    text: "(UTC+03:00) Nairobi",
+    "value": "North Asia Standard Time",
+    "offset": "+07:00"
   },
   {
-    value: "Iran Standard Time",
-    abbr: "IDT",
-    offset: 4.5,
-    isdst: true,
-    text: "(UTC+03:30) Tehran",
+    "value": "N. Central Asia Standard Time",
+    "offset": "+07:00"
   },
   {
-    value: "Arabian Standard Time",
-    abbr: "AST",
-    offset: 4,
-    isdst: false,
-    text: "(UTC+04:00) Abu Dhabi, Muscat",
+    "value": "Tomsk Standard Time",
+    "offset": "+07:00"
   },
   {
-    value: "Azerbaijan Standard Time",
-    abbr: "ADT",
-    offset: 5,
-    isdst: true,
-    text: "(UTC+04:00) Baku",
+    "value": "China Standard Time",
+    "offset": "+08:00"
   },
   {
-    value: "Russian Standard Time",
-    abbr: "RST",
-    offset: 4,
-    isdst: false,
-    text: "(UTC+04:00) Moscow, St. Petersburg, Volgograd",
+    "value": "North Asia East Standard Time",
+    "offset": "+08:00"
   },
   {
-    value: "Mauritius Standard Time",
-    abbr: "MST",
-    offset: 4,
-    isdst: false,
-    text: "(UTC+04:00) Port Louis",
+    "value": "Singapore Standard Time",
+    "offset": "+08:00"
   },
   {
-    value: "Georgian Standard Time",
-    abbr: "GST",
-    offset: 4,
-    isdst: false,
-    text: "(UTC+04:00) Tbilisi",
+    "value": "W. Australia Standard Time",
+    "offset": "+08:00"
   },
   {
-    value: "Caucasus Standard Time",
-    abbr: "CST",
-    offset: 4,
-    isdst: false,
-    text: "(UTC+04:00) Yerevan",
+    "value": "Taipei Standard Time",
+    "offset": "+08:00"
   },
   {
-    value: "Afghanistan Standard Time",
-    abbr: "AST",
-    offset: 4.5,
-    isdst: false,
-    text: "(UTC+04:30) Kabul",
+    "value": "Ulaanbaatar Standard Time",
+    "offset": "+08:00"
   },
   {
-    value: "West Asia Standard Time",
-    abbr: "WAST",
-    offset: 5,
-    isdst: false,
-    text: "(UTC+05:00) Ashgabat, Tashkent",
+    "value": "Aus Central W. Standard Time",
+    "offset": "+08:45"
   },
   {
-    value: "Pakistan Standard Time",
-    abbr: "PST",
-    offset: 5,
-    isdst: false,
-    text: "(UTC+05:00) Islamabad, Karachi",
+    "value": "Transbaikal Standard Time",
+    "offset": "+09:00"
   },
   {
-    value: "India Standard Time",
-    abbr: "IST",
-    offset: 5.5,
-    isdst: false,
-    text: "(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi",
+    "value": "Tokyo Standard Time",
+    "offset": "+09:00"
   },
   {
-    value: "Sri Lanka Standard Time",
-    abbr: "SLST",
-    offset: 5.5,
-    isdst: false,
-    text: "(UTC+05:30) Sri Jayawardenepura",
+    "value": "North Korea Standard Time",
+    "offset": "+09:00"
   },
   {
-    value: "Nepal Standard Time",
-    abbr: "NST",
-    offset: 5.75,
-    isdst: false,
-    text: "(UTC+05:45) Kathmandu",
+    "value": "Korea Standard Time",
+    "offset": "+09:00"
   },
   {
-    value: "Central Asia Standard Time",
-    abbr: "CAST",
-    offset: 6,
-    isdst: false,
-    text: "(UTC+06:00) Astana",
+    "value": "Yakutsk Standard Time",
+    "offset": "+09:00"
   },
   {
-    value: "Bangladesh Standard Time",
-    abbr: "BST",
-    offset: 6,
-    isdst: false,
-    text: "(UTC+06:00) Dhaka",
+    "value": "Cen. Australia Standard Time",
+    "offset": "+09:30"
   },
   {
-    value: "Ekaterinburg Standard Time",
-    abbr: "EST",
-    offset: 6,
-    isdst: false,
-    text: "(UTC+06:00) Ekaterinburg",
+    "value": "AUS Central Standard Time",
+    "offset": "+09:30"
   },
   {
-    value: "Myanmar Standard Time",
-    abbr: "MST",
-    offset: 6.5,
-    isdst: false,
-    text: "(UTC+06:30) Yangon (Rangoon)",
+    "value": "E. Australia Standard Time",
+    "offset": "+10:00"
   },
   {
-    value: "SE Asia Standard Time",
-    abbr: "SAST",
-    offset: 7,
-    isdst: false,
-    text: "(UTC+07:00) Bangkok, Hanoi, Jakarta",
+    "value": "AUS Eastern Standard Time",
+    "offset": "+10:00"
   },
   {
-    value: "N. Central Asia Standard Time",
-    abbr: "NCAST",
-    offset: 7,
-    isdst: false,
-    text: "(UTC+07:00) Novosibirsk",
+    "value": "West Pacific Standard Time",
+    "offset": "+10:00"
   },
   {
-    value: "China Standard Time",
-    abbr: "CST",
-    offset: 8,
-    isdst: false,
-    text: "(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi",
+    "value": "Tasmania Standard Time",
+    "offset": "+10:00"
   },
   {
-    value: "North Asia Standard Time",
-    abbr: "NAST",
-    offset: 8,
-    isdst: false,
-    text: "(UTC+08:00) Krasnoyarsk",
+    "value": "Vladivostok Standard Time",
+    "offset": "+10:00"
   },
   {
-    value: "Singapore Standard Time",
-    abbr: "MPST",
-    offset: 8,
-    isdst: false,
-    text: "(UTC+08:00) Kuala Lumpur, Singapore",
+    "value": "Lord Howe Standard Time",
+    "offset": "+10:30"
   },
   {
-    value: "W. Australia Standard Time",
-    abbr: "WAST",
-    offset: 8,
-    isdst: false,
-    text: "(UTC+08:00) Perth",
+    "value": "Bougainville Standard Time",
+    "offset": "+11:00"
   },
   {
-    value: "Taipei Standard Time",
-    abbr: "TST",
-    offset: 8,
-    isdst: false,
-    text: "(UTC+08:00) Taipei",
+    "value": "Russia Time Zone 10",
+    "offset": "+11:00"
   },
   {
-    value: "Ulaanbaatar Standard Time",
-    abbr: "UST",
-    offset: 8,
-    isdst: false,
-    text: "(UTC+08:00) Ulaanbaatar",
+    "value": "Magadan Standard Time",
+    "offset": "+11:00"
   },
   {
-    value: "North Asia East Standard Time",
-    abbr: "NAEST",
-    offset: 9,
-    isdst: false,
-    text: "(UTC+09:00) Irkutsk",
+    "value": "Norfolk Standard Time",
+    "offset": "+11:00"
   },
   {
-    value: "Tokyo Standard Time",
-    abbr: "TST",
-    offset: 9,
-    isdst: false,
-    text: "(UTC+09:00) Osaka, Sapporo, Tokyo",
+    "value": "Sakhalin Standard Time",
+    "offset": "+11:00"
   },
   {
-    value: "Korea Standard Time",
-    abbr: "KST",
-    offset: 9,
-    isdst: false,
-    text: "(UTC+09:00) Seoul",
+    "value": "Central Pacific Standard Time",
+    "offset": "+11:00"
   },
   {
-    value: "Cen. Australia Standard Time",
-    abbr: "CAST",
-    offset: 9.5,
-    isdst: false,
-    text: "(UTC+09:30) Adelaide",
+    "value": "Russia Time Zone 11",
+    "offset": "+12:00"
   },
   {
-    value: "AUS Central Standard Time",
-    abbr: "ACST",
-    offset: 9.5,
-    isdst: false,
-    text: "(UTC+09:30) Darwin",
+    "value": "New Zealand Standard Time",
+    "offset": "+12:00"
   },
   {
-    value: "E. Australia Standard Time",
-    abbr: "EAST",
-    offset: 10,
-    isdst: false,
-    text: "(UTC+10:00) Brisbane",
+    "value": "UTC+12",
+    "offset": "+12:00"
   },
   {
-    value: "AUS Eastern Standard Time",
-    abbr: "AEST",
-    offset: 10,
-    isdst: false,
-    text: "(UTC+10:00) Canberra, Melbourne, Sydney",
+    "value": "Fiji Standard Time",
+    "offset": "+12:00"
   },
   {
-    value: "West Pacific Standard Time",
-    abbr: "WPST",
-    offset: 10,
-    isdst: false,
-    text: "(UTC+10:00) Guam, Port Moresby",
+    "value": "Chatham Islands Standard Time",
+    "offset": "+12:45"
   },
   {
-    value: "Tasmania Standard Time",
-    abbr: "TST",
-    offset: 10,
-    isdst: false,
-    text: "(UTC+10:00) Hobart",
+    "value": "UTC+13",
+    "offset": "+13:00"
   },
   {
-    value: "Yakutsk Standard Time",
-    abbr: "YST",
-    offset: 10,
-    isdst: false,
-    text: "(UTC+10:00) Yakutsk",
+    "value": "Tonga Standard Time",
+    "offset": "+13:00"
   },
   {
-    value: "Central Pacific Standard Time",
-    abbr: "CPST",
-    offset: 11,
-    isdst: false,
-    text: "(UTC+11:00) Solomon Is., New Caledonia",
+    "value": "Samoa Standard Time",
+    "offset": "+13:00"
   },
   {
-    value: "Vladivostok Standard Time",
-    abbr: "VST",
-    offset: 11,
-    isdst: false,
-    text: "(UTC+11:00) Vladivostok",
+    "value": "Kamchatka Standard Time",
+    "offset": "+13:00"
   },
   {
-    value: "New Zealand Standard Time",
-    abbr: "NZST",
-    offset: 12,
-    isdst: false,
-    text: "(UTC+12:00) Auckland, Wellington",
+    "value": "Line Islands Standard Time",
+    "offset": "+14:00"
   },
   {
-    value: "UTC+12",
-    abbr: "U",
-    offset: 12,
-    isdst: false,
-    text: "(UTC+12:00) Coordinated Universal Time+12",
+    "value": "Cape Verde Standard Time",
+    "offset": "-01:00"
   },
   {
-    value: "Fiji Standard Time",
-    abbr: "FST",
-    offset: 12,
-    isdst: false,
-    text: "(UTC+12:00) Fiji",
+    "value": "Mid-Atlantic Standard Time",
+    "offset": "-01:00"
   },
   {
-    value: "Magadan Standard Time",
-    abbr: "MST",
-    offset: 12,
-    isdst: false,
-    text: "(UTC+12:00) Magadan",
+    "value": "UTC-02",
+    "offset": "-02:00"
   },
   {
-    value: "Kamchatka Standard Time",
-    abbr: "KDT",
-    offset: 13,
-    isdst: true,
-    text: "(UTC+12:00) Petropavlovsk-Kamchatsky - Old",
+    "value": "Greenland Standard Time",
+    "offset": "-02:00"
   },
   {
-    value: "Tonga Standard Time",
-    abbr: "TST",
-    offset: 13,
-    isdst: false,
-    text: "(UTC+13:00) Nuku'alofa",
+    "value": "Saint Pierre Standard Time",
+    "offset": "-02:00"
   },
   {
-    value: "Samoa Standard Time",
-    abbr: "SST",
-    offset: 13,
-    isdst: false,
-    text: "(UTC+13:00) Samoa",
+    "value": "Newfoundland Standard Time",
+    "offset": "-02:30"
   },
+  {
+    "value": "Tocantins Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "E. South America Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "SA Eastern Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "Argentina Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "Atlantic Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "Bahia Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "Montevideo Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "Magallanes Standard Time",
+    "offset": "-03:00"
+  },
+  {
+    "value": "Venezuela Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Central Brazilian Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "SA Western Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Pacific SA Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Eastern Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Haiti Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Cuba Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "US Eastern Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Turks And Caicos Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "Paraguay Standard Time",
+    "offset": "-04:00"
+  },
+  {
+    "value": "SA Pacific Standard Time",
+    "offset": "-05:00"
+  },
+  {
+    "value": "Eastern Standard Time (Mexico)",
+    "offset": "-05:00"
+  },
+  {
+    "value": "Central Standard Time",
+    "offset": "-05:00"
+  },
+  {
+    "value": "Easter Island Standard Time",
+    "offset": "-06:00"
+  },
+  {
+    "value": "Central Standard Time (Mexico)",
+    "offset": "-06:00"
+  },
+  {
+    "value": "Canada Central Standard Time",
+    "offset": "-06:00"
+  },
+  {
+    "value": "Mountain Standard Time",
+    "offset": "-06:00"
+  },
+  {
+    "value": "Central America Standard Time",
+    "offset": "-06:00"
+  },
+  {
+    "value": "Yukon Standard Time",
+    "offset": "-07:00"
+  },
+  {
+    "value": "Pacific Standard Time",
+    "offset": "-07:00"
+  },
+  {
+    "value": "US Mountain Standard Time",
+    "offset": "-07:00"
+  },
+  {
+    "value": "Mountain Standard Time (Mexico)",
+    "offset": "-07:00"
+  },
+  {
+    "value": "Pacific Standard Time (Mexico)",
+    "offset": "-07:00"
+  },
+  {
+    "value": "UTC-08",
+    "offset": "-08:00"
+  },
+  {
+    "value": "Alaskan Standard Time",
+    "offset": "-08:00"
+  },
+  {
+    "value": "UTC-09",
+    "offset": "-09:00"
+  },
+  {
+    "value": "Aleutian Standard Time",
+    "offset": "-09:00"
+  },
+  {
+    "value": "Marquesas Standard Time",
+    "offset": "-09:30"
+  },
+  {
+    "value": "Hawaiian Standard Time",
+    "offset": "-10:00"
+  },
+  {
+    "value": "UTC-11",
+    "offset": "-11:00"
+  },
+  {
+    "value": "Dateline Standard Time",
+    "offset": "-12:00"
+  }
 ];
 
 const services = {
   getTimezoneText() {
-    return timezonesOptions.map((zone) => zone.text);
+    return timezonesOptions.map((zone) => `${zone.value} (${zone.offset})`);
   },
   getAllTimezones() {
     return timezonesOptions;

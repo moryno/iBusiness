@@ -35,9 +35,9 @@ const Onboarding = () => {
     useState(null);
 
   const [selectedTimezone, setSelectedTimezone] = useState(
-    "(UTC+03:00) Nairobi"
+    "E. Africa Standard Time"
   );
-  const [timeZone, setTimezone] = useState("(UTC+03:00) Nairobi");
+  const [timeZone, setTimezone] = useState("E. Africa Standard Time");
   const [onboardingQuestions, setOnboardingQuestions] = useState("");
   const [answer, setAnswer] = useState("");
   const [servicePlan, setServicePlan] = useState(
@@ -70,10 +70,15 @@ const Onboarding = () => {
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = services.getAllTimezones();
     allTimezones.filter((timezone) => {
-      if (timezone.text === selectedTimeZone) {
-        setSelectedTimezone(timezone.text);
+      // Check the changes below
+      if (timezone.value === selectedTimeZone) {
+        setSelectedTimezone(timezone.value);
         setTimezone(timezone.value);
       }
+      // if (timezone.text === selectedTimeZone) {
+      //   setSelectedTimezone(timezone.text);
+      //   setTimezone(timezone.value);
+      // }
       return 0;
     });
   };
@@ -130,7 +135,7 @@ const Onboarding = () => {
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationName"
                   >
-                    What is your Organization's Name?:
+                    What is your organization's name?
                   </label>
                   <span className="text-xs">
                     The name should be the name of your business, brand or
@@ -188,7 +193,7 @@ const Onboarding = () => {
                     searchEnabled={true}
                     onValueChanged={(e) => setOnboardingQuestions(e.value)}
                     value={onboardingQuestions}
-                    placeholder="Select a Service Plan"
+                    placeholder="Choose a security question"
                     height={30}
                     style={{ fontSize: "12px" }}
                     className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
@@ -199,7 +204,7 @@ const Onboarding = () => {
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationName"
                   >
-                    What is your answer to the question you have selected?:
+                    What is your answer to the question you have selected?
                   </label>
                   <span className="text-xs">
                     The answer should be familiar to you and would not be hard
@@ -223,17 +228,17 @@ const Onboarding = () => {
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationCategory"
                   >
-                    Please choose your time zone
+                    Choose your time zone
                   </label>
                   <span className="text-xs">
-                    Choose the timezone that you are curretly at
+                    You can set your preffered timezone here.
                   </span>
                   <SelectBox
-                    dataSource={timezonesOptions}
+                    dataSource={timezonesOptions.v}
                     searchEnabled={true}
                     onValueChanged={(e) => handleTimeZone(e.value)}
-                    value={selectedTimezone}
-                    placeholder="Select Organization Category"
+                    value={selectedTimezone.value}
+                    placeholder="Preffered timezone"
                     height={30}
                     style={{ fontSize: "12px" }}
                     className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
@@ -244,11 +249,10 @@ const Onboarding = () => {
                     className="text-lg   text-gray-800 font-medium"
                     htmlFor="originCountry"
                   >
-                    Create your Subscriber - Select a Plan
+                    Select your subscription plan
                   </label>
                   <span className="text-xs">
-                    The name should be the name of your business, brand or
-                    organization. You can change this later.
+                    Get to choose a preffered package here according to your needs.
                   </span>
                   <SelectBox
                     dataSource={servicePlanOptions}
