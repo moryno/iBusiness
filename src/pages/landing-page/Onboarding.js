@@ -20,13 +20,17 @@ import { useNavigate } from "react-router-dom";
 import requestService from "../../axios/requestService";
 import Portal from "../../components/dashboard/Portal";
 import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
-import { useDispatch } from "react-redux";
-import { getUserInformation } from "../../services/userService";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAuthToken,
+  getOnboardingInfo,
+  getUserInformation,
+} from "../../services/userService";
 
 const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [organizationName, setOrganizationName] = useState("");
+
   const [profession, setProfession] = useState(
     "Accounting, finance, banking, insuarance"
   );
@@ -46,13 +50,27 @@ const Onboarding = () => {
   // eslint-disable-next-line
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
 
+  const currentUser = useSelector((state) => state.user?.currentUser);
+
+  const [organizationName, setOrganizationName] = useState(
+    currentUser?.organizationName
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const url = "https://192.168.1.13/api/user-info";
-    getUserInformation(dispatch, url);
+    const url = "https://localhost:5001/api/user-info";
+    const getUserURL = "https://localhost:7041/api/user";
+
+    //const token = getAuthToken(url);
+    getOnboardingInfo(dispatch, url, getUserURL);
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   const url = "https://localhost:7041/api/user";
+  //   if (accessToken) getUserInformation(dispatch, url);
+  // }, [accessToken, dispatch]);
 
   // // Set the industry for the organisation according to what the user selects
   // const handleCategorySelection = (category) => {

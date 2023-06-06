@@ -63,7 +63,7 @@ webService.interceptors.request.use(
 export default { Request };
 
 export const signUpInURL =
-  "https://192.168.1.13/MicrosoftIdentity/Account/SignIn";
+  "https://localhost:5001/MicrosoftIdentity/Account/SignIn";
 
 export const sideMenuRequest =
   "http://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
