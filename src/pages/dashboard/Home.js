@@ -8,7 +8,7 @@ import Portal from "../../components/dashboard/Portal";
 import New from "../../components/dashboard/New";
 import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
 import { useDispatch } from "react-redux";
-import { getUserInformation } from "../../services/userService";
+import { getCurrentUser } from "../../services/userService";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
@@ -30,8 +30,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const url = "https://192.168.1.13/api/user-info";
-    getUserInformation(dispatch, url);
+    getCurrentUser(dispatch);
   }, [dispatch]);
 
   const handleClose = () => {

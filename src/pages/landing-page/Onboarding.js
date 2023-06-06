@@ -6,26 +6,19 @@ import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
 import {
   onboardingQuestionsOptions,
-  organizationCategoryOptions,
   professionalOptions,
   servicePlanOptions,
 } from "../../helpers/onBoardingSource";
 
 import services from "../../helpers/timezones";
-import {
-  handleCategory,
-  handleServicePlan,
-} from "../../utils/onBoardingServices";
+import { handleServicePlan } from "../../utils/onBoardingServices";
 import { useNavigate } from "react-router-dom";
 import requestService from "../../axios/requestService";
 import Portal from "../../components/dashboard/Portal";
 import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAuthToken,
-  getOnboardingInfo,
-  getUserInformation,
-} from "../../services/userService";
+
+import { getCurrentUser } from "../../services/userService";
 
 const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
@@ -60,11 +53,7 @@ const Onboarding = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const url = "https://localhost:5001/api/user-info";
-    const getUserURL = "https://localhost:7041/api/user";
-
-    //const token = getAuthToken(url);
-    getOnboardingInfo(dispatch, url, getUserURL);
+    getCurrentUser(dispatch);
   }, [dispatch]);
 
   // useEffect(() => {
@@ -88,35 +77,35 @@ const Onboarding = () => {
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = services.getAllTimezones();
     allTimezones.filter((timezone) => {
-      // // Check the changes below
-      // if (timezone.value === selectedTimeZone) {
-      //   setSelectedTimezone(timezone.value);
-      //   setTimezone(timezone.value);
-      // }
+      // Check the changes below
       if (timezone.text === selectedTimeZone) {
         setSelectedTimezone(timezone.text);
         setTimezone(timezone.value);
       }
+
       return 0;
     });
   };
 
   // Submit the tenant info to be processed and added to the database
+  const onboardingFormData = {
+    company: organizationName,
+    profession,
+    timeZone,
+    question: onboardingQuestions,
+    answer,
+  };
+
   const submitForm = async (e) => {
     e.preventDefault();
     setOpen(true);
     setLoading(true);
-    const formData = {
-      company: organizationName,
-      profession,
-      timeZone,
-      question: onboardingQuestions,
-      answer,
-      // servicePlanNumber,
-    };
 
     try {
-      const { data } = await requestService.post("/SadUser", formData);
+      const { data } = await requestService.post(
+        "/SadUser",
+        onboardingFormData
+      );
 
       if (data) {
         setOpen(false);
@@ -143,155 +132,160 @@ const Onboarding = () => {
             </p>
           </article>
           <article>
-            <form
-              onSubmit={submitForm}
-              className="flex flex-col md:items-start items-center"
-            >
-              <article className="flex flex-wrap">
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg text-gray-800 font-medium"
-                    htmlFor="organizationName"
-                  >
-                    What is your organization's name?
-                  </label>
-                  <span className="text-xs">
-                    The name should be the name of your business, brand or
-                    organization. You can change this later.
-                  </span>
-                  <TextBox
-                    placeholder="Type here.."
-                    onValueChanged={(e) => setOrganizationName(e.value)}
-                    value={organizationName}
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  >
-                    <Validator>
-                      <RequiredRule message="Organisation name is required" />
-                    </Validator>
-                  </TextBox>
-                </div>
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg text-gray-800 font-medium"
-                    htmlFor="organizationCategory"
-                  >
-                    What is your profession?
-                  </label>
-                  <span className="text-xs">
-                    Identifying your industry will help people find you in
-                    search results. Choose the closest one - you can update it
-                    later.
-                  </span>
-                  <SelectBox
-                    dataSource={professionalOptions}
-                    searchEnabled={true}
-                    onValueChanged={(e) => setProfession(e.value)}
-                    value={profession}
-                    placeholder="Select Organization Category"
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  />
-                </div>
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg text-gray-800 font-medium"
-                    htmlFor="question"
-                  >
-                    Please choose question category
-                  </label>
-                  <span className="text-xs">
-                    Choose any security question that is suitable for you. You
-                    can change this later.
-                  </span>
-                  <SelectBox
-                    dataSource={onboardingQuestionsOptions}
-                    searchEnabled={true}
-                    onValueChanged={(e) => setOnboardingQuestions(e.value)}
-                    value={onboardingQuestions}
-                    placeholder="Choose a security question"
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  />
-                </div>
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg text-gray-800 font-medium"
-                    htmlFor="organizationName"
-                  >
-                    What is your answer to the question you have selected?
-                  </label>
-                  <span className="text-xs">
-                    The answer should be familiar to you and would not be hard
-                    to remember.
-                  </span>
-                  <TextBox
-                    placeholder="Type here.."
-                    onValueChanged={(e) => setAnswer(e.value)}
-                    value={answer}
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  >
-                    <Validator>
-                      <RequiredRule message="An answer is required" />
-                    </Validator>
-                  </TextBox>
-                </div>
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg text-gray-800 font-medium"
-                    htmlFor="organizationCategory"
-                  >
-                    Choose your time zone
-                  </label>
-                  <span className="text-xs">
-                    You can set your preffered timezone here.
-                  </span>
-                  <SelectBox
-                    dataSource={timezonesOptions}
-                    searchEnabled={true}
-                    onValueChanged={(e) => handleTimeZone(e.value)}
-                    value={selectedTimezone}
-                    placeholder="Preffered timezone"
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  />
-                </div>
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg   text-gray-800 font-medium"
-                    htmlFor="originCountry"
-                  >
-                    Select your subscription plan
-                  </label>
-                  <span className="text-xs">
-                    Get to choose a preffered package here according to your needs.
-                  </span>
-                  <SelectBox
-                    dataSource={servicePlanOptions}
-                    searchEnabled={true}
-                    onValueChanged={(e) => handleServicePlanSelection(e.value)}
-                    value={servicePlan}
-                    placeholder="Select a Service Plan"
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  />
-                </div>
-              </article>
-              <article>
-                <Button id="onBoardingButton" useSubmitBehavior={true}>
-                  {" "}
-                  <FcAddDatabase className="text-white" fontSize={20} />
-                  Submit
-                </Button>
-              </article>
-            </form>
+            {currentUser.organizationName && (
+              <form
+                onSubmit={submitForm}
+                className="flex flex-col md:items-start items-center"
+              >
+                <article className="flex flex-wrap">
+                  <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                    <label
+                      className="text-lg text-gray-800 font-medium"
+                      htmlFor="organizationName"
+                    >
+                      What is your organization's name?
+                    </label>
+                    <span className="text-xs">
+                      The name should be the name of your business, brand or
+                      organization. You can change this later.
+                    </span>
+                    <TextBox
+                      placeholder="Type here.."
+                      onValueChanged={(e) => setOrganizationName(e.value)}
+                      value={organizationName}
+                      height={30}
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    >
+                      <Validator>
+                        <RequiredRule message="Organisation name is required" />
+                      </Validator>
+                    </TextBox>
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                    <label
+                      className="text-lg text-gray-800 font-medium"
+                      htmlFor="organizationCategory"
+                    >
+                      What is your profession?
+                    </label>
+                    <span className="text-xs">
+                      Identifying your industry will help people find you in
+                      search results. Choose the closest one - you can update it
+                      later.
+                    </span>
+                    <SelectBox
+                      dataSource={professionalOptions}
+                      searchEnabled={true}
+                      onValueChanged={(e) => setProfession(e.value)}
+                      value={profession}
+                      placeholder="Select Organization Category"
+                      height={30}
+                      style={{ fontSize: "12px" }}
+                      className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                    <label
+                      className="text-lg text-gray-800 font-medium"
+                      htmlFor="question"
+                    >
+                      Please choose question category
+                    </label>
+                    <span className="text-xs">
+                      Choose any security question that is suitable for you. You
+                      can change this later.
+                    </span>
+                    <SelectBox
+                      dataSource={onboardingQuestionsOptions}
+                      searchEnabled={true}
+                      onValueChanged={(e) => setOnboardingQuestions(e.value)}
+                      value={onboardingQuestions}
+                      placeholder="Choose a security question"
+                      height={30}
+                      style={{ fontSize: "12px" }}
+                      className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                    <label
+                      className="text-lg text-gray-800 font-medium"
+                      htmlFor="organizationName"
+                    >
+                      What is your answer to the question you have selected?
+                    </label>
+                    <span className="text-xs">
+                      The answer should be familiar to you and would not be hard
+                      to remember.
+                    </span>
+                    <TextBox
+                      placeholder="Type here.."
+                      onValueChanged={(e) => setAnswer(e.value)}
+                      value={answer}
+                      height={30}
+                      style={{ fontSize: "12px" }}
+                      className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    >
+                      <Validator>
+                        <RequiredRule message="An answer is required" />
+                      </Validator>
+                    </TextBox>
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                    <label
+                      className="text-lg text-gray-800 font-medium"
+                      htmlFor="organizationCategory"
+                    >
+                      Choose your time zone
+                    </label>
+                    <span className="text-xs">
+                      You can set your preffered timezone here.
+                    </span>
+                    <SelectBox
+                      dataSource={timezonesOptions}
+                      searchEnabled={true}
+                      onValueChanged={(e) => handleTimeZone(e.value)}
+                      value={selectedTimezone}
+                      placeholder="Preffered timezone"
+                      height={30}
+                      style={{ fontSize: "12px" }}
+                      className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
+                    <label
+                      className="text-lg   text-gray-800 font-medium"
+                      htmlFor="originCountry"
+                    >
+                      Select your subscription plan
+                    </label>
+                    <span className="text-xs">
+                      Get to choose a preffered package here according to your
+                      needs.
+                    </span>
+                    <SelectBox
+                      dataSource={servicePlanOptions}
+                      searchEnabled={true}
+                      onValueChanged={(e) =>
+                        handleServicePlanSelection(e.value)
+                      }
+                      value={servicePlan}
+                      placeholder="Select a Service Plan"
+                      height={30}
+                      style={{ fontSize: "12px" }}
+                      className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
+                    />
+                  </div>
+                </article>
+                <article>
+                  <Button id="onBoardingButton" useSubmitBehavior={true}>
+                    {" "}
+                    <FcAddDatabase className="text-white" fontSize={20} />
+                    Submit
+                  </Button>
+                </article>
+              </form>
+            )}
           </article>
         </section>
       </section>

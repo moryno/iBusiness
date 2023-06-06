@@ -27,19 +27,24 @@ export const getAuthToken = async (url) => {
   }
 };
 
-export const getOnboardingInfo = async (dispatch, url1, url2) => {
+export const getCurrentUser = async (dispatch) => {
+  const getTokenUrl = "https://localhost:5001/api/GetAuthUser";
+  const getUserURL = "https://localhost:7041/api/user";
+
   try {
-    const { data } = await axios.get(url1, {
+    const { data } = await axios.get(getTokenUrl, {
       withCredentials: true,
     });
+
+    setUpToken(data?.accessToken);
 
     const config = {
       headers: { Authorization: `Bearer ${data?.accessToken}` },
     };
 
-    setUpToken(data?.accessToken);
-    const response = await axios.get(url2, config);
-    dispatch(loginSuccess(response.data));
+    const response = await axios.get(getUserURL, config);
+
+    dispatch(loginSuccess(response?.data));
   } catch (error) {
     console.log(error);
   }
