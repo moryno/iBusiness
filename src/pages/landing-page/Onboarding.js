@@ -50,6 +50,18 @@ const Onboarding = () => {
   );
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getCurrentUser(dispatch);
+  }, [dispatch]);
+
+  // // Set the industry for the organisation according to what the user selects
+  // const handleCategorySelection = (category) => {
+  //   const selectedCategory = handleCategory(category);
+  //   setOrganizationCategory(selectedCategory.name);
+  //   setOrganizationCategoryNumber(selectedCategory.key);
+  // };
 
   const handleServicePlanSelection = (servicePlan) => {
     const selectedService = handleServicePlan(servicePlan);
