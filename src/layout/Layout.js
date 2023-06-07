@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 import Sidebar from "../components/dashboard/Sidebar";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(true);
 
@@ -15,9 +14,7 @@ const Layout = () => {
       />
       <div className="flex w-full">
         <Sidebar showSidebar={showSidebar} openSidebar={openSidebar} />
-        <div className="w-full">
-          <Outlet />
-        </div>
+        <div className="w-full">{children}</div>
       </div>
     </main>
   );

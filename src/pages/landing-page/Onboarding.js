@@ -50,23 +50,6 @@ const Onboarding = () => {
   );
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getCurrentUser(dispatch);
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   const url = "https://localhost:7041/api/user";
-  //   if (accessToken) getUserInformation(dispatch, url);
-  // }, [accessToken, dispatch]);
-
-  // // Set the industry for the organisation according to what the user selects
-  // const handleCategorySelection = (category) => {
-  //   const selectedCategory = handleCategory(category);
-  //   setOrganizationCategory(selectedCategory.name);
-  //   setOrganizationCategoryNumber(selectedCategory.key);
-  // };
 
   const handleServicePlanSelection = (servicePlan) => {
     const selectedService = handleServicePlan(servicePlan);
@@ -132,7 +115,7 @@ const Onboarding = () => {
             </p>
           </article>
           <article>
-            {currentUser.organizationName && (
+            {currentUser?.organizationName && (
               <form
                 onSubmit={submitForm}
                 className="flex flex-col md:items-start items-center"
