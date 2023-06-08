@@ -8,6 +8,10 @@ import Portal from "../../components/dashboard/Portal";
 import New from "../../components/dashboard/New";
 import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
 import { useDispatch } from "react-redux";
+
+import { loginSuccess } from "../../redux/userSlice";
+import { setUpToken } from "../../helpers/auth";
+import axios from "axios";
 import { getCurrentUser } from "../../services/userService";
 
 // Get todays day to use in the filter date fields of the datagrid
@@ -29,9 +33,9 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getCurrentUser(dispatch);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   getCurrentUser(dispatch);
+  // }, [dispatch]);
 
   const handleClose = () => {
     setRowDblClickBookingId(null);
