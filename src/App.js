@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./assets/styles.css";
 
-import Profile from "./pages/dashboard/Profile";
+import Profile from "./pages/dashboard/users/Profile";
 import Home from "./pages/dashboard/Home";
 import { PurchaseOrder } from "./pages/dashboard/purchase-orders/PurchaseOrder";
 import Orders from "./pages/dashboard/Orders";
@@ -13,6 +13,7 @@ import Onboarding from "./pages/landing-page/Onboarding";
 import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/Booking";
 import ProtectedRoute from "./components/dashboard/ProtectedRoute";
+import User from "./pages/dashboard/users/User";
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/dashboard/users"
+          element={
+            <ProtectedRoute>
+              <User />
             </ProtectedRoute>
           }
         ></Route>
