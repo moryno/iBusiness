@@ -100,14 +100,14 @@ const New = ({
   // Code ends here
 
   // Get our current user using redux to update booking when creating or updating
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const currentUser = useSelector((state) => state.user?.currentUser);
 
   // A function to save the booking details to the backend then populate the datagrid
   const submitForm = async (e) => {
     e.preventDefault();
     setLoading(true);
     // Create Booking information
-    const formData = {
+    const newFormData = {
       user: {
         userID: currentUser?.userID,
         fullName,
@@ -134,7 +134,7 @@ const New = ({
     };
 
     // Update Booking information
-    const editData = {
+    const editFormData = {
       user: {
         userID: singleBooking?.user?.userID,
         fullName,
@@ -165,7 +165,7 @@ const New = ({
     if (statusMode === "CreateMode") {
       try {
         // perform form submission on creating new booking
-        const response = await webService.Request.create(formData);
+        const response = await webService.Request.create(newFormData);
         // Append the new booking to the top of the datagrid
         setBookings([response?.Booking?.booking, ...bookings]);
         setLoading(false);
@@ -177,7 +177,7 @@ const New = ({
     } else {
       try {
         // perform form submission on updating existing booking
-        const response = await webService.Request.update(editData);
+        const response = await webService.Request.update(editFormData);
 
         // Append the updated booking to the top of the datagrid
         const newBooking = bookings.map((booking) => {

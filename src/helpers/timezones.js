@@ -706,7 +706,7 @@ const timezonesOptions = [
   },
 ];
 
-const services = {
+const timezoneService = {
   getTimezoneText() {
     return timezonesOptions.map((zone) => zone.text);
   },
@@ -715,4 +715,4 @@ const services = {
   },
 };
 
-export default services;
+export default timezoneService;

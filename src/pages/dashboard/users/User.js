@@ -185,9 +185,6 @@ const User = () => {
       {statusMode === "CreateMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <NewUser
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
             handleClose={handleClose}
             title={"Create A User"}
             heading={"User Management"}
@@ -198,9 +195,6 @@ const User = () => {
       ) : statusMode === "EditMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <NewUser
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
             handleClose={handleClose}
             title={"Update A User"}
             heading={"User Management"}

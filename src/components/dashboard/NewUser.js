@@ -7,7 +7,6 @@ import { TbBrandBooking } from "react-icons/tb";
 import { TextBox } from "devextreme-react/text-box";
 import TextArea from "devextreme-react/text-area";
 import SelectBox from "devextreme-react/select-box";
-import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
 import Validator, {
   RequiredRule,
@@ -17,13 +16,9 @@ import Validator, {
 import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
-import webService from "../../axios/webService";
 
 const NewUser = ({
   handleClose,
-  bookings,
-  singleBooking,
-  setBookings,
   title,
   heading,
   statusBarText,
@@ -34,166 +29,109 @@ const NewUser = ({
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
 
-  const [fullName, setFullName] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.fullName : ""
-  );
-  const [idNumber, setIdNumber] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.idNumber : ""
-  );
-  const [email, setEmail] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.email : ""
-  );
+  const [fullName, setFullName] = useState(statusMode === "EditMode" ? "" : "");
+  const [idNumber, setIdNumber] = useState(statusMode === "EditMode" ? "" : "");
+  const [email, setEmail] = useState(statusMode === "EditMode" ? "" : "");
   const [telephone, setTelephone] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.telephone : ""
+    statusMode === "EditMode" ? "" : ""
   );
   const [physicalAddress, setPhysicalAddress] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.physicalAddress : ""
+    statusMode === "EditMode" ? "" : ""
   );
   const [employerName, setEmployerName] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.employerName : ""
+    statusMode === "EditMode" ? "" : ""
   );
-  const [position, setPosition] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.position : ""
-  );
-  const [schemePosition, setSchemePosition] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.schemePosition : ""
-  );
-  const [additionalRequirements, setAdditionalRequirements] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.additionalRequirements
-      : ""
-  );
-  const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.externalSchemeAdmin : ""
+  const [position, setPosition] = useState(statusMode === "EditMode" ? "" : "");
+
+  const [narrations, setNarrations] = useState(
+    statusMode === "EditMode" ? "" : ""
   );
 
   const [experience, setExperience] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.experience : 0
+    statusMode === "EditMode" ? 0 : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.originCountry : "Kenya"
+    statusMode === "EditMode" ? "Kenya" : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.user?.disabilityStatus
-      : "Not Disabled"
+    statusMode === "EditMode" ? "Not Disabled" : "Not Disabled"
   );
-  const [schemeOptions, setSchemeOptions] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.retirementSchemeName
-      : "A I C KIJABE PRINTING"
+  const [callCenterName, setCallCenterName] = useState(
+    statusMode === "EditMode" ? "Head Office" : "Head Office"
   );
-  const [bookingType, setBookingType] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.bookingType
-      : "First Time"
-  );
-  const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.trainingVenue : "INHOUSE"
-  );
-  const [courseDate, setCourseDate] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.courseDate : today
-  );
-  const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
-  );
+
   // Code ends here
 
   // Get our current user using redux to update booking when creating or updating
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const currentUser = useSelector((state) => state.user?.currentUser);
+
+  const newUserFormData = {
+    userID: currentUser?.userID,
+    fullName,
+    idNumber,
+    email,
+    telephone,
+    physicalAddress,
+    originCountry: selectedCountry,
+    employerName,
+    experience,
+    position,
+    disabilityStatus: selectedStatus,
+  };
+
+  // Update Booking information
+  const editUserFormData = {
+    userID: currentUser?.userID,
+    fullName,
+    idNumber,
+    email,
+    telephone,
+    physicalAddress,
+    employerName,
+    experience,
+    position,
+    disabilityStatus: selectedStatus,
+    originCountry: selectedCountry,
+  };
 
   // A function to save the booking details to the backend then populate the datagrid
   const submitForm = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Create Booking information
-    const formData = {
-      user: {
-        userID: currentUser?.userID,
-        fullName,
-        idNumber,
-        email,
-        telephone,
-        physicalAddress,
-        originCountry: selectedCountry,
-        employerName,
-        experience,
-        position,
-        disabilityStatus: selectedStatus,
-      },
-      booking: {
-        bookingType,
-        retirementSchemeName: schemeOptions,
-        schemePosition,
-        trainingVenue,
-        courseDate,
-        paymentMode,
-        additionalRequirements,
-        externalSchemeAdmin,
-      },
-    };
 
-    // Update Booking information
-    const editData = {
-      user: {
-        userID: singleBooking?.user?.userID,
-        fullName,
-        idNumber,
-        email,
-        telephone,
-        physicalAddress,
-        employerName,
-        experience,
-        position,
-        disabilityStatus: selectedStatus,
-      },
-      booking: {
-        bookingId: singleBooking?.booking?.bookingId,
-        bookingType,
-        retirementSchemeName: schemeOptions,
-        schemePosition,
-        originCountry: selectedCountry,
-        trainingVenue,
-        courseDate,
-        paymentMode,
-        additionalRequirements,
-        externalSchemeAdmin,
-      },
-    };
+    // // Check to save depending on the current mode
+    // if (statusMode === "CreateMode") {
+    //   try {
+    //     // perform form submission on creating new booking
+    //     const response = await webService.Request.create(newUserFormData);
+    //     // Append the new booking to the top of the datagrid
+    //     //setBookings([response?.Booking?.booking, ...bookings]);
+    //     setLoading(false);
+    //     handleClose();
+    //   } catch (error) {
+    //     setLoading(false);
+    //     console.log(error);
+    //   }
+    // } else {
+    //   try {
+    //     // perform form submission on updating existing booking
+    //     const response = await webService.Request.update(editUserFormData);
 
-    // Check to save depending on the current mode
-    if (statusMode === "CreateMode") {
-      try {
-        // perform form submission on creating new booking
-        const response = await webService.Request.create(formData);
-        // Append the new booking to the top of the datagrid
-        setBookings([response?.Booking?.booking, ...bookings]);
-        setLoading(false);
-        handleClose();
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
-    } else {
-      try {
-        // perform form submission on updating existing booking
-        const response = await webService.Request.update(editData);
-
-        // Append the updated booking to the top of the datagrid
-        const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === response?.Booking.bookingId) {
-            return response?.Booking;
-          }
-          return booking;
-        });
-        setBookings(newBooking);
-        handleClose();
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
-    }
+    //     // Append the updated booking to the top of the datagrid
+    //     const newBooking = bookings.map((booking) => {
+    //       if (booking.bookingId === response?.Booking.bookingId) {
+    //         return response?.Booking;
+    //       }
+    //       return booking;
+    //     });
+    //     setBookings(newBooking);
+    //     handleClose();
+    //     setLoading(false);
+    //   } catch (error) {
+    //     setLoading(false);
+    //     console.log(error);
+    //   }
+    // }
   };
 
   return (
@@ -448,13 +386,13 @@ const NewUser = ({
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <SelectBox
-                      dataSource={retirementSchemeOptions}
+                      dataSource={callCenterOptions}
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={26}
                       style={{ fontSize: "12px" }}
-                      onValueChanged={(e) => setSchemeOptions(e.value)}
-                      value={schemeOptions}
+                      onValueChanged={(e) => setCallCenterName(e.value)}
+                      value={callCenterName}
                       className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
@@ -474,8 +412,8 @@ const NewUser = ({
                     height="5vh"
                     placeholder="Type additional requirements here"
                     id="additionalRequirements"
-                    onValueChanged={(e) => setAdditionalRequirements(e.value)}
-                    value={additionalRequirements}
+                    onValueChanged={(e) => setNarrations(e.value)}
+                    value={narrations}
                     style={{ fontSize: "12px" }}
                     className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                   />
@@ -514,16 +452,8 @@ const NewUser = ({
 
 const countriesOptions = services.getCountries();
 
-const trainingVenuesOptions = services.getCities();
-
-const bookingTypeOptions = services.getBookinType();
-
-const retirementSchemeOptions = services.getRetirementScheme();
-
-const paymentModeOptions = services.getPaymentMode();
+const callCenterOptions = services.getCallCenters();
 
 const diabilityStatusOptions = services.getDisabilityStatus();
-
-const today = new Date().toISOString().slice(0, 10);
 
 export default NewUser;
