@@ -66,4 +66,4 @@ export const signUpInURL =
   "https://localhost:5001/MicrosoftIdentity/Account/SignIn";
 
 export const sideMenuRequest =
-  "http://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
+  "https://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
