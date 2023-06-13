@@ -15,11 +15,11 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const getTokenUrl = "https://localhost:5001/api/GetAuthUser";
-      const getUserURL = "https://localhost:7041/api/user";
+      const getTokenUrl = process.env.REACT_APP_BASE_URL;
+      const getUserURL = process.env.REACT_APP_SEC_API;
 
       try {
-        const { data } = await axios.get(getTokenUrl, {
+        const { data } = await axios.get(getTokenUrl + "/GetAuthUser", {
           withCredentials: true,
         });
 
@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
           headers: { Authorization: `Bearer ${data?.accessToken}` },
         };
 
-        const response = await axios.get(getUserURL, config);
+        const response = await axios.get(getUserURL + "/user", config);
 
         dispatch(loginSuccess(response?.data));
         setIsLoading(false);

@@ -7,13 +7,13 @@ export const setUpToken = (token) => {
   localStorage.setItem("token", token);
 };
 
-// export function setLocalData(key, value) {
-//   try {
-//       localStorage.setItem(key, value)
-//   } catch (error) {
-//       console.log('error', error)
-//   }
-// }
+export function setLocalData(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    console.log("error", error);
+  }
+}
 
 export function getLocalData(key) {
   try {

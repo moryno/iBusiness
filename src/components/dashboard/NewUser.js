@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
@@ -24,11 +23,6 @@ const NewUser = ({
   statusBarText,
   statusMode,
 }) => {
-  // Define state to store the change in the input field
-  // Code starts here
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
-
   const [fullName, setFullName] = useState(statusMode === "EditMode" ? "" : "");
   const [idNumber, setIdNumber] = useState(statusMode === "EditMode" ? "" : "");
   const [email, setEmail] = useState(statusMode === "EditMode" ? "" : "");
@@ -60,78 +54,8 @@ const NewUser = ({
     statusMode === "EditMode" ? "Head Office" : "Head Office"
   );
 
-  // Code ends here
-
-  // Get our current user using redux to update booking when creating or updating
-  const currentUser = useSelector((state) => state.user?.currentUser);
-
-  const newUserFormData = {
-    userID: currentUser?.userID,
-    fullName,
-    idNumber,
-    email,
-    telephone,
-    physicalAddress,
-    originCountry: selectedCountry,
-    employerName,
-    experience,
-    position,
-    disabilityStatus: selectedStatus,
-  };
-
-  // Update Booking information
-  const editUserFormData = {
-    userID: currentUser?.userID,
-    fullName,
-    idNumber,
-    email,
-    telephone,
-    physicalAddress,
-    employerName,
-    experience,
-    position,
-    disabilityStatus: selectedStatus,
-    originCountry: selectedCountry,
-  };
-
-  // A function to save the booking details to the backend then populate the datagrid
   const submitForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    // // Check to save depending on the current mode
-    // if (statusMode === "CreateMode") {
-    //   try {
-    //     // perform form submission on creating new booking
-    //     const response = await webService.Request.create(newUserFormData);
-    //     // Append the new booking to the top of the datagrid
-    //     //setBookings([response?.Booking?.booking, ...bookings]);
-    //     setLoading(false);
-    //     handleClose();
-    //   } catch (error) {
-    //     setLoading(false);
-    //     console.log(error);
-    //   }
-    // } else {
-    //   try {
-    //     // perform form submission on updating existing booking
-    //     const response = await webService.Request.update(editUserFormData);
-
-    //     // Append the updated booking to the top of the datagrid
-    //     const newBooking = bookings.map((booking) => {
-    //       if (booking.bookingId === response?.Booking.bookingId) {
-    //         return response?.Booking;
-    //       }
-    //       return booking;
-    //     });
-    //     setBookings(newBooking);
-    //     handleClose();
-    //     setLoading(false);
-    //   } catch (error) {
-    //     setLoading(false);
-    //     console.log(error);
-    //   }
-    // }
   };
 
   return (
@@ -447,8 +371,6 @@ const NewUser = ({
     </main>
   );
 };
-
-// Controls Options
 
 const countriesOptions = services.getCountries();
 

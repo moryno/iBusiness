@@ -11,7 +11,6 @@ import {
 import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { signUpInURL } from "../../../axios/webService";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
@@ -86,7 +85,7 @@ export const Navbar = () => {
               </button>
             </>
           ) : (
-            <a href={signUpInURL}>
+            <a href={process.env.REACT_APP_SIGNUPIN_URL}>
               <button className="nav-signin-button">Sign Up/In</button>
             </a>
           )}

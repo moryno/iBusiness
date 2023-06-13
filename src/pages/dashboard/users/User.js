@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DateBox from "devextreme-react/date-box";
 import { toast } from "react-toastify";
 import DataTable from "../../../components/dashboard/DataTable";
@@ -7,22 +7,18 @@ import Statusbar from "../../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../../components/dashboard/MenuButtonsGroup";
 import MobileMenus from "../../../components/dashboard/MobileMenus";
 import Portal from "../../../components/dashboard/Portal";
-import New from "../../../components/dashboard/New";
-
-import { bookingFilterValues } from "../../../helpers/datatableSource";
-
-import webService from "../../../axios/webService";
 import ConfirmationPopupComponent from "../../../components/dashboard/ConfirmationPopupComponent";
 import { userColumns } from "../../../data/usersSource";
 import { usersMenuSource } from "../../../data/menu";
 import NewUser from "../../../components/dashboard/NewUser";
 
-// Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
 
 const User = () => {
   const [bookings, setBookings] = useState([]);
+  // eslint-disable-next-line
   const [singleBooking, setSingleBooking] = useState({});
+  // eslint-disable-next-line
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
@@ -30,10 +26,7 @@ const User = () => {
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
 
-  // Fuction to close the Create || update form
   const handleClose = () => {
     setRowDblClickBookingId(null);
     setSingleBooking({});
@@ -41,7 +34,6 @@ const User = () => {
     setOpen(false);
   };
 
-  // Define a function to get the instance of selected row
   const startEdit = ({ data }) => {
     if (data) {
       setRowDblClickBookingId(data.bookingId);
@@ -50,36 +42,6 @@ const User = () => {
     }
   };
 
-  // This Hook is to fetch all bookings when a page renders or when date is passed as parameter in the datagrid
-  useEffect(() => {
-    try {
-      const getData = async () => {
-        setLoading(true);
-        const response = date
-          ? await webService.Request.getByDate(date.startdate, date.enddate)
-          : await webService.Request.get();
-
-        setLoading(false);
-        setBookings(response);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [date]);
-
-  // This Hook is to fetch single booking when a row in the datagrid is double clicked
-  useEffect(() => {
-    const getSingleBooking = async () => {
-      const response = await webService.Request.getById(onRowDblClickBookingId);
-      setSingleBooking(response);
-      setStatusMode("EditMode");
-      setOpen((isOpen) => !isOpen);
-    };
-    if (onRowDblClickBookingId) getSingleBooking();
-  }, [onRowDblClickBookingId]);
-
-  // Function to open ConfirmationPopupComponent
   const openConfirmationPopup = async (rowItem) => {
     if (rowItem === null) {
       toast.warning("Please select a booking to delete");
@@ -89,7 +51,6 @@ const User = () => {
     }
   };
 
-  // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
@@ -177,7 +138,6 @@ const User = () => {
             //loading={loading}
             setRowClickItem={setRowClickItem}
             openConfirmationPopup={openConfirmationPopup}
-            filterValues={bookingFilterValues}
           />
         </section>
       </section>

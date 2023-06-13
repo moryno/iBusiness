@@ -29,11 +29,6 @@ const New = ({
   statusBarText,
   statusMode,
 }) => {
-  // Define state to store the change in the input field
-  // Code starts here
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
-
   const [fullName, setFullName] = useState(
     statusMode === "EditMode" ? singleBooking.user?.fullName : ""
   );
@@ -97,89 +92,76 @@ const New = ({
   const [paymentMode, setPaymentMode] = useState(
     statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
   );
-  // Code ends here
 
-  // Get our current user using redux to update booking when creating or updating
   const currentUser = useSelector((state) => state.user?.currentUser);
 
-  // A function to save the booking details to the backend then populate the datagrid
+  const newFormData = {
+    user: {
+      userID: currentUser?.userID,
+      fullName,
+      idNumber,
+      email,
+      telephone,
+      physicalAddress,
+      originCountry: selectedCountry,
+      employerName,
+      experience,
+      position,
+      disabilityStatus: selectedStatus,
+    },
+    booking: {
+      bookingType,
+      retirementSchemeName: schemeOptions,
+      schemePosition,
+      trainingVenue,
+      courseDate,
+      paymentMode,
+      additionalRequirements,
+      externalSchemeAdmin,
+    },
+  };
+
+  const editFormData = {
+    user: {
+      userID: singleBooking?.user?.userID,
+      fullName,
+      idNumber,
+      email,
+      telephone,
+      physicalAddress,
+      employerName,
+      experience,
+      position,
+      disabilityStatus: selectedStatus,
+    },
+    booking: {
+      bookingId: singleBooking?.booking?.bookingId,
+      bookingType,
+      retirementSchemeName: schemeOptions,
+      schemePosition,
+      originCountry: selectedCountry,
+      trainingVenue,
+      courseDate,
+      paymentMode,
+      additionalRequirements,
+      externalSchemeAdmin,
+    },
+  };
+
   const submitForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // Create Booking information
-    const newFormData = {
-      user: {
-        userID: currentUser?.userID,
-        fullName,
-        idNumber,
-        email,
-        telephone,
-        physicalAddress,
-        originCountry: selectedCountry,
-        employerName,
-        experience,
-        position,
-        disabilityStatus: selectedStatus,
-      },
-      booking: {
-        bookingType,
-        retirementSchemeName: schemeOptions,
-        schemePosition,
-        trainingVenue,
-        courseDate,
-        paymentMode,
-        additionalRequirements,
-        externalSchemeAdmin,
-      },
-    };
 
-    // Update Booking information
-    const editFormData = {
-      user: {
-        userID: singleBooking?.user?.userID,
-        fullName,
-        idNumber,
-        email,
-        telephone,
-        physicalAddress,
-        employerName,
-        experience,
-        position,
-        disabilityStatus: selectedStatus,
-      },
-      booking: {
-        bookingId: singleBooking?.booking?.bookingId,
-        bookingType,
-        retirementSchemeName: schemeOptions,
-        schemePosition,
-        originCountry: selectedCountry,
-        trainingVenue,
-        courseDate,
-        paymentMode,
-        additionalRequirements,
-        externalSchemeAdmin,
-      },
-    };
-
-    // Check to save depending on the current mode
     if (statusMode === "CreateMode") {
       try {
-        // perform form submission on creating new booking
         const response = await webService.Request.create(newFormData);
-        // Append the new booking to the top of the datagrid
         setBookings([response?.Booking?.booking, ...bookings]);
-        setLoading(false);
         handleClose();
       } catch (error) {
-        setLoading(false);
         console.log(error);
       }
     } else {
       try {
-        // perform form submission on updating existing booking
         const response = await webService.Request.update(editFormData);
-
-        // Append the updated booking to the top of the datagrid
         const newBooking = bookings.map((booking) => {
           if (booking.bookingId === response?.Booking.bookingId) {
             return response?.Booking;
@@ -188,9 +170,7 @@ const New = ({
         });
         setBookings(newBooking);
         handleClose();
-        setLoading(false);
       } catch (error) {
-        setLoading(false);
         console.log(error);
       }
     }

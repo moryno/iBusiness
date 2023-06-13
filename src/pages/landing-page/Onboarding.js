@@ -15,12 +15,12 @@ import timezoneService from "../../helpers/timezones";
 import {
   handleCategory,
   handleServicePlan,
-} from "../../utils/onBoardingServices";
+} from "../../helpers/onBoardingFunction";
 import { useNavigate } from "react-router-dom";
 import services from "../../helpers/formDataSource";
 import Portal from "../../components/dashboard/Portal";
 import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getCurrentUser } from "../../services/userService";
 import axios from "axios";
@@ -53,8 +53,6 @@ const Onboarding = () => {
   );
   // eslint-disable-next-line
   const [servicePlanNumber, setServicePlanNumber] = useState(null);
-
-  const currentUser = useSelector((state) => state.user?.currentUser);
 
   const [organizationName, setOrganizationName] = useState("");
 

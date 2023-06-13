@@ -1,48 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DateBox from "devextreme-react/date-box";
 import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
-import Portal from "../../components/dashboard/Portal";
-import New from "../../components/dashboard/New";
-import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
-import { useDispatch } from "react-redux";
-
-import { loginSuccess } from "../../redux/userSlice";
-import { setUpToken } from "../../helpers/auth";
-import axios from "axios";
-import { getCurrentUser } from "../../services/userService";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
 
 const Home = () => {
-  const [bookings, setBookings] = useState([]);
-  const [singleBooking, setSingleBooking] = useState({});
-  // eslint-disable-next-line
-  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
-  // eslint-disable-next-line
-  const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
   // eslint-disable-next-line
   const [date, setDate] = useState("");
-  const [statusMode, setStatusMode] = useState("");
-  const [isOpen, setOpen] = useState(false);
-
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   getCurrentUser(dispatch);
-  // }, [dispatch]);
-
-  const handleClose = () => {
-    setRowDblClickBookingId(null);
-    setSingleBooking({});
-    setStatusMode("");
-    setOpen(false);
-  };
 
   const handleClick = (menu) => {
     switch (menu) {
@@ -52,8 +22,6 @@ const Home = () => {
           : setDate({ startdate: fromDate, enddate: toDate });
         break;
       case "New":
-        setStatusMode("CreateMode");
-        setOpen((isOpen) => !isOpen);
         break;
       case "Delete":
         break;
@@ -74,7 +42,7 @@ const Home = () => {
       <section>
         <section>
           <MenuButtonsGroup
-            heading="Booking List"
+            heading="Home"
             menus={homeMenuSource}
             onMenuClick={handleClick}
           />
@@ -127,48 +95,6 @@ const Home = () => {
           </h1>
         </section>
       </section>
-
-      {statusMode === "CreateMode" ? (
-        <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
-            handleClose={handleClose}
-            title={"Create New Booking"}
-            heading={"Booking Item Management"}
-            statusBarText={"New Booking Item"}
-            statusMode={statusMode}
-          />
-        </Portal>
-      ) : statusMode === "EditMode" ? (
-        <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
-            handleClose={handleClose}
-            title={"Update A Booking Item"}
-            heading={"Booking Item Management"}
-            statusBarText={"Updating Booking Item"}
-            statusMode={statusMode}
-          />
-        </Portal>
-      ) : (
-        statusMode === "DeleteMode" && (
-          <Portal isOpen={isOpen} setOpen={setOpen}>
-            <ConfirmationPopupComponent
-              item={onRowClickItem}
-              bookings={bookings}
-              setBookings={setBookings}
-              handleClose={handleClose}
-              title={"Delete A Booking Item"}
-              statusBarText={"Delete Booking Item"}
-              statusMode={statusMode}
-            />
-          </Portal>
-        )
-      )}
 
       <Statusbar heading="Booking List" company="ARBS Customer Portal" />
     </main>

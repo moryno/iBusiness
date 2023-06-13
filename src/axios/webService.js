@@ -61,9 +61,3 @@ webService.interceptors.request.use(
 
 // eslint-disable-next-line
 export default { Request };
-
-export const signUpInURL =
-  "https://localhost:5001/MicrosoftIdentity/Account/SignIn";
-
-export const sideMenuRequest =
-  "https://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
