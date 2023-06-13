@@ -129,7 +129,7 @@ const Onboarding = () => {
   };
 
   return (
-    <main className="min-h-secreen ">
+    <main className="min-h-screen ">
       <section className="p-3 md:py-5 md:px-0">
         <section className="w-full md:w-[50%] mx-auto">
           <article className="mb-5">

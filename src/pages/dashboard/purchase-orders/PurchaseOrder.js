@@ -23,10 +23,10 @@ export const PurchaseOrder = ({ orderstate }) => {
     tableData: "",
   });
   const [initialRender, setInitialRender] = useState(true);
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const currentUser = useSelector((state) => state.user?.currentUser);
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [data, setData] = useState(new DataSource());
   const count = useRef(1);
@@ -36,7 +36,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(false);
     if (orderstate === 0) {
       async function getData() {
         try {

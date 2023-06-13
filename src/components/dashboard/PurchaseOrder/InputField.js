@@ -19,7 +19,7 @@ export const InputField = ({ data, setMessage, order, orderstate }) => {
   const numberBoxRef = useRef(null);
   const selectboxRef = useRef(null);
   const addRef = useRef(null);
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const currentUser = useSelector((state) => state.user?.currentUser);
 
   const handleOptionSelection = (e) => {
     setSelectedOption(e.value);
@@ -111,7 +111,7 @@ export const InputField = ({ data, setMessage, order, orderstate }) => {
       if (orderstate === 0) {
         try {
           if (orderstate === 0) {
-              await request.put(
+            await request.put(
               "PurchaseOrder/updateorderitem",
               itemtoadd.data()
             );

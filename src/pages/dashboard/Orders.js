@@ -11,7 +11,7 @@ import { orderFilterValues } from "../../helpers/datatableSource";
 
 const Orders = () => {
   const [data, setData] = useState([]);
-  const loadingRef = useRef(true);
+  const loadingRef = useRef(false);
   // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
