@@ -108,9 +108,10 @@ const Onboarding = () => {
     setOpen(true);
     setLoading(true);
 
+    const url = process.env.REACT_APP_BASE_URL;
     try {
       const { data } = await axios.post(
-        "https://localhost:5001/api/onboarding",
+        url + "/onboarding",
         onboardingFormData,
         { withCredentials: true }
       );
@@ -128,8 +129,8 @@ const Onboarding = () => {
   };
 
   return (
-    <main className="min-h-secreen">
-      <section className="p-3 md:pt-5 pb-20 md:px-0">
+    <main className="min-h-secreen ">
+      <section className="p-3 md:py-5 md:px-0">
         <section className="w-full md:w-[50%] mx-auto">
           <article className="mb-5">
             <h1 className="font-bold text-2xl md:text-3xl mb-1 text-headingBlue">
