@@ -31,7 +31,7 @@ const Form = ({
   initialRender,
   setInitialRender,
   orderstate,
-  setMessage
+  setMessage,
 }) => {
   const [costCenter, setCostCenter] = useState();
   const [supplier, setSupplier] = useState();
@@ -45,66 +45,70 @@ const Form = ({
   const [orderNumber, setOrderNumber] = useState(0);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
-  useEffect(() => {
-    setCostCenter(formUpdateData.costCenter);
-    setSupplier(formUpdateData.supplier);
-    setShipsTo(formUpdateData.shipsTo);
-    setOrderDate(dateString);
-    setOrderAmount(formUpdateData.orderAmount);
-    setDeliveryPeriod(formUpdateData.deliveryPeriod);
-    setfirstDeliveryDate(dateString);
-    setdriverDetails(formUpdateData.vehicleDetails);
-    setNarration(formUpdateData.narration);
-    setOrderNumber(formUpdateData.orderNumber);
-    setInitialRender(false);
-    setLoading(false);
-  }, 
-  // eslint-disable-next-line
-  [formUpdateData]);
+  useEffect(
+    () => {
+      setCostCenter(formUpdateData.costCenter);
+      setSupplier(formUpdateData.supplier);
+      setShipsTo(formUpdateData.shipsTo);
+      setOrderDate(dateString);
+      setOrderAmount(formUpdateData.orderAmount);
+      setDeliveryPeriod(formUpdateData.deliveryPeriod);
+      setfirstDeliveryDate(dateString);
+      setdriverDetails(formUpdateData.vehicleDetails);
+      setNarration(formUpdateData.narration);
+      setOrderNumber(formUpdateData.orderNumber);
+      setInitialRender(false);
+      setLoading(false);
+    },
+    // eslint-disable-next-line
+    [formUpdateData]
+  );
 
-  useEffect(() => {
-    const data = {
-      costCenter: costCenter ?? "",
-      supplier: supplier ?? "",
-      shipsTo: shipsTo ?? "",
-      orderDate: orderDate ?? dateString,
-      orderAmount: orderAmount ?? 0,
-      deliveryPeriod: deliveryPeriod ?? 0,
-      firstDeliveryDate: firstDeliveryDate ?? dateString,
-      vehicleDetails: driverDetails ?? "",
-      narration: narration ?? "",
-      orderNumber: orderNumber ?? 0,
-      id: currentUser.email ?? "",
-    };
+  useEffect(
+    () => {
+      const data = {
+        costCenter: costCenter ?? "",
+        supplier: supplier ?? "",
+        shipsTo: shipsTo ?? "",
+        orderDate: orderDate ?? dateString,
+        orderAmount: orderAmount ?? 0,
+        deliveryPeriod: deliveryPeriod ?? 0,
+        firstDeliveryDate: firstDeliveryDate ?? dateString,
+        vehicleDetails: driverDetails ?? "",
+        narration: narration ?? "",
+        orderNumber: orderNumber ?? 0,
+        id: currentUser.email ?? "",
+      };
 
-    if (initialRender === true) {
-      return;
-    } else if (orderstate === 1) {
-      setUpdateData({ ...updateData, formData: data });
-      return;
-    }
-    updateToCosmos(data);
-  }, 
-  // eslint-disable-next-line
-  [
-    costCenter,
-    supplier,
-    shipsTo,
-    orderDate,
-    orderAmount,
-    firstDeliveryDate,
-    narration,
-    deliveryPeriod,
-    driverDetails,
-  ]);
+      if (initialRender === true) {
+        return;
+      } else if (orderstate === 1) {
+        setUpdateData({ ...updateData, formData: data });
+        return;
+      }
+      updateToCosmos(data);
+    },
+    // eslint-disable-next-line
+    [
+      costCenter,
+      supplier,
+      shipsTo,
+      orderDate,
+      orderAmount,
+      firstDeliveryDate,
+      narration,
+      deliveryPeriod,
+      driverDetails,
+    ]
+  );
 
   const updateToCosmos = async (data) => {
-    setMessage('Saving...');
+    setMessage("Saving...");
     try {
       await request.put("/PurchaseOrder/updateorderinfo", data);
     } catch (e) {
       console.log(e);
-      setMessage('Network problem')
+      setMessage("Network problem");
     }
     setMessage();
   };

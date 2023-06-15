@@ -9,15 +9,12 @@ const NavMenus = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Get current user
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
-  // Handle logout and remove token from persist
   const handleLogOut = () => {
     dispatch(logout());
   };
 
-  // Function when menu is clicked
   const handleClick = (link) => {
     if (link === "Sign Out") {
       handleLogOut();
@@ -46,7 +43,7 @@ const NavMenus = () => {
                   <article className="bg-sidebarHeading p-5  shadow-xl">
                     <article className="flex flex-col mt-6 items-center">
                       <h3 className="font-medium text-heading">
-                        {currentUser?.name}
+                        {currentUser?.fullName}
                       </h3>
                       <span className="text-[14px]  text-heading font-normal">
                         {currentUser?.email}

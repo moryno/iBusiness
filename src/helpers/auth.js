@@ -1,3 +1,6 @@
+import axios from "axios";
+import Constant from "../utils/constant";
+
 export const logoutFunc = () => {
   localStorage.removeItem("token");
   window.location.href = "/";
@@ -7,13 +10,13 @@ export const setUpToken = (token) => {
   localStorage.setItem("token", token);
 };
 
-// export function setLocalData(key, value) {
-//   try {
-//       localStorage.setItem(key, value)
-//   } catch (error) {
-//       console.log('error', error)
-//   }
-// }
+export function setLocalData(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    console.log("error", error);
+  }
+}
 
 export function getLocalData(key) {
   try {
@@ -21,5 +24,15 @@ export function getLocalData(key) {
     return data;
   } catch (error) {
     console.log("error", error);
+  }
+}
+
+export async function getCRSFToken() {
+  const url = process.env.REACT_APP_BASE_URL + Constant.ACTION.CSRFTOKEN;
+  try {
+    const { data } = await axios.get(url, { withCredentials: true });
+    setLocalData("csrfToken", data?.token);
+  } catch (error) {
+    console.error("Failed to fetch CSRF token:", error);
   }
 }

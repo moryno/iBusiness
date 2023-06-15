@@ -2,8 +2,6 @@ import { FaCheck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
-import { signUpInURL } from "../../../../axios/webService";
-
 const PricingItem = ({ pricing }) => {
   return (
     <main className="w-full px-5 box-border md:w-1/2 lg:w-1/3 xl:w-1/4 mt-4 md:hover:-translate-y-1">
@@ -39,7 +37,7 @@ const PricingItem = ({ pricing }) => {
               </li>
             ))}
           </ul>
-          <Link to={signUpInURL}>
+          <Link to={process.env.REACT_APP_SIGNUPIN_URL}>
             {" "}
             <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-buttonBg text-white capitalize">
               {pricing?.button}

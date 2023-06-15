@@ -9,16 +9,18 @@ import {
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { signUpInURL } from "../../../axios/webService";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
+  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
-  const currentUser = useSelector((state) => state.user?.currentUser);
-
-  const handleLogOut = () => {};
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate(process.env.REACT_APP_SIGNOUT_URL);
+  };
 
   const handleToggle = () => {
     if (toggleSidebar === false) {
@@ -77,7 +79,7 @@ export const Navbar = () => {
               <article className="flex items-center font-medium">
                 <article className="flex items-center gap-1">
                   <h1 className="text-gray-600 font-medium">
-                    Hello, {currentUser?.name}
+                    Hello, {currentUser?.fullName}
                   </h1>
                 </article>
               </article>
@@ -86,7 +88,7 @@ export const Navbar = () => {
               </button>
             </>
           ) : (
-            <a href={signUpInURL}>
+            <a href={process.env.REACT_APP_SIGNUPIN_URL}>
               <button className="nav-signin-button">Sign Up/In</button>
             </a>
           )}

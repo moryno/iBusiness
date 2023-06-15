@@ -311,6 +311,14 @@ const retirementSchemeName = [
   "AIC LITENI CATTAGE",
 ];
 
+const costCenterNames = [
+  "Head Office",
+  "Upper Hill",
+  "Parklands",
+  "Westlands",
+  "Kisumu",
+];
+
 const services = {
   getBookinType() {
     return bookingType;
@@ -329,6 +337,9 @@ const services = {
   },
   getDisabilityStatus() {
     return disabilityStatus;
+  },
+  getCallCenters() {
+    return costCenterNames;
   },
 };
 

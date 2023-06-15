@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
@@ -7,7 +6,6 @@ import { TbBrandBooking } from "react-icons/tb";
 import { TextBox } from "devextreme-react/text-box";
 import TextArea from "devextreme-react/text-area";
 import SelectBox from "devextreme-react/select-box";
-import DateBox from "devextreme-react/date-box";
 import NumberBox from "devextreme-react/number-box";
 import Validator, {
   RequiredRule,
@@ -17,163 +15,47 @@ import Validator, {
 import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
-import webService from "../../axios/webService";
 
-const New = ({
+const NewUser = ({
   handleClose,
-  bookings,
-  singleBooking,
-  setBookings,
   title,
   heading,
   statusBarText,
   statusMode,
 }) => {
-  const [fullName, setFullName] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.fullName : ""
-  );
-  const [idNumber, setIdNumber] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.idNumber : ""
-  );
-  const [email, setEmail] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.email : ""
-  );
+  const [fullName, setFullName] = useState(statusMode === "EditMode" ? "" : "");
+  const [idNumber, setIdNumber] = useState(statusMode === "EditMode" ? "" : "");
+  const [email, setEmail] = useState(statusMode === "EditMode" ? "" : "");
   const [telephone, setTelephone] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.telephone : ""
+    statusMode === "EditMode" ? "" : ""
   );
   const [physicalAddress, setPhysicalAddress] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.physicalAddress : ""
+    statusMode === "EditMode" ? "" : ""
   );
   const [employerName, setEmployerName] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.employerName : ""
+    statusMode === "EditMode" ? "" : ""
   );
-  const [position, setPosition] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.position : ""
-  );
-  const [schemePosition, setSchemePosition] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.schemePosition : ""
-  );
-  const [additionalRequirements, setAdditionalRequirements] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.additionalRequirements
-      : ""
-  );
-  const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.externalSchemeAdmin : ""
+  const [position, setPosition] = useState(statusMode === "EditMode" ? "" : "");
+
+  const [narrations, setNarrations] = useState(
+    statusMode === "EditMode" ? "" : ""
   );
 
   const [experience, setExperience] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.experience : 0
+    statusMode === "EditMode" ? 0 : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.originCountry : "Kenya"
+    statusMode === "EditMode" ? "Kenya" : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.user?.disabilityStatus
-      : "Not Disabled"
+    statusMode === "EditMode" ? "Not Disabled" : "Not Disabled"
   );
-  const [schemeOptions, setSchemeOptions] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.retirementSchemeName
-      : "A I C KIJABE PRINTING"
+  const [callCenterName, setCallCenterName] = useState(
+    statusMode === "EditMode" ? "Head Office" : "Head Office"
   );
-  const [bookingType, setBookingType] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.bookingType
-      : "First Time"
-  );
-  const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.trainingVenue : "INHOUSE"
-  );
-  const [courseDate, setCourseDate] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.courseDate : today
-  );
-  const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
-  );
-
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
-
-  const newFormData = {
-    user: {
-      userID: currentUser?.userID,
-      fullName,
-      idNumber,
-      email,
-      telephone,
-      physicalAddress,
-      originCountry: selectedCountry,
-      employerName,
-      experience,
-      position,
-      disabilityStatus: selectedStatus,
-    },
-    booking: {
-      bookingType,
-      retirementSchemeName: schemeOptions,
-      schemePosition,
-      trainingVenue,
-      courseDate,
-      paymentMode,
-      additionalRequirements,
-      externalSchemeAdmin,
-    },
-  };
-
-  const editFormData = {
-    user: {
-      userID: singleBooking?.user?.userID,
-      fullName,
-      idNumber,
-      email,
-      telephone,
-      physicalAddress,
-      employerName,
-      experience,
-      position,
-      disabilityStatus: selectedStatus,
-    },
-    booking: {
-      bookingId: singleBooking?.booking?.bookingId,
-      bookingType,
-      retirementSchemeName: schemeOptions,
-      schemePosition,
-      originCountry: selectedCountry,
-      trainingVenue,
-      courseDate,
-      paymentMode,
-      additionalRequirements,
-      externalSchemeAdmin,
-    },
-  };
 
   const submitForm = async (e) => {
     e.preventDefault();
-
-    if (statusMode === "CreateMode") {
-      try {
-        const response = await webService.Request.create(newFormData);
-        setBookings([response?.Booking?.booking, ...bookings]);
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        const response = await webService.Request.update(editFormData);
-        const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === response?.Booking.bookingId) {
-            return response?.Booking;
-          }
-          return booking;
-        });
-        setBookings(newBooking);
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      }
-    }
   };
 
   return (
@@ -198,8 +80,7 @@ const New = ({
             {heading}
           </h2>
           <p className="text-xs text-center md:text-left">
-            Enter all the booking information in the fields below then tap on
-            save.
+            Enter all the user information in the fields below then tap on save.
           </p>
         </article>
         <article className="h-full px-2 md:border md:overflow-y-auto">
@@ -425,150 +306,29 @@ const New = ({
                       className="text-xs  text-gray-600"
                       htmlFor="retirementSchemeName"
                     >
-                      Sch Name:
+                      CC Name:
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <SelectBox
-                      dataSource={retirementSchemeOptions}
+                      dataSource={callCenterOptions}
                       searchEnabled={true}
                       placeholder="Select an option"
                       height={26}
                       style={{ fontSize: "12px" }}
-                      onValueChanged={(e) => setSchemeOptions(e.value)}
-                      value={schemeOptions}
+                      onValueChanged={(e) => setCallCenterName(e.value)}
+                      value={callCenterName}
                       className=" border pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                     />
                   </div>
                 </article>
               </section>
               <section className="w-full flex flex-col gap-2">
-                <article className="w-full flex flex-wrap lg:w-[80%] box-border justify-between  gap-2">
-                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
-                    <label
-                      className="text-xs  text-gray-600"
-                      htmlFor="bookingType"
-                    >
-                      Booking Type:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <SelectBox
-                      dataSource={bookingTypeOptions}
-                      searchEnabled={true}
-                      placeholder="Select a Scheme Name"
-                      height={26}
-                      style={{ fontSize: "12px" }}
-                      onValueChanged={(e) => setBookingType(e.value)}
-                      value={bookingType}
-                      className=" border pl-1 w-full md:w-[70%]  outline-none"
-                    />
-                  </div>
-                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
-                    <label
-                      className="text-xs text-gray-600"
-                      htmlFor="schemePosition"
-                    >
-                      Sch Position:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <TextBox
-                      type="text"
-                      id="schemePosition"
-                      placeholder="Type scheme position here"
-                      onValueChanged={(e) => setSchemePosition(e.value)}
-                      value={schemePosition}
-                      height={26}
-                      style={{ fontSize: "12px" }}
-                      className=" h-7 border pl-1 w-full md:w-[70%]  outline-none"
-                    >
-                      {" "}
-                      <Validator>
-                        <RequiredRule message="Scheme Position is required" />
-                      </Validator>
-                    </TextBox>
-                  </div>
-                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
-                    <label
-                      className="text-xs   text-gray-600"
-                      htmlFor="trainingVenue"
-                    >
-                      Training Venue:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <SelectBox
-                      dataSource={trainingVenuesOptions}
-                      searchEnabled={true}
-                      placeholder="Select a Training Venue"
-                      height={26}
-                      style={{ fontSize: "12px" }}
-                      onValueChanged={(e) => setTrainingVenue(e.value)}
-                      value={trainingVenue}
-                      className=" border pl-1 w-full md:w-[70%]  outline-none"
-                    />
-                  </div>
-
-                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
-                    <label
-                      className="text-xs text-gray-600"
-                      htmlFor="courseDate"
-                    >
-                      Course Date:<sup className=" text-red-600">*</sup>
-                    </label>
-
-                    <DateBox
-                      id="courseDate"
-                      height={26}
-                      style={{ fontSize: "12px" }}
-                      onValueChanged={(e) => setCourseDate(e.value)}
-                      value={courseDate}
-                      className=" border pl-1 w-full md:w-[70%]  outline-none"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
-                    <label
-                      className="text-xs   text-gray-600"
-                      htmlFor="paymentMode"
-                    >
-                      Payment Mode:<sup className=" text-red-600">*</sup>
-                    </label>
-                    <SelectBox
-                      dataSource={paymentModeOptions}
-                      searchEnabled={true}
-                      placeholder="Select a Payment Mode"
-                      height={26}
-                      style={{ fontSize: "12px" }}
-                      onValueChanged={(e) => setPaymentMode(e.value)}
-                      value={paymentMode}
-                      className=" border  pl-1 w-full md:w-[70%]  outline-none"
-                    />
-                  </div>
-                  <div className="flex justify-between box-border flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[48%]">
-                    <label
-                      className="text-xs text-gray-600"
-                      htmlFor="externalSchemeAdmin"
-                    >
-                      Scheme Admin:
-                      <sup className=" text-red-600">*</sup>
-                    </label>
-                    <TextBox
-                      type="text"
-                      id="externalSchemeAdmin"
-                      placeholder="Type external scheme admin here"
-                      onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
-                      value={externalSchemeAdmin}
-                      height={26}
-                      style={{ fontSize: "12px" }}
-                      className=" border h-7 pl-1 w-full md:w-[70%]  outline-none"
-                    >
-                      {" "}
-                      <Validator>
-                        <RequiredRule message="Scheme admin is required" />
-                      </Validator>
-                    </TextBox>
-                  </div>
-                </article>
                 <div className="flex justify-between box-border flex-col gap-3 md:flex-row w-full md:w-7/12">
                   <label
                     className="text-xs text-gray-600"
                     htmlFor="additionalRequirements"
                   >
-                    Requirements:
+                    Narration:
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <TextArea
@@ -576,8 +336,8 @@ const New = ({
                     height="5vh"
                     placeholder="Type additional requirements here"
                     id="additionalRequirements"
-                    onValueChanged={(e) => setAdditionalRequirements(e.value)}
-                    value={additionalRequirements}
+                    onValueChanged={(e) => setNarrations(e.value)}
+                    value={narrations}
                     style={{ fontSize: "12px" }}
                     className=" border resize-none text-xs pl-1 w-full md:w-[70%] lg:w-[80%] outline-none"
                   />
@@ -612,20 +372,10 @@ const New = ({
   );
 };
 
-// Controls Options
-
 const countriesOptions = services.getCountries();
 
-const trainingVenuesOptions = services.getCities();
-
-const bookingTypeOptions = services.getBookinType();
-
-const retirementSchemeOptions = services.getRetirementScheme();
-
-const paymentModeOptions = services.getPaymentMode();
+const callCenterOptions = services.getCallCenters();
 
 const diabilityStatusOptions = services.getDisabilityStatus();
 
-const today = new Date().toISOString().slice(0, 10);
-
-export default New;
+export default NewUser;

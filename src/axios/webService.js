@@ -1,69 +1,69 @@
 import axios from "axios";
+import { getLocalData } from "../helpers/auth";
 
-const BASE_URL = "https://ibusinessbooking.azurewebsites.net/api";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION;
+const service = axios.create({ baseURL: BASE_URL });
 
-const webService = axios.create({ baseURL: BASE_URL });
+export default class WebService {
+  static async post(action, params) {
+    let response = await service.post(action, params);
+    return response.data;
+  }
+  static async put(action, params) {
+    let response = await service.put(action, params);
+    return response.data;
+  }
+  static async get(action) {
+    let response = await service.get(action);
+    return response.data;
+  }
+  static async delete(action) {
+    let response = await service.delete(action);
+    return response.data;
+  }
+  static async patch(action, params) {
+    let response = await service.patch(action, params);
+    return response.data;
+  }
+}
 
-axios.interceptors.response.use(undefined, (error) => {
-  // const { status, config } = error.response;
-  // if (status === 404) {
-  //   toast.error("Not found");
-  // }
-  // if (status === 400 && config.method === "get") {
-  //   toast.error("Not found");
-  // }
-  // if (
-  //   status === 400 &&
-  //   (config.method === "post" ||
-  //     config.method === "put" ||
-  //     config.method === "delete")
-  // ) {
-  //   toast.error("Multiple fields are required.");
-  // }
-  // if (status === 500) {
-  //   toast.error("Server error - check the terminal for more info!");
-  // }
-});
+service.interceptors.request.use(
+  async (config) => {
+    // Do something before request is sent
+    config.baseURL = BASE_URL;
+    const token = await getLocalData("token");
 
-const responseBody = (response) => response.data;
-
-const request = {
-  get: (url) => axios.get(url).then(responseBody),
-  post: (url, body) => axios.post(url, body).then(responseBody),
-  put: (url, body) => axios.put(url, body).then(responseBody),
-  del: (url) => axios.delete(url).then(responseBody),
-};
-
-const Request = {
-  get: () => request.get("/booking"),
-  getByDate: (fromDate, toDate) =>
-    request.get(`booking/GetbyDate?startdate=${fromDate}&enddate=${toDate}`),
-  getById: (id) => request.get(`booking?bookingID=${id}`),
-  create: (payload) => request.post("/booking/Create", payload),
-  update: (payload) => request.put("/booking/UpdateBooking", payload),
-  delete: (id) => request.del(`booking?bookingID=${id}`),
-};
-
-webService.interceptors.request.use(
-  (config) => {
-    const TOKEN = localStorage.getItem("token");
-
-    if (TOKEN) {
-      config.headers = { Authorization: `Bearer ${TOKEN}` };
+    if (token) {
+      config.headers = { Authorization: `Bearer ${token}` };
     }
 
     return config;
   },
   (error) => {
+    // Do something with request error
     return Promise.reject(error);
   }
 );
 
-// eslint-disable-next-line
-export default { Request };
+service.interceptors.response.use(
+  (response) => {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
 
-export const signUpInURL =
-  "https://localhost:5001/MicrosoftIdentity/Account/SignIn";
+    return response;
+  },
+  (error) => {
+    // // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // // Do something with response error
 
-export const sideMenuRequest =
-  "http://ibusinesstestutils.azurewebsites.net/api/CategoryMenus/GetModuleMenu";
+    const { response } = error;
+    // const originalRequest = config;
+
+    if (response.status === 401 || response.status === 404) {
+      return Promise.reject(error);
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);

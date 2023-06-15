@@ -6,8 +6,6 @@ import data from "../../../data/products";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const Products = () => {
-  // Carousel functionality
-
   const items = data.items;
   const chunkSize = 3;
 
@@ -40,8 +38,6 @@ export const Products = () => {
       setCarousel(carousel - 100);
     }
   };
-
-  // End of carousel
 
   return (
     <div className="products">

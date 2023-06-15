@@ -1,4 +1,4 @@
-export const organizationCategoryOptions = [
+export const industryOptions = [
   "Automotive, Mobility & Transportation",
   "Energy & Sustainability",
   "Finance Services",

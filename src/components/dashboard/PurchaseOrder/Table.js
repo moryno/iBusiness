@@ -85,10 +85,7 @@ export const Table = ({
 
       if (orderstate === 0) {
         try {
-          await request.post(
-            "PurchaseOrder/insertorderitems",
-            rowIndex.data
-          );
+          await request.post("PurchaseOrder/insertorderitems", rowIndex.data);
         } catch (e) {
           console.log(e);
         }
@@ -120,7 +117,7 @@ export const Table = ({
             "PurchaseOrder/updateorderitem",
             rowIndex.data
           );
-          console.log(response.status)
+          console.log(response.status);
         } catch (e) {
           console.log(e);
         }
@@ -173,11 +170,7 @@ export const Table = ({
 
     if (orderstate === 0) {
       try {
-
-        await request.put(
-          "PurchaseOrder/updateorderitem",
-          rowIndex.newData
-        );
+        await request.put("PurchaseOrder/updateorderitem", rowIndex.newData);
       } catch (e) {
         console.log(e);
       }
@@ -193,10 +186,9 @@ export const Table = ({
     if (orderstate === 0) {
       if (!e.cancel) {
         try {
-          await request.delete(
-            "PurchaseOrder/removeorderitem",
-            { data: e.data }
-          );
+          await request.delete("PurchaseOrder/removeorderitem", {
+            data: e.data,
+          });
         } catch (ex) {
           console.log(ex);
           data.store().insert(e.data);
@@ -207,15 +199,12 @@ export const Table = ({
     } else {
       if (!e.cancel) {
         try {
-          await request.delete(
-            "PurchaseOrder/deleteorderitem",
-            {
-              data: {
-                itemid: e.data.id,
-                orderNo: e.data.partitionKey,
-              },
-            }
-          );
+          await request.delete("PurchaseOrder/deleteorderitem", {
+            data: {
+              itemid: e.data.id,
+              orderNo: e.data.partitionKey,
+            },
+          });
         } catch (ex) {
           console.log(ex);
           data.store().insert(e.data);
@@ -251,7 +240,6 @@ export const Table = ({
       handleRowAdded();
     }
   };
-
 
   return (
     <DataGrid

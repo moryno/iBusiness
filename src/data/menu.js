@@ -53,6 +53,39 @@ export const homeMenuSource = [
   },
 ];
 
+export const usersMenuSource = [
+  {
+    id: 1,
+    title: "Find",
+    icon: <MdOutlineSearch fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 2,
+    title: "New",
+    icon: <MdOutlineAdd fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
+    title: "Delete",
+    icon: <MdOutlineDeleteOutline fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 4,
+    title: "Close",
+    icon: <MdFreeCancellation fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 5,
+    title: "Help",
+    icon: <MdHelpOutline fontSize={20} />,
+    onClick: "handleClick",
+  },
+];
+
 export const newMenuSource = [
   {
     id: 1,
