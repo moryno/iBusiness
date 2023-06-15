@@ -23,7 +23,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     tableData: "",
   });
   const [initialRender, setInitialRender] = useState(true);
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);

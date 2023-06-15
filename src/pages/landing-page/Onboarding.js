@@ -21,9 +21,10 @@ import services from "../../helpers/formDataSource";
 import Portal from "../../components/dashboard/Portal";
 import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
 import { useDispatch } from "react-redux";
-
 import { getCurrentUser } from "../../services/userService";
-import axios from "axios";
+import { getCRSFToken } from "../../helpers/auth";
+import OnboardingService from "../../axios/onboardingRequest";
+import Constant from "../../utils/constant";
 
 const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
@@ -58,6 +59,10 @@ const Onboarding = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getCRSFToken();
+  }, []);
 
   useEffect(() => {
     getCurrentUser(dispatch);
@@ -108,15 +113,12 @@ const Onboarding = () => {
     setOpen(true);
     setLoading(true);
 
-    const url = process.env.REACT_APP_BASE_URL;
-    try {
-      const { data } = await axios.post(
-        url + "/onboarding",
-        onboardingFormData,
-        { withCredentials: true }
-      );
+    let action = Constant.ACTION.ONBOARDING;
 
-      if (data) {
+    try {
+      const response = await OnboardingService.post(action, onboardingFormData);
+
+      if (response) {
         setOpen(false);
         setLoading(false);
         navigate("/dashboard");

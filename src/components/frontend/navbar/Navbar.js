@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
 
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const handleLogOut = () => {};
 
@@ -76,7 +76,7 @@ export const Navbar = () => {
               <article className="flex items-center font-medium">
                 <article className="flex items-center gap-1">
                   <h1 className="text-gray-600 font-medium">
-                    Hello, {currentUser?.fullNames}
+                    Hello, {currentUser?.fullName}
                   </h1>
                 </article>
               </article>

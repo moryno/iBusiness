@@ -19,7 +19,7 @@ export const InputField = ({ data, setMessage, order, orderstate }) => {
   const numberBoxRef = useRef(null);
   const selectboxRef = useRef(null);
   const addRef = useRef(null);
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const handleOptionSelection = (e) => {
     setSelectedOption(e.value);

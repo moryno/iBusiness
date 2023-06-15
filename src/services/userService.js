@@ -1,25 +1,15 @@
-import axios from "axios";
 import { loginSuccess } from "../redux/userSlice";
 import { setUpToken } from "../helpers/auth";
+import Constant from "../utils/constant";
+import OnboardingService from "../axios/onboardingRequest";
 
 export const getCurrentUser = async (dispatch) => {
-  const getTokenUrl = process.env.REACT_APP_BASE_URL;
-  const getUserURL = process.env.REACT_APP_SEC_API;
+  const action = Constant.ACTION.USER;
 
   try {
-    const { data } = await axios.get(getTokenUrl + "/GetAuthUser", {
-      withCredentials: true,
-    });
-
-    setUpToken(data?.accessToken);
-
-    const config = {
-      headers: { Authorization: `Bearer ${data?.accessToken}` },
-    };
-
-    const response = await axios.get(getUserURL + "/user", config);
-
-    dispatch(loginSuccess(response?.data));
+    const response = await OnboardingService.get(action);
+    setUpToken(response?.accessToken);
+    dispatch(loginSuccess(response));
   } catch (error) {
     console.log(error);
   }

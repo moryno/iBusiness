@@ -9,7 +9,7 @@ const NavMenus = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const handleLogOut = () => {
     dispatch(logout());
@@ -43,7 +43,7 @@ const NavMenus = () => {
                   <article className="bg-sidebarHeading p-5  shadow-xl">
                     <article className="flex flex-col mt-6 items-center">
                       <h3 className="font-medium text-heading">
-                        {currentUser?.fullNames}
+                        {currentUser?.fullName}
                       </h3>
                       <span className="text-[14px]  text-heading font-normal">
                         {currentUser?.email}

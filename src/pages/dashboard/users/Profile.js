@@ -9,7 +9,7 @@ import Statusbar from "../../../components/dashboard/Statusbar";
 import axios from "axios";
 
 const Profile = () => {
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formInputs, setFormInputs] = useState(currentUser);
 
   const dispatch = useDispatch();

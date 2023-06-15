@@ -28,7 +28,7 @@ export const Table = ({
 }) => {
   const gridRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const addRef = useRef(null);
 
   function onContentReady(e) {

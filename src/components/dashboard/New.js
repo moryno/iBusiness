@@ -93,7 +93,7 @@ const New = ({
     statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
   );
 
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const newFormData = {
     user: {

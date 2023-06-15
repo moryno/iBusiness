@@ -14,109 +14,134 @@ import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/Booking";
 import ProtectedRoute from "./components/dashboard/ProtectedRoute";
 import User from "./pages/dashboard/users/User";
+import TestProduct from "./components/dashboard/TestProduct";
+import ScrollToTop from "./components/frontend/ScrollToTop";
+import { NotFound } from "./pages/landing-page/NotFound";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <FrontendLayout>
-              <LandingPage />
-            </FrontendLayout>
-          }
-        ></Route>
-        <Route
-          path="/pricing"
-          element={
-            <FrontendLayout>
-              <ProductsView />
-            </FrontendLayout>
-          }
-        ></Route>
-        <Route
-          path="/company"
-          element={
-            <FrontendLayout>
-              <Company />
-            </FrontendLayout>
-          }
-        ></Route>
-        <Route
-          path="/support"
-          element={
-            <FrontendLayout>
-              <Support />
-            </FrontendLayout>
-          }
-        ></Route>
-        <Route
-          path="/onboarding"
-          element={
-            <FrontendLayout>
-              <Onboarding />
-            </FrontendLayout>
-          }
-        ></Route>
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        ></Route>
-        <Route
-          path="/dashboard/users"
-          element={
-            <ProtectedRoute>
-              <User />
-            </ProtectedRoute>
-          }
-        ></Route>
-        <Route
-          path="/dashboard/bookings"
-          element={
-            <ProtectedRoute>
-              <Booking />
-            </ProtectedRoute>
-          }
-        ></Route>
+      <ScrollToTop>
+        <Routes>
+          <Route path="/">
+            <Route
+              index
+              element={
+                <FrontendLayout>
+                  <LandingPage />
+                </FrontendLayout>
+              }
+            ></Route>
+            <Route
+              path="pricing"
+              element={
+                <FrontendLayout>
+                  <ProductsView />
+                </FrontendLayout>
+              }
+            ></Route>
+            <Route
+              path="company"
+              element={
+                <FrontendLayout>
+                  <Company />
+                </FrontendLayout>
+              }
+            ></Route>
+            <Route
+              path="support"
+              element={
+                <FrontendLayout>
+                  <Support />
+                </FrontendLayout>
+              }
+            ></Route>
+            <Route
+              path="onboarding"
+              element={
+                <FrontendLayout>
+                  <Onboarding />
+                </FrontendLayout>
+              }
+            ></Route>
+          </Route>
+          <Route path="dashboard">
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="users"
+              element={
+                <ProtectedRoute>
+                  <User />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="products"
+              element={
+                <ProtectedRoute>
+                  <TestProduct />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="bookings"
+              element={
+                <ProtectedRoute>
+                  <Booking />
+                </ProtectedRoute>
+              }
+            ></Route>
 
-        <Route
-          path="/dashboard/purchase-order"
-          element={
-            <ProtectedRoute>
-              <PurchaseOrder orderstate={0} />
-            </ProtectedRoute>
-          }
-        ></Route>
-        <Route
-          path="/dashboard/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        ></Route>
-        <Route
-          path="/dashboard/orders"
-          element={
-            <ProtectedRoute>
-              <Orders />
-            </ProtectedRoute>
-          }
-        ></Route>
-        <Route
-          path="/dashboard/updateorder/:id"
-          element={
-            <ProtectedRoute>
-              <PurchaseOrder orderstate={1} />
-            </ProtectedRoute>
-          }
-        ></Route>
-      </Routes>
+            <Route
+              path="purchase-order"
+              element={
+                <ProtectedRoute>
+                  <PurchaseOrder orderstate={0} />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="orders"
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="updateorder/:id"
+              element={
+                <ProtectedRoute>
+                  <PurchaseOrder orderstate={1} />
+                </ProtectedRoute>
+              }
+            ></Route>
+          </Route>
+          <Route
+            path="*"
+            element={
+              <FrontendLayout>
+                <NotFound />
+              </FrontendLayout>
+            }
+          />
+        </Routes>
+      </ScrollToTop>
     </Router>
   );
 }

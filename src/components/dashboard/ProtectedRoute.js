@@ -4,34 +4,28 @@ import Layout from "../../layout/Layout";
 import LoadingComponent from "../frontend/LoadingComponent";
 import { loginSuccess } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { setUpToken } from "../../helpers/auth";
+import { getCRSFToken, setUpToken } from "../../helpers/auth";
+import OnboardingService from "../../axios/onboardingRequest";
+import Constant from "../../utils/constant";
 
 const ProtectedRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const isAuthenticated = useSelector((state) => state.user?.currentUser);
+  const isAuthenticated = useSelector((state) => state.user?.currentUser?.user);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    getCRSFToken();
+  }, []);
+
+  useEffect(() => {
+    const action = Constant.ACTION.USER;
+
     const getCurrentUser = async () => {
-      const getTokenUrl = process.env.REACT_APP_BASE_URL;
-      const getUserURL = process.env.REACT_APP_SEC_API;
-
       try {
-        const { data } = await axios.get(getTokenUrl + "/GetAuthUser", {
-          withCredentials: true,
-        });
-
-        setUpToken(data?.accessToken);
-
-        const config = {
-          headers: { Authorization: `Bearer ${data?.accessToken}` },
-        };
-
-        const response = await axios.get(getUserURL + "/user", config);
-
-        dispatch(loginSuccess(response?.data));
+        const response = await OnboardingService.get(action);
+        setUpToken(response?.accessToken);
+        dispatch(loginSuccess(response));
         setIsLoading(false);
       } catch (error) {
         console.log(error);

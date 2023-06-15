@@ -43,7 +43,7 @@ const Form = ({
   const [deliveryPeriod, setDeliveryPeriod] = useState();
   const [driverDetails, setdriverDetails] = useState();
   const [orderNumber, setOrderNumber] = useState(0);
-  const currentUser = useSelector((state) => state.user?.currentUser);
+  const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   useEffect(
     () => {
