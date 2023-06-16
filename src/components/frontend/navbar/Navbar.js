@@ -10,14 +10,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../../redux/userSlice"
+
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
-
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const dispatch = useDispatch();
 
-  const handleLogOut = () => {};
+  const handleLogOut = () => {
+    dispatch(logout());
+    window.location = "https://localhost:5001/MicrosoftIdentity/Account/SignOut";
+  };
 
   const handleToggle = () => {
     if (toggleSidebar === false) {
