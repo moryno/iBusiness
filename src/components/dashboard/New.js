@@ -18,6 +18,7 @@ import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
 import webService from "../../axios/webService";
+import OnboardingService from "../../axios/onboardingRequest";
 
 const New = ({
   handleClose,
@@ -92,33 +93,30 @@ const New = ({
   const [paymentMode, setPaymentMode] = useState(
     statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
   );
-
+  // eslint-disable-next-line
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
   const newFormData = {
-    user: {
-      userID: currentUser?.userID,
-      fullName,
-      idNumber,
-      email,
-      telephone,
-      physicalAddress,
-      originCountry: selectedCountry,
-      employerName,
-      experience,
-      position,
-      disabilityStatus: selectedStatus,
-    },
-    booking: {
-      bookingType,
-      retirementSchemeName: schemeOptions,
-      schemePosition,
-      trainingVenue,
-      courseDate,
-      paymentMode,
-      additionalRequirements,
-      externalSchemeAdmin,
-    },
+    userID: 2,
+    fullName,
+    idNumber,
+    email,
+    telephone,
+    physicalAddress,
+    originCountry: selectedCountry,
+    employerName,
+    experience,
+    position,
+    disabilityStatus: selectedStatus,
+    bookingId: 1,
+    bookingType,
+    retirementSchemeName: schemeOptions,
+    schemePosition,
+    trainingVenue,
+    courseDate,
+    paymentMode,
+    additionalRequirements,
+    externalSchemeAdmin,
   };
 
   const editFormData = {
@@ -147,7 +145,7 @@ const New = ({
       externalSchemeAdmin,
     },
   };
-
+  // eslint-disable-next-line
   const submitForm = async (e) => {
     e.preventDefault();
 
@@ -173,6 +171,18 @@ const New = ({
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = "/test";
+    try {
+      const response = await OnboardingService.post(url, newFormData);
+      setBookings([response, ...bookings]);
+      handleClose();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -205,7 +215,7 @@ const New = ({
         <article className="h-full px-2 md:border md:overflow-y-auto">
           <div>
             <form
-              onSubmit={submitForm}
+              onSubmit={handleSubmit}
               className="flex w-full mt-1 py-1  items-stretch rounded-sm flex-wrap justify-between gap-2"
             >
               <section className="flex flex-col md:flex-row w-full gap-2">
