@@ -11,8 +11,7 @@ import {
 import data from "../../../data/navbar";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../../redux/userSlice"
-
+import { logout } from "../../../redux/userSlice";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
@@ -21,7 +20,6 @@ export const Navbar = () => {
 
   const handleLogOut = () => {
     dispatch(logout());
-    window.location = "https://localhost:5001/MicrosoftIdentity/Account/SignOut";
   };
 
   const handleToggle = () => {

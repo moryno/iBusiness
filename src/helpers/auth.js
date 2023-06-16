@@ -3,7 +3,7 @@ import Constant from "../utils/constant";
 
 export const logoutFunc = () => {
   localStorage.removeItem("token");
-  window.location.href = "/";
+  window.location = process.env.REACT_APP_SIGNOUT_URL;
 };
 
 export const setUpToken = (token) => {
@@ -13,6 +13,13 @@ export const setUpToken = (token) => {
 export function setLocalData(key, value) {
   try {
     localStorage.setItem(key, value);
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+export function removeLocalData(key) {
+  try {
+    localStorage.removeItem(key);
   } catch (error) {
     console.log("error", error);
   }
