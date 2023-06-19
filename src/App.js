@@ -14,7 +14,6 @@ import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/Booking";
 import ProtectedRoute from "./components/dashboard/ProtectedRoute";
 import User from "./pages/dashboard/users/User";
-import TestProduct from "./components/dashboard/TestProduct";
 import ScrollToTop from "./components/frontend/ScrollToTop";
 import { NotFound } from "./pages/landing-page/NotFound";
 
@@ -82,14 +81,7 @@ function App() {
                 </ProtectedRoute>
               }
             ></Route>
-            <Route
-              path="products"
-              element={
-                <ProtectedRoute>
-                  <TestProduct />
-                </ProtectedRoute>
-              }
-            ></Route>
+
             <Route
               path="bookings"
               element={

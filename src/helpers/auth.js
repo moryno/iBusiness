@@ -2,8 +2,8 @@ import axios from "axios";
 import Constant from "../utils/constant";
 
 export const logoutFunc = () => {
+  window.location = process.env.REACT_APP_SIGNOUT_URL;
   localStorage.removeItem("token");
-  window.location.href = "/";
 };
 
 export const setUpToken = (token) => {
@@ -13,6 +13,13 @@ export const setUpToken = (token) => {
 export function setLocalData(key, value) {
   try {
     localStorage.setItem(key, value);
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+export function removeLocalData(key) {
+  try {
+    localStorage.removeItem(key);
   } catch (error) {
     console.log("error", error);
   }
@@ -28,7 +35,11 @@ export function getLocalData(key) {
 }
 
 export async function getCRSFToken() {
-  const url = process.env.REACT_APP_BASE_URL + Constant.ACTION.CSRFTOKEN;
+  const url =
+    process.env.REACT_APP_BASE_URL +
+    process.env.REACT_APP_API_VERSION +
+    Constant.ACTION.CSRFTOKEN;
+
   try {
     const { data } = await axios.get(url, { withCredentials: true });
     setLocalData("csrfToken", data?.token);

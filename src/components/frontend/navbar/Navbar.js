@@ -9,17 +9,17 @@ import {
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/navbar";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../../redux/userSlice";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
-  const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const dispatch = useDispatch();
 
   const handleLogOut = () => {
-    localStorage.clear();
-    navigate(process.env.REACT_APP_SIGNOUT_URL);
+    dispatch(logout());
   };
 
   const handleToggle = () => {

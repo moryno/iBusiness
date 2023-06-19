@@ -12,6 +12,7 @@ import { bookingColumns } from "../../data/PurchaseOrderData";
 import { bookingFilterValues } from "../../helpers/datatableSource";
 import webService from "../../axios/webService";
 import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
+import OnboardingService from "../../axios/onboardingRequest";
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -47,10 +48,11 @@ const Booking = () => {
     try {
       const getData = async () => {
         setLoading(true);
-        const response = date
-          ? await webService.Request.getByDate(date.startdate, date.enddate)
-          : await webService.Request.get();
-
+        // const response = date
+        //   ? await webService.Request.getByDate(date.startdate, date.enddate)
+        //   : await webService.Request.get();
+        const url = "/test";
+        const response = await OnboardingService.get(url);
         setLoading(false);
         setBookings(response);
       };
