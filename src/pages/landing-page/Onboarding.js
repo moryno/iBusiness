@@ -25,11 +25,11 @@ import { getCurrentUser } from "../../services/userService";
 import { getCRSFToken } from "../../helpers/auth";
 import OnboardingService from "../../axios/onboardingRequest";
 import Constant from "../../utils/constant";
+import ianasqltimezones from "../../data/ianasqltimezones";
 
 const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [industry, setIndustry] = useState(
     "Accounting, finance, banking, insuarance"
   );
@@ -38,7 +38,6 @@ const Onboarding = () => {
   );
   // eslint-disable-next-line
   const [categoryId, setCategoryId] = useState(null);
-
   const [employees, setEmployees] = useState(0);
 
   const [selectedTimezone, setSelectedTimezone] = useState(
@@ -56,18 +55,30 @@ const Onboarding = () => {
   const [servicePlanNumber, setServicePlanNumber] = useState(7);
 
   const [organizationName, setOrganizationName] = useState("");
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     getCRSFToken();
+    getCurrentTimezone();
   }, []);
 
   useEffect(() => {
     getCurrentUser(dispatch);
   }, [dispatch]);
 
+  const getCurrentTimezone = () => {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const currentZone = ianasqltimezones.filter((a) => {
+      return a.ianaTimezone === timeZone;
+    });
+    const sqlZone = timezonesComplete.filter(
+      (tz) => tz.value === currentZone[0].sqlTimeZone
+    );
+    return setSelectedTimezone(sqlZone[0].text);
+  };
+
+  // Set the industry for the organisation according to what the user selects
   const handleIndustrySelection = (category) => {
     const selectedCategory = handleCategory(category);
     setIndustry(selectedCategory.name);
@@ -377,6 +388,7 @@ const Onboarding = () => {
 };
 
 const timezonesOptions = timezoneService.getTimezoneText();
+const timezonesComplete = timezoneService.getAllTimezones();
 const countriesOptions = services.getCountries();
 
 export default Onboarding;
