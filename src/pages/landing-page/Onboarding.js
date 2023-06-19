@@ -44,7 +44,7 @@ const Onboarding = () => {
   const [selectedTimezone, setSelectedTimezone] = useState(
     "E. Africa Standard Time"
   );
-  const [tenantRouteName, setTenantRouteName] = useState("");
+
   const [timeZone, setTimezone] = useState("E. Africa Standard Time");
   const [onboardingQuestions, setOnboardingQuestions] = useState("");
   const [country, setCountry] = useState("Kenya");
@@ -53,7 +53,7 @@ const Onboarding = () => {
     "Standard (Ksh10,000, Free 14 Days Trial)"
   );
   // eslint-disable-next-line
-  const [servicePlanNumber, setServicePlanNumber] = useState(null);
+  const [servicePlanNumber, setServicePlanNumber] = useState(7);
 
   const [organizationName, setOrganizationName] = useState("");
 
@@ -68,7 +68,6 @@ const Onboarding = () => {
     getCurrentUser(dispatch);
   }, [dispatch]);
 
-  // Set the industry for the organisation according to what the user selects
   const handleIndustrySelection = (category) => {
     const selectedCategory = handleCategory(category);
     setIndustry(selectedCategory.name);
@@ -84,7 +83,6 @@ const Onboarding = () => {
   const handleTimeZone = (selectedTimeZone) => {
     const allTimezones = timezoneService.getAllTimezones();
     allTimezones.filter((timezone) => {
-      // Check the changes below
       if (timezone.text === selectedTimeZone) {
         setSelectedTimezone(timezone.text);
         setTimezone(timezone.value);
@@ -94,12 +92,10 @@ const Onboarding = () => {
     });
   };
 
-  // Submit the tenant info to be processed and added to the database
   const onboardingFormData = {
     organizationName,
     categoryId,
     noofEmployees: employees,
-    tenantRouteName,
     country,
     profession,
     timeZone,
@@ -226,10 +222,10 @@ const Onboarding = () => {
                     className="text-lg text-gray-800 font-medium"
                     htmlFor="organizationCategory"
                   >
-                    What is your profession?
+                    What is your job title?
                   </label>
                   <span className="text-xs">
-                    Identifying your industry will help people find you in
+                    Identifying your job title will help people find you in
                     search results. Choose the closest one - you can update it
                     later.
                   </span>
@@ -244,30 +240,7 @@ const Onboarding = () => {
                     className="border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
                   />
                 </div>
-                <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
-                  <label
-                    className="text-lg text-gray-800 font-medium"
-                    htmlFor="tenantRouteName"
-                  >
-                    Please choose a name for your custom Tenant Route
-                  </label>
-                  <span className="text-xs">
-                    Choose a unique route to use when accessing your tenant. You
-                    can change this later.
-                  </span>
-                  <TextBox
-                    placeholder="Type here.."
-                    onValueChanged={(e) => setTenantRouteName(e.value)}
-                    value={tenantRouteName}
-                    height={30}
-                    style={{ fontSize: "12px" }}
-                    className=" border pl-1 text-center w-full md:w-[70%] lg:w-[80%] outline-none"
-                  >
-                    <Validator>
-                      <RequiredRule message="Organisation name is required" />
-                    </Validator>
-                  </TextBox>
-                </div>
+
                 <div className="flex justify-between box-border flex-col gap-1  w-full mb-2">
                   <label
                     className="text-lg text-gray-800 font-medium"
