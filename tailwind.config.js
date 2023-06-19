@@ -55,7 +55,7 @@ module.exports = {
         dropDown: "#282828",
       },
       boxShadow: {
-        "3xl": "0 10px 30px -10px rgba(0, 0, 0, 1)",
+        "3xl": "0 8px 25px -10px rgba(0, 0, 0, 1)",
       },
       fontSize: {},
       height: {},
