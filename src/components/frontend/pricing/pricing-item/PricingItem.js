@@ -1,7 +1,6 @@
 import { FaCheck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
-import { msSingleSign } from "../../../../utils/webService";
 
 const PricingItem = ({ pricing }) => {
   return (
@@ -38,9 +37,12 @@ const PricingItem = ({ pricing }) => {
               </li>
             ))}
           </ul>
-          <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-headingBlue text-white capitalize transition-all duration-400 hover:bg-buttonHover active:bg-headingBlue">
-            <Link to={msSingleSign}>{pricing?.button}</Link>
-          </button>
+          <Link to={process.env.REACT_APP_SIGNUPIN_URL}>
+            {" "}
+            <button className="w-full mt-5 mb-3 rounded-3xl px-3 py-2 cursor-pointer border-none bg-headingBlue text-white capitalize transition-all duration-400 hover:bg-buttonHover active:bg-headingBlue">
+              {pricing?.button}
+            </button>
+          </Link>
         </article>
       </section>
     </main>

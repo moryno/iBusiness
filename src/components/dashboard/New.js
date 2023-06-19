@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
@@ -14,12 +14,11 @@ import Validator, {
   PatternRule,
   EmailRule,
 } from "devextreme-react/validator";
-import ValidationSummary from "devextreme-react/validation-summary";
+import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
-import webService from "../../utils/webService";
-import LoadingIndicator from "../../components/features/LoadingIndicator";
-import { Button, ValidationGroup } from "devextreme-react";
+import webService from "../../axios/webService";
+import OnboardingService from "../../axios/onboardingRequest";
 
 const New = ({
   handleClose,
@@ -31,10 +30,6 @@ const New = ({
   statusBarText,
   statusMode,
 }) => {
-  // Define state to store the change in the input field
-  // Code starts here
-  const [loading, setLoading] = useState(false);
-
   const [fullName, setFullName] = useState(
     statusMode === "EditMode" ? singleBooking.user?.fullName : ""
   );
@@ -98,89 +93,73 @@ const New = ({
   const [paymentMode, setPaymentMode] = useState(
     statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
   );
-  // Code ends here
-
-  // Get our current user using redux to update booking when creating or updating
+  // eslint-disable-next-line
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
-  // A function to save the booking details to the backend then populate the datagrid
+  const newFormData = {
+    userID: 2,
+    fullName,
+    idNumber,
+    email,
+    telephone,
+    physicalAddress,
+    originCountry: selectedCountry,
+    employerName,
+    experience,
+    position,
+    disabilityStatus: selectedStatus,
+    bookingId: 1,
+    bookingType,
+    retirementSchemeName: schemeOptions,
+    schemePosition,
+    trainingVenue,
+    courseDate,
+    paymentMode,
+    additionalRequirements,
+    externalSchemeAdmin,
+  };
+
+  const editFormData = {
+    user: {
+      userID: singleBooking?.user?.userID,
+      fullName,
+      idNumber,
+      email,
+      telephone,
+      physicalAddress,
+      employerName,
+      experience,
+      position,
+      disabilityStatus: selectedStatus,
+    },
+    booking: {
+      bookingId: singleBooking?.booking?.bookingId,
+      bookingType,
+      retirementSchemeName: schemeOptions,
+      schemePosition,
+      originCountry: selectedCountry,
+      trainingVenue,
+      courseDate,
+      paymentMode,
+      additionalRequirements,
+      externalSchemeAdmin,
+    },
+  };
+  // eslint-disable-next-line
   const submitForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // Create Booking information
-    const formData = {
-      user: {
-        userID: currentUser?.userID,
-        fullName,
-        idNumber,
-        email,
-        telephone,
-        physicalAddress,
-        originCountry: selectedCountry,
-        employerName,
-        experience,
-        position,
-        disabilityStatus: selectedStatus,
-      },
-      booking: {
-        bookingType,
-        retirementSchemeName: schemeOptions,
-        schemePosition,
-        trainingVenue,
-        courseDate,
-        paymentMode,
-        additionalRequirements,
-        externalSchemeAdmin,
-      },
-    };
 
-    // Update Booking information
-    const editData = {
-      user: {
-        userID: singleBooking?.user?.userID,
-        fullName,
-        idNumber,
-        email,
-        telephone,
-        physicalAddress,
-        employerName,
-        experience,
-        position,
-        disabilityStatus: selectedStatus,
-      },
-      booking: {
-        bookingId: singleBooking?.booking?.bookingId,
-        bookingType,
-        retirementSchemeName: schemeOptions,
-        schemePosition,
-        originCountry: selectedCountry,
-        trainingVenue,
-        courseDate,
-        paymentMode,
-        additionalRequirements,
-        externalSchemeAdmin,
-      },
-    };
-
-    // Check to save depending on the current mode
     if (statusMode === "CreateMode") {
       try {
-        // perform form submission on creating new booking
-        const response = await webService.Request.create(formData);
-        // Append the new booking to the top of the datagrid
+        const response = await webService.Request.create(newFormData);
         setBookings([response?.Booking?.booking, ...bookings]);
-        setLoading(false);
         handleClose();
       } catch (error) {
-        setLoading(false);
         console.log(error);
       }
     } else {
       try {
-        // perform form submission on updating existing booking
-        const response = await webService.Request.update(editData);
-
-        // Append the updated booking to the top of the datagrid
+        const response = await webService.Request.update(editFormData);
         const newBooking = bookings.map((booking) => {
           if (booking.bookingId === response?.Booking.bookingId) {
             return response?.Booking;
@@ -189,11 +168,21 @@ const New = ({
         });
         setBookings(newBooking);
         handleClose();
-        setLoading(false);
       } catch (error) {
-        setLoading(false);
         console.log(error);
       }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = "/test";
+    try {
+      const response = await OnboardingService.post(url, newFormData);
+      setBookings([response, ...bookings]);
+      handleClose();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -226,7 +215,7 @@ const New = ({
         <article className="h-full px-2 md:border md:overflow-y-auto">
           <div>
             <form
-              onSubmit={submitForm}
+              onSubmit={handleSubmit}
               className="flex w-full mt-1 py-1  items-stretch rounded-sm flex-wrap justify-between gap-2"
             >
               <section className="flex flex-col md:flex-row w-full gap-2">

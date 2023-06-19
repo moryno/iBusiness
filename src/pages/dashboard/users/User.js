@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import DateBox from "devextreme-react/date-box";
 import { toast } from "react-toastify";
-import DataTable from "../../components/dashboard/DataTable";
-import Statusbar from "../../components/dashboard/Statusbar";
-import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
-import { homeMenuSource } from "../../data/menu";
-import MobileMenus from "../../components/dashboard/MobileMenus";
-import Portal from "../../components/dashboard/Portal";
-import New from "../../components/dashboard/New";
-import { bookingColumns } from "../../data/PurchaseOrderData";
-import { bookingFilterValues } from "../../helpers/datatableSource";
-import webService from "../../axios/webService";
-import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
-import OnboardingService from "../../axios/onboardingRequest";
+import DataTable from "../../../components/dashboard/DataTable";
+import Statusbar from "../../../components/dashboard/Statusbar";
+import MenuButtonsGroup from "../../../components/dashboard/MenuButtonsGroup";
+import MobileMenus from "../../../components/dashboard/MobileMenus";
+import Portal from "../../../components/dashboard/Portal";
+import ConfirmationPopupComponent from "../../../components/dashboard/ConfirmationPopupComponent";
+import { userColumns } from "../../../data/usersSource";
+import { usersMenuSource } from "../../../data/menu";
+import NewUser from "../../../components/dashboard/NewUser";
 
 const today = new Date().toISOString().slice(0, 10);
 
-const Booking = () => {
+const User = () => {
   const [bookings, setBookings] = useState([]);
+  // eslint-disable-next-line
   const [singleBooking, setSingleBooking] = useState({});
+  // eslint-disable-next-line
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
@@ -26,8 +26,6 @@ const Booking = () => {
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
     setRowDblClickBookingId(null);
@@ -43,34 +41,6 @@ const Booking = () => {
       setRowDblClickBookingId(null);
     }
   };
-
-  useEffect(() => {
-    try {
-      const getData = async () => {
-        setLoading(true);
-        // const response = date
-        //   ? await webService.Request.getByDate(date.startdate, date.enddate)
-        //   : await webService.Request.get();
-        const url = "/test";
-        const response = await OnboardingService.get(url);
-        setLoading(false);
-        setBookings(response);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [date]);
-
-  useEffect(() => {
-    const getSingleBooking = async () => {
-      const response = await webService.Request.getById(onRowDblClickBookingId);
-      setSingleBooking(response);
-      setStatusMode("EditMode");
-      setOpen((isOpen) => !isOpen);
-    };
-    if (onRowDblClickBookingId) getSingleBooking();
-  }, [onRowDblClickBookingId]);
 
   const openConfirmationPopup = async (rowItem) => {
     if (rowItem === null) {
@@ -112,13 +82,13 @@ const Booking = () => {
       <section>
         <section>
           <MenuButtonsGroup
-            heading="Booking List"
-            menus={homeMenuSource}
+            heading="Users"
+            menus={usersMenuSource}
             onMenuClick={handleClick}
           />
 
           <article className="relative">
-            <MobileMenus menus={homeMenuSource} onMenuClick={handleClick} />
+            <MobileMenus menus={usersMenuSource} onMenuClick={handleClick} />
 
             <article className=" md:pr-5 flex gap-4 items-center">
               <div className="flex flex-col gap-2 md:flex-row w-full md:py-2">
@@ -162,40 +132,33 @@ const Booking = () => {
         <section className="mt-5">
           <DataTable
             data={bookings}
-            columns={bookingColumns}
+            columns={userColumns}
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
             //loading={loading}
             setRowClickItem={setRowClickItem}
             openConfirmationPopup={openConfirmationPopup}
-            filterValues={bookingFilterValues}
           />
         </section>
       </section>
 
       {statusMode === "CreateMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
+          <NewUser
             handleClose={handleClose}
-            title={"Create New Booking"}
-            heading={"Booking Item Management"}
-            statusBarText={"New Booking Item"}
+            title={"Create A User"}
+            heading={"User Management"}
+            statusBarText={"New User"}
             statusMode={statusMode}
           />
         </Portal>
       ) : statusMode === "EditMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
+          <NewUser
             handleClose={handleClose}
-            title={"Update A Booking Item"}
-            heading={"Booking Item Management"}
-            statusBarText={"Updating Booking Item"}
+            title={"Update A User"}
+            heading={"User Management"}
+            statusBarText={"Update A User"}
             statusMode={statusMode}
           />
         </Portal>
@@ -215,9 +178,9 @@ const Booking = () => {
         )
       )}
 
-      <Statusbar heading="Booking List" company="ARBS Customer Portal" />
+      <Statusbar heading="User List" company="ARBS Customer Portal" />
     </main>
   );
 };
 
-export default Booking;
+export default User;

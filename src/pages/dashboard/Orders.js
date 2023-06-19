@@ -11,7 +11,7 @@ import { orderFilterValues } from "../../helpers/datatableSource";
 
 const Orders = () => {
   const [data, setData] = useState([]);
-  const loadingRef = useRef(true);
+  const loadingRef = useRef(false);
   // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
@@ -20,21 +20,11 @@ const Orders = () => {
 
   const today = new Date().toISOString().slice(0, 10);
 
-  // Fuction to get date change
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInput({ ...input, [name]: value });
   };
 
-  // // Fuction to close the Create || update form
-  // const handleClose = () => {
-  //   setStatusMode("");
-  //   setOpen(false);
-  // };
-
-  // Fuction to edit row
-
-  // This Hook is to fetch all orders
   useEffect(() => {
     const getData = async () => {
       try {
@@ -42,7 +32,7 @@ const Orders = () => {
         setData(response.data);
         loadingRef.current = false;
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
 
@@ -50,7 +40,6 @@ const Orders = () => {
   }, []);
 
   const startEdit = ({ data }) => {
-    // navigate(`/dashboard/updateorder/${e.data.orderNumber}`);
     if (data) {
       setRowDblClickBookingId(data.orderNumber);
     } else {
@@ -59,13 +48,11 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    if (onRowDblClickBookingId){
+    if (onRowDblClickBookingId) {
       navigate(`/dashboard/updateorder/${onRowDblClickBookingId}`);
-    } 
+    }
   }, [onRowDblClickBookingId, navigate]);
 
-
-  // This fucntion is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":

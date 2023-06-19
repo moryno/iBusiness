@@ -14,6 +14,8 @@ module.exports = {
         bgxLight: "#E3EFFF",
         button: "#0D6EFD",
         buttonBlue: "#0088ff",
+        userProfileBg: "#0088ff",
+        userProHover: "#F1F1F4",
         buttonBg: "#1B6EC2",
         bgxxLight: "#f3f3f3",
         section: "#F1F1F4",

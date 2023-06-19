@@ -5,7 +5,7 @@ const LoadingIndicator = () => {
   return (
     <main className="flex gap-1 items-center">
       <ImSpinner className=" animate-spin" />
-      <span>Loading...</span>
+      <span className="text-xs">Loading...</span>
     </main>
   );
 };

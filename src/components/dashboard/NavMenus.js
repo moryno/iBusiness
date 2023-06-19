@@ -9,15 +9,12 @@ const NavMenus = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Get current user
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
-  // Handle logout and remove token from persist
   const handleLogOut = () => {
     dispatch(logout());
   };
 
-  // Function when menu is clicked
   const handleClick = (link) => {
     if (link === "Sign Out") {
       handleLogOut();

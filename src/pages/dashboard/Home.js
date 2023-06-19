@@ -1,89 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DateBox from "devextreme-react/date-box";
-import { toast } from "react-toastify";
 import Statusbar from "../../components/dashboard/Statusbar";
 import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
 import MobileMenus from "../../components/dashboard/MobileMenus";
-import Portal from "../../components/dashboard/Portal";
-import New from "./New";
-import webService from "../../utils/webService";
-
-import ConfirmationPopupComponent from "../../components/features/ConfirmationPopupComponent";
-
-import { useDispatch } from "react-redux";
 
 // Get todays day to use in the filter date fields of the datagrid
 const today = new Date().toISOString().slice(0, 10);
 
 const Home = () => {
-  const [bookings, setBookings] = useState([]);
-  const [singleBooking, setSingleBooking] = useState({});
-  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
-  const [onRowClickItem, setRowClickItem] = useState(null);
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
+  // eslint-disable-next-line
   const [date, setDate] = useState("");
-  const [statusMode, setStatusMode] = useState("");
-  const [isOpen, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  // Fuction to close the Create || update form
-  const handleClose = () => {
-    setRowDblClickBookingId(null);
-    setSingleBooking({});
-    setStatusMode("");
-    setOpen(false);
-  };
-
-  // Define a function to get the instance of selected row
-  const startEdit = ({ data }) => {
-    if (data) {
-      setRowDblClickBookingId(data.bookingId);
-    } else {
-      setRowDblClickBookingId(null);
-    }
-  };
-
-  useEffect(() => {
-    try {
-      const getData = async () => {
-        setLoading(true);
-        const response = date
-          ? await webService.Request.getByDate(date.startdate, date.enddate)
-          : await webService.Request.get();
-
-        setLoading(false);
-        setBookings(response);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [date]);
-
-  // This Hook is to fetch single booking when a row in the datagrid is double clicked
-  useEffect(() => {
-    const getSingleBooking = async () => {
-      const response = await webService.Request.getById(onRowDblClickBookingId);
-      setSingleBooking(response);
-      setStatusMode("EditMode");
-      setOpen((isOpen) => !isOpen);
-    };
-    if (onRowDblClickBookingId) getSingleBooking();
-  }, [onRowDblClickBookingId]);
-
-  // Function to open ConfirmationPopupComponent
-  const openConfirmationPopup = async (rowItem) => {
-    if (rowItem === null) {
-      toast.warning("Please select a booking to delete");
-    } else {
-      setStatusMode("DeleteMode");
-      setOpen((isOpen) => !isOpen);
-    }
-  };
-
-  // This function is used to toggle between each menu botton clicks
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
@@ -92,11 +22,8 @@ const Home = () => {
           : setDate({ startdate: fromDate, enddate: toDate });
         break;
       case "New":
-        setStatusMode("CreateMode");
-        setOpen((isOpen) => !isOpen);
         break;
       case "Delete":
-        openConfirmationPopup(onRowClickItem);
         break;
       case "Close":
         console.log("Close was clicked");
@@ -115,7 +42,7 @@ const Home = () => {
       <section>
         <section>
           <MenuButtonsGroup
-            heading="Booking List"
+            heading="Home"
             menus={homeMenuSource}
             onMenuClick={handleClick}
           />
@@ -168,48 +95,6 @@ const Home = () => {
           </h1>
         </section>
       </section>
-
-      {statusMode === "CreateMode" ? (
-        <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
-            handleClose={handleClose}
-            title={"Create New Booking"}
-            heading={"Booking Item Management"}
-            statusBarText={"New Booking Item"}
-            statusMode={statusMode}
-          />
-        </Portal>
-      ) : statusMode === "EditMode" ? (
-        <Portal isOpen={isOpen} setOpen={setOpen}>
-          <New
-            bookings={bookings}
-            singleBooking={singleBooking}
-            setBookings={setBookings}
-            handleClose={handleClose}
-            title={"Update A Booking Item"}
-            heading={"Booking Item Management"}
-            statusBarText={"Updating Booking Item"}
-            statusMode={statusMode}
-          />
-        </Portal>
-      ) : (
-        statusMode === "DeleteMode" && (
-          <Portal isOpen={isOpen} setOpen={setOpen}>
-            <ConfirmationPopupComponent
-              item={onRowClickItem}
-              bookings={bookings}
-              setBookings={setBookings}
-              handleClose={handleClose}
-              title={"Delete A Booking Item"}
-              statusBarText={"Delete Booking Item"}
-              statusMode={statusMode}
-            />
-          </Portal>
-        )
-      )}
 
       <Statusbar heading="Booking List" company="ARBS Customer Portal" />
     </main>

@@ -15,63 +15,63 @@ import Statusbar from "../../../components/dashboard/Statusbar";
 import { useSelector } from "react-redux";
 import { LoadPanel } from "devextreme-react/load-panel";
 
-// Main Function
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
   const [order, setOrder] = useState(0);
   const [updateData, setUpdateData] = useState({
     formData: "",
-    tableData: ""
-  }) 
+    tableData: "",
+  });
   const [initialRender, setInitialRender] = useState(true);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [data, setData] = useState(new DataSource());
   const count = useRef(1);
-  const [modalmessage, setModalMessage] = useState("Are you sure you want to clear the table?");
+  const [modalmessage, setModalMessage] = useState(
+    "Are you sure you want to clear the table?"
+  );
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    setLoading(true)
+    setLoading(false);
     if (orderstate === 0) {
-      async function getData(){
+      async function getData() {
         try {
-          const response = await request.get(`/PurchaseOrder/getorderitems?userid=${currentUser?.email}`);
+          const response = await request.get(
+            `/PurchaseOrder/getorderitems?userid=${currentUser?.email}`
+          );
           data.store().clear();
           response.data.orderItems.map((item) => {
             return data.store().insert(item);
           });
-          if (response.data.orderInformation.length === 0){
+          if (response.data.orderInformation.length === 0) {
             setInitialRender(false);
             setLoading(false);
           } else {
             setFormUpdateData(response.data.orderInformation[0]);
           }
           data.reload();
-
-
         } catch (e) {
           console.log(e);
         }
       }
       getData();
-
     } else if (orderstate === 1) {
       const getUpdateData = async () => {
         try {
-          const response = await request.get(`/PurchaseOrder/getorder?orderNumber=${id}`);
+          const response = await request.get(
+            `/PurchaseOrder/getorder?orderNumber=${id}`
+          );
           response.data.tableData.map((item) => {
             data.store().insert(item);
             return data.reload();
           });
           setFormUpdateData(response.data.formInfo);
-          setUpdateData({...updateData, "formData": response.data.formInfo})
-          setOrder(response.data.formInfo.orderNumber)
-
+          setUpdateData({ ...updateData, formData: response.data.formInfo });
+          setOrder(response.data.formInfo.orderNumber);
         } catch (e) {
           console.log(e);
         }
@@ -81,17 +81,15 @@ export const PurchaseOrder = ({ orderstate }) => {
     }
 
     const handleKeyUp = (e) => {
-        if (e.code === "KeyS" && (e.ctrlKey)){
-          e.preventDefault();
-          submitOrder();
-          document.removeEventListener("keydown", handleKeyUp);
-        }
-      
+      if (e.code === "KeyS" && e.ctrlKey) {
+        e.preventDefault();
+        submitOrder();
+        document.removeEventListener("keydown", handleKeyUp);
+      }
     };
-  
+
     document.addEventListener("keydown", handleKeyUp);
-  
-    //Cleanup function to remove the event listener
+
     return () => {
       document.removeEventListener("keydown", handleKeyUp);
     };
@@ -99,42 +97,34 @@ export const PurchaseOrder = ({ orderstate }) => {
   }, [orderstate]);
 
   const submitOrder = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      if (orderstate === 0){
+      if (orderstate === 0) {
         const user = {
           userid: currentUser?.email,
         };
-        await request.post(
-          "/PurchaseOrder/createpurchaseorder",
-          user
-        );
+        await request.post("/PurchaseOrder/createpurchaseorder", user);
 
         setMessage("Order submitted successfully.");
-        setLoading(false)
-
+        setLoading(false);
       } else {
         const dataToUpdate = {
-          "formData" : updateData.formData,
-          "tableData" : data.store()._array,
-        }
+          formData: updateData.formData,
+          tableData: data.store()._array,
+        };
         await request.put("/PurchaseOrder/updateorder", dataToUpdate);
         setMessage("Order has been updated successfully.");
-        setLoading(false)
-
+        setLoading(false);
       }
       setTimeout(() => {
         navigate("/dashboard/orders");
       }, 1500);
     } catch (e) {
       console.log(e);
-      setLoading(false)
-      return setMessage(e.response.data['error']);
-      
+      setLoading(false);
+      return setMessage(e.response.data["error"]);
     }
   };
-
-  
 
   const handleClick = (menu) => {
     switch (menu) {
@@ -155,7 +145,9 @@ export const PurchaseOrder = ({ orderstate }) => {
     <main className="purchase-order-page w-full min-h-full relative h-full px-3 md:px-5 py-1.5">
       <section>
         <MenuButtonsGroup
-          heading= {orderstate === 0 ? "Purchase Order Entry" : "Update Purchase Order"}
+          heading={
+            orderstate === 0 ? "Purchase Order Entry" : "Update Purchase Order"
+          }
           menus={purchaseOrderMenu}
           onMenuClick={handleClick}
         />
@@ -197,7 +189,10 @@ export const PurchaseOrder = ({ orderstate }) => {
             setUpdateData={setUpdateData}
             orderstate={orderstate}
           />
-          <LoadPanel visible={loading} messageText="Checking for unsubmitted orders..."/>
+          <LoadPanel
+            visible={loading}
+            messageText="Checking for unsubmitted orders..."
+          />
         </div>
       </section>
       <div id="confirm-modal" className="po-modal">
@@ -220,5 +215,3 @@ export const PurchaseOrder = ({ orderstate }) => {
     </main>
   );
 };
-
-// End of function

@@ -1,12 +1,13 @@
-import { Outlet } from "react-router-dom";
 import { Copyright } from "../components/frontend/copyright/Copyright";
+import { Footer } from "../components/frontend/footer/Footer";
 import { Navbar } from "../components/frontend/navbar/Navbar";
 
-const FrontendLayout = () => {
+const FrontendLayout = ({ children }) => {
   return (
     <main>
       <Navbar />
-      <Outlet />
+      {children}
+      <Footer />
       <Copyright />
     </main>
   );

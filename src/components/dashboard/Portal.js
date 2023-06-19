@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 const Portal = ({ isOpen, setOpen, children }) => {
-  // Add an event listener when the component is mounted
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+  useEffect(
+    () => {
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    },
+    // eslint-disable-next-line
+    []
+  );
 
-    // Remove the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  // Handle the keydown event
   function handleKeyDown(event) {
     if (event.key === "Escape") {
       setOpen(false);

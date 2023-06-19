@@ -17,7 +17,9 @@ const SearchCategories = ({ searchInput, setSearchInput }) => {
       );
       setSearchResult(resultArray);
     }
-  }, [searchInput]);
+  }, 
+  // eslint-disable-next-line
+  [searchInput]);
 
   const handleExpand = () => {
     setSearchInput("");

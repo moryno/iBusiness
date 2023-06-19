@@ -31,17 +31,14 @@ const DataTable = ({
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  // Define a state variable to hold the context menu target element
   const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
 
-  // Define a dataGridRef variable to hold the reference to the datagrid
   const dataGridRef = useRef(null);
 
   const exportFormats = ["xlsx", "pdf"];
 
   const pageSizes = [10, 25, 50, 100];
 
-  // Get the datagrid instance once the datagrid is loaded
   function onContentReady(e) {
     getDataGridRef(dataGridRef.current);
     if (!collapsed) {
@@ -52,13 +49,11 @@ const DataTable = ({
     }
   }
 
-  // Define a function to handle the context menu event
   const handleContextMenu = (e) => {
     e.preventDefault();
     setContextMenuCoords({ x: e.clientX, y: e.clientY });
   };
 
-  // Define a function to handle when a row or cell is right clicked
   const handleContextMenuPreparing = (e) => {
     if (e.row && e.row.rowType === "data") {
       if (!e.items) e.items = [];
@@ -101,7 +96,6 @@ const DataTable = ({
     }
   };
 
-  // onvert the filter values to filterBuilder object
   const filterBuilder = {
     logic: "and",
     filters: filterValues.map(([field, operator, value]) => ({

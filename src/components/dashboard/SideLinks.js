@@ -5,10 +5,8 @@ import { Link } from "react-router-dom";
 import { RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
-
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { sideMenuRequest } from "../../utils/webService";
 
 const SideLinks = () => {
   const [heading, setHeading] = useState("");
@@ -38,24 +36,34 @@ const SideLinks = () => {
     }
   };
 
-  // Hook to fetch module menus from Cosmos DB
   useEffect(() => {
+    const url = process.env.REACT_APP_SIDEMENUS_URL;
+
     const getModuleMenus = async () => {
-      const { data } = await axios.get(
-        // Check if different module options was selected then fetch using their partion key
-        partitionKey
-          ? sideMenuRequest + `?moduleName=${partitionKey}`
-          : sideMenuRequest
-      );
-      setModuleMenus(data);
+      try {
+        const { data } = await axios.get(url);
+        setModuleMenus(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getModuleMenus();
-  }, [partitionKey]);
+  }, []);
+
+  const filteredMenus = moduleMenus?.filter((menu) => {
+    if (partitionKey === "") {
+      return menu?.partitionKey.toLowerCase().includes("procure2pay");
+    } else {
+      return menu?.partitionKey
+        .toLowerCase()
+        .includes(partitionKey.toLowerCase());
+    }
+  });
 
   return (
     <>
-      {moduleMenus &&
-        moduleMenus?.map((link) => {
+      {filteredMenus &&
+        filteredMenus?.map((link) => {
           const icon = getCategoryIcon(link.title);
 
           return (
