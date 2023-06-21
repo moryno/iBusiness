@@ -9,6 +9,7 @@ import { bookingFilterValues } from "../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
 import OnboardingService from "../../axios/onboardingRequest";
 import CategoryComponent from "../../components/dashboard/CategoryComponent";
+import { useNavigate } from "react-router";
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -26,6 +27,8 @@ const Booking = () => {
   const [isOpen, setOpen] = useState(false);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setRowDblClickBookingId(null);
@@ -66,7 +69,10 @@ const Booking = () => {
       const url = "/test/" + onRowDblClickBookingId;
       const response = await OnboardingService.get(url);
       setSingleBooking(response);
-      setStatusMode("EditMode");
+      navigate(`/dashboard/bookings/${response?.bookingId}`, {
+        state: { data: response },
+      });
+      // setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
     if (onRowDblClickBookingId) getSingleBooking();
