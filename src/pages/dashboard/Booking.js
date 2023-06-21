@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
-import DateBox from "devextreme-react/date-box";
 import { toast } from "react-toastify";
 import DataTable from "../../components/dashboard/DataTable";
-import Statusbar from "../../components/dashboard/Statusbar";
-import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import { homeMenuSource } from "../../data/menu";
-import MobileMenus from "../../components/dashboard/MobileMenus";
 import Portal from "../../components/dashboard/Portal";
 import New from "../../components/dashboard/New";
 import { bookingColumns } from "../../data/PurchaseOrderData";
 import { bookingFilterValues } from "../../helpers/datatableSource";
-import webService from "../../axios/webService";
 import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
 import OnboardingService from "../../axios/onboardingRequest";
+import CategoryComponent from "../../components/dashboard/CategoryComponent";
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -21,7 +17,9 @@ const Booking = () => {
   const [singleBooking, setSingleBooking] = useState({});
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [onRowClickItem, setRowClickItem] = useState(null);
+  // eslint-disable-next-line
   const [fromDate, setFromDate] = useState(today);
+  // eslint-disable-next-line
   const [toDate, setToDate] = useState(today);
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
@@ -64,7 +62,9 @@ const Booking = () => {
 
   useEffect(() => {
     const getSingleBooking = async () => {
-      const response = await webService.Request.getById(onRowDblClickBookingId);
+      // const response = await webService.Request.getById(onRowDblClickBookingId);
+      const url = "/test/" + onRowDblClickBookingId;
+      const response = await OnboardingService.get(url);
       setSingleBooking(response);
       setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
@@ -110,56 +110,12 @@ const Booking = () => {
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <section>
-        <section>
-          <MenuButtonsGroup
-            heading="Booking List"
-            menus={homeMenuSource}
-            onMenuClick={handleClick}
-          />
-
-          <article className="relative">
-            <MobileMenus menus={homeMenuSource} onMenuClick={handleClick} />
-
-            <article className=" md:pr-5 flex gap-4 items-center">
-              <div className="flex flex-col gap-2 md:flex-row w-full md:py-2">
-                <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
-                  <label
-                    className="font-semibold text-xs  text-gray-600"
-                    htmlFor="fromDate"
-                  >
-                    From Date:
-                  </label>
-
-                  <DateBox
-                    id="fromDate"
-                    onValueChanged={(e) => setFromDate(e.value)}
-                    value={fromDate}
-                    height={26}
-                    style={{ fontSize: "12px" }}
-                    className=" border pl-1 w-full md:w-1/2  outline-none"
-                  />
-                </div>
-                <div className="flex w-full justify-between md:justify-start md:w-1/2 items-center gap-5">
-                  <label
-                    className="font-semibold text-xs  text-gray-600"
-                    htmlFor="toDate"
-                  >
-                    To Date:
-                  </label>
-                  <DateBox
-                    id="toDate"
-                    onValueChanged={(e) => setToDate(e.value)}
-                    value={toDate}
-                    height={26}
-                    style={{ fontSize: "12px" }}
-                    className=" border pl-1 w-full md:w-1/2  outline-none"
-                  />
-                </div>
-              </div>
-            </article>
-          </article>
-        </section>
-        <section className="mt-5">
+        <CategoryComponent
+          menus={homeMenuSource}
+          heading={"Booking List"}
+          company={"ARBS Customer Portal"}
+          onMenuClick={handleClick}
+        >
           <DataTable
             data={bookings}
             columns={bookingColumns}
@@ -170,7 +126,7 @@ const Booking = () => {
             openConfirmationPopup={openConfirmationPopup}
             filterValues={bookingFilterValues}
           />
-        </section>
+        </CategoryComponent>
       </section>
 
       {statusMode === "CreateMode" ? (
@@ -214,8 +170,6 @@ const Booking = () => {
           </Portal>
         )
       )}
-
-      <Statusbar heading="Booking List" company="ARBS Customer Portal" />
     </main>
   );
 };

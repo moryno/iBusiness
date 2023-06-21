@@ -107,8 +107,15 @@ export const updateMenuSource = [
     icon: <FcAddDatabase fontSize={20} />,
     onClick: "handleClick",
   },
+
   {
     id: 2,
+    title: "Delete",
+    icon: <MdOutlineDeleteOutline fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
     title: "Close",
     icon: <MdFreeCancellation fontSize={20} />,
     onClick: "handleClick",

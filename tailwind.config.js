@@ -12,6 +12,7 @@ module.exports = {
         bgLight: "#C3DAF9",
         light: "#eeedec",
         bgxLight: "#E3EFFF",
+        card: "#F3F3F3",
         button: "#0D6EFD",
         buttonBlue: "#0088ff",
         userProfileBg: "#0088ff",

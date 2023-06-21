@@ -16,6 +16,7 @@ import ProtectedRoute from "./components/dashboard/ProtectedRoute";
 import User from "./pages/dashboard/users/User";
 import ScrollToTop from "./components/frontend/ScrollToTop";
 import { NotFound } from "./pages/landing-page/NotFound";
+import BookingDetail from "./pages/dashboard/BookingDetail";
 
 function App() {
   return (
@@ -81,7 +82,24 @@ function App() {
                 </ProtectedRoute>
               }
             ></Route>
-
+            <Route path="bookings">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Booking />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path=":id"
+                element={
+                  <ProtectedRoute>
+                    <BookingDetail />
+                  </ProtectedRoute>
+                }
+              ></Route>
+            </Route>
             <Route
               path="bookings"
               element={
