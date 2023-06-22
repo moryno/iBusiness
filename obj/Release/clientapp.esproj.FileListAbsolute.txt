@@ -1,0 +1,2 @@
+D:\iBusiness\git-repos\ibusiness-saas\src\ClientApp\obj\Release\clientapp.esproj.SuggestedBindingRedirects.cache
+D:\iBusiness\git-repos\ibusiness-saas\src\ClientApp\obj\Release\clientapp.esproj.CoreCompileInputs.cache
