@@ -20,6 +20,7 @@ import {
   getDataGridRef,
   handleExporting,
 } from "../../helpers/datagridFunctions";
+import { useNavigate } from "react-router-dom";
 
 const DataTable = ({
   data,
@@ -36,6 +37,7 @@ const DataTable = ({
   const dataGridRef = useRef(null);
 
   const exportFormats = ["xlsx", "pdf"];
+  const navigate = useNavigate()
 
   const pageSizes = [10, 25, 50, 100];
 
@@ -93,13 +95,13 @@ const DataTable = ({
     }
   };
 
-  const handleRowClickItem = (e) => {
-    e.cells[1].cellElement.children[0].children[0].style.color = "white";
-    setRowClickItem(e)
-  }
 
-  const handleHyperlinkClick = (e) => {
+  const handleHyperlinkClick = (e, data) => {
+    console.log(data.row.key)
     console.log(e)
+    // var row = e.component.getRowElement(clickedRow)
+    // console.log(row)
+    // navigate(`/bookings/${clickedRow}/view`)
   }
   
   const handleFocusedRowChanging = (e) => {
@@ -131,7 +133,7 @@ const DataTable = ({
         keyExpr={keyExpr}
         focusedRowEnabled={true}
         onFocusedRowChanging={(e) => handleFocusedRowChanging(e)}
-        onRowClick={(e) => handleRowClickItem(e)}
+        // onRowClick={(e) => setRowClickItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -156,7 +158,7 @@ const DataTable = ({
               (data) => {
                 return (
                   <div data-row-key={data.key} data-column-index={data.columnIndex}>
-                    <span onClick={(e) => handleHyperlinkClick(e)} className="pk-hyperlink">{data.value}</span>
+                    <button onClick={(e) => handleHyperlinkClick(e, data)} className="pk-hyperlink">{data.value}</button>
                   </div>
                 );
               } :
