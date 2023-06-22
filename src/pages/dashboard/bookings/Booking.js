@@ -114,7 +114,7 @@ const Booking = () => {
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
           handleRedirect={handleRedirect}
-          data={bookingDemo}
+          data={bookings}
           keyExpr={"bookingId"}
           columns={bookingColumns}
           startEdit={startEdit}

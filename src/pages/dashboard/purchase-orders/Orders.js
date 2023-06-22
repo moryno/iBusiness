@@ -86,7 +86,7 @@ const Orders = () => {
           heading={"Purchase Orders"}
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
-          data={orderDemo}
+          data={data}
           keyExpr={"orderNumber"}
           columns={orderColumns}
           handleRedirect={handleRedirect}
