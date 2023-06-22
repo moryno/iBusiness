@@ -37,6 +37,11 @@ const Booking = () => {
     }
   };
 
+  const handleRedirect = (id) => {
+    navigate(`/dashboard/bookings/${id}/view`);
+
+  };
+
   useEffect(() => {
     try {
       const getData = async () => {
@@ -108,6 +113,7 @@ const Booking = () => {
           heading={"Booking List"}
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
+          handleRedirect={handleRedirect}
           data={bookingDemo}
           keyExpr={"bookingId"}
           columns={bookingColumns}

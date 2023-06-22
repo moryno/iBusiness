@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 const DataTable = ({
   data,
   startEdit,
-  setRowClickItem,
+  handleRedirect,
   columns,
   keyExpr,
   loading,
@@ -97,16 +97,15 @@ const DataTable = ({
 
 
   const handleHyperlinkClick = (e, data) => {
-    console.log(data.row.key)
-    console.log(e)
-    // var row = e.component.getRowElement(clickedRow)
-    // console.log(row)
-    // navigate(`/bookings/${clickedRow}/view`)
+    handleRedirect(data.row.key)
+    e.target.style.color = "white"
   }
   
   const handleFocusedRowChanging = (e) => {
     const prevRow = e.component.getRowElement(e.prevRowIndex)
+    const newRow = e.component.getRowElement(e.newRowIndex)
     prevRow[0].children[1].children[0].children[0].style.color = "#489AEE"
+    newRow[0].children[1].children[0].children[0].style.color = "white"
   }
 
   const filterBuilder = {
