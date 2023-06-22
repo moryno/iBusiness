@@ -113,7 +113,9 @@ const DataTable = ({
   };
 
   const handleRowClickItem = (e) => {
-    e.cells[1].cellElement.children[0].children[0].style.color = "white"
+    e.cells[1].cellElement.children[0].children[0].style.color = "white";
+    console.log(e.prevRowIndex)
+    console.log(e.component.getRowElement(e.prevRowIndex))
   }
 
   const handleFocusedRowChanging = (e) => {
