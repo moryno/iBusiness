@@ -135,8 +135,8 @@ export const columns = [
 // Defines columns used by orders grid
 
 export const orderColumns = [
-  { dataField: "orderNumber", alignment:'left' },
   { dataField: "costCenter" },
+  { dataField: "orderNumber", alignment:'left', pk:true },
   { dataField: "supplier" },
   { dataField: "shipsTo" },
   { dataField: "orderDate" },
