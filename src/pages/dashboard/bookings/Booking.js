@@ -39,7 +39,6 @@ const Booking = () => {
 
   const handleRedirect = (id) => {
     navigate(`/dashboard/bookings/${id}/view`);
-
   };
 
   useEffect(() => {
@@ -63,8 +62,7 @@ const Booking = () => {
       const url = "/test/" + onRowDblClickBookingId;
       const response = await OnboardingService.get(url);
       setSingleBooking(response);
-      navigate(`/dashboard/bookings/${response?.bookingId}/view`);
-
+      setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
     if (onRowDblClickBookingId) getSingleBooking();
@@ -142,6 +140,8 @@ const Booking = () => {
           <New
             singleBooking={singleBooking}
             setSingleBooking={setSingleBooking}
+            bookings={bookings}
+            setBookings={setBookings}
             handleClose={handleClose}
             title={"Update A Booking Item"}
             heading={"Booking Item Management"}
@@ -169,4 +169,3 @@ const Booking = () => {
 };
 
 export default Booking;
-

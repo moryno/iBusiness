@@ -181,6 +181,16 @@ const New = ({
     if (statusMode === "EditMode") {
       try {
         const response = await OnboardingService.put(url, editFormData);
+        if (bookings) {
+          console.log(response);
+          const newBooking = bookings.map((booking) => {
+            if (booking.bookingId === response?.bookingId) {
+              return response;
+            }
+            return booking;
+          });
+          setBookings(newBooking);
+        }
         setSingleBooking(response);
         handleClose();
       } catch (error) {
@@ -219,7 +229,7 @@ const New = ({
           <div>
             <form
               onSubmit={handleSubmit}
-              className="flex w-full mt-1 py-1  items-stretch rounded-sm flex-wrap justify-between gap-2"
+              className="flex w-full mt-1 py-1 items-stretch rounded-sm flex-wrap justify-between gap-2"
             >
               <section className="flex flex-col md:flex-row w-full gap-2">
                 <article className="w-full flex flex-wrap box-border justify-between  gap-2">
@@ -597,7 +607,7 @@ const New = ({
                 </div>
               </section>
               <section className="w-full sticky inset-x-0 bottom-0 ">
-                <article className="flex bg-white px-2 pt-1 justify-center items-center gap-4">
+                <article className="flex px-2 pt-1 justify-center items-center gap-4">
                   <Button id="submitButton" useSubmitBehavior={true}>
                     {" "}
                     <FcAddDatabase fontSize={20} />
@@ -605,7 +615,7 @@ const New = ({
                   </Button>
                   <button
                     onClick={handleClose}
-                    className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
+                    className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit text-menuText items-center font-medium  cursor-pointer text-xs"
                   >
                     <ImUndo2 fontSize={18} />
                     Cancel

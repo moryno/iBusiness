@@ -2,7 +2,7 @@ import React from "react";
 
 const GridItemContent = ({ data, title }) => {
   return (
-    <main className="lg:rounded-md h-screen flex flex-col gap-3 lg:shadow-xl p-0 lg:p-5">
+    <main className="lg:rounded-md h-screen md:h-full flex flex-col gap-3 lg:shadow-xl p-0 lg:p-5">
       <section>
         <h2 className="font-semibold">Detail item: {title}</h2>
       </section>
