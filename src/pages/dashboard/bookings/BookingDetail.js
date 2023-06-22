@@ -52,7 +52,7 @@ const BookingDetail = () => {
       <GridItemDetails
         data={data}
         heading={"Booking details"}
-        title={data.bookingId}
+        title={`Booking Id: ${data.bookingId}`}
         menus={updateMenuSource}
         customAction={customActionsSource}
         company={"ARBS Customer Portal"}

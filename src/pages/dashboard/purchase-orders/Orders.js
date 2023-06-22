@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { orderColumns } from "../../../data/PurchaseOrderData";
 import { homeMenuSource } from "../../../data/menu";
@@ -6,6 +6,7 @@ import { orderFilterValues } from "../../../helpers/datatableSource";
 import CategoryComponent from "../../../components/dashboard/CategoryComponent";
 import { toast } from "react-toastify";
 import OnboardingService from "../../../axios/onboardingRequest";
+import Constant from "../../../utils/constant";
 
 const Orders = () => {
   const [data, setData] = useState([]);
@@ -13,13 +14,13 @@ const Orders = () => {
   // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
+
   const navigate = useNavigate();
+  const route = Constant.ROUTE.ORDER;
 
   useEffect(() => {
     const getData = async () => {
       try {
-        // const response = await request.get("PurchaseOrder/orders");
-        // setData(response.data);
         const url = "/test2";
         const response = await OnboardingService.get(url);
         setData(response);
@@ -52,10 +53,6 @@ const Orders = () => {
     }
   };
 
-  const handleRedirect = (id) => {
-    navigate(`/dashboard/orders/${id}/view`)
-  }
-
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
@@ -87,9 +84,9 @@ const Orders = () => {
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
           data={data}
+          route={route}
           keyExpr={"orderNumber"}
           columns={orderColumns}
-          handleRedirect={handleRedirect}
           startEdit={startEdit}
           setRowClickItem={setRowClickItem}
           openConfirmationPopup={openConfirmationPopup}
@@ -101,5 +98,3 @@ const Orders = () => {
 };
 
 export default Orders;
-
-

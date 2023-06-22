@@ -129,7 +129,7 @@
 }
 
 /* DataGrid Styling */
-#bookingGrid{
+#dataTableGrid{
   height: 75vh;
   font-size: 0.7rem !important;
 }

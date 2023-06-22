@@ -8,9 +8,9 @@ const CategoryComponent = ({
   heading,
   menus,
   company,
-  handleRedirect,
   data,
   keyExpr,
+  route,
   columns,
   startEdit,
   setRowClickItem,
@@ -37,9 +37,8 @@ const CategoryComponent = ({
             data={data}
             columns={columns}
             keyExpr={keyExpr}
+            route={route}
             startEdit={(e) => startEdit(e)}
-            handleRedirect={handleRedirect}
-            //loading={loading}
             setRowClickItem={setRowClickItem}
             openConfirmationPopup={openConfirmationPopup}
             filterValues={filterValues}

@@ -19,6 +19,7 @@ import { Button } from "devextreme-react";
 import services from "../../helpers/formDataSource";
 import webService from "../../axios/webService";
 import OnboardingService from "../../axios/onboardingRequest";
+import { toast } from "react-toastify";
 
 const New = ({
   handleClose,
@@ -136,34 +137,6 @@ const New = ({
     additionalRequirements,
     externalSchemeAdmin,
   };
-  // eslint-disable-next-line
-  const submitForm = async (e) => {
-    e.preventDefault();
-
-    if (statusMode === "CreateMode") {
-      try {
-        const response = await webService.Request.create(newFormData);
-        setBookings([response?.booking, ...bookings]);
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        const response = await webService.Request.update(editFormData);
-        const newBooking = bookings.map((booking) => {
-          if (booking.bookingId === response?.Booking.bookingId) {
-            return response?.Booking;
-          }
-          return booking;
-        });
-        setBookings(newBooking);
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -174,6 +147,7 @@ const New = ({
         const response = await OnboardingService.post(url, newFormData);
         setBookings([response, ...bookings]);
         handleClose();
+        toast.success("Booking created successfully.");
       } catch (error) {
         console.log(error);
       }
@@ -182,9 +156,9 @@ const New = ({
       try {
         const response = await OnboardingService.put(url, editFormData);
         if (bookings) {
-          console.log(response);
           const newBooking = bookings.map((booking) => {
             if (booking.bookingId === response?.bookingId) {
+              console.log(response);
               return response;
             }
             return booking;
@@ -193,6 +167,7 @@ const New = ({
         }
         setSingleBooking(response);
         handleClose();
+        toast.success("Booking updated successfully.");
       } catch (error) {
         console.log(error);
       }

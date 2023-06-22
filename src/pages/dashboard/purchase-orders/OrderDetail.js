@@ -7,8 +7,6 @@ import { customActionsSource, updateMenuSource } from "../../../data/menu";
 const OrderDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [statusMode, setStatusMode] = useState("");
-  const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +41,7 @@ const OrderDetail = () => {
       <GridItemDetails
         data={data}
         heading={"Order details"}
-        title={data.orderNumber}
+        title={`Order number: ${data.orderNumber}`}
         menus={updateMenuSource}
         customAction={customActionsSource}
         company={"ARBS Customer Portal"}

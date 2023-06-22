@@ -18,12 +18,13 @@ import {
   getDataGridRef,
   handleExporting,
 } from "../../helpers/datagridFunctions";
+import { Link } from "react-router-dom";
 
 const DataTable = ({
   data,
   startEdit,
-  handleRedirect,
   columns,
+  route,
   keyExpr,
   loading,
   openConfirmationPopup,
@@ -48,7 +49,6 @@ const DataTable = ({
   }
 
   const handleContextMenuPreparing = (e) => {
-    console.log(e);
     if (e.row && e.row.rowType === "data") {
       if (!e.items) e.items = [];
       e.items.push(
@@ -90,8 +90,7 @@ const DataTable = ({
     }
   };
 
-  const handleHyperlinkClick = (e, data) => {
-    handleRedirect(data.row.key);
+  const handleHyperlinkClick = (e) => {
     e.target.style.color = "white";
   };
 
@@ -114,7 +113,7 @@ const DataTable = ({
   return (
     <main>
       <DataGrid
-        id="bookingGrid"
+        id="dataTableGrid"
         className={"dx-card wide-card"}
         dataSource={data}
         onContextMenuPreparing={(e) => {
@@ -154,12 +153,14 @@ const DataTable = ({
                         data-row-key={data.key}
                         data-column-index={data.columnIndex}
                       >
-                        <button
-                          onClick={(e) => handleHyperlinkClick(e, data)}
-                          className="pk-hyperlink"
-                        >
-                          {data.value}
-                        </button>
+                        <Link to={`/dashboard/${route}/${data.row.key}/view`}>
+                          <span
+                            onClick={(e) => handleHyperlinkClick(e, data)}
+                            className="pk-hyperlink"
+                          >
+                            {data.value}
+                          </span>
+                        </Link>
                       </div>
                     );
                   }

@@ -8,38 +8,19 @@ import { bookingFilterValues } from "../../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../../components/dashboard/ConfirmationPopupComponent";
 import OnboardingService from "../../../axios/onboardingRequest";
 import CategoryComponent from "../../../components/dashboard/CategoryComponent";
-import { useNavigate } from "react-router";
+import Constant from "../../../utils/constant";
 
 const Booking = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
-  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
+  const [onEditRecordId, setEditRecordId] = useState(null);
   const [onRowClickItem, setRowClickItem] = useState(null);
   // eslint-disable-next-line
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
 
-  const navigate = useNavigate();
-
-  const handleClose = () => {
-    setRowDblClickBookingId(null);
-    setSingleBooking({});
-    setStatusMode("");
-    setOpen(false);
-  };
-
-  const startEdit = ({ data }) => {
-    if (data) {
-      setRowDblClickBookingId(data.bookingId);
-    } else {
-      setRowDblClickBookingId(null);
-    }
-  };
-
-  const handleRedirect = (id) => {
-    navigate(`/dashboard/bookings/${id}/view`);
-  };
+  const route = Constant.ROUTE.BOOKING;
 
   useEffect(() => {
     try {
@@ -57,16 +38,30 @@ const Booking = () => {
   }, [date]);
 
   useEffect(() => {
-    const getSingleBooking = async () => {
-      // const response = await webService.Request.getById(onRowDblClickBookingId);
-      const url = "/test/" + onRowDblClickBookingId;
+    const getSingleRecord = async () => {
+      const url = "/test/" + onEditRecordId;
       const response = await OnboardingService.get(url);
       setSingleBooking(response);
       setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
-    if (onRowDblClickBookingId) getSingleBooking();
-  }, [onRowDblClickBookingId, navigate]);
+    if (onEditRecordId) getSingleRecord();
+  }, [onEditRecordId]);
+
+  const startEdit = ({ data }) => {
+    if (data) {
+      setEditRecordId(data.bookingId);
+    } else {
+      setEditRecordId(null);
+    }
+  };
+
+  const handleClose = () => {
+    setEditRecordId(null);
+    setSingleBooking({});
+    setStatusMode("");
+    setOpen(false);
+  };
 
   const openConfirmationPopup = async (rowItem) => {
     if (rowItem === null) {
@@ -111,8 +106,8 @@ const Booking = () => {
           heading={"Booking List"}
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
-          handleRedirect={handleRedirect}
           data={bookings}
+          route={route}
           keyExpr={"bookingId"}
           columns={bookingColumns}
           startEdit={startEdit}
@@ -164,6 +159,10 @@ const Booking = () => {
           </Portal>
         )
       )}
+      {/* <div>
+      <a data-refid="recordId" data-special-link="true" title="Maurice Nganga" data-navigable="true" target="_blank" data-ownerid="2175:0" data-recordid="0018d00000eyAglAAE" rel="noreferrer" href="/lightning/r/0018d00000eyAglAAE/view" class="slds-truncate outputLookupLink slds-truncate outputLookupLink-0018d00000eyAglAAE-2175:0 forceOutputLookup" data-aura-rendered-by="2186:0" data-aura-class="forceOutputLookup">Maurice Nganga<!--render facet: 2189:0--></a>
+      
+      </div> */}
     </main>
   );
 };
