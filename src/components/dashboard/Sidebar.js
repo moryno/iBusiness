@@ -14,9 +14,10 @@ const Sidebar = ({ showSidebar, openSidebar }) => {
         "-translate-x-full": !showSidebar,
         "md:hidden": !openSidebar,
       })}
+      id="mainsidenav"
     >
       <section className="flex flex-col h-full justify-between">
-        <section>
+        <section id="sidebar-child">
           <article className="w-full font-medium">
             <ul className="flex flex-col gap-2 text-left">
               <SideLinks />

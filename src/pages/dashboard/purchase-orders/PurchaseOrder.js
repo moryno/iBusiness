@@ -197,7 +197,6 @@ export const PurchaseOrder = ({ orderstate }) => {
       </section>
       <div id="confirm-modal" className="po-modal">
         <div className="po-modal-content">
-          <div className="po-modal-header"></div>
           <div className="po-modal-body">
             <p>{modalmessage}</p>
           </div>

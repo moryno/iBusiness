@@ -85,12 +85,12 @@ export const Navbar = () => {
                 </article>
               </article>
               <button onClick={handleLogOut} className="nav-signin-button">
-                Sign Out
+                {data.signouttext}
               </button>
             </>
           ) : (
             <a href={process.env.REACT_APP_SIGNUPIN_URL}>
-              <button className="nav-signin-button">Sign Up/In</button>
+              <button className="nav-signin-button">{data.signintext}</button>
             </a>
           )}
 
@@ -102,7 +102,7 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="contact-section">
-        <p className="contact-section-text">Chat with us</p>
+        <p className="contact-section-text">{data.chatText}</p>
         <FontAwesomeIcon icon={faComments} className="contact-section-icon"/>
       </div>
     </>

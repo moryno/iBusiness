@@ -184,7 +184,19 @@ export const bookingColumns = [
           {data.value}
         </td>
       );
+    }
+  },
+  {
+    dataField: "retirementSchemeName",
+    width: 300,
+    cellRender: (data) => {
+      return (
+        <td data-row-key={data.key} data-column-index={data.columnIndex}>
+          {data.value}
+        </td>
+      );
     },
+    pk: true
   },
   {
     dataField: "bookingType",
@@ -200,17 +212,6 @@ export const bookingColumns = [
   {
     dataField: "externalSchemeAdmin",
 
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    },
-  },
-  {
-    dataField: "retirementSchemeName",
-    width: 300,
     cellRender: (data) => {
       return (
         <td data-row-key={data.key} data-column-index={data.columnIndex}>
