@@ -33,8 +33,6 @@ const DataTable = ({
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
-
   const dataGridRef = useRef(null);
 
   const exportFormats = ["xlsx", "pdf"];
@@ -51,23 +49,6 @@ const DataTable = ({
     }
   }
 
-  const handleContextMenu = (e) => {
-    e.preventDefault();
-    console.log(e.clientX);
-    console.log(e.clientY);
-    setContextMenuCoords({ x: e.clientX, y: e.clientY });
-  };
-
-  const renderContextLink = (e) => {
-    return (
-      <button
-        onClick={(event) => handleContextMenu(event)}
-        className="grid-context-btn"
-      >
-        <FaAngleDown />
-      </button>
-    );
-  };
 
   const handleContextMenuPreparing = (e) => {
     console.log(e)
@@ -114,12 +95,16 @@ const DataTable = ({
 
   const handleRowClickItem = (e) => {
     e.cells[1].cellElement.children[0].children[0].style.color = "white";
-    console.log(e.prevRowIndex)
-    console.log(e.component.getRowElement(e.prevRowIndex))
+    setRowClickItem(e)
   }
 
-  const handleFocusedRowChanging = (e) => {
+  const handleHyperlinkClick = (e) => {
     console.log(e)
+  }
+  
+  const handleFocusedRowChanging = (e) => {
+    const prevRow = e.component.getRowElement(e.prevRowIndex)
+    prevRow[0].children[1].children[0].children[0].style.color = "#489AEE"
   }
 
   const filterBuilder = {
@@ -137,7 +122,6 @@ const DataTable = ({
         id="bookingGrid"
         className={"dx-card wide-card"}
         dataSource={data}
-        // onContextMenu={handleContextMenu}
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
         }}
@@ -166,20 +150,21 @@ const DataTable = ({
         {columns.map((column) => (
           <Column 
             dataField={column.dataField}
+            key={column.dataField}
             cellRender={
               column?.pk === true ? 
               (data) => {
                 return (
-                  <td data-row-key={data.key} data-column-index={data.columnIndex}>
-                    <a href="?" className="pk-hyperlink">{data.value}</a>
-                  </td>
+                  <div data-row-key={data.key} data-column-index={data.columnIndex}>
+                    <span onClick={(e) => handleHyperlinkClick(e)} className="pk-hyperlink">{data.value}</span>
+                  </div>
                 );
               } :
               (data) => {
                 return (
-                  <td data-row-key={data.key} data-column-index={data.columnIndex}>
+                  <div data-row-key={data.key} data-column-index={data.columnIndex}>
                     {data.value}
-                  </td>
+                  </div>
                 );
               }
             }

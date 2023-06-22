@@ -98,17 +98,14 @@ const SideLinks = () => {
                     <div>
                       <div className="px-2">
                         {link.subLinks.map((mysublinks) => (
-                          <div
-                            className="flex items-center gap-1 hover:bg-[#f5f5f5]"
-                            key={mysublinks.name}
-                          >
-                            <RxDot />
-                            <li className="text-xs font-normal text-sideMenu py-1.5">
-                              <Link to={mysublinks.link}>
+                          <Link to={mysublinks.link} key={mysublinks.name}>
+                            <div className="flex items-center gap-1 hover:bg-[#f5f5f5]">
+                              <RxDot />
+                              <li className="text-xs font-normal text-sideMenu py-1.5">
                                 {mysublinks.name}
-                              </Link>
-                            </li>
-                          </div>
+                              </li>
+                            </div>
+                          </Link>
                         ))}
                       </div>
                     </div>

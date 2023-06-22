@@ -24,6 +24,7 @@ const New = ({
   handleClose,
   bookings,
   singleBooking,
+  setSingleBooking,
   setBookings,
   title,
   heading,
@@ -31,70 +32,64 @@ const New = ({
   statusMode,
 }) => {
   const [fullName, setFullName] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.fullName : ""
+    statusMode === "EditMode" ? singleBooking?.fullName : ""
   );
   const [idNumber, setIdNumber] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.idNumber : ""
+    statusMode === "EditMode" ? singleBooking?.idNumber : ""
   );
   const [email, setEmail] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.email : ""
+    statusMode === "EditMode" ? singleBooking?.email : ""
   );
   const [telephone, setTelephone] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.telephone : ""
+    statusMode === "EditMode" ? singleBooking?.telephone : ""
   );
   const [physicalAddress, setPhysicalAddress] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.physicalAddress : ""
+    statusMode === "EditMode" ? singleBooking?.physicalAddress : ""
   );
   const [employerName, setEmployerName] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.employerName : ""
+    statusMode === "EditMode" ? singleBooking?.employerName : ""
   );
   const [position, setPosition] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.position : ""
+    statusMode === "EditMode" ? singleBooking?.position : ""
   );
   const [schemePosition, setSchemePosition] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.schemePosition : ""
+    statusMode === "EditMode" ? singleBooking?.schemePosition : ""
   );
   const [additionalRequirements, setAdditionalRequirements] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.additionalRequirements
-      : ""
+    statusMode === "EditMode" ? singleBooking?.additionalRequirements : ""
   );
   const [externalSchemeAdmin, setExternalSchemeAdmin] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.externalSchemeAdmin : ""
+    statusMode === "EditMode" ? singleBooking?.externalSchemeAdmin : ""
   );
 
   const [experience, setExperience] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.experience : 0
+    statusMode === "EditMode" ? singleBooking?.experience : 0
   );
   const [selectedCountry, setSelectedCountry] = useState(
-    statusMode === "EditMode" ? singleBooking.user?.originCountry : "Kenya"
+    statusMode === "EditMode" ? singleBooking?.originCountry : "Kenya"
   );
   const [selectedStatus, setSelectedStatus] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.user?.disabilityStatus
-      : "Not Disabled"
+    statusMode === "EditMode" ? singleBooking?.disabilityStatus : "Not Disabled"
   );
   const [schemeOptions, setSchemeOptions] = useState(
     statusMode === "EditMode"
-      ? singleBooking.booking?.retirementSchemeName
+      ? singleBooking?.retirementSchemeName
       : "A I C KIJABE PRINTING"
   );
   const [bookingType, setBookingType] = useState(
-    statusMode === "EditMode"
-      ? singleBooking.booking?.bookingType
-      : "First Time"
+    statusMode === "EditMode" ? singleBooking?.bookingType : "First Time"
   );
   const [trainingVenue, setTrainingVenue] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.trainingVenue : "INHOUSE"
+    statusMode === "EditMode" ? singleBooking?.trainingVenue : "INHOUSE"
   );
   const [courseDate, setCourseDate] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.courseDate : today
+    statusMode === "EditMode" ? singleBooking?.courseDate : today
   );
   const [paymentMode, setPaymentMode] = useState(
-    statusMode === "EditMode" ? singleBooking.booking?.paymentMode : "Cheque"
+    statusMode === "EditMode" ? singleBooking?.paymentMode : "Cheque"
   );
   // eslint-disable-next-line
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  const currentUser = useSelector((state) => state?.currentUser?.user);
 
   const newFormData = {
     userID: 2,
@@ -120,30 +115,26 @@ const New = ({
   };
 
   const editFormData = {
-    user: {
-      userID: singleBooking?.user?.userID,
-      fullName,
-      idNumber,
-      email,
-      telephone,
-      physicalAddress,
-      employerName,
-      experience,
-      position,
-      disabilityStatus: selectedStatus,
-    },
-    booking: {
-      bookingId: singleBooking?.booking?.bookingId,
-      bookingType,
-      retirementSchemeName: schemeOptions,
-      schemePosition,
-      originCountry: selectedCountry,
-      trainingVenue,
-      courseDate,
-      paymentMode,
-      additionalRequirements,
-      externalSchemeAdmin,
-    },
+    userID: singleBooking?.userID,
+    fullName,
+    idNumber,
+    email,
+    telephone,
+    physicalAddress,
+    employerName,
+    experience,
+    position,
+    disabilityStatus: selectedStatus,
+    bookingId: singleBooking?.bookingId,
+    bookingType,
+    retirementSchemeName: schemeOptions,
+    schemePosition,
+    originCountry: selectedCountry,
+    trainingVenue,
+    courseDate,
+    paymentMode,
+    additionalRequirements,
+    externalSchemeAdmin,
   };
   // eslint-disable-next-line
   const submitForm = async (e) => {
@@ -152,7 +143,7 @@ const New = ({
     if (statusMode === "CreateMode") {
       try {
         const response = await webService.Request.create(newFormData);
-        setBookings([response?.Booking?.booking, ...bookings]);
+        setBookings([response?.booking, ...bookings]);
         handleClose();
       } catch (error) {
         console.log(error);
@@ -177,12 +168,24 @@ const New = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = "/test";
-    try {
-      const response = await OnboardingService.post(url, newFormData);
-      setBookings([response, ...bookings]);
-      handleClose();
-    } catch (error) {
-      console.log(error);
+
+    if (statusMode === "CreateMode") {
+      try {
+        const response = await OnboardingService.post(url, newFormData);
+        setBookings([response, ...bookings]);
+        handleClose();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (statusMode === "EditMode") {
+      try {
+        const response = await OnboardingService.put(url, editFormData);
+        setSingleBooking(response);
+        handleClose();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
