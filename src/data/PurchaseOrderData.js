@@ -135,8 +135,8 @@ export const columns = [
 // Defines columns used by orders grid
 
 export const orderColumns = [
-  { dataField: "orderNumber", alignment:'left' },
   { dataField: "costCenter" },
+  { dataField: "orderNumber", alignment:'left', pk:true },
   { dataField: "supplier" },
   { dataField: "shipsTo" },
   { dataField: "orderDate" },
@@ -178,68 +178,28 @@ export const bookingColumns = [
   {
     dataField: "bookingId",
     width: 70,
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    }
+
   },
   {
     dataField: "retirementSchemeName",
     width: 300,
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    },
     pk: true
   },
   {
     dataField: "bookingType",
 
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    },
   },
   {
     dataField: "externalSchemeAdmin",
 
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    },
   },
   {
     dataField: "schemePosition",
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    },
+
   },
   {
     dataField: "trainingVenue",
 
-    cellRender: (data) => {
-      return (
-        <td data-row-key={data.key} data-column-index={data.columnIndex}>
-          {data.value}
-        </td>
-      );
-    },
   },
 ];
 

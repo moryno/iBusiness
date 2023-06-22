@@ -52,6 +52,10 @@ const Orders = () => {
     }
   };
 
+  const handleRedirect = (id) => {
+    navigate(`/dashboard/orders/${id}/view`)
+  }
+
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
@@ -79,12 +83,13 @@ const Orders = () => {
       <section>
         <CategoryComponent
           menus={homeMenuSource}
-          heading={"Booking List"}
+          heading={"Purchase Orders"}
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
           data={data}
           keyExpr={"orderNumber"}
           columns={orderColumns}
+          handleRedirect={handleRedirect}
           startEdit={startEdit}
           setRowClickItem={setRowClickItem}
           openConfirmationPopup={openConfirmationPopup}
@@ -95,4 +100,6 @@ const Orders = () => {
   );
 };
 
-export default memo(Orders);
+export default Orders;
+
+

@@ -1,13 +1,11 @@
 import React, { useRef, useState } from "react";
 import "devextreme/data/odata/store";
-import { FaAngleDown } from "react-icons/fa";
 import DataGrid, {
   Pager,
   Paging,
   FilterRow,
   FilterPanel,
   FilterBuilderPopup,
-  SearchPanel,
   Editing,
   Toolbar,
   Item,
@@ -15,7 +13,7 @@ import DataGrid, {
   Export,
   Column,
 } from "devextreme-react/data-grid";
-import { ContextMenu } from "devextreme-react/context-menu";
+
 import {
   getDataGridRef,
   handleExporting,
@@ -24,7 +22,7 @@ import {
 const DataTable = ({
   data,
   startEdit,
-  setRowClickItem,
+  handleRedirect,
   columns,
   keyExpr,
   loading,
@@ -32,8 +30,6 @@ const DataTable = ({
   filterValues,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
-
-  const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
 
   const dataGridRef = useRef(null);
 
@@ -50,24 +46,6 @@ const DataTable = ({
       });
     }
   }
-
-  const handleContextMenu = (e) => {
-    e.preventDefault();
-    console.log(e.clientX);
-    console.log(e.clientY);
-    setContextMenuCoords({ x: e.clientX, y: e.clientY });
-  };
-
-  const renderContextLink = (e) => {
-    return (
-      <button
-        onClick={(event) => handleContextMenu(event)}
-        className="grid-context-btn"
-      >
-        <FaAngleDown />
-      </button>
-    );
-  };
 
   const handleContextMenuPreparing = (e) => {
     console.log(e);
@@ -112,12 +90,16 @@ const DataTable = ({
     }
   };
 
-  const handleRowClickItem = (e) => {
-    e.cells[1].cellElement.children[0].children[0].style.color = "white";
+  const handleHyperlinkClick = (e, data) => {
+    handleRedirect(data.row.key);
+    e.target.style.color = "white";
   };
 
   const handleFocusedRowChanging = (e) => {
-    console.log(e);
+    const prevRow = e.component.getRowElement(e.prevRowIndex);
+    const newRow = e.component.getRowElement(e.newRowIndex);
+    prevRow[0].children[1].children[0].children[0].style.color = "#489AEE";
+    newRow[0].children[1].children[0].children[0].style.color = "white";
   };
 
   const filterBuilder = {
@@ -135,7 +117,6 @@ const DataTable = ({
         id="bookingGrid"
         className={"dx-card wide-card"}
         dataSource={data}
-        // onContextMenu={handleContextMenu}
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
         }}
@@ -145,7 +126,7 @@ const DataTable = ({
         keyExpr={keyExpr}
         focusedRowEnabled={true}
         onFocusedRowChanging={(e) => handleFocusedRowChanging(e)}
-        onRowClick={(e) => handleRowClickItem(e)}
+        // onRowClick={(e) => setRowClickItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -173,9 +154,12 @@ const DataTable = ({
                         data-row-key={data.key}
                         data-column-index={data.columnIndex}
                       >
-                        <a href="?" className="pk-hyperlink">
+                        <button
+                          onClick={(e) => handleHyperlinkClick(e, data)}
+                          className="pk-hyperlink"
+                        >
                           {data.value}
-                        </a>
+                        </button>
                       </div>
                     );
                   }

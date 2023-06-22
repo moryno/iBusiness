@@ -21,10 +21,10 @@ const GridItemDetails = ({
         onMenuClick={onMenuClick}
       />
       <section className="mt-5 w-full gap-2 md:gap-0 flex flex-col-reverse md:flex-row">
-        <article className="w-full px-2 md:w-9/12 md:px-5 box-border">
+        <article className="w-full px-2 md:w-9/12 lg:px-5 box-border">
           <GridItemContent data={data} title={title} />
         </article>
-        <article className="w-full px-2 md:w-3/12 md:px-5 ">
+        <article className="w-full px-2 md:w-3/12 lg:px-5 ">
           <RightBarComponent customAction={customAction} />
         </article>
       </section>
