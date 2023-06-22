@@ -13,7 +13,6 @@ import DataGrid, {
   Export,
   Column,
 } from "devextreme-react/data-grid";
-
 import {
   getDataGridRef,
   handleExporting,
