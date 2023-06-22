@@ -14,17 +14,17 @@ const GridItemDetails = ({
   customAction,
 }) => {
   return (
-    <main className="w-full">
+    <main className="w-full min-h-full">
       <GridDetailHeader
         menus={menus}
         heading={heading}
         onMenuClick={onMenuClick}
       />
-      <section className="mt-5 w-full flex">
-        <article className="w-9/12 px-5 box-border">
+      <section className="mt-5 w-full gap-2 md:gap-0 flex flex-col-reverse md:flex-row">
+        <article className="w-full px-2 md:w-9/12 md:px-5 box-border">
           <GridItemContent data={data} title={title} />
         </article>
-        <article className="w-3/12 px-5 ">
+        <article className="w-full px-2 md:w-3/12 md:px-5 ">
           <RightBarComponent customAction={customAction} />
         </article>
       </section>
