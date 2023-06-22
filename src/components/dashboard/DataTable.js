@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import "devextreme/data/odata/store";
+import { FaAngleDown } from "react-icons/fa";
 import DataGrid, {
   Pager,
   Paging,
@@ -12,6 +13,7 @@ import DataGrid, {
   Item,
   Selection,
   Export,
+  Column
 } from "devextreme-react/data-grid";
 import { ContextMenu } from "devextreme-react/context-menu";
 import {
@@ -51,10 +53,24 @@ const DataTable = ({
 
   const handleContextMenu = (e) => {
     e.preventDefault();
+    console.log(e.clientX);
+    console.log(e.clientY);
     setContextMenuCoords({ x: e.clientX, y: e.clientY });
   };
 
+  const renderContextLink = (e) => {
+    return (
+      <button
+        onClick={(event) => handleContextMenu(event)}
+        className="grid-context-btn"
+      >
+        <FaAngleDown />
+      </button>
+    );
+  };
+
   const handleContextMenuPreparing = (e) => {
+    console.log(e)
     if (e.row && e.row.rowType === "data") {
       if (!e.items) e.items = [];
       e.items.push(
@@ -96,6 +112,14 @@ const DataTable = ({
     }
   };
 
+  const handleRowClickItem = (e) => {
+    e.cells[1].cellElement.children[0].children[0].style.color = "white"
+  }
+
+  const handleFocusedRowChanging = (e) => {
+    console.log(e)
+  }
+
   const filterBuilder = {
     logic: "and",
     filters: filterValues.map(([field, operator, value]) => ({
@@ -111,8 +135,7 @@ const DataTable = ({
         id="bookingGrid"
         className={"dx-card wide-card"}
         dataSource={data}
-        columns={columns}
-        onContextMenu={handleContextMenu}
+        // onContextMenu={handleContextMenu}
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
         }}
@@ -121,7 +144,8 @@ const DataTable = ({
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onRowClick={(e) => setRowClickItem(e)}
+        onFocusedRowChanging={(e) => handleFocusedRowChanging(e)}
+        onRowClick={(e) => handleRowClickItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -137,6 +161,35 @@ const DataTable = ({
         }}
         onContentReady={onContentReady}
       >
+        {columns.map((column) => (
+          <Column 
+            dataField={column.dataField}
+            cellRender={
+              column?.pk === true ? 
+              (data) => {
+                return (
+                  <td data-row-key={data.key} data-column-index={data.columnIndex}>
+                    <a href="?" className="pk-hyperlink">{data.value}</a>
+                  </td>
+                );
+              } :
+              (data) => {
+                return (
+                  <td data-row-key={data.key} data-column-index={data.columnIndex}>
+                    {data.value}
+                  </td>
+                );
+              }
+            }
+            width={column.width}
+            visible={true}
+          />
+        ))}
+        {/* <Column
+         cellRender={renderContextLink}
+         width='100px'
+         alignment="center"
+        /> */}
         <Export
           enabled={true}
           formats={exportFormats}
@@ -144,10 +197,9 @@ const DataTable = ({
         />
         <Editing mode="row" />
         <Selection mode="none" />
-        <Toolbar>
+        <Toolbar visible={false}> 
           <Item name="groupPanel" />
           <Item name="columnChooserButton" />
-          <Item name="searchPanel" />
         </Toolbar>
         <FilterRow visible={true} />
         <FilterPanel visible={true} />
@@ -156,8 +208,6 @@ const DataTable = ({
           height={"50vh"}
           width={"50vw"}
         />
-
-        <SearchPanel visible={true} />
         <Paging defaultPageSize={10} />
         <Pager
           showPageSizeSelector={true}
@@ -165,12 +215,6 @@ const DataTable = ({
           allowedPageSizes={pageSizes}
         />
       </DataGrid>
-      {contextMenuCoords && (
-        <ContextMenu
-          coords={contextMenuCoords}
-          onHiding={() => setContextMenuCoords(null)}
-        />
-      )}
     </main>
   );
 };

@@ -161,7 +161,7 @@ const Booking = () => {
         </section>
         <section className="mt-5">
           <DataTable
-            data={bookings}
+            data={bookingDemo}
             columns={bookingColumns}
             keyExpr="bookingId"
             startEdit={(e) => startEdit(e)}
@@ -221,3 +221,5 @@ const Booking = () => {
 };
 
 export default Booking;
+
+
