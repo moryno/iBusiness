@@ -96,8 +96,8 @@ const DataTable = ({
   const handleFocusedRowChanging = (e) => {
     const prevRow = e.component.getRowElement(e.prevRowIndex);
     const newRow = e.component.getRowElement(e.newRowIndex);
-    prevRow[0].children[0].children[0].children[0].style.color = "#489AEE";
-    newRow[0].children[0].children[0].children[0].style.color = "white";
+    prevRow[0].children[0].children[0].children[0].children[0].style.color = "#489AEE";
+    newRow[0].children[0].children[0].children[0].children[0].style.color = "white";
   };
 
   const filterBuilder = {
@@ -113,13 +113,13 @@ const DataTable = ({
     <main>
       <DataGrid
         id="dataTableGrid"
-        className={"dx-card wide-card"}
         dataSource={data}
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
         }}
-        showBorders={false}
+        showBorders={true}
         showColumnLines={true}
+        showRowLines={false}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
         keyExpr={keyExpr}
