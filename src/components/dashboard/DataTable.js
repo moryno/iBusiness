@@ -13,7 +13,7 @@ import DataGrid, {
   Item,
   Selection,
   Export,
-  Column
+  Column,
 } from "devextreme-react/data-grid";
 import { ContextMenu } from "devextreme-react/context-menu";
 import {
@@ -70,7 +70,7 @@ const DataTable = ({
   };
 
   const handleContextMenuPreparing = (e) => {
-    console.log(e)
+    console.log(e);
     if (e.row && e.row.rowType === "data") {
       if (!e.items) e.items = [];
       e.items.push(
@@ -113,12 +113,12 @@ const DataTable = ({
   };
 
   const handleRowClickItem = (e) => {
-    e.cells[1].cellElement.children[0].children[0].style.color = "white"
-  }
+    e.cells[1].cellElement.children[0].children[0].style.color = "white";
+  };
 
   const handleFocusedRowChanging = (e) => {
-    console.log(e)
-  }
+    console.log(e);
+  };
 
   const filterBuilder = {
     logic: "and",
@@ -162,34 +162,38 @@ const DataTable = ({
         onContentReady={onContentReady}
       >
         {columns.map((column) => (
-          <Column 
+          <Column
             dataField={column.dataField}
+            key={column.dataField}
             cellRender={
-              column?.pk === true ? 
-              (data) => {
-                return (
-                  <td data-row-key={data.key} data-column-index={data.columnIndex}>
-                    <a href="?" className="pk-hyperlink">{data.value}</a>
-                  </td>
-                );
-              } :
-              (data) => {
-                return (
-                  <td data-row-key={data.key} data-column-index={data.columnIndex}>
-                    {data.value}
-                  </td>
-                );
-              }
+              column?.pk === true
+                ? (data) => {
+                    return (
+                      <div
+                        data-row-key={data.key}
+                        data-column-index={data.columnIndex}
+                      >
+                        <a href="?" className="pk-hyperlink">
+                          {data.value}
+                        </a>
+                      </div>
+                    );
+                  }
+                : (data) => {
+                    return (
+                      <div
+                        data-row-key={data.key}
+                        data-column-index={data.columnIndex}
+                      >
+                        {data.value}
+                      </div>
+                    );
+                  }
             }
             width={column.width}
             visible={true}
           />
         ))}
-        {/* <Column
-         cellRender={renderContextLink}
-         width='100px'
-         alignment="center"
-        /> */}
         <Export
           enabled={true}
           formats={exportFormats}
@@ -197,7 +201,7 @@ const DataTable = ({
         />
         <Editing mode="row" />
         <Selection mode="none" />
-        <Toolbar visible={false}> 
+        <Toolbar visible={false}>
           <Item name="groupPanel" />
           <Item name="columnChooserButton" />
         </Toolbar>
