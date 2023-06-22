@@ -4,6 +4,7 @@ import { TbFileExport } from "react-icons/tb";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { SlPrinter } from "react-icons/sl";
 import { GrDocumentPdf } from "react-icons/gr";
+import { RiFileEditFill } from "react-icons/ri";
 
 import {
   MdArrowDropDown,
@@ -103,8 +104,8 @@ export const newMenuSource = [
 export const updateMenuSource = [
   {
     id: 1,
-    title: "Update",
-    icon: <FcAddDatabase fontSize={20} />,
+    title: "Edit",
+    icon: <RiFileEditFill fontSize={20} />,
     onClick: "handleClick",
   },
 
@@ -118,6 +119,29 @@ export const updateMenuSource = [
     id: 3,
     title: "Close",
     icon: <MdFreeCancellation fontSize={20} />,
+    onClick: "handleClick",
+  },
+];
+export const customActionsSource = [
+  {
+    id: 1,
+    title: "Approve",
+    onClick: "handleClick",
+  },
+
+  {
+    id: 2,
+    title: "Assign",
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
+    title: "Decline",
+    onClick: "handleClick",
+  },
+  {
+    id: 4,
+    title: "Reverse",
     onClick: "handleClick",
   },
 ];

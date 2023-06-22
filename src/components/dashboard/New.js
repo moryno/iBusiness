@@ -24,6 +24,7 @@ const New = ({
   handleClose,
   bookings,
   singleBooking,
+  setSingleBooking,
   setBookings,
   title,
   heading,
@@ -114,30 +115,26 @@ const New = ({
   };
 
   const editFormData = {
-    user: {
-      userID: singleBooking?.userID,
-      fullName,
-      idNumber,
-      email,
-      telephone,
-      physicalAddress,
-      employerName,
-      experience,
-      position,
-      disabilityStatus: selectedStatus,
-    },
-    booking: {
-      bookingId: singleBooking?.bookingId,
-      bookingType,
-      retirementSchemeName: schemeOptions,
-      schemePosition,
-      originCountry: selectedCountry,
-      trainingVenue,
-      courseDate,
-      paymentMode,
-      additionalRequirements,
-      externalSchemeAdmin,
-    },
+    userID: singleBooking?.userID,
+    fullName,
+    idNumber,
+    email,
+    telephone,
+    physicalAddress,
+    employerName,
+    experience,
+    position,
+    disabilityStatus: selectedStatus,
+    bookingId: singleBooking?.bookingId,
+    bookingType,
+    retirementSchemeName: schemeOptions,
+    schemePosition,
+    originCountry: selectedCountry,
+    trainingVenue,
+    courseDate,
+    paymentMode,
+    additionalRequirements,
+    externalSchemeAdmin,
   };
   // eslint-disable-next-line
   const submitForm = async (e) => {
@@ -171,12 +168,24 @@ const New = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = "/test";
-    try {
-      const response = await OnboardingService.post(url, newFormData);
-      setBookings([response, ...bookings]);
-      handleClose();
-    } catch (error) {
-      console.log(error);
+
+    if (statusMode === "CreateMode") {
+      try {
+        const response = await OnboardingService.post(url, newFormData);
+        setBookings([response, ...bookings]);
+        handleClose();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (statusMode === "EditMode") {
+      try {
+        const response = await OnboardingService.put(url, editFormData);
+        setSingleBooking(response);
+        handleClose();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import DataTable from "../../components/dashboard/DataTable";
-import { homeMenuSource } from "../../data/menu";
-import Portal from "../../components/dashboard/Portal";
-import New from "../../components/dashboard/New";
-import { bookingColumns } from "../../data/PurchaseOrderData";
-import { bookingFilterValues } from "../../helpers/datatableSource";
-import ConfirmationPopupComponent from "../../components/dashboard/ConfirmationPopupComponent";
-import OnboardingService from "../../axios/onboardingRequest";
-import CategoryComponent from "../../components/dashboard/CategoryComponent";
+import { homeMenuSource } from "../../../data/menu";
+import Portal from "../../../components/dashboard/Portal";
+import New from "../../../components/dashboard/New";
+import { bookingColumns } from "../../../data/PurchaseOrderData";
+import { bookingFilterValues } from "../../../helpers/datatableSource";
+import ConfirmationPopupComponent from "../../../components/dashboard/ConfirmationPopupComponent";
+import OnboardingService from "../../../axios/onboardingRequest";
+import CategoryComponent from "../../../components/dashboard/CategoryComponent";
 import { useNavigate } from "react-router";
-
-const today = new Date().toISOString().slice(0, 10);
 
 const Booking = () => {
   const [bookings, setBookings] = useState([]);
@@ -19,14 +16,9 @@ const Booking = () => {
   const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
   const [onRowClickItem, setRowClickItem] = useState(null);
   // eslint-disable-next-line
-  const [fromDate, setFromDate] = useState(today);
-  // eslint-disable-next-line
-  const [toDate, setToDate] = useState(today);
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,13 +40,10 @@ const Booking = () => {
   useEffect(() => {
     try {
       const getData = async () => {
-        setLoading(true);
-        // const response = date
-        //   ? await webService.Request.getByDate(date.startdate, date.enddate)
+        // const response vice.Request.getByDate(date.startdate, date.enddate)
         //   : await webService.Request.get();
         const url = "/test";
         const response = await OnboardingService.get(url);
-        setLoading(false);
         setBookings(response);
       };
       getData();
@@ -69,14 +58,12 @@ const Booking = () => {
       const url = "/test/" + onRowDblClickBookingId;
       const response = await OnboardingService.get(url);
       setSingleBooking(response);
-      navigate(`/dashboard/bookings/${response?.bookingId}`, {
-        state: { data: response },
-      });
-      // setStatusMode("EditMode");
+      navigate(`/dashboard/bookings/${response?.bookingId}/view`);
+
       setOpen((isOpen) => !isOpen);
     };
     if (onRowDblClickBookingId) getSingleBooking();
-  }, [onRowDblClickBookingId]);
+  }, [onRowDblClickBookingId, navigate]);
 
   const openConfirmationPopup = async (rowItem) => {
     if (rowItem === null) {
@@ -90,9 +77,9 @@ const Booking = () => {
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":
-        fromDate === null && toDate && date === ""
-          ? setDate({ startdate: fromDate, enddate: toDate })
-          : setDate({ startdate: fromDate, enddate: toDate });
+        // fromDate === null && toDate && date === ""
+        //   ? setDate({ startdate: fromDate, enddate: toDate })
+        //   : setDate({ startdate: fromDate, enddate: toDate });
         break;
       case "New":
         setStatusMode("CreateMode");
@@ -121,18 +108,14 @@ const Booking = () => {
           heading={"Booking List"}
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
-        >
-          <DataTable
-            data={bookings}
-            columns={bookingColumns}
-            keyExpr="bookingId"
-            startEdit={(e) => startEdit(e)}
-            //loading={loading}
-            setRowClickItem={setRowClickItem}
-            openConfirmationPopup={openConfirmationPopup}
-            filterValues={bookingFilterValues}
-          />
-        </CategoryComponent>
+          data={bookings}
+          keyExpr={"bookingId"}
+          columns={bookingColumns}
+          startEdit={startEdit}
+          setRowClickItem={setRowClickItem}
+          openConfirmationPopup={openConfirmationPopup}
+          filterValues={bookingFilterValues}
+        />
       </section>
 
       {statusMode === "CreateMode" ? (
@@ -151,9 +134,8 @@ const Booking = () => {
       ) : statusMode === "EditMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
-            bookings={bookings}
             singleBooking={singleBooking}
-            setBookings={setBookings}
+            setSingleBooking={setSingleBooking}
             handleClose={handleClose}
             title={"Update A Booking Item"}
             heading={"Booking Item Management"}
