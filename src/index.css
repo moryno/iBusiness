@@ -17,7 +17,7 @@
 
 }
 
-/* #mainsidenav::-webkit-scrollbar-thumb {
+#mainsidenav::-webkit-scrollbar-thumb {
   background-color: #489bee38;
   border-radius: 5px;
   
@@ -43,7 +43,7 @@
 
 #mainsidenav::-webkit-scrollbar:horizontal {
   display: none;
-} */
+}
 
 .notfound-header {
   font-size: 5rem;
@@ -142,9 +142,11 @@
 }
 
 .dx-datagrid-headers {
-    background-color: #489AEE !important;
-    color:#fff !important;
-    font-weight: 500 !important;
+    /* color: #000 !important; */
+    color: #282828 !important;
+    background-color:#fff !important;
+    font-weight: 600 !important;
+    /* font-size: .8rem; */
 }
 
 .dx-overlay-content .dx-popup-normal {
