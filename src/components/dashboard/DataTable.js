@@ -1,13 +1,11 @@
 import React, { useRef, useState } from "react";
 import "devextreme/data/odata/store";
-import { FaAngleDown } from "react-icons/fa";
 import DataGrid, {
   Pager,
   Paging,
   FilterRow,
   FilterPanel,
   FilterBuilderPopup,
-  SearchPanel,
   Editing,
   Toolbar,
   Item,
@@ -15,12 +13,11 @@ import DataGrid, {
   Export,
   Column
 } from "devextreme-react/data-grid";
-import { ContextMenu } from "devextreme-react/context-menu";
 import {
   getDataGridRef,
   handleExporting,
 } from "../../helpers/datagridFunctions";
-import { useNavigate } from "react-router-dom";
+
 
 const DataTable = ({
   data,
@@ -37,7 +34,6 @@ const DataTable = ({
   const dataGridRef = useRef(null);
 
   const exportFormats = ["xlsx", "pdf"];
-  const navigate = useNavigate()
 
   const pageSizes = [10, 25, 50, 100];
 
