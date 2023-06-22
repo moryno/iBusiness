@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { MdOutlineClose } from "react-icons/md";
 import { ImUndo2 } from "react-icons/im";
 import { FcAddDatabase } from "react-icons/fc";
@@ -17,7 +16,6 @@ import Validator, {
 import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
-import webService from "../../axios/webService";
 import OnboardingService from "../../axios/onboardingRequest";
 import { toast } from "react-toastify";
 
@@ -89,8 +87,6 @@ const New = ({
   const [paymentMode, setPaymentMode] = useState(
     statusMode === "EditMode" ? singleBooking?.paymentMode : "Cheque"
   );
-  // eslint-disable-next-line
-  const currentUser = useSelector((state) => state?.currentUser?.user);
 
   const newFormData = {
     userID: 2,
