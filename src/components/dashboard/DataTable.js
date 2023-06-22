@@ -113,12 +113,11 @@ const DataTable = ({
     <main>
       <DataGrid
         id="dataTableGrid"
-        className={"dx-card wide-card"}
         dataSource={data}
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
         }}
-        showBorders={false}
+        showBorders={true}
         showColumnLines={true}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
