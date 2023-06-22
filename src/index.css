@@ -17,7 +17,7 @@
 
 }
 
-#mainsidenav::-webkit-scrollbar-thumb {
+/* #mainsidenav::-webkit-scrollbar-thumb {
   background-color: #489bee38;
   border-radius: 5px;
   
@@ -43,7 +43,7 @@
 
 #mainsidenav::-webkit-scrollbar:horizontal {
   display: none;
-}
+} */
 
 .notfound-header {
   font-size: 5rem;
