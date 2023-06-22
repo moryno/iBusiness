@@ -104,8 +104,8 @@ const DataTable = ({
   const handleFocusedRowChanging = (e) => {
     const prevRow = e.component.getRowElement(e.prevRowIndex)
     const newRow = e.component.getRowElement(e.newRowIndex)
-    prevRow[0].children[1].children[0].children[0].style.color = "#489AEE"
-    newRow[0].children[1].children[0].children[0].style.color = "white"
+    prevRow[0].children[0].children[0].children[0].style.color = "#489AEE"
+    newRow[0].children[0].children[0].children[0].style.color = "white"
   }
 
   const filterBuilder = {
@@ -127,6 +127,8 @@ const DataTable = ({
           handleContextMenuPreparing(e);
         }}
         showBorders={false}
+        showColumnLines={true}
+        showRowLines={false}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
         keyExpr={keyExpr}
@@ -152,6 +154,7 @@ const DataTable = ({
           <Column 
             dataField={column.dataField}
             key={column.dataField}
+            alignment="left"
             cellRender={
               column?.pk === true ? 
               (data) => {
@@ -196,7 +199,7 @@ const DataTable = ({
           height={"50vh"}
           width={"50vw"}
         />
-        <Paging defaultPageSize={10} />
+        <Paging defaultPageSize={50} />
         <Pager
           showPageSizeSelector={true}
           showInfo={true}
