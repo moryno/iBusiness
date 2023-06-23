@@ -70,7 +70,7 @@ const SideLinks = () => {
             <div key={link.id}>
               <div className="cursor-pointer px-1 overflow-y-auto w-full max-h-80 scrollbar-hide bg-blend-overlay">
                 <div
-                  className="font-semibold border-b border-gray-300 text-[13px] sticky pl-2 py-0.5 text-sideColor top-0 flex justify-between  items-center w-full"
+                  className="form-heading font-semibold border-b border-gray-300 text-[13px] sticky pl-2 py-0.5 text-statusBar top-0 flex justify-between  items-center w-full"
                   onClick={() =>
                     heading !== link.title
                       ? setHeading(link.title)
@@ -78,7 +78,7 @@ const SideLinks = () => {
                   }
                 >
                   <div className="flex items-center gap-1">
-                    <span className="text-menuText"> {icon}</span>
+                    <span> {icon}</span>
                     {link.title}
                   </div>
                   <div className="flex items-center">

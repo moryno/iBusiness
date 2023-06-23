@@ -96,8 +96,10 @@ const DataTable = ({
   const handleFocusedRowChanging = (e) => {
     const prevRow = e.component.getRowElement(e.prevRowIndex);
     const newRow = e.component.getRowElement(e.newRowIndex);
-    prevRow[0].children[0].children[0].children[0].children[0].style.color = "#489AEE";
-    newRow[0].children[0].children[0].children[0].children[0].style.color = "white";
+    prevRow[0].children[0].children[0].children[0].children[0].style.color =
+      "#489AEE";
+    newRow[0].children[0].children[0].children[0].children[0].style.color =
+      "white";
   };
 
   const filterBuilder = {

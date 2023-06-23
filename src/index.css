@@ -142,11 +142,9 @@
 }
 
 .dx-datagrid-headers {
-    /* color: #000 !important; */
+
     color: #282828 !important;
-    background-color:#fff !important;
     font-weight: 600 !important;
-    /* font-size: .8rem; */
 }
 
 .dx-overlay-content .dx-popup-normal {
