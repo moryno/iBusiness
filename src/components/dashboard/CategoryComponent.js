@@ -3,6 +3,7 @@ import MenuButtonsGroup from "../../components/dashboard/MenuButtonsGroup";
 import MobileMenus from "../../components/dashboard/MobileMenus";
 import FromToDateComponent from "./FromToDateComponent";
 import DataTable from "./DataTable";
+import { memo } from "react";
 
 const CategoryComponent = ({
   heading,
@@ -50,4 +51,4 @@ const CategoryComponent = ({
   );
 };
 
-export default CategoryComponent;
+export default memo(CategoryComponent);
