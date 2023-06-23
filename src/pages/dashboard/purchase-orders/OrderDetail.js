@@ -38,15 +38,17 @@ const OrderDetail = () => {
 
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
-      <GridItemDetails
-        data={data}
-        heading={"Order details"}
-        title={`Order number: ${data.orderNumber}`}
-        menus={updateMenuSource}
-        customAction={customActionsSource}
-        company={"ARBS Customer Portal"}
-        onMenuClick={handleClick}
-      />
+      {data && (
+        <GridItemDetails
+          data={data}
+          heading={"Order details"}
+          title={`Order number: ${data.orderNumber}`}
+          menus={updateMenuSource}
+          customAction={customActionsSource}
+          company={"ARBS Customer Portal"}
+          onMenuClick={handleClick}
+        />
+      )}
     </main>
   );
 };

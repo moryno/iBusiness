@@ -70,7 +70,7 @@ const SideLinks = () => {
             <div key={link.id}>
               <div className="cursor-pointer px-1 overflow-y-auto w-full max-h-80 scrollbar-hide bg-blend-overlay">
                 <div
-                  className="form-heading font-semibold border-b border-gray-300 text-[13px] sticky pl-2 py-0.5 text-statusBar top-0 flex justify-between  items-center w-full"
+                  className="linear-bg font-semibold border-b border-gray-300 text-[13px] sticky pl-2 py-0.5 text-statusBar top-0 flex justify-between  items-center w-full"
                   onClick={() =>
                     heading !== link.title
                       ? setHeading(link.title)

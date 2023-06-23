@@ -8,7 +8,7 @@ import New from "../../../components/dashboard/New";
 
 const BookingDetail = () => {
   const { id } = useParams();
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -49,15 +49,17 @@ const BookingDetail = () => {
 
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
-      <GridItemDetails
-        data={data}
-        heading={"Booking details"}
-        title={`Booking Id: ${data.bookingId}`}
-        menus={updateMenuSource}
-        customAction={customActionsSource}
-        company={"ARBS Customer Portal"}
-        onMenuClick={handleClick}
-      />
+      {data && (
+        <GridItemDetails
+          data={data}
+          heading={"Booking details"}
+          title={`Booking Id: ${data.bookingId}`}
+          menus={updateMenuSource}
+          customAction={customActionsSource}
+          company={"ARBS Customer Portal"}
+          onMenuClick={handleClick}
+        />
+      )}
 
       {statusMode === "EditMode" && (
         <Portal isOpen={isOpen} setOpen={setOpen}>

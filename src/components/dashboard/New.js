@@ -187,7 +187,7 @@ const New = ({
         </article>
       </section>
       <section className="md:p-3">
-        <article className="text-formHeadingColor md:rounded-t-sm p-1 md:py-2 md:px-10 form-heading">
+        <article className="text-formHeadingColor md:rounded-t-sm p-1 md:py-2 md:px-10 linear-bg">
           <h2 className="text-xl flex justify-center md:justify-start font-medium opacity-90">
             {heading}
           </h2>
@@ -577,22 +577,21 @@ const New = ({
                   />
                 </div>
               </section>
-              <section className="w-full sticky inset-x-0 bottom-0 ">
-                <article className="flex px-2 pt-1 justify-center items-center gap-4">
-                  <Button id="submitButton" useSubmitBehavior={true}>
-                    {" "}
-                    <FcAddDatabase fontSize={20} />
-                    {statusMode === "CreateMode" ? "Save" : "Update"}
-                  </Button>
-                  <button
-                    onClick={handleClose}
-                    className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit text-menuText items-center font-medium  cursor-pointer text-xs"
-                  >
-                    <ImUndo2 fontSize={18} />
-                    Cancel
-                  </button>
-                </article>
-              </section>
+
+              <article className="w-full sticky inset-x-0 bottom-0 flex px-2 pt-1 justify-center items-center gap-4">
+                <Button id="submitButton" useSubmitBehavior={true}>
+                  {" "}
+                  <FcAddDatabase fontSize={20} />
+                  {statusMode === "CreateMode" ? "Save" : "Update"}
+                </Button>
+                <button
+                  onClick={handleClose}
+                  className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit text-menuText items-center font-medium  cursor-pointer text-xs"
+                >
+                  <ImUndo2 fontSize={18} />
+                  Cancel
+                </button>
+              </article>
             </form>
           </div>
         </article>
