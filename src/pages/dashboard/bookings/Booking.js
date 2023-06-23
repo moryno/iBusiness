@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { homeMenuSource } from "../../../data/menu";
 import Portal from "../../../components/dashboard/Portal";
@@ -48,13 +48,13 @@ const Booking = () => {
     if (onEditRecordId) getSingleRecord();
   }, [onEditRecordId]);
 
-  const startEdit = ({ data }) => {
+  const startEdit = useCallback(({ data }) => {
     if (data) {
       setEditRecordId(data.bookingId);
     } else {
       setEditRecordId(null);
     }
-  };
+  }, []);
 
   const handleClose = () => {
     setEditRecordId(null);
@@ -63,16 +63,16 @@ const Booking = () => {
     setOpen(false);
   };
 
-  const openConfirmationPopup = async (rowItem) => {
+  const openConfirmationPopup = useCallback(async (rowItem) => {
     if (rowItem === null) {
       toast.warning("Please select a booking to delete");
     } else {
       setStatusMode("DeleteMode");
       setOpen((isOpen) => !isOpen);
     }
-  };
+  }, []);
 
-  const handleClick = (menu) => {
+  const handleClick = useCallback((menu) => {
     switch (menu) {
       case "Find":
         // fromDate === null && toDate && date === ""
@@ -96,7 +96,8 @@ const Booking = () => {
       default:
         break;
     }
-  };
+  }, [onRowClickItem, openConfirmationPopup]);
+  
 
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
