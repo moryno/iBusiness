@@ -21,31 +21,26 @@ const CategoryComponent = ({
 }) => {
   return (
     <main className="w-full">
-      <section>
-        <section>
-          <MenuButtonsGroup
-            heading={heading}
-            menus={menus}
-            onMenuClick={onMenuClick}
-          />
-          <article className="relative">
-            <MobileMenus menus={menus} onMenuClick={onMenuClick} />
-            <FromToDateComponent />
-          </article>
-        </section>
-        <section className="mt-5">
-          <DataTable
-            data={data}
-            columns={columns}
-            keyExpr={keyExpr}
-            route={route}
-            startEdit={(e) => startEdit(e)}
-            setRowClickItem={setRowClickItem}
-            openConfirmationPopup={openConfirmationPopup}
-            filterValues={filterValues}
-          />
-        </section>
-      </section>
+      <MenuButtonsGroup
+        heading={heading}
+        menus={menus}
+        onMenuClick={onMenuClick}
+      />
+
+      <MobileMenus menus={menus} onMenuClick={onMenuClick} />
+      <FromToDateComponent />
+
+      <DataTable
+        data={data}
+        columns={columns}
+        keyExpr={keyExpr}
+        route={route}
+        startEdit={(e) => startEdit(e)}
+        setRowClickItem={setRowClickItem}
+        openConfirmationPopup={openConfirmationPopup}
+        filterValues={filterValues}
+      />
+
       <Statusbar heading={heading} company={company} />
     </main>
   );

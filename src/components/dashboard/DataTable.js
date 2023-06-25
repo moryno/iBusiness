@@ -112,7 +112,7 @@ const DataTable = ({
   };
 
   return (
-    <main>
+    <main className="mt-5">
       <DataGrid
         id="dataTableGrid"
         dataSource={data}
