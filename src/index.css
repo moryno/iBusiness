@@ -165,14 +165,14 @@
   width: 20vw !important;
 }
 
+.pk-div {
+  cursor: pointer;
+  color: var(--dashboardSecondaryBlue);
+}
 /* Context Menu */
 
 .dx-context-menu {
   background-color: #f2f2f2;
-}
-
-.pk-hyperlink {
-  color: var(--dashboardSecondaryBlue);
 }
 
 .pk-hyperlink:hover {
