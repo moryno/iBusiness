@@ -49,17 +49,15 @@ const BookingDetail = () => {
 
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
-      {data && (
-        <GridItemDetails
-          data={data}
-          heading={"Booking details"}
-          title={`Booking Id: ${data.bookingId}`}
-          menus={updateMenuSource}
-          customAction={customActionsSource}
-          company={"ARBS Customer Portal"}
-          onMenuClick={handleClick}
-        />
-      )}
+      <GridItemDetails
+        data={data}
+        heading={"Booking details"}
+        title={`Booking Id: ${data?.bookingId}`}
+        menus={updateMenuSource}
+        customAction={customActionsSource}
+        company={"ARBS Customer Portal"}
+        onMenuClick={handleClick}
+      />
 
       {statusMode === "EditMode" && (
         <Portal isOpen={isOpen} setOpen={setOpen}>

@@ -18,7 +18,7 @@ const Booking = () => {
   const [bookings, setBookings] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onEditRecordId, setEditRecordId] = useState(null);
-  const [onRowClickItem, setRowClickItem] = useState(null);
+  const [selectedRecordId, setSelectedRecordId] = useState(null);
   // eslint-disable-next-line
   const [date, setDate] = useState("");
   const [statusMode, setStatusMode] = useState("");
@@ -32,7 +32,6 @@ const Booking = () => {
         const url = "/test";
         const response = await OnboardingService.get(url);
         setBookings(response);
-        console.log(response);
       };
       getData();
     } catch (error) {
@@ -61,9 +60,9 @@ const Booking = () => {
     }
   }, []);
 
-  const selectRowItem = useCallback((rowItem) => {
-    if (rowItem) {
-      setRowClickItem(rowItem);
+  const selectRowItem = useCallback(({ key }) => {
+    if (key) {
+      setSelectedRecordId(key);
     }
   }, []);
 
@@ -100,7 +99,7 @@ const Booking = () => {
           setOpen((isOpen) => !isOpen);
           break;
         case "Delete":
-          openConfirmationPopup(onRowClickItem);
+          openConfirmationPopup(selectedRecordId);
           break;
         case "Close":
           console.log("Close was clicked");
@@ -113,7 +112,7 @@ const Booking = () => {
           break;
       }
     },
-    [onRowClickItem, openConfirmationPopup]
+    [selectedRecordId, openConfirmationPopup]
   );
 
   return (
