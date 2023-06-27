@@ -153,19 +153,20 @@ const DataTable = ({
               column?.pk === true
                 ? (data) => {
                     return (
+                    <Link to={`/dashboard/${route}/${data.row.key}/view`}>
                       <div
                         data-row-key={data.key}
+                        onClick={(e) => handleHyperlinkClick(e, data)}
                         data-column-index={data.columnIndex}
+                        className="pk-div"
                       >
-                        <Link to={`/dashboard/${route}/${data.row.key}/view`}>
-                          <span
-                            onClick={(e) => handleHyperlinkClick(e, data)}
-                            className="pk-hyperlink"
-                          >
-                            {data.value}
-                          </span>
-                        </Link>
+                        <span
+                          className="pk-hyperlink"
+                        >
+                          {data.value}
+                        </span>
                       </div>
+                    </Link>
                     );
                   }
                 : (data) => {
