@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { FaToolbox } from "react-icons/fa";
-import CustomActionsComponent from "./CustomActionsComponent";
-import CustomActionModal from "../modals/CustomActionModal";
+import CustomActionsComponent from "../Menus/CustomActionsComponent";
+import CustomActionModal from "../../modals/CustomActionModal";
+import SalesApprovalComponent from "../SalesApprovalComponent";
 
-const RightBarComponent = ({ customAction }) => {
+const DetailsRightBar = ({ customAction }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (action) => {
@@ -41,9 +42,11 @@ const RightBarComponent = ({ customAction }) => {
           ))}
         </article>
       </section>
-      <CustomActionModal isOpen={isOpen} handleClose={handleClose} />
+      <CustomActionModal isOpen={isOpen} handleClose={handleClose}>
+        <SalesApprovalComponent handleClose={handleClose} />
+      </CustomActionModal>
     </main>
   );
 };
 
-export default RightBarComponent;
+export default DetailsRightBar;

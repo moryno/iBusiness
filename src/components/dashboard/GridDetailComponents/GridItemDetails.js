@@ -1,8 +1,8 @@
 import React from "react";
 import GridItemContent from "./GridItemContent";
-import Statusbar from "./Statusbar";
-import GridDetailHeader from "./GridDetailHeader";
-import RightBarComponent from "./RightBarComponent";
+import Statusbar from "../Statusbar";
+import DetailsRightBar from "./DetailsRightBar";
+import MenusGroupComponent from "../Menus/MenusGroupComponent";
 
 const GridItemDetails = ({
   heading,
@@ -15,7 +15,7 @@ const GridItemDetails = ({
 }) => {
   return (
     <main className="w-full min-h-full">
-      <GridDetailHeader
+      <MenusGroupComponent
         menus={menus}
         heading={heading}
         onMenuClick={onMenuClick}
@@ -25,7 +25,7 @@ const GridItemDetails = ({
           {data && <GridItemContent data={data} title={title} />}
         </article>
         <article className="w-full px-2 md:w-3/12 lg:px-5 ">
-          <RightBarComponent customAction={customAction} />
+          <DetailsRightBar customAction={customAction} />
         </article>
       </section>
       <Statusbar heading={heading} company={company} />

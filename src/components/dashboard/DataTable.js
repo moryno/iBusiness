@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Pager,
@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 const DataTable = ({
   data,
   startEdit,
+  selectRowItem,
   columns,
   route,
   keyExpr,
@@ -127,11 +128,11 @@ const DataTable = ({
         keyExpr={keyExpr}
         focusedRowEnabled={true}
         onFocusedRowChanging={(e) => handleFocusedRowChanging(e)}
-        // onRowClick={(e) => setRowClickItem(e)}
+        onRowClick={(e) => selectRowItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
-        columnMinWidth={100}
+        columnMinWidth={70}
         columnAutoWidth={true}
         columnHidingEnabled={true}
         ref={dataGridRef}
@@ -218,4 +219,4 @@ const filterBuilderPopupPosition = {
   offset: { y: 10 },
 };
 
-export default DataTable;
+export default memo(DataTable);

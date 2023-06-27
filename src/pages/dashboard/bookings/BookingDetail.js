@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import GridItemDetails from "../../../components/dashboard/GridItemDetails";
+import GridItemDetails from "../../../components/dashboard/GridDetailComponents/GridItemDetails";
 import OnboardingService from "../../../axios/onboardingRequest";
 import { customActionsSource, updateMenuSource } from "../../../data/menu";
 import Portal from "../../../components/dashboard/Portal";
