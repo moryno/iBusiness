@@ -12,7 +12,7 @@ const BookingDetail = () => {
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
-
+  // Todo
   useEffect(() => {
     const getSingleBooking = async () => {
       const url = "/test/" + id;
