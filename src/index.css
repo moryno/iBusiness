@@ -165,6 +165,10 @@
   width: 20vw !important;
 }
 
+.blue-icon {
+  color: #0088ff; 
+}
+
 .pk-div {
   cursor: pointer;
   color: var(--dashboardSecondaryBlue);

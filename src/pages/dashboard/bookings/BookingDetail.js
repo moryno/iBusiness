@@ -12,6 +12,7 @@ const BookingDetail = () => {
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const getSingleBooking = async () => {
@@ -42,6 +43,18 @@ const BookingDetail = () => {
     }
   };
 
+  const handleCustomClick = (action) => {
+    switch (action) {
+      case "Approve":
+        setIsSidebarOpen(true)
+        
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const handleClose = () => {
     setStatusMode("");
     setOpen(false);
@@ -55,6 +68,7 @@ const BookingDetail = () => {
           heading={"Booking details"}
           title={`Booking Id: ${data.bookingId}`}
           menus={updateMenuSource}
+          moreInfo={moreInfo}
           customAction={customActionsSource}
           company={"ARBS Customer Portal"}
           onMenuClick={handleClick}
@@ -79,3 +93,10 @@ const BookingDetail = () => {
 };
 
 export default BookingDetail;
+
+const moreInfo = {
+  "Created by" : "Maurice Ng'ang'a",
+  "Date created" : "Wednesday, 30th July 2023",
+  "Time": "0234Hrs",
+  "Status" : "Booked"
+}

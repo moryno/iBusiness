@@ -13,7 +13,7 @@ const GridItemContent = ({ data, title }) => {
             key={key}
             className="w-full md:w-[45%] lg:w-[48%] flex justify-between gap-1 items-center border-b border-gray-300"
           >
-            <h3 className=" font-light text-xs">{key}:</h3>
+            <h3 className="font-light text-xs">{key}:</h3>
             <h5 className="font-medium text-sm">{data[key]}</h5>
           </article>
         ))}

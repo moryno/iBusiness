@@ -1,10 +1,12 @@
-import { MdFreeCancellation } from "react-icons/md";
+import { MdFreeCancellation, MdRemoveCircleOutline } from "react-icons/md";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbFileExport } from "react-icons/tb";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { SlPrinter } from "react-icons/sl";
 import { GrDocumentPdf } from "react-icons/gr";
 import { RiFileEditFill } from "react-icons/ri";
+import { BsCheck } from "react-icons/bs";
+import { BiArrowBack, BiUserPlus } from "react-icons/bi"
 
 import {
   MdArrowDropDown,
@@ -38,6 +40,44 @@ export const homeMenuSource = [
     id: 4,
     title: "Delete",
     icon: <MdOutlineDeleteOutline fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 5,
+    title: "Close",
+    icon: <MdFreeCancellation fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 6,
+    title: "Help",
+    icon: <MdHelpOutline fontSize={20} />,
+    onClick: "handleClick",
+  },
+];
+export const ordersMenuSource = [
+  {
+    id: 1,
+    title: "Find",
+    icon: <MdOutlineSearch fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 2,
+    title: "New",
+    icon: <MdOutlineAdd fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
+    title: "Approve",
+    icon: <BsCheck fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 4,
+    title: "Export",
+    icon: <MdOutlineLocalPrintshop fontSize={20} />,
     onClick: "handleClick",
   },
   {
@@ -122,29 +162,63 @@ export const updateMenuSource = [
     onClick: "handleClick",
   },
 ];
+
 export const customActionsSource = [
   {
     id: 1,
     title: "Approve",
     onClick: "handleClick",
+    icon: <BsCheck fontSize={20} />,
   },
 
   {
     id: 2,
     title: "Assign",
     onClick: "handleClick",
+    icon: <BiUserPlus fontSize={20} />
   },
   {
     id: 3,
     title: "Decline",
     onClick: "handleClick",
+    icon: <MdRemoveCircleOutline fontSize={20} />
   },
   {
     id: 4,
     title: "Reverse",
     onClick: "handleClick",
+    icon: <BiArrowBack fontSize={20} />
   },
 ];
+
+export const poDetailsActionsSource = [
+  {
+    id: 1,
+    title: "Approve",
+    onClick: "handleCustomClick",
+    icon: <BsCheck fontSize={20} />,
+  },
+
+  {
+    id: 2,
+    title: "Assign",
+    onClick: "handleCustomClick()",
+    icon: <BiUserPlus fontSize={20} />
+  },
+  {
+    id: 3,
+    title: "Decline",
+    onClick: "handleCustomClick()",
+    icon: <MdRemoveCircleOutline fontSize={20} />
+  },
+  {
+    id: 4,
+    title: "Reverse",
+    onClick: "handleCustomClick()",
+    icon: <BiArrowBack fontSize={20} />
+  },
+];
+
 export const purchaseOrderMenu = [
   {
     id: 1,

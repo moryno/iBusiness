@@ -4,8 +4,9 @@ const CustomActionsComponent = ({ onClick, title, icon }) => {
   return (
     <article
       onClick={onClick}
-      className="flex gap-1 hover:bg-gray-200 first:border-l border-t border-r border-b border-gray-200 py-1 px-1.5 w-fit bg-menuBg text-menuText items-center font-medium  cursor-pointer text-sm"
+      className="flex gap-1 justify-center rounded-sm hover:bg-gray-200 border-l border-t border-r border-b border-gray-200 py-1 w-1/2 bg-menuBg text-menuText items-center font-medium  cursor-pointer text-sm"
     >
+      <span className="blue-icon">{icon}</span>
       {title}
     </article>
   );

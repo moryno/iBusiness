@@ -8,7 +8,10 @@ const GridItemDetails = ({
   heading,
   menus,
   title,
+  moreInfo,
+  handleCustomClick,
   company,
+  isSidebarOpen,
   data,
   onMenuClick,
   customAction,
@@ -25,7 +28,7 @@ const GridItemDetails = ({
           {data && <GridItemContent data={data} title={title} />}
         </article>
         <article className="w-full px-2 md:w-3/12 lg:px-5 ">
-          <DetailsRightBar customAction={customAction} />
+          <DetailsRightBar customAction={customAction} isSidebarOpen={isSidebarOpen} handleCustomClick={handleCustomClick} moreInfo={moreInfo} />
         </article>
       </section>
       <Statusbar heading={heading} company={company} />
