@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 const DataTable = ({
   data,
   startEdit,
-  selectRowItem,
+  setRowClickItem,
   columns,
   route,
   keyExpr,
@@ -94,14 +94,6 @@ const DataTable = ({
     e.target.style.color = "white";
   };
 
-  const handleFocusedRowChanging = (e) => {
-    const prevRow = e.component.getRowElement(e.prevRowIndex);
-    const newRow = e.component.getRowElement(e.newRowIndex);
-    prevRow[0].children[0].children[0].children[0].children[0].style.color =
-      "#489AEE";
-    newRow[0].children[0].children[0].children[0].children[0].style.color =
-      "white";
-  };
 
   const filterBuilder = {
     logic: "and",
@@ -127,8 +119,7 @@ const DataTable = ({
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onFocusedRowChanging={(e) => handleFocusedRowChanging(e)}
-        onRowClick={(e) => selectRowItem(e)}
+        onRowClick={(e) => startEdit(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -148,7 +139,7 @@ const DataTable = ({
           <Column
             dataField={column.dataField}
             key={column.dataField}
-            alignment="left"
+            alignment={column.alignment}
             cellRender={
               column?.pk === true
                 ? (data) => {
@@ -169,16 +160,7 @@ const DataTable = ({
                     </Link>
                     );
                   }
-                : (data) => {
-                    return (
-                      <div
-                        data-row-key={data.key}
-                        data-column-index={data.columnIndex}
-                      >
-                        {data.value}
-                      </div>
-                    );
-                  }
+                : column.cellRender
             }
             width={column.width}
             visible={true}

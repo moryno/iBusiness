@@ -96,7 +96,7 @@ export default BookingDetail;
 
 const moreInfo = {
   "Created by" : "Maurice Ng'ang'a",
-  "Date created" : "Wednesday, 30th July 2023",
-  "Time": "0234Hrs",
-  "Status" : "Booked"
+  "Created at" : "Wednesday, 30th July 2023",
+  "Last updated by": "0234Hrs",
+  "Last updated at" : "Booked"
 }

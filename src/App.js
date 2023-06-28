@@ -4,7 +4,7 @@ import "./assets/styles.css";
 import Profile from "./pages/dashboard/users/Profile";
 import Home from "./pages/dashboard/Home";
 import { PurchaseOrder } from "./pages/dashboard/purchase-orders/PurchaseOrder";
-import Orders from "./pages/dashboard/purchase-orders/Orders";
+import OrderTrial from "./pages/dashboard/purchase-orders/OrderTrial";
 import { LandingPage } from "./pages/landing-page/LandingPage";
 import { Company } from "./pages/landing-page/Company";
 import { ProductsView } from "./pages/landing-page/ProductsView";
@@ -16,7 +16,7 @@ import ProtectedRoute from "./components/dashboard/ProtectedRoute";
 import ScrollToTop from "./components/frontend/ScrollToTop";
 import { NotFound } from "./pages/landing-page/NotFound";
 import BookingDetail from "./pages/dashboard/bookings/BookingDetail";
-import OrderDetail from "./pages/dashboard/purchase-orders/OrderDetail";
+import OrderDetailTrial from "./pages/dashboard/purchase-orders/OrderDetailTrial";
 
 function App() {
   return (
@@ -99,7 +99,7 @@ function App() {
                 index
                 element={
                   <ProtectedRoute>
-                    <Orders />
+                    <OrderTrial />
                   </ProtectedRoute>
                 }
               />
@@ -107,7 +107,7 @@ function App() {
                 path=":id/view"
                 element={
                   <ProtectedRoute>
-                    <OrderDetail />
+                    <OrderDetailTrial />
                   </ProtectedRoute>
                 }
               />

@@ -1,6 +1,6 @@
 import { CgMenuGridO } from "react-icons/cg";
 
-import { GoKebabVertical } from "react-icons/go";
+import { GoKebabHorizontal } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { moduleCategories } from "../../helpers/moduleSource";
 import { getModule } from "../../redux/moduleSlice";
@@ -19,7 +19,7 @@ const Module = () => {
           <CgMenuGridO fontSize={24} />
         </article>
         <article className="flex md:hidden opacity-70 items-center font-medium">
-          <GoKebabVertical fontSize={16} />
+          <GoKebabHorizontal fontSize={16} />
         </article>
 
         <section className="absolute md:top-8 top-6 right-1 md:right-5  z-50 hidden  group-hover:block hover:block">

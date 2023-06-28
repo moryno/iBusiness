@@ -12,6 +12,7 @@ module.exports = {
         bgLight: "#C3DAF9",
         light: "#eeedec",
         bgxLight: "#E3EFFF",
+        bgSearch: "#0061af",
         card: "#F3F3F3",
         button: "#0D6EFD",
         menuButton: "#0176d3",

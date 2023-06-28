@@ -1,3 +1,5 @@
+import { FaCheck, FaMinus } from "react-icons/fa";
+
 export const formfields = {
   "Cost Center": "",
   Supplier: "",
@@ -148,7 +150,22 @@ export const orderColumns = [
   } },
   { dataField: "deliveryPeriod", alignment:'left' },
   { dataField: "firstDeliveryDate" },
-  { dataField: "vehicleDetails", alignment:'left' }
+  { dataField: "vehicleDetails",
+    alignment:'left'
+  },
+  { dataField: "approved",
+    alignment: "center",
+    cellRender: 
+      ({data}) => {
+        console.log(data);
+        return (
+        <div className="flex justify-center items-center">
+          {data.approved === "True" ? <FaCheck style={{fontSize: ".8rem", color: "green"}} /> : <FaMinus style={{fontSize: ".8rem", color: "#0088ff"}} />}
+        </div>
+        )
+
+      }
+  }
 
 ];
 

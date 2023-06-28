@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+// OrderTrial.jsx
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { orderColumns } from "../../../data/PurchaseOrderData";
 import { homeMenuSource } from "../../../data/menu";
@@ -11,14 +12,16 @@ import FromToDateComponent from "../../../components/dashboard/FromToDateCompone
 import DataTable from "../../../components/dashboard/DataTable";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupComponent";
+import OrderDetailTrial from "./OrderDetailTrial";
 
-const Orders = () => {
+const OrderTrial = () => {
   const [data, setData] = useState([]);
-  const loadingRef = useRef(false);
+  const loadingRef = useRef(true);
   // eslint-disable-next-line
   const [onRowClickItem, setRowClickItem] = useState(null);
-  const [modalActive, setmodalActive] = useState(false);
-  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null);
+  const [orderId, setOrderId] = useState(null);
+  const [modalActive, setModalActive] = useState(false);
+  const [onRowDblClickBookingId, setRowDblClickBookingId] = useState(null)
   const navigate = useNavigate();
   const route = Constant.ROUTE.ORDER;
 
@@ -37,27 +40,32 @@ const Orders = () => {
     getData();
   }, []);
 
-  const startEdit = ({ data }) => {
+  const startEdit = useCallback(({ data }) => {
     if (data) {
-      setRowDblClickBookingId(data.orderNumber);
+      setOrderId(data.orderNumber);
+      setModalActive(true)
     } else {
       setRowDblClickBookingId(null);
     }
-  };
+  }, []);
 
-  const toggleModalActive = useCallback(() => {setmodalActive(!modalActive)} , [])
+  const toggleModalActive = useCallback(
+    () => setModalActive(!modalActive),
+    [modalActive]
+  );
 
   useEffect(() => {
     if (onRowDblClickBookingId) {
-      navigate(`/dashboard/orders/${onRowDblClickBookingId}/view`);
+      //   navigate(`/dashboard/orders/${onRowDblClickBookingId}/view`);
+      setOrderId(onRowDblClickBookingId);
     }
   }, [onRowDblClickBookingId, navigate]);
 
-  const openConfirmationPopup = async (rowItem) => {
+  const openConfirmationPopup = useCallback(async (rowItem) => {
     if (rowItem === null) {
       toast.warning("Please select a booking to delete");
     }
-  };
+  }, []);
 
   const handleClick = (menu) => {
     switch (menu) {
@@ -107,8 +115,13 @@ const Orders = () => {
           />
         </CategoryComponent>
       </section>
+      {modalActive && (
+        <div className="absolute top-0 right-0 z-50 w-full bg-[#FFFFFF] b-red-700 min-h-full px-3 md:px-5 py-1.5">
+          <OrderDetailTrial id={orderId} modalActive={modalActive} togglemodalActive={toggleModalActive} />
+        </div>
+      )}
     </main>
   );
 };
 
-export default Orders;
+export default OrderTrial;

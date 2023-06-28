@@ -25,16 +25,16 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
           </h1>
         </article>
 
-        <article className="hidden md:flex gap-4  ">
+        <article className="hidden md:flex gap-4">
           <form
             onSubmit={handleSubmit}
-            className="flex  w-[400px]  px-2 items-center border border-gray-300 overflow-hidden rounded-3xl justify-between "
+            className="flex  w-[400px]  px-2 items-center hover:bg-bgSearch box-border border overflow-hidden rounded-md justify-between "
           >
             <MdOutlineSearch fontSize={20} />
             <input
               type="text"
-              className="py-1.5  px-2 w-full outline-none bg-transparent  text-xs  placeholder:text-gray-200 placeholder:text-xs"
-              placeholder="Search for..."
+              className="py-1.5  px-2 w-full outline-none bg-transparent text-xs placeholder:text-gray-200 placeholder:text-xs"
+              placeholder="Search..."
               name="search"
               onChange={(e) => setSearchInput(e.target.value)}
             />
@@ -43,7 +43,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
               setSearchInput={setSearchInput}
             />
           </form>
-          <article className=" flex items-center font-medium">
+          <article className="flex items-center font-medium">
             <article className="flex items-center gap-1">
               <article className="rounded-full overflow-hidden  w-7 h-7 flex items-center justify-center cursor-pointer">
                 <img
@@ -67,7 +67,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
             <div className="flex w-full items-center  justify-between ">
               <input
                 type="text"
-                className="py-1.5 px-2 w-full outline-none bg-transparent text-xs  placeholder:text-gray-200 placeholder:text-xs"
+                className="py-1.5 px-2 w-full outline-none bg-red-700 text-xs placeholder:text-gray-200 placeholder:text-xs"
                 placeholder="Search for..."
                 name="search"
                 onChange={(e) => setSearchInput(e.target.value)}
