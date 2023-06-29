@@ -136,12 +136,6 @@ const DataTable = ({
         columnAutoWidth={true}
         columnHidingEnabled={true}
         ref={dataGridRef}
-        loadPanel={{
-          enabled: true,
-          text: "Loading data...",
-          visible: loading,
-          showPane: true,
-        }}
         onContentReady={onContentReady}
       >
         {columns.map((column) => (
@@ -153,20 +147,16 @@ const DataTable = ({
               column?.pk === true
                 ? (data) => {
                     return (
-                    <Link to={`/dashboard/${route}/${data.row.key}/view`}>
-                      <div
-                        data-row-key={data.key}
-                        onClick={(e) => handleHyperlinkClick(e, data)}
-                        data-column-index={data.columnIndex}
-                        className="pk-div"
-                      >
-                        <span
-                          className="pk-hyperlink"
+                      <Link to={`/dashboard/${route}/${data.row.key}/view`}>
+                        <div
+                          data-row-key={data.key}
+                          onClick={(e) => handleHyperlinkClick(e, data)}
+                          data-column-index={data.columnIndex}
+                          className="pk-div"
                         >
-                          {data.value}
-                        </span>
-                      </div>
-                    </Link>
+                          <span className="pk-hyperlink">{data.value}</span>
+                        </div>
+                      </Link>
                     );
                   }
                 : (data) => {
