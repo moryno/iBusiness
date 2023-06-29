@@ -18,24 +18,37 @@ import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupC
 import { getBookings, getFreshBookings } from "../../../redux/api/bookingCall";
 
 const Booking = () => {
+  const dispatch = useDispatch();
+  const [data, setData] = useState([]);
   const [singleBooking, setSingleBooking] = useState({});
   const [onEditRecordId, setEditRecordId] = useState(null);
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const bookings = useSelector((state) => state.booking.bookings);
-
   const route = Constant.ROUTE.BOOKING;
 
   useEffect(() => {
-    if (bookings.length > 1) {
+    if (data.length < 1) {
+      getBookings(dispatch);
+    } else {
       getFreshBookings(dispatch);
     }
-    getBookings(dispatch);
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (bookings.length < 1 || bookings === undefined) {
+  //     getBookings(dispatch);
+  //   } else {
+  //     getFreshBookings(dispatch);
+  //   }
+  // }, [dispatch]);
+
+  const bookings = useSelector((state) => state.booking.bookings);
+
+  useEffect(() => {
+    setData(bookings);
+  }, [bookings]);
 
   useEffect(() => {
     const getSingleRecord = async () => {
@@ -122,7 +135,7 @@ const Booking = () => {
           />
           <FromToDateComponent />
           <DataTable
-            data={bookings}
+            data={data}
             route={route}
             keyExpr={"bookingId"}
             columns={bookingColumns}

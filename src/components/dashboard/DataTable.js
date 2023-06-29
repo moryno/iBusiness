@@ -26,7 +26,6 @@ const DataTable = ({
   columns,
   route,
   keyExpr,
-  loading,
   openConfirmationPopup,
   filterValues,
 }) => {
