@@ -32,7 +32,6 @@ const Booking = () => {
         const url = "/test";
         const response = await OnboardingService.get(url);
         setBookings(response);
-        console.log(response);
       };
       getData();
     } catch (error) {

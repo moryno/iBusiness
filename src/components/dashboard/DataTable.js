@@ -22,9 +22,9 @@ import { Link } from "react-router-dom";
 const DataTable = ({
   data,
   startEdit,
-  setRowClickItem,
+  setActiveItem,
   columns,
-  route,
+  handleRowClick,
   keyExpr,
   loading,
   openConfirmationPopup,
@@ -90,8 +90,8 @@ const DataTable = ({
     }
   };
 
-  const handleHyperlinkClick = (e) => {
-    e.target.style.color = "white";
+  const handleHyperlinkClick = (e, data) => {
+    setActiveItem(data.key);
   };
 
 
@@ -119,7 +119,7 @@ const DataTable = ({
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onRowClick={(e) => startEdit(e)}
+        onRowClick={(e) => handleRowClick(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
         allowColumnResizing={true}
@@ -144,7 +144,7 @@ const DataTable = ({
               column?.pk === true
                 ? (data) => {
                     return (
-                    <Link to={`/dashboard/${route}/${data.row.key}/view`}>
+                    <Link>
                       <div
                         data-row-key={data.key}
                         onClick={(e) => handleHyperlinkClick(e, data)}

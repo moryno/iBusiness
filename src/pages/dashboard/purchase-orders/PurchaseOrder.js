@@ -27,8 +27,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line
-  const [data, setData] = useState(new DataSource());
+  const [data] = useState(new DataSource());
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState(
     "Are you sure you want to clear the table?"

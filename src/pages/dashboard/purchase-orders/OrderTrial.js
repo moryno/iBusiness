@@ -40,14 +40,20 @@ const OrderTrial = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    orderId != null ? setModalActive(true) : setModalActive(false)
+  }, [orderId])
+  
+
   const startEdit = useCallback(({ data }) => {
     if (data) {
       setOrderId(data.orderNumber);
-      setModalActive(true)
+      setModalActive(true);
     } else {
       setRowDblClickBookingId(null);
     }
-  }, []);
+
+  }, [setOrderId, setModalActive, setRowDblClickBookingId]);
 
   const toggleModalActive = useCallback(
     () => setModalActive(!modalActive),
@@ -66,6 +72,11 @@ const OrderTrial = () => {
       toast.warning("Please select a booking to delete");
     }
   }, []);
+  
+  const handleRowClick = useCallback(() => {
+    // console.log("Hello world")
+  }, [])
+  
 
   const handleClick = (menu) => {
     switch (menu) {
@@ -104,7 +115,9 @@ const OrderTrial = () => {
             route={route}
             keyExpr={"orderNumber"}
             columns={orderColumns}
-            startEdit={(e) => startEdit(e)}
+            setActiveItem={setOrderId}
+            startEdit={startEdit}
+            handleRowClick={handleRowClick}
             setRowClickItem={setRowClickItem}
             openConfirmationPopup={openConfirmationPopup}
             filterValues={orderFilterValues}

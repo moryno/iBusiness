@@ -118,7 +118,6 @@
   color: var(--blue);
 }
 
-
 .scrollbar-hide::-webkit-scrollbar {
     width: 0;
     background-color: #fff;
@@ -209,6 +208,10 @@
 .dx-menu-item-content > .dx-icon{
   color: var(--dashboardGridBlue);
   font-weight: 500;
+}
+
+.dx-row-focused td a div span {
+  color: var(--cream);
 }
 
 .dx-menu-item-content:hover {

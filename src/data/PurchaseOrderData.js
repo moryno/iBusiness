@@ -141,7 +141,7 @@ export const orderColumns = [
   { dataField: "costCenter" },
   { dataField: "supplier" },
   { dataField: "shipsTo" },
-  { dataField: "orderDate" },
+  { dataField: "orderDate"},
   { dataField: "orderAmount", alignment:'left', format: {
     type: "fixedPoint",
     precision: 2,
@@ -157,7 +157,6 @@ export const orderColumns = [
     alignment: "center",
     cellRender: 
       ({data}) => {
-        console.log(data);
         return (
         <div className="flex justify-center items-center">
           {data.approved === "True" ? <FaCheck style={{fontSize: ".8rem", color: "green"}} /> : <FaMinus style={{fontSize: ".8rem", color: "#0088ff"}} />}
