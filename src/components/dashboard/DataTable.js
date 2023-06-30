@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useMemo, useRef, useState } from "react";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Pager,
@@ -35,7 +35,9 @@ const DataTable = ({
 
   const exportFormats = ["xlsx", "pdf"];
 
-  const pageSizes = [10, 25, 50, 100];
+  const pageSizes = useMemo(() => {
+    return [10, 25, 50, 100];
+  }, []);
 
   function onContentReady(e) {
     getDataGridRef(dataGridRef.current);
