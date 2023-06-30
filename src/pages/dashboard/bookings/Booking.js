@@ -35,6 +35,7 @@ const Booking = () => {
     } else {
       getFreshBookings(dispatch);
     }
+    // eslint-disable-next-line
   }, [dispatch]);
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import userReducer from "./userSlice";
 import bookingReducer from "./bookingSlice";
+import purchaseOrderReducer from "./purchaseOrderSlice";
 import moduleSlice from "./moduleSlice";
 
 const persistConfig = {
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   booking: bookingReducer,
+  purchase: purchaseOrderReducer,
   moduleCategory: moduleSlice,
 });
 
