@@ -42,7 +42,11 @@ const DetailsRightBar = ({ customAction }) => {
           ))}
         </article>
       </section>
-      <CustomActionModal isOpen={isOpen} handleClose={handleClose}>
+      <CustomActionModal
+        title={"Orders Approval"}
+        isOpen={isOpen}
+        handleClose={handleClose}
+      >
         <SalesApprovalComponent handleClose={handleClose} />
       </CustomActionModal>
     </main>

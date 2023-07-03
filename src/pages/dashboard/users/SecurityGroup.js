@@ -68,7 +68,11 @@ const SecurityGroup = () => {
           />
         </CategoryComponent>
       </section>
-      <CustomActionModal isOpen={isOpen} handleClose={handleClose}>
+      <CustomActionModal
+        title={"Security Group"}
+        isOpen={isOpen}
+        handleClose={handleClose}
+      >
         <SecurityGroupForm handleClose={handleClose} />
       </CustomActionModal>
     </main>
