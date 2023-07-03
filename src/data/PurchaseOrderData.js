@@ -97,7 +97,7 @@ export const reportSummary = {
         useGrouping: true,
       },
       displayFormat: "{0}",
-    }
+    },
   ],
 };
 
@@ -135,21 +135,30 @@ export const columns = [
 // Defines columns used by orders grid
 
 export const orderColumns = [
-  { dataField: "orderNumber", alignment:'left', pk:true },
+  {
+    dataField: "orderNumber",
+    width: 70,
+    alignment: "left",
+    pk: true,
+    caption: "Select",
+  },
   { dataField: "costCenter" },
   { dataField: "supplier" },
   { dataField: "shipsTo" },
   { dataField: "orderDate" },
-  { dataField: "orderAmount", alignment:'left', format: {
-    type: "fixedPoint",
-    precision: 2,
-    currency: "KES",
-    useGrouping: true,
-  } },
-  { dataField: "deliveryPeriod", alignment:'left' },
+  {
+    dataField: "orderAmount",
+    alignment: "left",
+    format: {
+      type: "fixedPoint",
+      precision: 2,
+      currency: "KES",
+      useGrouping: true,
+    },
+  },
+  { dataField: "deliveryPeriod", alignment: "left" },
   { dataField: "firstDeliveryDate" },
-  { dataField: "vehicleDetails", alignment:'left' }
-
+  { dataField: "vehicleDetails", alignment: "left" },
 ];
 
 //
@@ -157,17 +166,20 @@ export const orderColumns = [
 // Defines columns used by orders grid
 
 export const reportColumns = [
-  { dataField: "orderNumber", alignment:'left' },
+  { dataField: "orderNumber", alignment: "left" },
   { dataField: "orderDate" },
-  { dataField: "deliveryPeriod", alignment:'left' },
-  { dataField: "vehicleDetails", alignment:'left' },
-  { dataField: "orderAmount", alignment:'left', format: {
-    type: "fixedPoint",
-    precision: 2,
-    currency: "KES",
-    useGrouping: true,
-  } }
-
+  { dataField: "deliveryPeriod", alignment: "left" },
+  { dataField: "vehicleDetails", alignment: "left" },
+  {
+    dataField: "orderAmount",
+    alignment: "left",
+    format: {
+      type: "fixedPoint",
+      precision: 2,
+      currency: "KES",
+      useGrouping: true,
+    },
+  },
 ];
 
 //
@@ -178,8 +190,8 @@ export const bookingColumns = [
   {
     dataField: "bookingId",
     width: 70,
-    pk: true
-
+    pk: true,
+    caption: "Select",
   },
   {
     dataField: "retirementSchemeName",
@@ -187,19 +199,15 @@ export const bookingColumns = [
   },
   {
     dataField: "bookingType",
-
   },
   {
     dataField: "externalSchemeAdmin",
-
   },
   {
     dataField: "schemePosition",
-
   },
   {
     dataField: "trainingVenue",
-
   },
 ];
 
