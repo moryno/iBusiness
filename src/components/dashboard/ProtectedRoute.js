@@ -19,12 +19,11 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const action = Constant.ACTION.USER;
-
     const getCurrentUser = async () => {
       try {
-        const response = await OnboardingService.get(action);
-        setUpToken(response?.accessToken);
+        const response = await OnboardingService.get("/GetUser");
+        const res = await OnboardingService.get("/test/gettoken");
+        setUpToken(res?.accessToken);
         dispatch(loginSuccess(response));
         setIsLoading(false);
       } catch (error) {
@@ -32,6 +31,7 @@ const ProtectedRoute = ({ children }) => {
         setIsLoading(false);
       }
     };
+
     if (!isAuthenticated) getCurrentUser();
   }, [dispatch, isAuthenticated]);
 

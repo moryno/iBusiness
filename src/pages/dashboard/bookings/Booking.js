@@ -19,7 +19,7 @@ import { getBookings, getFreshBookings } from "../../../redux/api/bookingCall";
 
 const Booking = () => {
   const dispatch = useDispatch();
-  const [singleBooking, setSingleBooking] = useState({});
+  const [singleRecord, setSingleRecord] = useState({});
   const [onEditRecordId, setEditRecordId] = useState(null);
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [statusMode, setStatusMode] = useState("");
@@ -42,7 +42,7 @@ const Booking = () => {
     const getSingleRecord = async () => {
       const url = "/test/" + onEditRecordId;
       const response = await OnboardingService.get(url);
-      setSingleBooking(response);
+      setSingleRecord(response);
       setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
@@ -65,7 +65,7 @@ const Booking = () => {
 
   const handleClose = () => {
     setEditRecordId(null);
-    setSingleBooking({});
+    setSingleRecord({});
     setStatusMode("");
     setOpen(false);
   };
@@ -143,7 +143,7 @@ const Booking = () => {
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
             bookings={bookings}
-            singleBooking={singleBooking}
+            singleRecord={singleRecord}
             handleClose={handleClose}
             title={"Create New Booking"}
             heading={"Booking Item Management"}
@@ -154,8 +154,8 @@ const Booking = () => {
       ) : statusMode === "EditMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
           <New
-            singleBooking={singleBooking}
-            setSingleBooking={setSingleBooking}
+            singleRecord={singleRecord}
+            setSingleRecord={setSingleRecord}
             bookings={bookings}
             handleClose={handleClose}
             title={"Update A Booking Item"}

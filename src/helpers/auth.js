@@ -3,7 +3,8 @@ import Constant from "../utils/constant";
 
 export const logoutFunc = () => {
   window.location = process.env.REACT_APP_SIGNOUT_URL;
-  localStorage.removeItem("token");
+  removeLocalData("token");
+  removeLocalData("csrfToken");
 };
 
 export const setUpToken = (token) => {

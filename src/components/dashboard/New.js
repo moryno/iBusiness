@@ -16,15 +16,13 @@ import Validator, {
 import { Button } from "devextreme-react";
 
 import services from "../../helpers/formDataSource";
-import OnboardingService from "../../axios/onboardingRequest";
 import { toast } from "react-toastify";
+import ErpService from "../../axios/erpService";
 
 const New = ({
   handleClose,
   bookings,
   singleBooking,
-  setSingleBooking,
-  setBookings,
   title,
   heading,
   statusBarText,
@@ -140,8 +138,8 @@ const New = ({
 
     if (statusMode === "CreateMode") {
       try {
-        const response = await OnboardingService.post(url, newFormData);
-        setBookings([response, ...bookings]);
+        await ErpService.post(url, newFormData);
+
         handleClose();
         toast.success("Booking created successfully.");
       } catch (error) {
@@ -150,18 +148,10 @@ const New = ({
     }
     if (statusMode === "EditMode") {
       try {
-        const response = await OnboardingService.put(url, editFormData);
+        await ErpService.put(url, editFormData);
         if (bookings) {
-          const newBooking = bookings.map((booking) => {
-            if (booking.bookingId === response?.bookingId) {
-              console.log(response);
-              return response;
-            }
-            return booking;
-          });
-          setBookings(newBooking);
         }
-        setSingleBooking(response);
+
         handleClose();
         toast.success("Booking updated successfully.");
       } catch (error) {

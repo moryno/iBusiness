@@ -55,7 +55,6 @@ onboardingRequest.interceptors.response.use(
   },
   (error) => {
     const { response } = error;
-    console.log(error);
     if (response.status === 401 || response.status === 404) {
       return Promise.reject(error);
     } else {

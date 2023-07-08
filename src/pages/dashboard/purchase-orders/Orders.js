@@ -94,7 +94,7 @@ const Orders = () => {
             route={route}
             keyExpr={"orderNumber"}
             columns={orderColumns}
-            startEdit={(e) => startEdit(e)}
+            startEdit={startEdit}
             setRowClickItem={setRowClickItem}
             openConfirmationPopup={openConfirmationPopup}
             filterValues={orderFilterValues}

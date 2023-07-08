@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import { homeMenuSource } from "../../../data/menu";
-import { bookingColumns } from "../../../data/PurchaseOrderData";
+import { securityGroupsColumns } from "../../../data/PurchaseOrderData";
 import { bookingFilterValues } from "../../../helpers/datatableSource";
 import CategoryComponent from "../../../components/dashboard/CategoryComponent";
 import Constant from "../../../utils/constant";
@@ -11,40 +9,83 @@ import Statusbar from "../../../components/dashboard/Statusbar";
 import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupComponent";
 import SecurityGroupForm from "../../../components/dashboard/SecurityGroupForm";
 import CustomActionModal from "../../../components/modals/CustomActionModal";
-
-import { getBookings, getFreshBookings } from "../../../redux/api/bookingCall";
+import ErpService from "../../../axios/erpService";
 
 const SecurityGroup = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  const bookings = useSelector((state) => state.booking.bookings);
+  const [records, setRecords] = useState([]);
+  const [singleRecord, setSingleRecord] = useState({});
+  const [onEditRecordId, setEditRecordId] = useState(null);
+  // eslint-disable-next-line
+  const [selectedRecordId, setSelectedRecordId] = useState(null);
+  const [statusMode, setStatusMode] = useState("");
+  const [isOpen, setOpen] = useState(false);
 
   const route = Constant.ROUTE.BOOKING;
 
-  useEffect(() => {
-    if (!bookings || bookings.length < 1) {
-      getBookings(dispatch);
-    } else {
-      getFreshBookings(dispatch);
-    }
-    // eslint-disable-next-line
-  }, [dispatch]);
+  const getRecords = async () => {
+    const url = "/SecurityGroups/GetAll";
+    const response = await ErpService.get(url);
+    setRecords(response);
+  };
 
-  const handleClick = (action) => {
-    switch (action) {
+  useEffect(() => {
+    getRecords();
+  }, []);
+
+  useEffect(() => {
+    const getSingleRecord = async () => {
+      const url = "/SecurityGroups/" + onEditRecordId;
+      const response = await ErpService.get(url);
+      setSingleRecord(response);
+      setStatusMode("EditMode");
+      setOpen((isOpen) => !isOpen);
+    };
+    if (onEditRecordId) getSingleRecord();
+  }, [onEditRecordId]);
+
+  const startEdit = useCallback(({ key }) => {
+    if (key) {
+      setEditRecordId(key);
+    } else {
+      setEditRecordId(null);
+    }
+  }, []);
+
+  const selectRowItem = useCallback(({ key }) => {
+    if (key) {
+      setSelectedRecordId(key);
+    }
+  }, []);
+
+  const handleClose = () => {
+    setEditRecordId(null);
+    setSingleRecord({});
+    setStatusMode("");
+    setOpen(false);
+  };
+
+  const handleClick = useCallback((menu) => {
+    switch (menu) {
+      case "Find":
+        break;
       case "New":
-        setIsOpen(true);
+        setStatusMode("CreateMode");
+        setOpen(true);
+        break;
+      case "Delete":
+        break;
+      case "Close":
+        console.log("Close was clicked");
+        break;
+      case "Help":
+        console.log("Help was clicked");
         break;
 
       default:
         break;
     }
-  };
+  }, []);
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
   return (
     <main className="w-full min-h-full relative px-3 md:px-5">
       <section>
@@ -55,10 +96,12 @@ const SecurityGroup = () => {
             onMenuClick={handleClick}
           />
           <DataTable
-            data={bookings}
+            data={records}
             route={route}
-            keyExpr={"bookingId"}
-            columns={bookingColumns}
+            keyExpr={"groupCode"}
+            columns={securityGroupsColumns}
+            startEdit={startEdit}
+            selectRowItem={selectRowItem}
             filterValues={bookingFilterValues}
           />
 
@@ -73,7 +116,25 @@ const SecurityGroup = () => {
         isOpen={isOpen}
         handleClose={handleClose}
       >
-        <SecurityGroupForm handleClose={handleClose} />
+        {statusMode === "CreateMode" ? (
+          <SecurityGroupForm
+            setRecords={setRecords}
+            records={records}
+            singleRecord={singleRecord}
+            statusMode={statusMode}
+            handleClose={handleClose}
+          />
+        ) : (
+          statusMode === "EditMode" && (
+            <SecurityGroupForm
+              setRecords={setRecords}
+              records={records}
+              singleRecord={singleRecord}
+              statusMode={statusMode}
+              handleClose={handleClose}
+            />
+          )
+        )}
       </CustomActionModal>
     </main>
   );

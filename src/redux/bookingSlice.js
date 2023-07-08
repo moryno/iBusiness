@@ -4,33 +4,45 @@ const bookingSlice = createSlice({
   name: "booking",
   initialState: {
     bookings: [],
-    isFetching: false,
-    error: false,
   },
   reducers: {
-    getBookingStart: (state) => {
-      state.isFetching = true;
-      state.error = false;
-    },
     getBookingSuccess: (state, action) => {
-      state.isFetching = false;
       state.bookings = action.payload;
-    },
-    getBookingFailure: (state) => {
-      state.isFetching = false;
-      state.error = true;
     },
     refreshBooking: (state, action) => {
       state.bookings = [...state.bookings, action.payload];
+    },
+    // Add Booking
+    addBookingSuccess: (state, action) => {
+      state.bookings = [action.payload, ...state.bookings];
+    },
+    // Edit Booking
+    updateBookingSuccess: (state, action) => {
+      state.bookings[
+        state.bookings.findIndex(
+          (booking) => booking.bookingId === action.payload.bookingId
+        )
+      ] = action.payload.booking;
+    },
+
+    // Delete Booking
+    deleteBookingSuccess: (state, action) => {
+      state.bookings.splice(
+        state.bookings.findIndex(
+          (booking) => booking.bookingId === action.payload
+        ),
+        1
+      );
     },
   },
 });
 
 export const {
-  getBookingStart,
   getBookingSuccess,
-  getBookingFailure,
   refreshBooking,
+  addBookingSuccess,
+  updateBookingSuccess,
+  deleteBookingSuccess,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

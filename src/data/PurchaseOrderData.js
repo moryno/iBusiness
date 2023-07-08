@@ -210,5 +210,35 @@ export const bookingColumns = [
     dataField: "trainingVenue",
   },
 ];
+export const securityGroupsColumns = [
+  {
+    dataField: "groupId",
+    width: 70,
+    pk: true,
+    caption: "Select",
+  },
+  {
+    dataField: "groupCode",
+    width: 150,
+  },
+  {
+    dataField: "groupDesc",
+  },
+  {
+    dataField: "narration",
+  },
+  {
+    dataField: "createdDate",
+  },
+  {
+    dataField: "createdUser",
+  },
+  {
+    dataField: "updatedDate",
+  },
+  {
+    dataField: "updatedUser",
+  },
+];
 
 // End of definition

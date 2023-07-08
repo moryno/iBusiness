@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import localforage from "localforage";
+import storage from "redux-persist/lib/storage";
 import {
   persistStore,
   persistReducer,
@@ -13,18 +13,20 @@ import {
 import userReducer from "./userSlice";
 import bookingReducer from "./bookingSlice";
 import purchaseOrderReducer from "./purchaseOrderSlice";
+import securityGroupReducer from "./securityGroupSlice";
 import moduleSlice from "./moduleSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
-  storage: localforage,
+  storage,
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
   booking: bookingReducer,
   purchase: purchaseOrderReducer,
+  securityGroups: securityGroupReducer,
   moduleCategory: moduleSlice,
 });
 

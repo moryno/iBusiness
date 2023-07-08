@@ -41,87 +41,79 @@ const DataTable = ({
     return [10, 25, 50, 100];
   }, []);
 
-  const onContentReady = useCallback(
-    (e) => {
-      getDataGridRef(dataGridRef.current);
-      if (!collapsed) {
-        e.component.expandRow(["EnviroCare"]);
-        setCollapsed({
-          collapsed: true,
-        });
-      }
-    },
-    [collapsed]
-  );
+  const onContentReady = (e) => {
+    getDataGridRef(dataGridRef.current);
+    if (!collapsed) {
+      e.component.expandRow(["EnviroCare"]);
+      setCollapsed({
+        collapsed: true,
+      });
+    }
+  };
 
-  const handleContextMenuPreparing = useCallback(
-    (e) => {
-      if (e.row && e.row.rowType === "data") {
-        if (!e.items) e.items = [];
-        e.items.push(
-          {
-            text: "Edit",
-            icon: "edit",
-            onItemClick: () => {
-              startEdit(e.row);
-            },
+  const handleContextMenuPreparing = (e) => {
+    if (e.row && e.row.rowType === "data") {
+      if (!e.items) e.items = [];
+      e.items.push(
+        {
+          text: "Edit",
+          icon: "edit",
+          onItemClick: () => {
+            startEdit(e.row);
           },
-          {
-            text: "Export",
-            icon: "export",
-            items: [
-              {
-                text: "Export all data to Excel",
-                icon: "exportxlsx",
-                onItemClick: () => {
-                  handleExporting("Export all data to Excel");
-                },
+        },
+        {
+          text: "Export",
+          icon: "export",
+          items: [
+            {
+              text: "Export all data to Excel",
+              icon: "exportxlsx",
+              onItemClick: () => {
+                handleExporting("Export all data to Excel");
               },
-              {
-                text: "Export all data to PDF",
-                icon: "exportpdf",
-                onItemClick: () => {
-                  handleExporting("Export all data to PDF");
-                },
-              },
-            ],
-          },
-          {
-            text: "Delete",
-            icon: "trash",
-            onItemClick: () => {
-              openConfirmationPopup(e.row);
             },
-          }
-        );
-      }
-    },
-    [openConfirmationPopup, startEdit]
-  );
+            {
+              text: "Export all data to PDF",
+              icon: "exportpdf",
+              onItemClick: () => {
+                handleExporting("Export all data to PDF");
+              },
+            },
+          ],
+        },
+        {
+          text: "Delete",
+          icon: "trash",
+          onItemClick: () => {
+            openConfirmationPopup(e.row);
+          },
+        }
+      );
+    }
+  };
 
-  const handleHyperlinkClick = useCallback((e) => {
+  const handleHyperlinkClick = (e) => {
     e.target.style.color = "white";
-  }, []);
+  };
 
-  const handleFocusedRowChanging = useCallback((e) => {
+  const handleFocusedRowChanging = (e) => {
     const prevRow = e.component.getRowElement(e.prevRowIndex);
     const newRow = e.component.getRowElement(e.newRowIndex);
     prevRow[0].children[0].children[0].children[0].children[0].style.color =
       "#489AEE";
     newRow[0].children[0].children[0].children[0].children[0].style.color =
       "white";
-  }, []);
+  };
 
-  const filterBuilder = useMemo(() => {
-    return {
-      logic: "and",
-      filters: filterValues.map(([field, operator, value]) => ({
-        field,
-        operator,
-        value,
-      })),
-    };
-  }, [filterValues]);
+  const filterBuilder = {
+    logic: "and",
+    filters: filterValues.map(([field, operator, value]) => ({
+      field,
+      operator,
+      value,
+    })),
+  };
 
   return (
     <main className="mt-5">
@@ -166,7 +158,7 @@ const DataTable = ({
                           data-column-index={data.columnIndex}
                           className="pk-div"
                         >
-                          <span className="pk-hyperlink">More...</span>
+                          <span className="pk-hyperlink">Details...</span>
                         </div>
                       </Link>
                     );
