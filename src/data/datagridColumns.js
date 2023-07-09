@@ -210,6 +210,7 @@ export const bookingColumns = [
     dataField: "trainingVenue",
   },
 ];
+
 export const securityGroupsColumns = [
   {
     dataField: "groupId",
@@ -223,6 +224,37 @@ export const securityGroupsColumns = [
   },
   {
     dataField: "groupDesc",
+  },
+  {
+    dataField: "narration",
+  },
+  {
+    dataField: "createdDate",
+  },
+  {
+    dataField: "createdUser",
+  },
+  {
+    dataField: "updatedDate",
+  },
+  {
+    dataField: "updatedUser",
+  },
+];
+
+export const userGroupsColumns = [
+  {
+    dataField: "userGroupId",
+    width: 70,
+    pk: true,
+    caption: "Select",
+  },
+  {
+    dataField: "groupCode",
+    width: 150,
+  },
+  {
+    dataField: "userName",
   },
   {
     dataField: "narration",

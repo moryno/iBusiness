@@ -3,6 +3,7 @@ import GridItemDetails from "../../../components/dashboard/GridDetailComponents/
 import OnboardingService from "../../../axios/onboardingRequest";
 import { useNavigate, useParams } from "react-router-dom";
 import { customActionsSource, updateMenuSource } from "../../../data/menu";
+import { orderDetailTitle } from "../../../data/headingFooterTitle";
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -40,11 +41,12 @@ const OrderDetail = () => {
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <GridItemDetails
         data={data}
-        heading={"Order details"}
-        title={`Order number: ${data?.orderNumber}`}
+        heading={orderDetailTitle.heading}
+        footer={orderDetailTitle.footer}
+        title={`${orderDetailTitle.title} ${data?.orderNumber}`}
         menus={updateMenuSource}
         customAction={customActionsSource}
-        company={"ARBS Customer Portal"}
+        company={orderDetailTitle.company}
         onMenuClick={handleClick}
       />
     </main>

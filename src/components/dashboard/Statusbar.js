@@ -1,10 +1,10 @@
-const Statusbar = ({ heading, company }) => {
+const Statusbar = ({ footer, company }) => {
   const year = new Date().getFullYear();
   return (
     <main className="absolute z-50 inset-x-0 bottom-0 w-full flex items-center bg-statusBar">
       <section className="flex w-full justify-between px:2 md:px-5">
         <article>
-          <p className=" text-sm font-medium text-statusBar">{heading}</p>
+          <p className=" text-sm font-medium text-statusBar">{footer}</p>
         </article>
         <article className="flex gap-1">
           <p className=" text-sm font-medium text-statusBar">{company}</p>

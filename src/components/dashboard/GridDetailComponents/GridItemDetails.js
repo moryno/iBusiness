@@ -8,6 +8,7 @@ import SkeletonRightDetail from "../Skeletons/SkeletonRightDetail";
 
 const GridItemDetails = ({
   heading,
+  footer,
   menus,
   title,
   company,
@@ -38,7 +39,7 @@ const GridItemDetails = ({
           )}
         </article>
       </section>
-      <Statusbar heading={heading} company={company} />
+      <Statusbar footer={footer} company={company} />
     </main>
   );
 };

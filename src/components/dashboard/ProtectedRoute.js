@@ -6,7 +6,6 @@ import { loginSuccess } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCRSFToken, setUpToken } from "../../helpers/auth";
 import OnboardingService from "../../axios/onboardingRequest";
-import Constant from "../../utils/constant";
 
 const ProtectedRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);

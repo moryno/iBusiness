@@ -4,18 +4,24 @@ import { toast } from "react-toastify";
 import { homeMenuSource } from "../../../data/menu";
 import Portal from "../../../components/dashboard/Portal";
 import New from "../../../components/dashboard/New";
-import { bookingColumns } from "../../../data/PurchaseOrderData";
+import { bookingColumns } from "../../../data/datagridColumns";
 import { bookingFilterValues } from "../../../helpers/datatableSource";
 import ConfirmationPopupComponent from "../../../components/dashboard/ConfirmationPopupComponent";
 import OnboardingService from "../../../axios/onboardingRequest";
 import CategoryComponent from "../../../components/dashboard/CategoryComponent";
 import Constant from "../../../utils/constant";
 import FromToDateComponent from "../../../components/dashboard/FromToDateComponent";
-import DataTable from "../../../components/dashboard/DataTable";
+import DataTable from "../../../components/dashboard/DataGrids/DataTable";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupComponent";
 
 import { getBookings, getFreshBookings } from "../../../redux/api/bookingCall";
+import {
+  bookingHeadingFooter,
+  deleteTitle,
+  editFormHeadingFooter,
+  newFormHeadingFooter,
+} from "../../../data/headingFooterTitle";
 
 const Booking = () => {
   const dispatch = useDispatch();
@@ -72,7 +78,9 @@ const Booking = () => {
 
   const openConfirmationPopup = useCallback(async (rowItem) => {
     if (rowItem === null) {
-      toast.warning("Please select a booking to delete");
+      toast.warning(
+        "You must select one or more records before you can perform this action."
+      );
     } else {
       setStatusMode("DeleteMode");
       setOpen((isOpen) => !isOpen);
@@ -114,30 +122,28 @@ const Booking = () => {
 
   return (
     <main className="w-full min-h-full relative px-3 md:px-5 py-1.5">
-      <section>
-        <CategoryComponent>
-          <MenusGroupComponent
-            menus={homeMenuSource}
-            heading={"Booking List"}
-            onMenuClick={handleClick}
-          />
-          <FromToDateComponent />
-          <DataTable
-            data={bookings}
-            route={route}
-            keyExpr={"bookingId"}
-            columns={bookingColumns}
-            startEdit={startEdit}
-            selectRowItem={selectRowItem}
-            openConfirmationPopup={openConfirmationPopup}
-            filterValues={bookingFilterValues}
-          />
-          <Statusbar
-            heading={"Booking List"}
-            company={"ARBS Customer Portal"}
-          />
-        </CategoryComponent>
-      </section>
+      <CategoryComponent>
+        <MenusGroupComponent
+          menus={homeMenuSource}
+          heading={bookingHeadingFooter.heading}
+          onMenuClick={handleClick}
+        />
+        <FromToDateComponent />
+        <DataTable
+          data={bookings}
+          route={route}
+          keyExpr={"bookingId"}
+          columns={bookingColumns}
+          startEdit={startEdit}
+          selectRowItem={selectRowItem}
+          openConfirmationPopup={openConfirmationPopup}
+          filterValues={bookingFilterValues}
+        />
+        <Statusbar
+          footer={bookingHeadingFooter.footer}
+          company={bookingHeadingFooter.company}
+        />
+      </CategoryComponent>
 
       {statusMode === "CreateMode" ? (
         <Portal isOpen={isOpen} setOpen={setOpen}>
@@ -145,9 +151,9 @@ const Booking = () => {
             bookings={bookings}
             singleRecord={singleRecord}
             handleClose={handleClose}
-            title={"Create New Booking"}
-            heading={"Booking Item Management"}
-            statusBarText={"New Booking Item"}
+            title={newFormHeadingFooter.title}
+            heading={newFormHeadingFooter.heading}
+            statusBarText={newFormHeadingFooter.footer}
             statusMode={statusMode}
           />
         </Portal>
@@ -158,9 +164,9 @@ const Booking = () => {
             setSingleRecord={setSingleRecord}
             bookings={bookings}
             handleClose={handleClose}
-            title={"Update A Booking Item"}
-            heading={"Booking Item Management"}
-            statusBarText={"Updating Booking Item"}
+            title={editFormHeadingFooter.title}
+            heading={editFormHeadingFooter.heading}
+            statusBarText={editFormHeadingFooter.footer}
             statusMode={statusMode}
           />
         </Portal>
@@ -169,8 +175,9 @@ const Booking = () => {
           <Portal isOpen={isOpen} setOpen={setOpen}>
             <ConfirmationPopupComponent
               handleClose={handleClose}
-              title={"Delete A Booking Item"}
-              statusBarText={"Delete Booking Item"}
+              title={deleteTitle.heading}
+              text={deleteTitle.text}
+              statusBarText={deleteTitle.footer}
               statusMode={statusMode}
               onDelete={handleDelete}
             />

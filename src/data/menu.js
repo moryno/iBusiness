@@ -5,6 +5,7 @@ import { SiMicrosoftexcel } from "react-icons/si";
 import { SlPrinter } from "react-icons/sl";
 import { GrDocumentPdf } from "react-icons/gr";
 import { RiFileEditFill } from "react-icons/ri";
+import { FcInvite } from "react-icons/fc";
 
 import {
   MdArrowDropDown,
@@ -63,8 +64,8 @@ export const usersMenuSource = [
   },
   {
     id: 2,
-    title: "New",
-    icon: <MdOutlineAdd fontSize={20} />,
+    title: "Invite",
+    icon: <FcInvite fontSize={20} />,
     onClick: "handleClick",
   },
   {

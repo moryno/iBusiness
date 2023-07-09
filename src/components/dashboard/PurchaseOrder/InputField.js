@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "../../../pages/dashboard/purchase-orders/PurchaseOrder.css";
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
-import { items } from "../../../data/PurchaseOrderData";
+import { items } from "../../../data/datagridColumns";
 import dataitem from "../../../utils/Order";
 import SelectBox from "devextreme-react/select-box";
 import { IoAdd, IoTrash } from "react-icons/io5";

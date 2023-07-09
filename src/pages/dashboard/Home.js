@@ -2,6 +2,7 @@ import Statusbar from "../../components/dashboard/Statusbar";
 import { homeMenuSource } from "../../data/menu";
 import MenusGroupComponent from "../../components/dashboard/Menus/MenusGroupComponent";
 import FromToDateComponent from "../../components/dashboard/FromToDateComponent";
+import { homeHeadingFooter } from "../../data/headingFooterTitle";
 
 const Home = () => {
   const handleClick = (menu) => {
@@ -32,7 +33,7 @@ const Home = () => {
       <section>
         <section>
           <MenusGroupComponent
-            heading="Home"
+            heading={homeHeadingFooter.heading}
             menus={homeMenuSource}
             onMenuClick={handleClick}
           />
@@ -45,7 +46,10 @@ const Home = () => {
         </section>
       </section>
 
-      <Statusbar heading="Booking List" company="ARBS Customer Portal" />
+      <Statusbar
+        footer={homeHeadingFooter.footer}
+        company={homeHeadingFooter.company}
+      />
     </main>
   );
 };

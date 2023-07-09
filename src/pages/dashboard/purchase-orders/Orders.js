@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { orderColumns } from "../../../data/PurchaseOrderData";
+import { orderColumns } from "../../../data/datagridColumns";
 import { homeMenuSource } from "../../../data/menu";
 import { orderFilterValues } from "../../../helpers/datatableSource";
 import CategoryComponent from "../../../components/dashboard/CategoryComponent";
 import { toast } from "react-toastify";
 import Constant from "../../../utils/constant";
 import FromToDateComponent from "../../../components/dashboard/FromToDateComponent";
-import DataTable from "../../../components/dashboard/DataTable";
+import DataTable from "../../../components/dashboard/DataGrids/DataTable";
 import Statusbar from "../../../components/dashboard/Statusbar";
 import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupComponent";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import {
   getFreshPurchaseOrders,
   getPurchaseOrders,
 } from "../../../redux/api/purchaseOrderCall";
+import { orderHeadingFooter } from "../../../data/headingFooterTitle";
 
 const Orders = () => {
   // eslint-disable-next-line
@@ -85,7 +86,7 @@ const Orders = () => {
         <CategoryComponent>
           <MenusGroupComponent
             menus={homeMenuSource}
-            heading={"Purchase Orders"}
+            heading={orderHeadingFooter.heading}
             onMenuClick={handleClick}
           />
           <FromToDateComponent />
@@ -100,8 +101,8 @@ const Orders = () => {
             filterValues={orderFilterValues}
           />
           <Statusbar
-            heading={"Purchase Orders"}
-            company={"ARBS Customer Portal"}
+            footer={orderHeadingFooter.footer}
+            company={orderHeadingFooter.company}
           />
         </CategoryComponent>
       </section>

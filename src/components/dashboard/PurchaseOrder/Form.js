@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../pages/dashboard/purchase-orders/PurchaseOrder.css";
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
-import { centerOptions } from "../../../data/PurchaseOrderData";
+import { centerOptions } from "../../../data/datagridColumns";
 import SelectBox from "devextreme-react/select-box";
 import TextBox from "devextreme-react/text-box";
 import DateBox from "devextreme-react/date-box";

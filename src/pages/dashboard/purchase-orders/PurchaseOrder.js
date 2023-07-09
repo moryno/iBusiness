@@ -6,7 +6,7 @@ import { purchaseOrderMenu } from "../../../data/menu";
 import DataSource from "devextreme/data/data_source";
 import Form from "../../../components/dashboard/PurchaseOrder/Form";
 import { InputField } from "../../../components/dashboard/PurchaseOrder/InputField";
-import { Table } from "../../../components/dashboard/PurchaseOrder/Table";
+import { Table } from "../../../components/dashboard/DataGrids/Table";
 import { MessageDiv } from "../../../components/dashboard/PurchaseOrder/Message";
 import { useNavigate, useParams } from "react-router-dom";
 import request from "../../../helpers/tempRequest";

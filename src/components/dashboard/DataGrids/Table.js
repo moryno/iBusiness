@@ -9,7 +9,7 @@ import {
 } from "devextreme-react/data-grid";
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
-import { items, summary, columns } from "../../../data/PurchaseOrderData";
+import { items, summary, columns } from "../../../data/datagridColumns";
 import dataitem from "../../../utils/Order";
 import { getDataGridRef } from "../../../helpers/datagridFunctions";
 import { useSelector } from "react-redux";

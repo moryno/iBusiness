@@ -5,6 +5,7 @@ import { ImUndo2 } from "react-icons/im";
 const ConfirmationPopupComponent = ({
   handleClose,
   title,
+  text,
   statusBarText,
   onDelete,
 }) => {
@@ -25,7 +26,7 @@ const ConfirmationPopupComponent = ({
         </article>
       </section>
       <section className="w-full p-3 text-xs flex items-center justify-center">
-        <p>Are you sure you want to delete this booking?</p>
+        <p>{text}</p>
       </section>
       <section className="sticky border-t border-gray-200 w-full inset-x-0 bottom-0 ">
         <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">

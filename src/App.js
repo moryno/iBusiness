@@ -18,6 +18,8 @@ import { NotFound } from "./pages/landing-page/NotFound";
 import BookingDetail from "./pages/dashboard/bookings/BookingDetail";
 import OrderDetail from "./pages/dashboard/purchase-orders/OrderDetail";
 import SecurityGroup from "./pages/dashboard/users/SecurityGroup";
+import User from "./pages/dashboard/users/User";
+import UserGroup from "./pages/dashboard/users/UserGroup";
 
 function App() {
   return (
@@ -131,10 +133,26 @@ function App() {
             </Route>
             <Route path="users">
               <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <User />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="security-groups"
                 element={
                   <ProtectedRoute>
                     <SecurityGroup />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="user-groups"
+                element={
+                  <ProtectedRoute>
+                    <UserGroup />
                   </ProtectedRoute>
                 }
               />

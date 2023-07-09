@@ -5,6 +5,10 @@ import OnboardingService from "../../../axios/onboardingRequest";
 import { customActionsSource, updateMenuSource } from "../../../data/menu";
 import Portal from "../../../components/dashboard/Portal";
 import New from "../../../components/dashboard/New";
+import {
+  bookingDetailTitle,
+  editFormHeadingFooter,
+} from "../../../data/headingFooterTitle";
 
 const BookingDetail = () => {
   const { id } = useParams();
@@ -51,11 +55,12 @@ const BookingDetail = () => {
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <GridItemDetails
         data={data}
-        heading={"Booking details"}
-        title={`Booking Id: ${data?.bookingId}`}
+        heading={bookingDetailTitle.heading}
+        title={`${bookingDetailTitle.title}: ${data?.bookingId}`}
+        footer={bookingDetailTitle.footer}
         menus={updateMenuSource}
         customAction={customActionsSource}
-        company={"ARBS Customer Portal"}
+        company={bookingDetailTitle.company}
         onMenuClick={handleClick}
       />
 
@@ -65,9 +70,9 @@ const BookingDetail = () => {
             singleBooking={data}
             setSingleBooking={setData}
             handleClose={handleClose}
-            title={"Update A Booking Item"}
-            heading={"Booking Item Management"}
-            statusBarText={"Updating Booking Item"}
+            title={editFormHeadingFooter.title}
+            heading={editFormHeadingFooter.heading}
+            statusBarText={editFormHeadingFooter.footer}
             statusMode={statusMode}
           />
         </Portal>
