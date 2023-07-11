@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import data from "../../../../data/frontend/footer";
+import data from "../../../../data/landing-page/footer";
 import { Link } from "react-router-dom";
 import Brand from "../../UI/Brand";
 import { footermenus } from "../../../../helpers/footerMenusSource";

@@ -9,7 +9,7 @@ import {
   faAngleRight,
   faComments,
 } from "@fortawesome/free-solid-svg-icons";
-import data from "../../../data/frontend/navbar";
+import data from "../../../data/landing-page/navbar";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../../redux/userSlice";

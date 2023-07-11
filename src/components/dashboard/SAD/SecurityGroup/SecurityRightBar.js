@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import RightBarHeader from "../../Shared/DetailsComponents/RightBarHeader";
 import CustomActionModal from "../../../modals/CustomActionModal";
-import SalesApprovalComponent from "../SalesApprovalComponent";
-import RightBarHeader from "./RightBarHeader";
+import SalesApprovalComponent from "../../Shared/SalesApprovalComponent";
 
-const DetailsRightBar = ({ customAction }) => {
+const SecurityRightBar = ({ customAction }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (action) => {
@@ -25,7 +25,7 @@ const DetailsRightBar = ({ customAction }) => {
     <main className="flex flex-col gap-4 box-border">
       <RightBarHeader customAction={customAction} handleClick={handleClick} />
       <CustomActionModal
-        title={"Orders Approval"}
+        title={"Security"}
         isOpen={isOpen}
         handleClose={handleClose}
       >
@@ -35,4 +35,4 @@ const DetailsRightBar = ({ customAction }) => {
   );
 };
 
-export default DetailsRightBar;
+export default SecurityRightBar;

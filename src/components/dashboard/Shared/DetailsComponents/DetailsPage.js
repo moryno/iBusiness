@@ -1,12 +1,9 @@
 import React from "react";
-import GridItemContent from "./GridItemContent";
 import Statusbar from "../NavBarFooter/Statusbar";
-import DetailsRightBar from "./DetailsRightBar";
 import MenusGroupComponent from "../Menus/MenusGroupComponent";
 import SkeletonDetail from "../Skeletons/SkeletonDetail";
-import SkeletonRightDetail from "../Skeletons/SkeletonRightDetail";
 
-const GridItemDetails = ({
+const DetailsPage = ({
   heading,
   footer,
   menus,
@@ -15,6 +12,8 @@ const GridItemDetails = ({
   data,
   onMenuClick,
   customAction,
+  DetailComponent,
+  CustomActionComponent,
 }) => {
   return (
     <main className="w-full min-h-full">
@@ -26,17 +25,13 @@ const GridItemDetails = ({
       <section className="mt-5 w-full gap-2 md:gap-0 flex flex-col-reverse md:flex-row">
         <article className="w-full px-2 md:w-9/12 lg:px-5 box-border">
           {data ? (
-            <GridItemContent data={data} title={title} />
+            <DetailComponent data={data} title={title} />
           ) : (
             <SkeletonDetail />
           )}
         </article>
         <article className="w-full px-2 md:w-3/12 lg:px-5 ">
-          {customAction ? (
-            <DetailsRightBar customAction={customAction} />
-          ) : (
-            <SkeletonRightDetail />
-          )}
+          <CustomActionComponent customAction={customAction} />
         </article>
       </section>
       <Statusbar footer={footer} company={company} />
@@ -44,4 +39,4 @@ const GridItemDetails = ({
   );
 };
 
-export default GridItemDetails;
+export default DetailsPage;

@@ -195,29 +195,3 @@ export const dropDownMenuSource = [
     ],
   },
 ];
-
-export function handleClick(menu) {
-  switch (menu) {
-    case "Find":
-      console.log("Find was clicked");
-      break;
-    case "New":
-      console.log("New was clicked");
-      break;
-    case "Print Report":
-      console.log("Print Report was clicked");
-      break;
-    case "Delete":
-      console.log("Delete was clicked");
-      break;
-    case "Close":
-      console.log("Close was clicked");
-      break;
-    case "Help":
-      console.log("Help was clicked");
-      break;
-
-    default:
-      break;
-  }
-}

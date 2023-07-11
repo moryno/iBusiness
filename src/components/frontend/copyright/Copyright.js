@@ -1,6 +1,6 @@
 import React from "react";
-import data from "../../../data/frontend/copyright";
-import copy from "../../../data/frontend/footer";
+import data from "../../../data/landing-page/copyright";
+import copy from "../../../data/landing-page/footer";
 import "./copyright.css";
 
 export const Copyright = () => {

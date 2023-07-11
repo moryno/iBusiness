@@ -15,6 +15,7 @@ const UserGroup = ({
   title,
   columns,
   url,
+  redirectRoute,
   filterValues,
   FormComponent,
 }) => {
@@ -26,16 +27,13 @@ const UserGroup = ({
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
 
-  const route = Constant.ROUTE.BOOKING;
-
-  const getRecords = async () => {
-    const url = "/SecurityGroups/GetAll";
-    const response = await SadService.get(url);
-    setRecords(response);
-  };
-
   useEffect(() => {
+    const getRecords = async () => {
+      const response = await SadService.get(url);
+      setRecords(response);
+    };
     getRecords();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -107,7 +105,7 @@ const UserGroup = ({
           />
           <DataTable
             data={records}
-            route={route}
+            route={redirectRoute}
             keyExpr={"groupCode"}
             columns={columns}
             startEdit={startEdit}

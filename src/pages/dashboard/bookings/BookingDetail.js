@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import GridItemDetails from "../../../components/dashboard/Shared/DetailsComponents/GridItemDetails";
+import DetailsPage from "../../../components/dashboard/Shared/DetailsComponents/DetailsPage";
 import OnboardingService from "../../../ClientServices/onboardingRequest";
 import {
   customActionsSource,
@@ -12,6 +12,7 @@ import {
   bookingDetailTitle,
   editFormHeadingFooter,
 } from "../../../data/headingFooterTitle";
+import GridItemContent from "../../../components/dashboard/Shared/DetailsComponents/GridItemContent";
 
 const BookingDetail = () => {
   const { id } = useParams();
@@ -38,7 +39,7 @@ const BookingDetail = () => {
       case "Delete":
         break;
       case "Close":
-        navigate("/dashboard/bookings");
+        navigate(-1);
         break;
       case "Help":
         console.log("Help was clicked");
@@ -56,7 +57,7 @@ const BookingDetail = () => {
 
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
-      <GridItemDetails
+      <DetailsPage
         data={data}
         heading={bookingDetailTitle.heading}
         title={`${bookingDetailTitle.title}: ${data?.bookingId}`}
@@ -65,6 +66,7 @@ const BookingDetail = () => {
         customAction={customActionsSource}
         company={bookingDetailTitle.company}
         onMenuClick={handleClick}
+        DetailComponent={GridItemContent}
       />
 
       {statusMode === "EditMode" && (

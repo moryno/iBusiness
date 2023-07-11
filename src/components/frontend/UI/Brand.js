@@ -1,5 +1,5 @@
 import React from "react";
-import data from "../../../data/frontend/navbar";
+import data from "../../../data/landing-page/navbar";
 
 const Brand = () => {
   return <div className="brandname">{data.brand}</div>;

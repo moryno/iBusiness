@@ -4,10 +4,10 @@ import { useState } from "react";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
-import SadService from "../../../ClientServices/sadService";
+import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
 
-const SecurityGroupForm = ({
+const InviteUserForm = ({
   handleClose,
   records,
   setRecords,
@@ -90,7 +90,7 @@ const SecurityGroupForm = ({
               className="text-[11px] text-label font-semibold"
               htmlFor="fullName"
             >
-              <sup className="text-red-600">*</sup>Group Code
+              <sup className="text-red-600">*</sup>Full Name
             </label>
             <TextBox
               type="text"
@@ -114,7 +114,7 @@ const SecurityGroupForm = ({
               className="text-[11px] text-label font-semibold"
               htmlFor="fullName"
             >
-              <sup className="text-red-600">*</sup>Group Name
+              <sup className="text-red-600">*</sup>Email Address
             </label>
             <TextBox
               type="text"
@@ -175,4 +175,4 @@ const SecurityGroupForm = ({
   );
 };
 
-export default SecurityGroupForm;
+export default InviteUserForm;

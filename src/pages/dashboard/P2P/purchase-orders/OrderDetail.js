@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GridItemDetails from "../../../../components/dashboard/Shared/DetailsComponents/GridItemDetails";
+import DetailsPage from "../../../../components/dashboard/Shared/DetailsComponents/DetailsPage";
 import OnboardingService from "../../../../ClientServices/onboardingRequest";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -7,6 +7,8 @@ import {
   updateMenuSource,
 } from "../../../../data/dashboard-page/menu";
 import { orderDetailTitle } from "../../../../data/headingFooterTitle";
+import GridItemContent from "../../../../components/dashboard/Shared/DetailsComponents/GridItemContent";
+import DetailsRightBar from "../../../../components/dashboard/Shared/DetailsComponents/DetailsRightBar";
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -29,7 +31,7 @@ const OrderDetail = () => {
       case "Delete":
         break;
       case "Close":
-        navigate("/dashboard/orders");
+        navigate(-1);
         break;
       case "Help":
         console.log("Help was clicked");
@@ -42,7 +44,7 @@ const OrderDetail = () => {
 
   return (
     <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
-      <GridItemDetails
+      <DetailsPage
         data={data}
         heading={orderDetailTitle.heading}
         footer={orderDetailTitle.footer}
@@ -51,6 +53,8 @@ const OrderDetail = () => {
         customAction={customActionsSource}
         company={orderDetailTitle.company}
         onMenuClick={handleClick}
+        DetailComponent={GridItemContent}
+        CustomActionComponent={DetailsRightBar}
       />
     </main>
   );

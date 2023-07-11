@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImUndo2 } from "react-icons/im";
 import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
-import SadService from "../../../ClientServices/sadService";
+import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
 
 const UserGroupForm = ({
@@ -24,6 +24,24 @@ const UserGroupForm = ({
   const [narration, setNarration] = useState(
     statusMode === "EditMode" ? singleRecord.narration : "Accounts"
   );
+
+  const getGroupCodes = async () => {
+    const url = "/GetGroupCode/";
+    const response = await SadService.get(url);
+    console.log(response);
+  };
+
+  const getAllUsers = async () => {
+    const url = "/GetAllUsers/";
+    const response = await SadService.get(url);
+    console.log(response);
+  };
+
+  useEffect(() => {
+    getAllUsers();
+    getGroupCodes();
+    // eslint-disable-next-line
+  }, []);
 
   const formData = {
     groupCode,

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./assets/styles.css";
 
-import Profile from "./pages/dashboard/users/Profile";
+import Profile from "./pages/dashboard/SAD/Users/Profile";
 import Home from "./pages/dashboard/Home";
 import { PurchaseOrder } from "./pages/dashboard/P2P/purchase-orders/PurchaseOrder";
 import Orders from "./pages/dashboard/P2P/purchase-orders/Orders";
@@ -17,9 +17,10 @@ import ScrollToTop from "./components/frontend/ScrollToTop";
 import { NotFound } from "./pages/landing-page/NotFound";
 import BookingDetail from "./pages/dashboard/bookings/BookingDetail";
 import OrderDetail from "./pages/dashboard/P2P/purchase-orders/OrderDetail";
-import SecurityGroup from "./pages/dashboard/SAD/SecurityGroup";
-import User from "./pages/dashboard/SAD/User";
-import UserGroup from "./pages/dashboard/SAD/UserGroup";
+import SecurityGroup from "./pages/dashboard/SAD/SecurityGroup/SecurityGroup";
+import User from "./pages/dashboard/SAD/Users/User";
+import UserGroup from "./pages/dashboard/SAD/UserGroup/UserGroup";
+import SecurityDetails from "./pages/dashboard/SAD/SecurityGroup/SecurityDetails";
 
 function App() {
   return (
@@ -96,7 +97,6 @@ function App() {
                 }
               />
             </Route>
-
             <Route path="orders">
               <Route
                 index
@@ -140,22 +140,34 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="security-groups"
-                element={
-                  <ProtectedRoute>
-                    <SecurityGroup />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="user-groups"
-                element={
-                  <ProtectedRoute>
-                    <UserGroup />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="security-groups">
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <SecurityGroup />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path=":id/view"
+                  element={
+                    <ProtectedRoute>
+                      <SecurityDetails />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+              <Route path="user-groups">
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <UserGroup />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
               <Route
                 path="profile"
                 element={
