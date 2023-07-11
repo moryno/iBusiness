@@ -1,6 +1,6 @@
 import React from "react";
 import { Socials } from "./Socials";
-import data from "../../../../data/footer";
+import data from "../../../../data/frontend/footer";
 
 export const AboutSec = () => {
   return (

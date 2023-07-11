@@ -1,7 +1,7 @@
 import React from "react";
 import "./supportform.css";
 import { Address } from "../../contactus/Address";
-import data from "../../../../data/pages/support";
+import data from "../../../../data/landing-page/support";
 
 export const SupportForm = () => {
   return (

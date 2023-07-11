@@ -1,7 +1,7 @@
-import Statusbar from "../../components/dashboard/Statusbar";
-import { homeMenuSource } from "../../data/menu";
-import MenusGroupComponent from "../../components/dashboard/Menus/MenusGroupComponent";
-import FromToDateComponent from "../../components/dashboard/FromToDateComponent";
+import Statusbar from "../../components/dashboard/Shared/NavBarFooter/Statusbar";
+import { homeMenuSource } from "../../data/dashboard-page/menu";
+import MenusGroupComponent from "../../components/dashboard/Shared/Menus/MenusGroupComponent";
+import FromToDateComponent from "../../components/dashboard/Shared/FromToDateComponent";
 import { homeHeadingFooter } from "../../data/headingFooterTitle";
 
 const Home = () => {

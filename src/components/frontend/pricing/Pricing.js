@@ -1,4 +1,4 @@
-import pricings from "../../../data/pricing.json";
+import pricings from "../../../data/landing-page/pricing.json";
 import PricingItem from "./pricing-item/PricingItem";
 
 const Pricing = () => {

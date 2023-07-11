@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { homeMenuSource } from "../../../data/menu";
-import Portal from "../../../components/dashboard/Portal";
-import New from "../../../components/dashboard/New";
-import { bookingColumns } from "../../../data/datagridColumns";
+import { homeMenuSource } from "../../../data/dashboard-page/menu";
+import Portal from "../../../components/modals/Portal";
+import New from "../../../components/dashboard/Shared/New";
+import { bookingColumns } from "../../../data/datagrid-json/datagridColumns";
 import { bookingFilterValues } from "../../../helpers/datatableSource";
-import ConfirmationPopupComponent from "../../../components/dashboard/ConfirmationPopupComponent";
-import OnboardingService from "../../../axios/onboardingRequest";
-import CategoryComponent from "../../../components/dashboard/CategoryComponent";
+import ConfirmationPopupComponent from "../../../components/dashboard/Shared/ConfirmationPopupComponent";
+import OnboardingService from "../../../ClientServices/onboardingRequest";
+import CategoryComponent from "../../../components/dashboard/Shared/CategoryComponent";
 import Constant from "../../../utils/constant";
-import FromToDateComponent from "../../../components/dashboard/FromToDateComponent";
-import DataTable from "../../../components/dashboard/DataGrids/DataTable";
-import Statusbar from "../../../components/dashboard/Statusbar";
-import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupComponent";
+import FromToDateComponent from "../../../components/dashboard/Shared/FromToDateComponent";
+import DataTable from "../../../components/dashboard/Shared/DataGrids/DataTable";
+import Statusbar from "../../../components/dashboard/Shared/NavBarFooter/Statusbar";
+import MenusGroupComponent from "../../../components/dashboard/Shared/Menus/MenusGroupComponent";
 
 import { getBookings, getFreshBookings } from "../../../redux/api/bookingCall";
 import {

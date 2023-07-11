@@ -7,9 +7,9 @@ import {
   faBars,
   faTimes,
   faAngleRight,
-  faComments
+  faComments,
 } from "@fortawesome/free-solid-svg-icons";
-import data from "../../../data/navbar";
+import data from "../../../data/frontend/navbar";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../../redux/userSlice";
@@ -103,7 +103,7 @@ export const Navbar = () => {
       </div>
       <div className="contact-section">
         <p className="contact-section-text">{data.chatText}</p>
-        <FontAwesomeIcon icon={faComments} className="contact-section-icon"/>
+        <FontAwesomeIcon icon={faComments} className="contact-section-icon" />
       </div>
     </>
   );

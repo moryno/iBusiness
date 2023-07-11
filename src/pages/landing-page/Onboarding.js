@@ -18,15 +18,15 @@ import {
 } from "../../helpers/onBoardingFunction";
 import { useNavigate } from "react-router-dom";
 import services from "../../helpers/formDataSource";
-import Portal from "../../components/dashboard/Portal";
-import LoadingIndicator from "../../components/dashboard/LoadingIndicator";
+import Portal from "../../components/modals/Portal";
+import LoadingIndicator from "../../components/dashboard/Shared/LoadingIndicator";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../../services/userService";
 import { getCRSFToken } from "../../helpers/auth";
-import OnboardingService from "../../axios/onboardingRequest";
+import OnboardingService from "../../ClientServices/onboardingRequest";
 import Constant from "../../utils/constant";
-import ianasqltimezones from "../../data/ianasqltimezones";
-import onboardingText from "../../data/onboarding"
+import ianasqltimezones from "../../data/onboarding-page/ianasqltimezones";
+import onboardingText from "../../data/onboarding-page/onboarding";
 
 const Onboarding = () => {
   const [isOpen, setOpen] = useState(false);
@@ -368,9 +368,7 @@ const Onboarding = () => {
       </section>
       <Portal isOpen={isOpen} setOpen={setOpen}>
         <section className="bg-white w-full md:w-[600px]  mx-auto p-5 h-20 gap-2 rounded-sm flex flex-col items-center justify-center">
-          <h2 className="text-lg">
-            {onboardingText.fields.onSubmitting.text}
-          </h2>
+          <h2 className="text-lg">{onboardingText.fields.onSubmitting.text}</h2>
           {loading && <LoadingIndicator />}
         </section>
       </Portal>

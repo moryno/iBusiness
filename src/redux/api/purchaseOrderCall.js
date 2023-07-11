@@ -1,4 +1,4 @@
-import OnboardingService from "../../axios/onboardingRequest";
+import OnboardingService from "../../ClientServices/onboardingRequest";
 import {
   refreshPurchaseOrder,
   getPurchaseOrderSuccess,

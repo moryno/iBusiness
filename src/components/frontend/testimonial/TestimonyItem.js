@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./testimonial.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import testimonies from "../../../data/testimonial";
+import testimonies from "../../../data/landing-page/testimonial";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 

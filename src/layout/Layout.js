@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DashboardNavbar from "../components/dashboard/DashboardNavbar";
-import Sidebar from "../components/dashboard/Sidebar";
+import DashboardNavbar from "../components/dashboard/Shared/NavBarFooter/DashboardNavbar";
+import Sidebar from "../components/dashboard/Shared/NavBarFooter/Sidebar";
 
 const Layout = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);

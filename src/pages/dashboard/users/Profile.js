@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "../../../redux/userSlice";
-import { updateMenuSource } from "../../../data/menu";
-import Statusbar from "../../../components/dashboard/Statusbar";
+import { updateMenuSource } from "../../../data/dashboard-page/menu";
+import Statusbar from "../../../components/dashboard/Shared/NavBarFooter/Statusbar";
 import axios from "axios";
-import MenusGroupComponent from "../../../components/dashboard/Menus/MenusGroupComponent";
+import MenusGroupComponent from "../../../components/dashboard/Shared/Menus/MenusGroupComponent";
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);

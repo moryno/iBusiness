@@ -1,6 +1,6 @@
 import React from "react";
 import "./contactus.css";
-import data from "../../../data/address";
+import data from "../../../data/frontend/address";
 
 export const Address = () => {
   return (

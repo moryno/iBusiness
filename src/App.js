@@ -3,8 +3,8 @@ import "./assets/styles.css";
 
 import Profile from "./pages/dashboard/users/Profile";
 import Home from "./pages/dashboard/Home";
-import { PurchaseOrder } from "./pages/dashboard/purchase-orders/PurchaseOrder";
-import Orders from "./pages/dashboard/purchase-orders/Orders";
+import { PurchaseOrder } from "./pages/dashboard/P2P/purchase-orders/PurchaseOrder";
+import Orders from "./pages/dashboard/P2P/purchase-orders/Orders";
 import { LandingPage } from "./pages/landing-page/LandingPage";
 import { Company } from "./pages/landing-page/Company";
 import { ProductsView } from "./pages/landing-page/ProductsView";
@@ -12,14 +12,14 @@ import { Support } from "./pages/landing-page/Support";
 import Onboarding from "./pages/landing-page/Onboarding";
 import FrontendLayout from "./layout/FrontendLayout";
 import Booking from "./pages/dashboard/bookings/Booking";
-import ProtectedRoute from "./components/dashboard/ProtectedRoute";
+import ProtectedRoute from "./components/dashboard/Shared/ProtectedRoute";
 import ScrollToTop from "./components/frontend/ScrollToTop";
 import { NotFound } from "./pages/landing-page/NotFound";
 import BookingDetail from "./pages/dashboard/bookings/BookingDetail";
-import OrderDetail from "./pages/dashboard/purchase-orders/OrderDetail";
-import SecurityGroup from "./pages/dashboard/users/SecurityGroup";
-import User from "./pages/dashboard/users/User";
-import UserGroup from "./pages/dashboard/users/UserGroup";
+import OrderDetail from "./pages/dashboard/P2P/purchase-orders/OrderDetail";
+import SecurityGroup from "./pages/dashboard/SAD/SecurityGroup";
+import User from "./pages/dashboard/SAD/User";
+import UserGroup from "./pages/dashboard/SAD/UserGroup";
 
 function App() {
   return (

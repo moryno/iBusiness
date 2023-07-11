@@ -21,6 +21,7 @@ module.exports = {
         buttonBg: "#1B6EC2",
         bgxxLight: "#f3f3f3",
         section: "#EFEFEF",
+        sec: "#F4F6F9",
         bgComponent: "#ffffff",
         sidebarHeading: "#489AEE",
         statusBar: "#489AEE",

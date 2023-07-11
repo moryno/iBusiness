@@ -1,7 +1,7 @@
 import { loginSuccess } from "../redux/userSlice";
 import { setUpToken } from "../helpers/auth";
 import Constant from "../utils/constant";
-import OnboardingService from "../axios/onboardingRequest";
+import OnboardingService from "../ClientServices/onboardingRequest";
 
 export const getCurrentUser = async (dispatch) => {
   const action = Constant.ACTION.USER;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./company.css";
 import illustration from "../../../../assets/ill3.png";
-import data from "../../../../data/pages/company";
+import data from "../../../../data/landing-page/company";
 
 export const CompanyInfo = () => {
   return (

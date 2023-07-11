@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import ErpService from "../../axios/erpService";
+import SadService from "../../ClientServices/sadService";
 import {
   getSecurityGroupsSuccess,
   refreshSecurityGroupsOrder,
@@ -9,7 +9,7 @@ import {
 
 export const getSecurityGroups = async (dispatch) => {
   try {
-    const response = await ErpService.get("/SecurityGroups/GetAll");
+    const response = await SadService.get("/SecurityGroups/GetAll");
     dispatch(getSecurityGroupsSuccess(response));
   } catch (error) {
     console.log(error);
@@ -18,7 +18,7 @@ export const getSecurityGroups = async (dispatch) => {
 
 export const getFreshSecurityGroups = async (dispatch) => {
   try {
-    const response = await ErpService.get("/SecurityGroups/GetAll");
+    const response = await SadService.get("/SecurityGroups/GetAll");
     dispatch(refreshSecurityGroupsOrder(response));
   } catch (error) {
     console.log(error);
@@ -27,7 +27,7 @@ export const getFreshSecurityGroups = async (dispatch) => {
 
 export const addSecurityGroups = async (group, dispatch, handleClose) => {
   try {
-    const response = await ErpService.post(`/SecurityGroups/Create`, group);
+    const response = await SadService.post(`/SecurityGroups/Create`, group);
     dispatch(addSecurityGroupsSuccess(response));
     handleClose();
     toast.success(response.responseMsg);
@@ -38,7 +38,7 @@ export const addSecurityGroups = async (group, dispatch, handleClose) => {
 
 export const updateSecurityGroups = async (group, dispatch, handleClose) => {
   try {
-    const response = await ErpService.put(`/SecurityGroups/Edit`, group);
+    const response = await SadService.put(`/SecurityGroups/Edit`, group);
     // dispatch(updateBookingSuccess({ bookingId: id, booking }));
     handleClose();
     toast.success(response.responseMsg);

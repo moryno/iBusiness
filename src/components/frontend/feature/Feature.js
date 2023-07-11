@@ -1,5 +1,5 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import features from "../../../data/products.json";
+import features from "../../../data/landing-page/products.json";
 import { Link } from "react-router-dom";
 
 const Feature = () => {

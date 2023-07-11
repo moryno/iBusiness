@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import GridItemDetails from "../../../components/dashboard/GridDetailComponents/GridItemDetails";
-import OnboardingService from "../../../axios/onboardingRequest";
-import { customActionsSource, updateMenuSource } from "../../../data/menu";
-import Portal from "../../../components/dashboard/Portal";
-import New from "../../../components/dashboard/New";
+import GridItemDetails from "../../../components/dashboard/Shared/DetailsComponents/GridItemDetails";
+import OnboardingService from "../../../ClientServices/onboardingRequest";
+import {
+  customActionsSource,
+  updateMenuSource,
+} from "../../../data/dashboard-page/menu";
+import Portal from "../../../components/modals/Portal";
+import New from "../../../components/dashboard/Shared/New";
 import {
   bookingDetailTitle,
   editFormHeadingFooter,
