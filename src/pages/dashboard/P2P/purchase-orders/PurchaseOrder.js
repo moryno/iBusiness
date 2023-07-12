@@ -148,7 +148,7 @@ export const PurchaseOrder = ({ orderstate }) => {
   };
 
   return (
-    <main className="purchase-order-page w-full min-h-full relative h-full px-3 md:px-5 py-1.5">
+    <main className="purchase-order-page w-full min-h-full relative h-full">
       <section>
         <DesktopMenus
           heading={
@@ -174,7 +174,7 @@ export const PurchaseOrder = ({ orderstate }) => {
       <section className="mt-2">
         <div className="po-grid h-full mt-2">
           <div className="add-item-btns">
-            <div className="add-item">
+            <div className="add-item px-3 md:px-5">
               <InputField
                 data={data}
                 count={count}

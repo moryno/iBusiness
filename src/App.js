@@ -21,6 +21,7 @@ import SecurityGroup from "./pages/dashboard/SAD/SecurityGroup/SecurityGroup";
 import User from "./pages/dashboard/SAD/Users/User";
 import UserGroup from "./pages/dashboard/SAD/UserGroup/UserGroup";
 import SecurityDetails from "./pages/dashboard/SAD/SecurityGroup/SecurityDetails";
+import UserGroupDetails from "./pages/dashboard/SAD/UserGroup/UserGroupDetails";
 
 function App() {
   return (
@@ -77,7 +78,7 @@ function App() {
                   <Home />
                 </ProtectedRoute>
               }
-            ></Route>
+            />
 
             <Route path="bookings">
               <Route
@@ -164,6 +165,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <UserGroup />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path=":id/view"
+                  element={
+                    <ProtectedRoute>
+                      <UserGroupDetails />
                     </ProtectedRoute>
                   }
                 />

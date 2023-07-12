@@ -5,14 +5,14 @@ import {
   customActionsSource,
   updateMenuSource,
 } from "../../../../data/dashboard-page/menu";
-import { securityDetail } from "../../../../data/headingFooterTitle";
+import { userGroupDetail } from "../../../../data/headingFooterTitle";
 import { useEffect, useState } from "react";
 import SadService from "../../../../ClientServices/sadService";
 import SecurityRightBar from "../../../../components/dashboard/SAD/SecurityGroup/SecurityRightBar";
 import SecurityGroupForm from "../../../../components/dashboard/SAD/SecurityGroup/SecurityGroupForm";
 import CustomActionModal from "../../../../components/modals/CustomActionModal";
 
-const SecurityDetails = () => {
+const UserGroupDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const SecurityDetails = () => {
 
   useEffect(() => {
     const getSingleBooking = async () => {
-      const url = "/SecurityGroups/" + id;
+      const url = "/UserGroups/" + id;
       const response = await SadService.get(url);
       setData(response);
     };
@@ -54,15 +54,15 @@ const SecurityDetails = () => {
   };
 
   return (
-    <main className="w-full min-h-full relative">
+    <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
       <DetailsPage
         data={data}
-        heading={securityDetail.heading}
-        footer={securityDetail.footer}
-        title={`${securityDetail.title} ${data?.groupCode}`}
+        heading={userGroupDetail.heading}
+        footer={userGroupDetail.footer}
+        title={`${userGroupDetail.title} ${data?.groupCode}`}
         menus={updateMenuSource}
         customAction={customActionsSource}
-        company={securityDetail.company}
+        company={userGroupDetail.company}
         onMenuClick={handleClick}
         DetailComponent={GroupDetails}
         CustomActionComponent={SecurityRightBar}
@@ -84,4 +84,4 @@ const SecurityDetails = () => {
   );
 };
 
-export default SecurityDetails;
+export default UserGroupDetails;

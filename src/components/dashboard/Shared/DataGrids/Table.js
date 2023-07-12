@@ -248,13 +248,14 @@ export const Table = ({
   return (
     <DataGrid
       id="orderGrid"
-      showBorders={true}
+      showBorders={false}
+      showColumnLines={false}
+      showRowLines={true}
       dataSource={data}
       //onRowUpdating={handleRowUpdating}
       hoverStateEnabled={true}
       reshapeOnPush={true}
       onRowUpdating={handleRowUpdated}
-      showRowLines={true}
       onKeyDown={handleKeyPress}
       onRowRemoving={handleRowRemoving}
       columnHidingEnabled={true}

@@ -114,7 +114,7 @@ const Form = ({
   };
 
   return (
-    <div className="po-form">
+    <div className="po-form px-3 md:px-5">
       <div className="w-full flex flex-wrap lg:w-[75%] box-border justify-between  gap-2">
         <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
           <label className="label-control text-xs text-gray-600">

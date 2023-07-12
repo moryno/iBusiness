@@ -13,8 +13,8 @@ const CustomActionModal = ({ isOpen, title, handleClose, children }) => {
         hidden: !isOpen,
       })}
     >
-      <section className="px-5 py-1.5 border-b border-gray-300 flex w-full items-center justify-between sticky inset-x-0 top-0 z-10">
-        <h1 className="text-menuHeading  text-sm w-full font-semibold">
+      <section className="px-5 py-1 border-b border-gray-300 flex w-full items-center justify-between sticky inset-x-0 top-0 z-10">
+        <h1 className="text-menuHeading  text-[15px] w-full font-semibold">
           {title}
         </h1>
         <div className="px:2 md:px-5">

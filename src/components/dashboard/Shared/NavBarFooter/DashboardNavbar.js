@@ -5,11 +5,15 @@ import NavMenus from "./NavMenus";
 import SearchCategories from "./SearchCategories";
 import { useState } from "react";
 import Module from "./Module";
+import { useSelector } from "react-redux";
 
 const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
   const handleSubmit = (e) => e.preventDefault();
   const [searchMode, setSearchMode] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const partitionKey = useSelector(
+    (state) => state.moduleCategory.partitionKey
+  );
 
   return (
     <main className="w-full p-1 md:p-4 bg-bg flex sticky top-0 z-10 items-center h-[40px] box-border text-navColor">
@@ -21,7 +25,10 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
             fontSize={20}
           />
           <h1 className="font-bold text-base cursor-pointer">
-            iBusiness
+            iBusiness{" "}
+            <span className="capitalize text-sm opacity-80 font-medium">
+              | {partitionKey}
+            </span>
           </h1>
         </article>
 

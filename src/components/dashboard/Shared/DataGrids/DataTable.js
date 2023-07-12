@@ -123,9 +123,9 @@ const DataTable = ({
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
         }}
-        showBorders={true}
-        showColumnLines={true}
-        showRowLines={false}
+        showBorders={false}
+        showColumnLines={false}
+        showRowLines={true}
         filterBuilder={filterBuilder}
         hoverStateEnabled={true}
         keyExpr={keyExpr}
@@ -145,7 +145,7 @@ const DataTable = ({
           <Column
             dataField={column.dataField}
             key={column.dataField}
-            alignment="left"
+            alignment={column.alignment}
             caption={column.caption}
             cellRender={
               column?.pk === true

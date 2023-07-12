@@ -27,6 +27,12 @@ export const securityDetail = {
   footer: "Security Details",
   company: "ARBS Customer Portal",
 };
+export const userGroupDetail = {
+  heading: "User Group Details",
+  title: "Group Code:",
+  footer: "User Group Details",
+  company: "ARBS Customer Portal",
+};
 export const bookingHeadingFooter = {
   heading: "Booking List",
   title: "Booking List",

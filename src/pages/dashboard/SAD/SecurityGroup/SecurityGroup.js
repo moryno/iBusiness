@@ -6,8 +6,9 @@ import { bookingFilterValues } from "../../../../helpers/datatableSource";
 import { securityHeadingFooter } from "../../../../data/headingFooterTitle";
 
 const SecurityGroup = () => {
-  const url = "/SecurityGroups/GetAll";
+  const url = "SecurityGroups";
   const redirectRoute = "users/security-groups";
+
   return (
     <GroupPage
       heading={securityHeadingFooter.heading}

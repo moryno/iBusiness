@@ -217,6 +217,7 @@ export const securityGroupsColumns = [
     width: 70,
     pk: true,
     caption: "Select",
+    alignment: "center",
   },
   {
     dataField: "groupCode",
@@ -232,11 +233,12 @@ export const securityGroupsColumns = [
     dataField: "createdDate",
   },
   {
-    dataField: "createdUser",
-  },
-  {
     dataField: "updatedDate",
   },
+  {
+    dataField: "createdUser",
+  },
+
   {
     dataField: "updatedUser",
   },
@@ -244,7 +246,7 @@ export const securityGroupsColumns = [
 
 export const userGroupsColumns = [
   {
-    dataField: "userGroupId",
+    dataField: "userGroupID",
     width: 70,
     pk: true,
     caption: "Select",
@@ -263,11 +265,12 @@ export const userGroupsColumns = [
     dataField: "createdDate",
   },
   {
-    dataField: "createdUser",
-  },
-  {
     dataField: "updatedDate",
   },
+  {
+    dataField: "createdUser",
+  },
+
   {
     dataField: "updatedUser",
   },

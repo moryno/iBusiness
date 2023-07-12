@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 import { RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getSideMenus } from "../../../../redux/api/sideMenusCall";
 
 const SideLinks = () => {
+  const dispatch = useDispatch();
   const [heading, setHeading] = useState("");
-  const [moduleMenus, setModuleMenus] = useState([]);
-
-  const partitionKey = useSelector(
-    (state) => state.moduleCategory?.partitionKey
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const { sideMenus, partitionKey } = useSelector(
+    (state) => state.moduleCategory
   );
 
   // Method to switch between each menu icons
@@ -37,28 +37,22 @@ const SideLinks = () => {
   };
 
   useEffect(() => {
-    const url = process.env.REACT_APP_SIDEMENUS_URL;
+    getSideMenus(dispatch);
+  }, [dispatch]);
 
-    const getModuleMenus = async () => {
-      try {
-        const { data } = await axios.get(url);
-        setModuleMenus(data);
-      } catch (error) {
-        console.log(error);
+  useEffect(() => {
+    const newMenus = sideMenus?.filter((menu) => {
+      if (partitionKey === "") {
+        return menu?.partitionKey.toLowerCase().includes("procure2pay");
+      } else {
+        return menu?.partitionKey
+          .toLowerCase()
+          .includes(partitionKey.toLowerCase());
       }
-    };
-    getModuleMenus();
-  }, []);
+    });
 
-  const filteredMenus = moduleMenus?.filter((menu) => {
-    if (partitionKey === "") {
-      return menu?.partitionKey.toLowerCase().includes("procure2pay");
-    } else {
-      return menu?.partitionKey
-        .toLowerCase()
-        .includes(partitionKey.toLowerCase());
-    }
-  });
+    setFilteredMenus(newMenus);
+  }, [partitionKey, sideMenus]);
 
   return (
     <>
@@ -99,7 +93,7 @@ const SideLinks = () => {
                       <div className="px-2">
                         {link.subLinks.map((mysublinks) => (
                           <Link to={mysublinks.link} key={mysublinks.name}>
-                            <div className="flex items-center gap-1 hover:bg-[#f5f5f5]">
+                            <div className="flex items-center gap-1 hover:bg-white">
                               <RxDot />
                               <li className="text-xs font-normal text-sideColor py-1.5">
                                 {mysublinks.name}

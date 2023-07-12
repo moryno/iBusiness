@@ -44,7 +44,7 @@ const Profile = () => {
   };
 
   return (
-    <main className="w-full relative h-full md:h-full  px-3 md:px-5 py-1.5">
+    <main className="w-full relative h-full md:h-full py-1.5">
       <section>
         <MenusGroupComponent
           heading="Update Profile"

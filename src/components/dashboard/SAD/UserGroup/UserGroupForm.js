@@ -15,26 +15,31 @@ const UserGroupForm = ({
   singleRecord,
   statusMode,
 }) => {
-  const [groupCode, setGroupCode] = useState(
-    statusMode === "EditMode" ? singleRecord.groupCode : "ACC"
-  );
-  const [groupDesc, setGroupDesc] = useState(
-    statusMode === "EditMode" ? singleRecord.groupDesc : "Accounts"
-  );
+  const [groupCodeSource, setGroupCodeSource] = useState([]);
+  const [groupCode, setGroupCode] = useState("");
+  const [users, setUsers] = useState([]);
+  const [userNames, setUserNames] = useState([]);
+  const [selecteduserName, setSelectedUserName] = useState("");
+
   const [narration, setNarration] = useState(
-    statusMode === "EditMode" ? singleRecord.narration : "Accounts"
+    statusMode === "EditMode" ? singleRecord.narration : "Done"
   );
 
   const getGroupCodes = async () => {
-    const url = "/GetGroupCode/";
+    const url = "/SecurityGroups/GetGroupCode";
     const response = await SadService.get(url);
-    console.log(response);
+    setGroupCodeSource(response);
   };
 
   const getAllUsers = async () => {
-    const url = "/GetAllUsers/";
+    const url = "/UserGroups/GetAllUsers";
     const response = await SadService.get(url);
-    console.log(response);
+    setUsers(response);
+    setUserNames(response?.map((user) => user.userName));
+  };
+
+  const getUser = () => {
+    return users?.find((user) => selecteduserName === user.userName);
   };
 
   useEffect(() => {
@@ -43,23 +48,22 @@ const UserGroupForm = ({
     // eslint-disable-next-line
   }, []);
 
-  const formData = {
-    groupCode,
-    groupDesc,
-    narration,
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const user = getUser();
+    const formData = {
+      groupCode,
+      userId: user.userId,
+      narration,
+    };
+
     if (statusMode === "CreateMode") {
       try {
-        const response = await SadService.post(
-          "/SecurityGroups/Create",
-          formData
-        );
+        const response = await SadService.post("/UserGroups/Create", formData);
 
         if (response?.dbResponse?.responseCode === "01") {
-          setRecords([response?.securityGroup, ...records]);
+          // setRecords([response?.securityGroup, ...records]);
           toast.success(response.dbResponse.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);
@@ -71,10 +75,7 @@ const UserGroupForm = ({
     }
     if (statusMode === "EditMode") {
       try {
-        const response = await SadService.post(
-          "/SecurityGroups/Create",
-          formData
-        );
+        const response = await SadService.post("/UserGroups/Create", formData);
 
         if (response?.dbResponse?.responseCode === "02") {
           const newRecord = records.map((record) => {
@@ -112,9 +113,10 @@ const UserGroupForm = ({
               <sup className="text-red-600">*</sup>Group Code
             </label>
             <SelectBox
-              dataSource={groupCode}
+              dataSource={groupCodeSource}
+              onValueChanged={(e) => setGroupCode(e.value)}
               searchEnabled={true}
-              placeholder="Select a Payment Mode"
+              placeholder="Select a Group Code"
               height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
@@ -128,9 +130,10 @@ const UserGroupForm = ({
               <sup className="text-red-600">*</sup>UserName
             </label>
             <SelectBox
-              dataSource={groupCode}
+              dataSource={userNames}
+              onValueChanged={(e) => setSelectedUserName(e.value)}
               searchEnabled={true}
-              placeholder="Select a Payment Mode"
+              placeholder="Select a UserName"
               height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"

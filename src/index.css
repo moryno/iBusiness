@@ -23,6 +23,7 @@ body{
   padding: 0;
   text-decoration: none;
   list-style: none;
+  background-color: #F4F6F9;
 }
 .notfound-header {
   font-size: 5rem;
@@ -131,7 +132,9 @@ body{
 /* DataGrid Styling */
 #dataTableGrid{
   height: 75vh;
-  font-size: 0.7rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+
 }
 
 #orderGrid{
@@ -140,11 +143,15 @@ body{
   margin-top: 1rem;
   font-size: 0.7rem !important;
 }
-
+/* .dx-datagrid-header-panel{
+  border-bottom: 1px solid rgb(229 231 235) !important;
+} */
 .dx-datagrid-headers {
-
-    color: #282828 !important;
+    color: #000 !important;
+   background-color: #f3f3f3 !important;
+   font-size: 0.75rem !important;
     font-weight: 600 !important;
+  
 }
 
 .dx-overlay-content .dx-popup-normal {

@@ -29,7 +29,8 @@ const UserGroup = ({
 
   useEffect(() => {
     const getRecords = async () => {
-      const response = await SadService.get(url);
+      const action = `/${url}/GetAll`;
+      const response = await SadService.get(action);
       setRecords(response);
     };
     getRecords();
@@ -38,13 +39,14 @@ const UserGroup = ({
 
   useEffect(() => {
     const getSingleRecord = async () => {
-      const url = "/SecurityGroups/" + onEditRecordId;
-      const response = await SadService.get(url);
+      const action = `/${url}/${onEditRecordId}`;
+      const response = await SadService.get(action);
       setSingleRecord(response);
       setStatusMode("EditMode");
       setOpen((isOpen) => !isOpen);
     };
     if (onEditRecordId) getSingleRecord();
+    // eslint-disable-next-line
   }, [onEditRecordId]);
 
   const startEdit = useCallback(({ key }) => {
@@ -95,7 +97,7 @@ const UserGroup = ({
   }, []);
 
   return (
-    <main className="w-full min-h-full relative px-3 md:px-5">
+    <main className="w-full min-h-full relative">
       <section>
         <CategoryComponent>
           <MenusGroupComponent
