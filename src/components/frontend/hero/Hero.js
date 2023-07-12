@@ -1,7 +1,6 @@
 import React from "react";
 import "./hero.css";
 import illustration from "../../../assets/illustrations/1.png";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import data from "../../../data/landing-page/hero";
 import { Link } from "react-router-dom";
 
@@ -16,11 +15,7 @@ export const Hero = () => {
         </button>
       </div>
       <div className="hero-image-div">
-        <LazyLoadImage
-          src={illustration}
-          className="hero-image"
-          alt="Bannerimage"
-        />
+        <img src={illustration} className="hero-image" alt="Bannerimage" />
       </div>
     </div>
   );

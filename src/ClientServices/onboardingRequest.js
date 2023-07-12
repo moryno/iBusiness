@@ -4,7 +4,7 @@ import { getLocalData } from "../helpers/auth";
 const BASE_URL =
   process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION;
 
-const onboardingRequest = axios.create({
+export const onboardingRequest = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });

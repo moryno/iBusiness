@@ -62,7 +62,7 @@ const SideLinks = () => {
 
           return (
             <div key={link.id}>
-              <div className="cursor-pointer px-1 overflow-y-auto w-full max-h-80 scrollbar-hide bg-blend-overlay">
+              <div className="cursor-pointer overflow-y-auto w-full max-h-80 scrollbar-hide bg-blend-overlay">
                 <div
                   className="linear-bg font-semibold border-b border-gray-300 text-[13px] sticky pl-2 py-0.5 text-statusBar top-0 flex justify-between  items-center w-full"
                   onClick={() =>
@@ -90,10 +90,10 @@ const SideLinks = () => {
               `}
                   >
                     <div>
-                      <div className="px-2">
+                      <div>
                         {link.subLinks.map((mysublinks) => (
                           <Link to={mysublinks.link} key={mysublinks.name}>
-                            <div className="flex items-center gap-1 hover:bg-white">
+                            <div className="flex px-2 items-center gap-1 hover:bg-white hover:shadow-xl">
                               <RxDot />
                               <li className="text-xs font-normal text-sideColor py-1.5">
                                 {mysublinks.name}

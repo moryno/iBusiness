@@ -2,6 +2,7 @@ const Constant = {
   ACTION: {
     STORE: "store/",
     DEFAULT: "DEFAULT/",
+    CHECK_AUTH_STATE: "account/isloggedin",
     CATEGORY: "category/",
     CONTENT: "content/",
     CSRFTOKEN: "/GetCsrfToken",

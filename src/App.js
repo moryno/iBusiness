@@ -28,6 +28,13 @@ function App() {
     <Router>
       <ScrollToTop>
         <Routes>
+          <Route
+            path="/signout"
+            component={() => {
+              window.location.href =
+                "https://localhost:5001/MicrosoftIdentity/Account/SignOut";
+            }}
+          />
           <Route path="/">
             <Route
               index

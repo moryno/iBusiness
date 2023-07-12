@@ -1,32 +1,53 @@
+import { useCallback, useEffect, useState } from "react";
+import FromToDateComponent from "../../../../components/dashboard/Shared/FromToDateComponent";
 import { useNavigate, useParams } from "react-router-dom";
-import DetailsPage from "../../../../components/dashboard/Shared/DetailsComponents/DetailsPage";
-import GroupDetails from "../../../../components/dashboard/Shared/DetailsComponents/GroupDetails";
-import {
-  customActionsSource,
-  updateMenuSource,
-} from "../../../../data/dashboard-page/menu";
-import { userGroupDetail } from "../../../../data/headingFooterTitle";
-import { useEffect, useState } from "react";
 import SadService from "../../../../ClientServices/sadService";
-import SecurityRightBar from "../../../../components/dashboard/SAD/SecurityGroup/SecurityRightBar";
-import SecurityGroupForm from "../../../../components/dashboard/SAD/SecurityGroup/SecurityGroupForm";
+import { userGroupDetail } from "../../../../data/headingFooterTitle";
+import Constant from "../../../../utils/constant";
+import CategoryComponent from "../../../../components/dashboard/Shared/CategoryComponent";
+import MenusGroupComponent from "../../../../components/dashboard/Shared/Menus/MenusGroupComponent";
+import { updateMenuSource } from "../../../../data/dashboard-page/menu";
+import DataTable from "../../../../components/dashboard/Shared/DataGrids/DataTable";
+import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Statusbar";
+import { userGroupsColumns } from "../../../../data/datagrid-json/datagridColumns";
+import { bookingFilterValues } from "../../../../helpers/datatableSource";
 import CustomActionModal from "../../../../components/modals/CustomActionModal";
+import UserGroupForm from "../../../../components/dashboard/SAD/UserGroup/UserGroupForm";
 
 const UserGroupDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState({});
-  const navigate = useNavigate();
-  const [isOpen, setOpen] = useState(false);
+  const [records, setRecords] = useState([]);
+
   const [statusMode, setStatusMode] = useState("");
+  const [isOpen, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const route = Constant.ROUTE.BOOKING;
 
   useEffect(() => {
-    const getSingleBooking = async () => {
+    const getUserGroupByCode = async () => {
       const url = "/UserGroups/" + id;
       const response = await SadService.get(url);
-      setData(response);
+      setRecords(response);
     };
-    getSingleBooking();
+    getUserGroupByCode();
   }, [id]);
+
+  const startEdit = useCallback(({ key }) => {
+    if (key) {
+    } else {
+    }
+  }, []);
+
+  const selectRowItem = useCallback(({ key }) => {
+    if (key) {
+    }
+  }, []);
+
+  const handleClose = () => {
+    setStatusMode("");
+    setOpen(false);
+  };
 
   const handleClick = (menu) => {
     switch (menu) {
@@ -48,37 +69,33 @@ const UserGroupDetails = () => {
     }
   };
 
-  const handleClose = () => {
-    setStatusMode("");
-    setOpen(false);
-  };
-
   return (
-    <main className="w-full min-h-full relative  px-3 md:px-5 py-1.5">
-      <DetailsPage
-        data={data}
-        heading={userGroupDetail.heading}
-        footer={userGroupDetail.footer}
-        title={`${userGroupDetail.title} ${data?.groupCode}`}
-        menus={updateMenuSource}
-        customAction={customActionsSource}
-        company={userGroupDetail.company}
-        onMenuClick={handleClick}
-        DetailComponent={GroupDetails}
-        CustomActionComponent={SecurityRightBar}
-      />
-      <CustomActionModal
-        title={data?.groupCode}
-        isOpen={isOpen}
-        handleClose={handleClose}
-      >
-        {statusMode === "EditMode" && (
-          <SecurityGroupForm
-            singleRecord={data}
-            statusMode={statusMode}
-            handleClose={handleClose}
-          />
-        )}
+    <main className="w-full min-h-full relative">
+      <CategoryComponent>
+        <MenusGroupComponent
+          menus={updateMenuSource}
+          heading={userGroupDetail.heading}
+          onMenuClick={handleClick}
+        />
+        <FromToDateComponent />
+        <DataTable
+          data={records}
+          route={route}
+          keyExpr={"createdDate"}
+          columns={userGroupsColumns}
+          startEdit={startEdit}
+          selectRowItem={selectRowItem}
+          filterValues={bookingFilterValues}
+        />
+        <Statusbar
+          footer={userGroupDetail.footer}
+          company={userGroupDetail.company}
+        />
+      </CategoryComponent>
+      <CustomActionModal title={id} isOpen={isOpen} handleClose={handleClose}>
+        {statusMode === "EditMode" ? (
+          <UserGroupForm statusMode={statusMode} handleClose={handleClose} />
+        ) : null}
       </CustomActionModal>
     </main>
   );

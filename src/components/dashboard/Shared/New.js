@@ -200,8 +200,6 @@ const New = ({
                     </label>
 
                     <TextBox
-                      type="text"
-                      id="fullName"
                       placeholder="Type full name here"
                       onValueChanged={(e) => setFullName(e.value)}
                       value={fullName}
@@ -223,8 +221,6 @@ const New = ({
                       ID Number:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="idNumber"
                       placeholder="Type id number here"
                       onValueChanged={(e) => setIdNumber(e.value)}
                       value={idNumber}
@@ -242,8 +238,6 @@ const New = ({
                       Email:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="email"
                       placeholder="Type email here"
                       onValueChanged={(e) => setEmail(e.value)}
                       value={email}
@@ -266,8 +260,6 @@ const New = ({
                       Telephone:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="telephone"
                       placeholder="Type phone number here"
                       onValueChanged={(e) => setTelephone(e.value)}
                       value={telephone}
@@ -289,8 +281,6 @@ const New = ({
                       Empl Name:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="employerName"
                       placeholder="Type employer name here"
                       onValueChanged={(e) => setEmployerName(e.value)}
                       value={employerName}
@@ -312,7 +302,6 @@ const New = ({
                       Experience:<sup className=" text-red-600">*</sup>
                     </label>
                     <NumberBox
-                      id="experience"
                       onValueChanged={(e) => setExperience(e.value)}
                       value={experience}
                       height={26}
@@ -348,8 +337,6 @@ const New = ({
                       Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="position"
                       placeholder="Type position here"
                       onValueChanged={(e) => setPosition(e.value)}
                       value={position}
@@ -371,8 +358,6 @@ const New = ({
                       Address:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="physicalAddress"
                       placeholder="Type physical address here"
                       onValueChanged={(e) => setPhysicalAddress(e.value)}
                       value={physicalAddress}
@@ -453,8 +438,6 @@ const New = ({
                       Sch Position:<sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="schemePosition"
                       placeholder="Type scheme position here"
                       onValueChanged={(e) => setSchemePosition(e.value)}
                       value={schemePosition}
@@ -496,7 +479,6 @@ const New = ({
                     </label>
 
                     <DateBox
-                      id="courseDate"
                       height={26}
                       style={{ fontSize: "12px" }}
                       onValueChanged={(e) => setCourseDate(e.value)}
@@ -531,8 +513,6 @@ const New = ({
                       <sup className=" text-red-600">*</sup>
                     </label>
                     <TextBox
-                      type="text"
-                      id="externalSchemeAdmin"
                       placeholder="Type external scheme admin here"
                       onValueChanged={(e) => setExternalSchemeAdmin(e.value)}
                       value={externalSchemeAdmin}
@@ -556,10 +536,8 @@ const New = ({
                     <sup className=" text-red-600">*</sup>
                   </label>
                   <TextArea
-                    type="text"
                     height="5vh"
                     placeholder="Type additional requirements here"
-                    id="additionalRequirements"
                     onValueChanged={(e) => setAdditionalRequirements(e.value)}
                     value={additionalRequirements}
                     style={{ fontSize: "12px" }}

@@ -88,70 +88,64 @@ const SecurityGroupForm = ({
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="groupCode"
             >
               <sup className="text-red-600">*</sup>Group Code
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
               placeholder="Type scheme position here"
               onValueChanged={(e) => setGroupCode(e.value)}
               value={groupCode}
-              height={26}
+              height={30}
               disabled={statusMode === "EditMode" && true}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Group Code is required" />
               </Validator>
             </TextBox>
           </div>
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="groupName"
             >
               <sup className="text-red-600">*</sup>Group Name
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
-              placeholder="Type scheme position here"
+              placeholder="Type group name here"
               onValueChanged={(e) => setGroupDesc(e.value)}
               value={groupDesc}
-              height={26}
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Group Name is required" />
               </Validator>
             </TextBox>
           </div>
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="narration"
             >
               <sup className="text-red-600">*</sup>Narration
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
-              placeholder="Type scheme position here"
+              placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height={26}
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Narration is required" />
               </Validator>
             </TextBox>
           </div>

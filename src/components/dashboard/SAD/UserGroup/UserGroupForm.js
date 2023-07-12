@@ -21,9 +21,7 @@ const UserGroupForm = ({
   const [userNames, setUserNames] = useState([]);
   const [selecteduserName, setSelectedUserName] = useState("");
 
-  const [narration, setNarration] = useState(
-    statusMode === "EditMode" ? singleRecord.narration : "Done"
-  );
+  const [narration, setNarration] = useState("");
 
   const getGroupCodes = async () => {
     const url = "/SecurityGroups/GetGroupCode";
@@ -108,7 +106,7 @@ const UserGroupForm = ({
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="groupCode"
             >
               <sup className="text-red-600">*</sup>Group Code
             </label>
@@ -125,7 +123,7 @@ const UserGroupForm = ({
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="userName"
             >
               <sup className="text-red-600">*</sup>UserName
             </label>
@@ -142,23 +140,21 @@ const UserGroupForm = ({
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="narration"
             >
               <sup className="text-red-600">*</sup>Narration
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
-              placeholder="Type scheme position here"
+              placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height={26}
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Narration is required" />
               </Validator>
             </TextBox>
           </div>

@@ -93,9 +93,7 @@ const InviteUserForm = ({
               <sup className="text-red-600">*</sup>Full Name
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
-              placeholder="Type scheme position here"
+              placeholder="Type Full Name here"
               onValueChanged={(e) => setGroupCode(e.value)}
               value={groupCode}
               height={26}
@@ -105,21 +103,19 @@ const InviteUserForm = ({
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Full Name is required" />
               </Validator>
             </TextBox>
           </div>
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="emailAddress"
             >
               <sup className="text-red-600">*</sup>Email Address
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
-              placeholder="Type scheme position here"
+              placeholder="Type email address here"
               onValueChanged={(e) => setGroupDesc(e.value)}
               value={groupDesc}
               height={26}
@@ -128,21 +124,19 @@ const InviteUserForm = ({
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Email Address is required" />
               </Validator>
             </TextBox>
           </div>
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"
-              htmlFor="fullName"
+              htmlFor="narration"
             >
               <sup className="text-red-600">*</sup>Narration
             </label>
             <TextBox
-              type="text"
-              id="schemePosition"
-              placeholder="Type scheme position here"
+              placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
               height={26}
@@ -151,7 +145,7 @@ const InviteUserForm = ({
             >
               {" "}
               <Validator>
-                <RequiredRule message="Scheme Position is required" />
+                <RequiredRule message="Narration is required" />
               </Validator>
             </TextBox>
           </div>

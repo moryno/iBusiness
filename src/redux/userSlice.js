@@ -24,6 +24,10 @@ const userSlice = createSlice({
       state.currentUser = null;
       logoutFunc();
     },
+    logoutUserInfo: (state) => {
+      state.currentUser = null;
+      localStorage.removeItem("token");
+    },
     updateUserProfile: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
@@ -37,6 +41,7 @@ export const {
   loginStart,
   loginSuccess,
   loginFailure,
+  logoutUserInfo,
   logout,
   updateUserProfile,
 } = userSlice.actions;
