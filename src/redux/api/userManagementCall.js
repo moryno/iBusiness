@@ -7,6 +7,29 @@ import {
   getUserGroupsSuccess,
   refreshUserGroupsOrder,
 } from "../userGroupSlice";
+import { getUserSuccess, refreshUser } from "../userSlice";
+
+export const getUsers = async (dispatch) => {
+  try {
+    const response = await SadService.get(
+      "/UserGroups/GetAllUsers?allFields=true"
+    );
+    dispatch(getUserSuccess(response));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFreshUsers = async (dispatch) => {
+  try {
+    const response = await SadService.get(
+      "/UserGroups/GetAllUsers?allFields=true"
+    );
+    dispatch(refreshUser(response));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getSecurityGroups = async (dispatch) => {
   try {

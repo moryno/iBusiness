@@ -1,19 +1,45 @@
 import InviteUserForm from "../../../../components/dashboard/SAD/Users/InviteUserForm";
 import GroupPage from "../GroupPage";
 import { usersMenuSource } from "../../../../data/dashboard-page/menu";
-import { securityGroupsColumns } from "../../../../data/datagrid-json/datagridColumns";
+import { usersColumns } from "../../../../data/datagrid-json/datagridColumns";
 import { bookingFilterValues } from "../../../../helpers/datatableSource";
 import { userHeadingFooter } from "../../../../data/headingFooterTitle";
+import { useEffect } from "react";
+import {
+  getFreshUsers,
+  getUsers,
+} from "../../../../redux/api/userManagementCall";
+import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {
+  const dispatch = useDispatch();
+  const url = "SecurityGroups";
+  const redirectRoute = "users/security-groups";
+
+  const users = useSelector((state) => state?.user?.users);
+
+  useEffect(() => {
+    if (!users || users.length < 1) {
+      getUsers(dispatch);
+    } else {
+      getFreshUsers(dispatch);
+    }
+
+    // eslint-disable-next-line
+  }, [dispatch]);
+
   return (
     <GroupPage
+      records={users}
       heading={userHeadingFooter.heading}
       title={userHeadingFooter.title}
       footer={userHeadingFooter.footer}
       company={userHeadingFooter.company}
       menus={usersMenuSource}
-      columns={securityGroupsColumns}
+      keyExpr={"userName"}
+      columns={usersColumns}
+      url={url}
+      redirectRoute={redirectRoute}
       filterValues={bookingFilterValues}
       FormComponent={InviteUserForm}
     />

@@ -87,7 +87,7 @@ export const usersMenuSource = [
     onClick: "handleClick",
   },
   {
-    id: 5,
+    id: 6,
     title: "Help",
     icon: <MdHelpOutline fontSize={20} />,
     onClick: "handleClick",
@@ -179,7 +179,7 @@ export const dropDownMenuSource = [
     title: "Export",
     icon: <TbFileExport fontSize={"18px"} />,
     dropArrow: (
-      <MdArrowDropDown fontSize={26} className=" opacity-70 cursor-pointer" />
+      <MdArrowDropDown fontSize={20} className=" opacity-70 cursor-pointer" />
     ),
     onClick: "handleClick",
     submenu: true,

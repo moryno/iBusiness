@@ -1,3 +1,4 @@
+import DrillDownSwitch from "../NavBarFooter/DrillDownSwitch";
 import CustomButtonComponent from "./CustomButtonComponent";
 
 const DesktopMenus = ({ heading, menus, onMenuClick }) => {
@@ -9,7 +10,7 @@ const DesktopMenus = ({ heading, menus, onMenuClick }) => {
             {heading}
           </h1>
         </article>
-        <article className="md:flex hidden justify-end py-1 gap-1 px-3 w-full md:w-9/12">
+        <article className="md:flex items-center hidden justify-end py-1 gap-1 px-3 w-full md:w-9/12">
           {menus.map((menu) => (
             <CustomButtonComponent
               key={menu.id}
@@ -18,6 +19,7 @@ const DesktopMenus = ({ heading, menus, onMenuClick }) => {
               icon={menu.icon}
             />
           ))}
+          <DrillDownSwitch />
         </article>
       </section>
     </main>

@@ -1,4 +1,4 @@
-import { ImUndo2 } from "react-icons/im";
+import { ImStarFull, ImUndo2 } from "react-icons/im";
 import { TextBox } from "devextreme-react/text-box";
 import { useState } from "react";
 import Validator, { RequiredRule } from "devextreme-react/validator";
@@ -6,6 +6,7 @@ import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
 import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
+import OnboardingService from "../../../../ClientServices/onboardingRequest";
 
 const InviteUserForm = ({
   handleClose,
@@ -14,19 +15,13 @@ const InviteUserForm = ({
   singleRecord,
   statusMode,
 }) => {
-  const [groupCode, setGroupCode] = useState(
-    statusMode === "EditMode" ? singleRecord.groupCode : "ACC"
-  );
-  const [groupDesc, setGroupDesc] = useState(
-    statusMode === "EditMode" ? singleRecord.groupDesc : "Accounts"
-  );
-  const [narration, setNarration] = useState(
-    statusMode === "EditMode" ? singleRecord.narration : "Accounts"
-  );
+  const [fullName, setFullName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [narration, setNarration] = useState("");
 
   const formData = {
-    groupCode,
-    groupDesc,
+    fullName,
+    emailAddress,
     narration,
   };
 
@@ -34,8 +29,8 @@ const InviteUserForm = ({
     e.preventDefault();
     if (statusMode === "CreateMode") {
       try {
-        const response = await SadService.post(
-          "/SecurityGroups/Create",
+        const response = await OnboardingService.post(
+          "/UserInvitation/newInvite",
           formData
         );
 
@@ -52,7 +47,7 @@ const InviteUserForm = ({
     }
     if (statusMode === "EditMode") {
       try {
-        const response = await SadService.post(
+        const response = await OnboardingService.post(
           "/SecurityGroups/Create",
           formData
         );
@@ -94,9 +89,9 @@ const InviteUserForm = ({
             </label>
             <TextBox
               placeholder="Type Full Name here"
-              onValueChanged={(e) => setGroupCode(e.value)}
-              value={groupCode}
-              height={26}
+              onValueChanged={(e) => setFullName(e.value)}
+              value={fullName}
+              height={30}
               disabled={statusMode === "EditMode" && true}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
@@ -116,9 +111,9 @@ const InviteUserForm = ({
             </label>
             <TextBox
               placeholder="Type email address here"
-              onValueChanged={(e) => setGroupDesc(e.value)}
-              value={groupDesc}
-              height={26}
+              onValueChanged={(e) => setEmailAddress(e.value)}
+              value={emailAddress}
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
@@ -139,7 +134,7 @@ const InviteUserForm = ({
               placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height={26}
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >

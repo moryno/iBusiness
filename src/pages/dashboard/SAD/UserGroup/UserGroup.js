@@ -36,6 +36,7 @@ const UserGroup = () => {
       company={userGroupHeadingFooter.company}
       title={userGroupHeadingFooter.title}
       menus={homeMenuSource}
+      keyExpr={"groupCode"}
       columns={userGroupsColumns}
       url={url}
       redirectRoute={redirectRoute}

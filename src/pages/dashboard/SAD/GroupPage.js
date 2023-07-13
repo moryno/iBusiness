@@ -9,6 +9,7 @@ import SadService from "../../../ClientServices/sadService";
 const UserGroup = ({
   records,
   menus,
+  keyExpr,
   heading,
   company,
   footer,
@@ -97,7 +98,7 @@ const UserGroup = ({
           <DataTable
             data={records}
             route={redirectRoute}
-            keyExpr={"groupCode"}
+            keyExpr={keyExpr}
             columns={columns}
             startEdit={startEdit}
             selectRowItem={selectRowItem}

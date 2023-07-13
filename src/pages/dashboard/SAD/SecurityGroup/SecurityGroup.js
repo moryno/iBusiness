@@ -36,6 +36,7 @@ const SecurityGroup = () => {
       footer={securityHeadingFooter.footer}
       company={securityHeadingFooter.company}
       menus={homeMenuSource}
+      keyExpr={"groupCode"}
       columns={securityGroupsColumns}
       url={url}
       redirectRoute={redirectRoute}

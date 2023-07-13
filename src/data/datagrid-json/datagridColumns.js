@@ -243,6 +243,34 @@ export const securityGroupsColumns = [
     dataField: "updatedUser",
   },
 ];
+export const usersColumns = [
+  {
+    dataField: "userId",
+    width: 70,
+    pk: true,
+    caption: "Select",
+    alignment: "center",
+  },
+  {
+    dataField: "userName",
+    width: 150,
+  },
+  {
+    dataField: "fullNames",
+  },
+  {
+    dataField: "email",
+  },
+  {
+    dataField: "telephone",
+  },
+  {
+    dataField: "superUser",
+  },
+  {
+    dataField: "principalUser",
+  },
+];
 
 export const userGroupsColumns = [
   {
