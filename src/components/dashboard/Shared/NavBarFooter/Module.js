@@ -2,7 +2,7 @@ import { CgMenuGridO } from "react-icons/cg";
 
 import { GoKebabVertical } from "react-icons/go";
 import { useDispatch } from "react-redux";
-import { moduleCategories } from "../../../../helpers/moduleSource";
+import { moduleCategories } from "../../../../data/dashboard-page/moduleSource";
 import { getModule } from "../../../../redux/moduleSlice";
 
 const Module = () => {

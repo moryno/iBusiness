@@ -1,7 +1,13 @@
 import DrillDownSwitch from "../NavBarFooter/DrillDownSwitch";
 import CustomButtonComponent from "./CustomButtonComponent";
 
-const DesktopMenus = ({ heading, menus, onMenuClick }) => {
+const DesktopMenus = ({
+  heading,
+  menus,
+  customActions,
+  onMenuClick,
+  onActionClick,
+}) => {
   return (
     <main className="w-full py-0.5 px-3 md:px-5 bg-sidebarBg border-b border-gray-200 md:pr-5 flex">
       <section className="flex w-full items-center">
@@ -19,7 +25,12 @@ const DesktopMenus = ({ heading, menus, onMenuClick }) => {
               icon={menu.icon}
             />
           ))}
-          <DrillDownSwitch />
+          {customActions && (
+            <DrillDownSwitch
+              customActions={customActions}
+              onActionClick={onActionClick}
+            />
+          )}
         </article>
       </section>
     </main>

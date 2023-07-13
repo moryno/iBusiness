@@ -16,6 +16,7 @@ const UserGroup = ({
   title,
   columns,
   url,
+  modules,
   redirectRoute,
   filterValues,
   FormComponent,
@@ -92,6 +93,7 @@ const UserGroup = ({
         <CategoryComponent>
           <MenusGroupComponent
             menus={menus}
+            modules={modules}
             heading={heading}
             onMenuClick={handleClick}
           />

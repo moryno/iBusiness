@@ -2,10 +2,22 @@ import React from "react";
 import DesktopMenus from "./DesktopMenus";
 import MobileMenus from "./MobileMenus";
 
-const MenusGroupComponent = ({ menus, heading, onMenuClick }) => {
+const MenusGroupComponent = ({
+  menus,
+  customActions,
+  heading,
+  onMenuClick,
+  onActionClick,
+}) => {
   return (
     <section>
-      <DesktopMenus heading={heading} menus={menus} onMenuClick={onMenuClick} />
+      <DesktopMenus
+        heading={heading}
+        menus={menus}
+        customActions={customActions}
+        onMenuClick={onMenuClick}
+        onActionClick={onActionClick}
+      />
       <MobileMenus menus={menus} onMenuClick={onMenuClick} />
     </section>
   );
