@@ -7,6 +7,8 @@ import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
 import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addUserGroupsSuccess } from "../../../../redux/userGroupSlice";
 
 const UserGroupForm = ({
   handleClose,
@@ -15,6 +17,7 @@ const UserGroupForm = ({
   singleRecord,
   statusMode,
 }) => {
+  const dispatch = useDispatch();
   const [groupCodeSource, setGroupCodeSource] = useState([]);
   const [groupCode, setGroupCode] = useState("");
   const [users, setUsers] = useState([]);
@@ -61,7 +64,7 @@ const UserGroupForm = ({
         const response = await SadService.post("/UserGroups/Create", formData);
 
         if (response?.dbResponse?.responseCode === "01") {
-          // setRecords([response?.securityGroup, ...records]);
+          dispatch(addUserGroupsSuccess(response?.userGroup));
           toast.success(response.dbResponse.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);

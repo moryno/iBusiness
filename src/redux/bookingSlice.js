@@ -10,7 +10,13 @@ const bookingSlice = createSlice({
       state.bookings = action.payload;
     },
     refreshBooking: (state, action) => {
-      state.bookings = [...state.bookings, action.payload];
+      const existingBookingIds = state.bookings.map(
+        (booking) => booking.bookingId
+      );
+      const updatedBookings = action.payload.filter(
+        (booking) => !existingBookingIds.includes(booking.bookingId)
+      );
+      state.bookings = [...state.bookings, ...updatedBookings];
     },
     // Add Booking
     addBookingSuccess: (state, action) => {

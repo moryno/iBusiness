@@ -7,6 +7,7 @@ import CustomActionModal from "../../../components/modals/CustomActionModal";
 import SadService from "../../../ClientServices/sadService";
 
 const UserGroup = ({
+  records,
   menus,
   heading,
   company,
@@ -18,23 +19,12 @@ const UserGroup = ({
   filterValues,
   FormComponent,
 }) => {
-  const [records, setRecords] = useState([]);
   const [singleRecord, setSingleRecord] = useState({});
   const [onEditRecordId, setEditRecordId] = useState(null);
   // eslint-disable-next-line
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
-
-  useEffect(() => {
-    const getRecords = async () => {
-      const action = `/${url}/GetAll`;
-      const response = await SadService.get(action);
-      setRecords(response);
-    };
-    getRecords();
-    // eslint-disable-next-line
-  }, []);
 
   useEffect(() => {
     const getSingleRecord = async () => {
@@ -124,8 +114,6 @@ const UserGroup = ({
       >
         {statusMode === "CreateMode" || statusMode === "EditMode" ? (
           <FormComponent
-            setRecords={setRecords}
-            records={records}
             singleRecord={singleRecord}
             statusMode={statusMode}
             handleClose={handleClose}

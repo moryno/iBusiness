@@ -13,7 +13,6 @@ const Sidebar = ({ showSidebar, openSidebar }) => {
         "-translate-x-full": !showSidebar,
         "md:hidden": !openSidebar,
       })}
-      id="mainsidenav"
     >
       <section className="flex flex-col h-full justify-between">
         <section id="sidebar-child">

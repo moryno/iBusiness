@@ -27,7 +27,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
           <h1 className="font-bold text-base cursor-pointer">
             iBusiness{" "}
             <span className="capitalize text-sm opacity-80 font-medium">
-              | {partitionKey}
+              | {partitionKey ? partitionKey : "Procure2pay"}
             </span>
           </h1>
         </article>

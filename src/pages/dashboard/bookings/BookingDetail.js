@@ -56,7 +56,7 @@ const BookingDetail = () => {
   };
 
   return (
-    <main className="w-full min-h-full relative py-1.5">
+    <main className="w-full min-h-full relative">
       <DetailsPage
         data={data}
         heading={bookingDetailTitle.heading}

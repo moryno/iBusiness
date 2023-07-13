@@ -6,14 +6,14 @@ import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
 import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import {
+  addSecurityGroupsSuccess,
+  updateSecurityGroupsSuccess,
+} from "../../../../redux/securityGroupSlice";
 
-const SecurityGroupForm = ({
-  handleClose,
-  records,
-  setRecords,
-  singleRecord,
-  statusMode,
-}) => {
+const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
+  const dispatch = useDispatch();
   const [groupCode, setGroupCode] = useState(
     statusMode === "EditMode" ? singleRecord.groupCode : "ACC"
   );
@@ -40,7 +40,7 @@ const SecurityGroupForm = ({
         );
 
         if (response?.dbResponse?.responseCode === "01") {
-          setRecords([response?.securityGroup, ...records]);
+          dispatch(addSecurityGroupsSuccess(response?.securityGroup));
           toast.success(response.dbResponse.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);
@@ -58,14 +58,7 @@ const SecurityGroupForm = ({
         );
 
         if (response?.dbResponse?.responseCode === "02") {
-          const newRecord = records.map((record) => {
-            if (record.groupCode === response?.securityGroup?.groupCode) {
-              return response?.securityGroup;
-            }
-            return record;
-          });
-
-          setRecords(newRecord);
+          dispatch(updateSecurityGroupsSuccess(response?.securityGroup));
           toast.success(response.dbResponse.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);

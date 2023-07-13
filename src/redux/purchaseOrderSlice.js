@@ -10,7 +10,13 @@ const purchaseOrderSlice = createSlice({
       state.orders = action.payload;
     },
     refreshPurchaseOrder: (state, action) => {
-      state.bookings = [...state.orders, action.payload];
+      const existingOrderNumbers = state.orders.map(
+        (order) => order.orderNumber
+      );
+      const updatedOrders = action.payload.filter(
+        (order) => !existingOrderNumbers.includes(order.orderNumber)
+      );
+      state.orders = [...state.orders, ...updatedOrders];
     },
   },
 });
