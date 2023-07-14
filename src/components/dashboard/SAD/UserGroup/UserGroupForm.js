@@ -12,9 +12,7 @@ import { addUserGroupsSuccess } from "../../../../redux/userGroupSlice";
 
 const UserGroupForm = ({
   handleClose,
-  records,
-  setRecords,
-  singleRecord,
+
   statusMode,
 }) => {
   const dispatch = useDispatch();
@@ -79,14 +77,6 @@ const UserGroupForm = ({
         const response = await SadService.post("/UserGroups/Create", formData);
 
         if (response?.dbResponse?.responseCode === "02") {
-          const newRecord = records.map((record) => {
-            if (record.groupCode === response?.securityGroup?.groupCode) {
-              return response?.securityGroup;
-            }
-            return record;
-          });
-
-          setRecords(newRecord);
           toast.success(response.dbResponse.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);

@@ -171,7 +171,9 @@ const SecurityGroup = () => {
             handleClose={handleClose}
           />
         ) : (
-          customModalMode === "CreateUserGroup" && <UserGroupForm />
+          customModalMode === "CreateUserGroup" && (
+            <UserGroupForm handleClose={handleClose} />
+          )
         )}
       </CustomActionModal>
     </main>
