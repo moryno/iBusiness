@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DetailsPage from "../../../components/dashboard/Shared/DetailsComponents/DetailsPage";
 import OnboardingService from "../../../ClientServices/onboardingRequest";
 import {
-  customActionsSource,
+  userGroupActionsSource,
   updateMenuSource,
 } from "../../../data/dashboard-page/menu";
 import Portal from "../../../components/modals/Portal";
@@ -63,7 +63,7 @@ const BookingDetail = () => {
         title={`${bookingDetailTitle.title}: ${data?.bookingId}`}
         footer={bookingDetailTitle.footer}
         menus={updateMenuSource}
-        customAction={customActionsSource}
+        customAction={userGroupActionsSource}
         company={bookingDetailTitle.company}
         onMenuClick={handleClick}
         DetailComponent={GridItemContent}

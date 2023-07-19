@@ -9,7 +9,7 @@ const DesktopMenus = ({
   onActionClick,
 }) => {
   return (
-    <main className="w-full py-0.5 px-3 md:px-5 bg-sidebarBg border-b border-gray-200 md:pr-5 flex">
+    <main className="w-full py-0.5 px-3 md:px-5 border-b border-gray-200 md:pr-5 flex">
       <section className="flex w-full items-center">
         <article className="flex items-center w-full md:w-3/12">
           <h1 className="text-menuHeading text-base w-full font-semibold">

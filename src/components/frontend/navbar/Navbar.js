@@ -12,7 +12,7 @@ import {
 import data from "../../../data/landing-page/navbar";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../../redux/userSlice";
+import { logout } from "../../../redux/reducers/userSlice";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);

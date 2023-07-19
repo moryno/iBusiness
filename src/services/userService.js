@@ -1,4 +1,4 @@
-import { loginSuccess } from "../redux/userSlice";
+import { loginSuccess } from "../redux/reducers/userSlice";
 import { setUpToken } from "../helpers/auth";
 import Constant from "../utils/constant";
 import OnboardingService from "../ClientServices/onboardingRequest";

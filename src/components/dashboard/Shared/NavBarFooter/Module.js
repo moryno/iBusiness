@@ -1,9 +1,9 @@
 import { CgMenuGridO } from "react-icons/cg";
 
-import { GoKebabVertical } from "react-icons/go";
+import { FaEllipsisV } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { moduleCategories } from "../../../../data/dashboard-page/moduleSource";
-import { getModule } from "../../../../redux/moduleSlice";
+import { getModule } from "../../../../redux/reducers/moduleSlice";
 
 const Module = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const Module = () => {
           <CgMenuGridO fontSize={24} />
         </article>
         <article className="flex md:hidden opacity-70 items-center font-medium">
-          <GoKebabVertical fontSize={16} />
+          <FaEllipsisV fontSize={16} />
         </article>
 
         <section className="absolute md:top-8 top-6 right-1 md:right-5  z-50 hidden  group-hover:block hover:block">

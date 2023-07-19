@@ -5,8 +5,12 @@ import Statusbar from "../../../components/dashboard/Shared/NavBarFooter/Statusb
 import MenusGroupComponent from "../../../components/dashboard/Shared/Menus/MenusGroupComponent";
 import CustomActionModal from "../../../components/modals/CustomActionModal";
 import SadService from "../../../ClientServices/sadService";
+import Portal from "../../../components/modals/Portal";
+import ConfirmationPopupComponent from "../../../components/dashboard/Shared/ConfirmationPopupComponent";
+import { deleteTitle } from "../../../data/headingFooterTitle";
+import { toast } from "react-toastify";
 
-const UserGroup = ({
+const GroupPage = ({
   records,
   menus,
   keyExpr,
@@ -16,7 +20,8 @@ const UserGroup = ({
   title,
   columns,
   url,
-  modules,
+  onActionClick,
+  customActions,
   redirectRoute,
   filterValues,
   FormComponent,
@@ -27,6 +32,7 @@ const UserGroup = ({
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     const getSingleRecord = async () => {
@@ -59,33 +65,69 @@ const UserGroup = ({
     setSingleRecord({});
     setStatusMode("");
     setOpen(false);
+    setConfirmDelete(false);
   };
 
-  const handleClick = useCallback((menu) => {
-    switch (menu) {
-      case "Find":
-        break;
-      case "New":
-        setStatusMode("CreateMode");
-        setOpen(true);
-        break;
-      case "Invite":
-        setStatusMode("CreateMode");
-        setOpen(true);
-        break;
-      case "Delete":
-        break;
-      case "Close":
-        console.log("Close was clicked");
-        break;
-      case "Help":
-        console.log("Help was clicked");
-        break;
-
-      default:
-        break;
+  const openConfirmationPopup = useCallback(async (rowItem) => {
+    if (rowItem === null) {
+      toast.warning(
+        "You must select one or more records before you can perform this action."
+      );
+    } else {
+      setStatusMode("DeleteMode");
+      setConfirmDelete((confirmDelete) => !confirmDelete);
     }
   }, []);
+
+  const handleDelete = async () => {
+    try {
+      const action = `/${url}/${selectedRecordId}`;
+      const response = await SadService.delete(action);
+
+      if (response?.responseCode === "02") {
+        //dispatch(deleteSecurityGroupSuccess(selectedRecordId));
+        setConfirmDelete(false);
+        setSelectedRecordId(null);
+        toast.success(response?.responseMsg);
+      } else {
+        setConfirmDelete(false);
+        setSelectedRecordId(null);
+        toast.error("Cannot delete a group with assigned users.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClick = useCallback(
+    (menu) => {
+      switch (menu) {
+        case "Find":
+          break;
+        case "New":
+          setStatusMode("CreateMode");
+          setOpen(true);
+          break;
+        case "Invite":
+          setStatusMode("CreateMode");
+          setOpen(true);
+          break;
+        case "Delete":
+          openConfirmationPopup(selectedRecordId);
+          break;
+        case "Close":
+          console.log("Close was clicked");
+          break;
+        case "Help":
+          console.log("Help was clicked");
+          break;
+
+        default:
+          break;
+      }
+    },
+    [selectedRecordId, openConfirmationPopup]
+  );
 
   return (
     <main className="w-full min-h-full relative">
@@ -93,12 +135,14 @@ const UserGroup = ({
         <CategoryComponent>
           <MenusGroupComponent
             menus={menus}
-            modules={modules}
+            customActions={customActions}
             heading={heading}
             onMenuClick={handleClick}
+            onActionClick={onActionClick}
           />
           <DataTable
             data={records}
+            className={"security-admin"}
             route={redirectRoute}
             keyExpr={keyExpr}
             columns={columns}
@@ -123,8 +167,20 @@ const UserGroup = ({
           />
         ) : null}
       </CustomActionModal>
+      {statusMode === "DeleteMode" && (
+        <Portal isOpen={confirmDelete} setOpen={setConfirmDelete}>
+          <ConfirmationPopupComponent
+            handleClose={handleClose}
+            title={deleteTitle.heading}
+            text={deleteTitle.text}
+            statusBarText={deleteTitle.footer}
+            statusMode={statusMode}
+            onDelete={handleDelete}
+          />
+        </Portal>
+      )}
     </main>
   );
 };
 
-export default UserGroup;
+export default GroupPage;

@@ -1,13 +1,9 @@
 import SadService from "../../ClientServices/sadService";
 import {
   getSecurityGroupsSuccess,
-  refreshSecurityGroupsOrder,
-} from "../securityGroupSlice";
-import {
-  getUserGroupsSuccess,
-  refreshUserGroupsOrder,
-} from "../userGroupSlice";
-import { getUserSuccess, refreshUser } from "../userSlice";
+} from "../reducers/securityGroupSlice";
+import { getUserGroupsSuccess } from "../reducers/userGroupSlice";
+import { getUserSuccess, refreshUser } from "../reducers/userSlice";
 
 export const getUsers = async (dispatch) => {
   try {
@@ -40,28 +36,10 @@ export const getSecurityGroups = async (dispatch) => {
   }
 };
 
-export const getFreshSecurityGroups = async (dispatch) => {
-  try {
-    const response = await SadService.get("/SecurityGroups/GetAll");
-    dispatch(refreshSecurityGroupsOrder(response));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const getUserGroups = async (dispatch) => {
   try {
     const response = await SadService.get("/UserGroups/GetAll");
     dispatch(getUserGroupsSuccess(response));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getFreshUserGroups = async (dispatch) => {
-  try {
-    const response = await SadService.get("/UserGroups/GetAll");
-    dispatch(refreshUserGroupsOrder(response));
   } catch (error) {
     console.log(error);
   }

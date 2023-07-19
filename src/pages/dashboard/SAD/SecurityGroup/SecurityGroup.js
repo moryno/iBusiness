@@ -1,16 +1,15 @@
 import SecurityGroupForm from "../../../../components/dashboard/SAD/SecurityGroup/SecurityGroupForm";
-import UserGroupForm from "../../../../components/dashboard/SAD/UserGroup/UserGroupForm";
 import { homeMenuSource } from "../../../../data/dashboard-page/menu";
 import { securityGroupsColumns } from "../../../../data/datagrid-json/datagridColumns";
 import { bookingFilterValues } from "../../../../helpers/datatableSource";
-import { securityHeadingFooter } from "../../../../data/headingFooterTitle";
+import {
+  deleteTitle,
+  securityHeadingFooter,
+} from "../../../../data/headingFooterTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import {
-  getFreshSecurityGroups,
-  getSecurityGroups,
-} from "../../../../redux/api/userManagementCall";
-import { securityGroupModules } from "../../../../data/dashboard-page/moduleSource";
+import { getSecurityGroups } from "../../../../redux/actions/userManagementCall";
+import { securityActions } from "../../../../data/dashboard-page/moduleSource";
 import CategoryComponent from "../../../../components/dashboard/Shared/CategoryComponent";
 import MenusGroupComponent from "../../../../components/dashboard/Shared/Menus/MenusGroupComponent";
 import DataTable from "../../../../components/dashboard/Shared/DataGrids/DataTable";
@@ -18,6 +17,11 @@ import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Stat
 import CustomActionModal from "../../../../components/modals/CustomActionModal";
 import SadService from "../../../../ClientServices/sadService";
 import { useNavigate } from "react-router-dom";
+import Portal from "../../../../components/modals/Portal";
+import ConfirmationPopupComponent from "../../../../components/dashboard/Shared/ConfirmationPopupComponent";
+import { toast } from "react-toastify";
+import { deleteSecurityGroupSuccess } from "../../../../redux/reducers/securityGroupSlice";
+import GroupPage from "../GroupPage";
 
 const SecurityGroup = () => {
   const dispatch = useDispatch();
@@ -29,6 +33,7 @@ const SecurityGroup = () => {
   const [statusMode, setStatusMode] = useState("");
   const [customModalMode, setCustomMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const url = "SecurityGroups";
   const redirectRoute = "users/security-groups";
@@ -36,13 +41,7 @@ const SecurityGroup = () => {
   const securityGroups = useSelector((state) => state?.securityGroups?.groups);
 
   useEffect(() => {
-    if (!securityGroups || securityGroups.length < 1) {
-      getSecurityGroups(dispatch);
-    } else {
-      getFreshSecurityGroups(dispatch);
-    }
-
-    // eslint-disable-next-line
+    getSecurityGroups(dispatch);
   }, [dispatch]);
 
   useEffect(() => {
@@ -76,30 +75,66 @@ const SecurityGroup = () => {
     setSingleRecord({});
     setStatusMode("");
     setOpen(false);
+    setConfirmDelete(false);
   };
 
-  const handleClick = useCallback((menu) => {
-    switch (menu) {
-      case "Find":
-        break;
-      case "New":
-        setStatusMode("CreateMode");
-        setOpen(true);
-        break;
-
-      case "Delete":
-        break;
-      case "Close":
-        console.log("Close was clicked");
-        break;
-      case "Help":
-        console.log("Help was clicked");
-        break;
-
-      default:
-        break;
+  const openConfirmationPopup = useCallback(async (rowItem) => {
+    if (rowItem === null) {
+      toast.warning(
+        "You must select one or more records before you can perform this action."
+      );
+    } else {
+      setStatusMode("DeleteMode");
+      setConfirmDelete((confirmDelete) => !confirmDelete);
     }
   }, []);
+
+  const handleDelete = async () => {
+    try {
+      const action = `/${url}/${selectedRecordId}`;
+      const response = await SadService.delete(action);
+
+      if (response?.responseCode === "02") {
+        dispatch(deleteSecurityGroupSuccess(selectedRecordId));
+        setConfirmDelete(false);
+        setSelectedRecordId(null);
+        toast.success(response?.responseMsg);
+      } else {
+        setConfirmDelete(false);
+        setSelectedRecordId(null);
+        toast.error("Cannot delete a group with assigned users.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClick = useCallback(
+    (menu) => {
+      switch (menu) {
+        case "Find":
+          break;
+        case "New":
+          setStatusMode("CreateMode");
+          setOpen(true);
+          break;
+
+        case "Delete":
+          openConfirmationPopup(selectedRecordId);
+          break;
+        case "Close":
+          console.log("Close was clicked");
+          break;
+        case "Help":
+          console.log("Help was clicked");
+          break;
+
+        default:
+          break;
+      }
+    },
+    [selectedRecordId, openConfirmationPopup]
+  );
 
   const onCustomActionClick = useCallback(
     (menu) => {
@@ -129,54 +164,22 @@ const SecurityGroup = () => {
   );
 
   return (
-    <main className="w-full min-h-full relative">
-      <section>
-        <CategoryComponent>
-          <MenusGroupComponent
-            menus={homeMenuSource}
-            customActions={securityGroupModules}
-            heading={securityHeadingFooter.heading}
-            onMenuClick={handleClick}
-            onActionClick={onCustomActionClick}
-          />
-          <DataTable
-            data={securityGroups}
-            route={redirectRoute}
-            keyExpr={"groupCode"}
-            columns={securityGroupsColumns}
-            startEdit={startEdit}
-            selectRowItem={selectRowItem}
-            filterValues={bookingFilterValues}
-          />
-
-          <Statusbar
-            footer={securityHeadingFooter.footer}
-            company={securityHeadingFooter.company}
-          />
-        </CategoryComponent>
-      </section>
-      <CustomActionModal
-        title={
-          customModalMode === "CreateUserGroup"
-            ? "User Group"
-            : securityHeadingFooter.title
-        }
-        isOpen={isOpen}
-        handleClose={handleClose}
-      >
-        {statusMode === "CreateMode" || statusMode === "EditMode" ? (
-          <SecurityGroupForm
-            singleRecord={singleRecord}
-            statusMode={statusMode}
-            handleClose={handleClose}
-          />
-        ) : (
-          customModalMode === "CreateUserGroup" && (
-            <UserGroupForm handleClose={handleClose} />
-          )
-        )}
-      </CustomActionModal>
-    </main>
+    <GroupPage
+      records={securityGroups}
+      heading={securityHeadingFooter.heading}
+      title={securityHeadingFooter.title}
+      footer={securityHeadingFooter.footer}
+      company={securityHeadingFooter.company}
+      menus={homeMenuSource}
+      customActions={securityActions}
+      keyExpr={"groupCode"}
+      columns={securityGroupsColumns}
+      url={"SecurityGroups"}
+      onActionClick={onCustomActionClick}
+      redirectRoute={"users/security-groups"}
+      filterValues={bookingFilterValues}
+      FormComponent={SecurityGroupForm}
+    />
   );
 };
 

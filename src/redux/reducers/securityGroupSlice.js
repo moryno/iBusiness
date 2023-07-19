@@ -9,13 +9,6 @@ const securityGroupsSlice = createSlice({
     getSecurityGroupsSuccess: (state, action) => {
       state.groups = action.payload;
     },
-    refreshSecurityGroupsOrder: (state, action) => {
-      const existingGroupCodes = state.groups.map((group) => group.groupCode);
-      const updatedGroups = action.payload.filter(
-        (group) => !existingGroupCodes.includes(group.groupCode)
-      );
-      state.groups = [...state.groups, ...updatedGroups];
-    },
     // Add Security Groups
     addSecurityGroupsSuccess: (state, action) => {
       state.groups = [action.payload, ...state.groups];
@@ -41,9 +34,9 @@ const securityGroupsSlice = createSlice({
 
 export const {
   getSecurityGroupsSuccess,
-  refreshSecurityGroupsOrder,
   addSecurityGroupsSuccess,
   updateSecurityGroupsSuccess,
+  deleteSecurityGroupSuccess,
 } = securityGroupsSlice.actions;
 
 export default securityGroupsSlice.reducer;

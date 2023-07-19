@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Layout from "../../../layout/Layout";
 import LoadingComponent from "../../frontend/LoadingComponent";
-import { loginSuccess } from "../../../redux/userSlice";
+import { loginSuccess } from "../../../redux/reducers/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCRSFToken, setUpToken } from "../../../helpers/auth";
 import OnboardingService from "../../../ClientServices/onboardingRequest";

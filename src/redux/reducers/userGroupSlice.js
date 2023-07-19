@@ -9,13 +9,6 @@ const userGroupsSlice = createSlice({
     getUserGroupsSuccess: (state, action) => {
       state.groups = action.payload;
     },
-    refreshUserGroupsOrder: (state, action) => {
-      const existingGroupCodes = state.groups.map((group) => group.groupCode);
-      const updatedGroups = action.payload.filter(
-        (group) => !existingGroupCodes.includes(group.groupCode)
-      );
-      state.groups = [...state.groups, ...updatedGroups];
-    },
     // Add User Groups
     addUserGroupsSuccess: (state, action) => {
       state.groups = [action.payload, ...state.groups];
@@ -23,17 +16,17 @@ const userGroupsSlice = createSlice({
     // Edit Booking
     updateUserGroupsSuccess: (state, action) => {
       const updatedGroup = action.payload;
-      const groupCode = state.groups.findIndex(
-        (User) => User.groupCode === action.payload.groupCode
+      const userGroupID = state.groups.findIndex(
+        (User) => User.userGroupID === action.payload.userGroupID
       );
-      if (groupCode !== -1) {
-        state.groups[groupCode] = updatedGroup;
+      if (userGroupID !== -1) {
+        state.groups[userGroupID] = updatedGroup;
       }
     },
     deleteUserGroupSuccess: (state, action) => {
-      const groupCode = action.payload;
+      const userGroupID = action.payload;
       state.groups = state.groups.filter(
-        (group) => group.groupCode !== groupCode
+        (group) => group.userGroupID !== userGroupID
       );
     },
   },
@@ -41,9 +34,9 @@ const userGroupsSlice = createSlice({
 
 export const {
   getUserGroupsSuccess,
-  refreshUserGroupsOrder,
   addUserGroupsSuccess,
   updateUserGroupsSuccess,
+  deleteUserGroupSuccess,
 } = userGroupsSlice.actions;
 
 export default userGroupsSlice.reducer;

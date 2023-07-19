@@ -17,7 +17,7 @@ import {
 import dataitem from "../../../../utils/Order";
 import { getDataGridRef } from "../../../../helpers/datagridFunctions";
 import { useSelector } from "react-redux";
-import request from "../../../../helpers/tempRequest";
+import OnboardingService from "../../../../ClientServices/onboardingRequest";
 
 // Table component
 
@@ -89,7 +89,7 @@ export const Table = ({
 
       if (orderstate === 0) {
         try {
-          await request.post("PurchaseOrder/insertorderitems", rowIndex.data);
+          await OnboardingService.post("PO/insertorderitems", rowIndex.data);
         } catch (e) {
           console.log(e);
         }
@@ -117,8 +117,8 @@ export const Table = ({
 
       if (orderstate === 0) {
         try {
-          const response = await request.put(
-            "PurchaseOrder/updateorderitem",
+          const response = await OnboardingService.put(
+            "PO/updateorderitem",
             rowIndex.data
           );
           console.log(response.status);
@@ -174,7 +174,7 @@ export const Table = ({
 
     if (orderstate === 0) {
       try {
-        await request.put("PurchaseOrder/updateorderitem", rowIndex.newData);
+        await OnboardingService.put("PO/updateorderitem", rowIndex.newData);
       } catch (e) {
         console.log(e);
       }
@@ -190,7 +190,8 @@ export const Table = ({
     if (orderstate === 0) {
       if (!e.cancel) {
         try {
-          await request.delete("PurchaseOrder/removeorderitem", {
+          console.log(e.data)
+          await OnboardingService.delete("PO/removeorderitem", {
             data: e.data,
           });
         } catch (ex) {
@@ -203,7 +204,7 @@ export const Table = ({
     } else {
       if (!e.cancel) {
         try {
-          await request.delete("PurchaseOrder/deleteorderitem", {
+          await OnboardingService.delete("PO/deleteorderitem", {
             data: {
               itemid: e.data.id,
               orderNo: e.data.partitionKey,

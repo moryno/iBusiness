@@ -9,11 +9,12 @@ import { InputField } from "../../../../components/dashboard/P2P/PurchaseOrder/I
 import { Table } from "../../../../components/dashboard/Shared/DataGrids/Table";
 import { MessageDiv } from "../../../../components/dashboard/P2P/PurchaseOrder/Message";
 import { useNavigate, useParams } from "react-router-dom";
-import request from "../../../../helpers/tempRequest";
 import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Statusbar";
 import { useSelector } from "react-redux";
 import { LoadPanel } from "devextreme-react/load-panel";
+import OnboardingService from "../../../../ClientServices/onboardingRequest";
 import DesktopMenus from "../../../../components/dashboard/Shared/Menus/DesktopMenus";
+import { toast } from "react-toastify";
 
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
@@ -37,22 +38,44 @@ export const PurchaseOrder = ({ orderstate }) => {
 
   useEffect(() => {
     setLoading(false);
-    if (orderstate === 0) {
+    if (orderstate === 1) {
+      setMessage("Fetching order...");
+      const getUpdateData = async () => {
+        try {
+          const response = await OnboardingService.get(
+            `/PO/fetchOrder?orderNumber=${id}`
+          );
+          response.tableData.map((item) => {
+            data.store().insert(item);
+            return data.reload();
+          });
+          setFormUpdateData(response.formInfo);
+          setUpdateData({ ...updateData, formData: response.formInfo });
+          setOrder(response.formInfo.orderNumber);
+        } catch (e) {
+          console.log(e);
+          setMessage("An error occured. Please refresh the page.");
+        }
+        setMessage("");
+      };
+
+      getUpdateData();
+    } else {
       async function getData() {
         try {
           setMessage("Checking for pending orders...");
-          const response = await request.get(
-            `/PurchaseOrder/getorderitems?userid=${currentUser?.email}`
+          const response = await OnboardingService.get(
+            `/PO/getorderitems?userid=${currentUser?.email}`
           );
           data.store().clear();
-          response.data.orderItems.map((item) => {
+          response.orderItems.map((item) => {
             return data.store().insert(item);
           });
-          if (response.data.orderInformation.length === 0) {
+          if (response.orderInformation.length === 0) {
             setInitialRender(false);
             setLoading(false);
           } else {
-            setFormUpdateData(response.data.orderInformation[0]);
+            setFormUpdateData(response.orderInformation[0]);
           }
           data.reload();
           setMessage();
@@ -62,35 +85,14 @@ export const PurchaseOrder = ({ orderstate }) => {
         }
       }
       getData();
-    } else if (orderstate === 1) {
-      setMessage("Fetching order...");
-      const getUpdateData = async () => {
-        try {
-          const response = await request.get(
-            `/PurchaseOrder/getorder?orderNumber=${id}`
-          );
-          response.data.tableData.map((item) => {
-            data.store().insert(item);
-            return data.reload();
-          });
-          setFormUpdateData(response.data.formInfo);
-          setUpdateData({ ...updateData, formData: response.data.formInfo });
-          setOrder(response.data.formInfo.orderNumber);
-          setMessage("Fetching order...");
-        } catch (e) {
-          console.log(e);
-          setMessage("An error occured. Please refresh the page.");
-        }
-      };
-
-      getUpdateData();
     }
 
     const handleKeyUp = (e) => {
       if (e.code === "KeyS" && e.ctrlKey) {
         e.preventDefault();
         submitOrder();
-        document.removeEventListener("keydown", handleKeyUp);
+      } else if (e.code === "Escape") {
+        navigate(-1);
       }
     };
 
@@ -106,29 +108,29 @@ export const PurchaseOrder = ({ orderstate }) => {
     setLoading(true);
     try {
       if (orderstate === 0) {
-        const user = {
-          userid: currentUser?.email,
+        const dataToSubmit = {
+          FormData: updateData.formData,
+          TableData: data.store()._array
         };
-        await request.post("/PurchaseOrder/createpurchaseorder", user);
-
-        setMessage("Order submitted successfully.");
+        await OnboardingService.post("/PO/createpurchaseorder", dataToSubmit);
+        toast.success("Order submitted successfully.");
         setLoading(false);
       } else {
         const dataToUpdate = {
-          formData: updateData.formData,
-          tableData: data.store()._array,
+          FormData: updateData.formData,
+          TableData: data.store()._array
         };
-        await request.put("/PurchaseOrder/updateorder", dataToUpdate);
-        setMessage("Order has been updated successfully.");
+        await OnboardingService.put("/PO/updateOrder", dataToUpdate);
+        toast.success("Order has been updated successfully.");
         setLoading(false);
       }
       setTimeout(() => {
         navigate("/dashboard/orders");
-      }, 1500);
+      }, 2000);
     } catch (e) {
       console.log(e);
       setLoading(false);
-      return setMessage(e.response.data["error"]);
+      return;
     }
   };
 
@@ -152,13 +154,13 @@ export const PurchaseOrder = ({ orderstate }) => {
       <section>
         <DesktopMenus
           heading={
-            orderstate === 0 ? "Purchase Order Entry" : "Update Purchase Order"
+            id === undefined ? "Purchase Order Entry" : "Update Purchase Order"
           }
           menus={purchaseOrderMenu}
           onMenuClick={handleClick}
         />
       </section>
-      <div className="mt-3 w-full">
+      <div className="mt-3 px-4 w-full">
         <Form
           orderState={orderstate}
           formUpdateData={formUpdateData}

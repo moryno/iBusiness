@@ -10,18 +10,19 @@ import { useDispatch } from "react-redux";
 import {
   addSecurityGroupsSuccess,
   updateSecurityGroupsSuccess,
-} from "../../../../redux/securityGroupSlice";
+} from "../../../../redux/reducers/securityGroupSlice";
+import { StringLengthRule } from "devextreme-react/form";
 
 const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
   const dispatch = useDispatch();
   const [groupCode, setGroupCode] = useState(
-    statusMode === "EditMode" ? singleRecord.groupCode : "ACC"
+    statusMode === "EditMode" ? singleRecord.groupCode : ""
   );
   const [groupDesc, setGroupDesc] = useState(
-    statusMode === "EditMode" ? singleRecord.groupDesc : "Accounts"
+    statusMode === "EditMode" ? singleRecord.groupDesc : ""
   );
   const [narration, setNarration] = useState(
-    statusMode === "EditMode" ? singleRecord.narration : "Accounts"
+    statusMode === "EditMode" ? singleRecord.narration : ""
   );
 
   const formData = {
@@ -97,6 +98,11 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
               {" "}
               <Validator>
                 <RequiredRule message="Group Code is required" />
+                <StringLengthRule
+                  min={2}
+                  max={4}
+                  message="Group code length should be betwen 2-4 characters"
+                />
               </Validator>
             </TextBox>
           </div>

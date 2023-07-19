@@ -1,10 +1,9 @@
-import { ImStarFull, ImUndo2 } from "react-icons/im";
+import { ImUndo2 } from "react-icons/im";
 import { TextBox } from "devextreme-react/text-box";
 import { useState } from "react";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
-import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
 import OnboardingService from "../../../../ClientServices/onboardingRequest";
 
@@ -12,7 +11,6 @@ const InviteUserForm = ({
   handleClose,
   records,
   setRecords,
-  singleRecord,
   statusMode,
 }) => {
   const [fullName, setFullName] = useState("");

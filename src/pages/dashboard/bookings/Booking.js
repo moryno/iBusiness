@@ -15,7 +15,10 @@ import DataTable from "../../../components/dashboard/Shared/DataGrids/DataTable"
 import Statusbar from "../../../components/dashboard/Shared/NavBarFooter/Statusbar";
 import MenusGroupComponent from "../../../components/dashboard/Shared/Menus/MenusGroupComponent";
 
-import { getBookings, getFreshBookings } from "../../../redux/api/bookingCall";
+import {
+  getBookings,
+  getFreshBookings,
+} from "../../../redux/actions/bookingCall";
 import {
   bookingHeadingFooter,
   deleteTitle,
@@ -132,6 +135,7 @@ const Booking = () => {
         <DataTable
           data={bookings}
           route={route}
+          className={"purchase-order"}
           keyExpr={"bookingId"}
           columns={bookingColumns}
           startEdit={startEdit}

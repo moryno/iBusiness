@@ -24,7 +24,7 @@ const DetailsPage = ({
       />
       <section className="mt-5 w-full gap-2 md:gap-0 flex flex-col-reverse md:flex-row">
         <article className="w-full px-2 md:w-9/12 lg:px-5 box-border">
-          {data ? (
+          {Object.keys(data).length ? (
             <DetailComponent data={data} title={title} />
           ) : (
             <SkeletonDetail />

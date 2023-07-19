@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useRef, useState } from "react";
+import React, { memo, useCallback, useMemo, useRef, useState } from "react";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Pager,
@@ -25,6 +25,7 @@ const DataTable = ({
   selectRowItem,
   columns,
   route,
+  className,
   keyExpr,
   openConfirmationPopup,
   filterValues,
@@ -41,70 +42,67 @@ const DataTable = ({
     return [10, 25, 50, 100];
   }, []);
 
-  const onContentReady = (e) => {
-    getDataGridRef(dataGridRef.current);
-    if (!collapsed) {
-      e.component.expandRow(["EnviroCare"]);
-      setCollapsed({
-        collapsed: true,
-      });
-    }
-  };
+  const onContentReady = useCallback(
+    (e) => {
+      getDataGridRef(dataGridRef.current);
+      if (!collapsed) {
+        e.component.expandRow(["EnviroCare"]);
+        setCollapsed({
+          collapsed: true,
+        });
+      }
+    },
+    [collapsed]
+  );
 
-  const handleContextMenuPreparing = (e) => {
-    if (e.row && e.row.rowType === "data") {
-      if (!e.items) e.items = [];
-      e.items.push(
-        {
-          text: "Edit",
-          icon: "edit",
-          onItemClick: () => {
-            startEdit(e.row);
-          },
-        },
-        {
-          text: "Export",
-          icon: "export",
-          items: [
-            {
-              text: "Export all data to Excel",
-              icon: "exportxlsx",
-              onItemClick: () => {
-                handleExporting("Export all data to Excel");
-              },
+  const handleContextMenuPreparing = useCallback(
+    (e) => {
+      if (e.row && e.row.rowType === "data") {
+        if (!e.items) e.items = [];
+        e.items.push(
+          {
+            text: "Edit",
+            icon: "edit",
+            onItemClick: () => {
+              startEdit(e.row);
             },
-            {
-              text: "Export all data to PDF",
-              icon: "exportpdf",
-              onItemClick: () => {
-                handleExporting("Export all data to PDF");
-              },
-            },
-          ],
-        },
-        {
-          text: "Delete",
-          icon: "trash",
-          onItemClick: () => {
-            openConfirmationPopup(e.row);
           },
-        }
-      );
-    }
-  };
+          {
+            text: "Export",
+            icon: "export",
+            items: [
+              {
+                text: "Export all data to Excel",
+                icon: "exportxlsx",
+                onItemClick: () => {
+                  handleExporting("Export all data to Excel");
+                },
+              },
+              {
+                text: "Export all data to PDF",
+                icon: "exportpdf",
+                onItemClick: () => {
+                  handleExporting("Export all data to PDF");
+                },
+              },
+            ],
+          },
+          {
+            text: "Delete",
+            icon: "trash",
+            onItemClick: () => {
+              openConfirmationPopup(e.row);
+            },
+          }
+        );
+      }
+    },
+    [openConfirmationPopup, startEdit]
+  );
 
-  const handleHyperlinkClick = (e) => {
+  const handleHyperlinkClick = useCallback((e) => {
     e.target.style.color = "white";
-  };
-
-  const handleFocusedRowChanging = (e) => {
-    const prevRow = e.component.getRowElement(e.prevRowIndex);
-    const newRow = e.component.getRowElement(e.newRowIndex);
-    prevRow[0].children[0].children[0].children[0].children[0].style.color =
-      "#489AEE";
-    newRow[0].children[0].children[0].children[0].children[0].style.color =
-      "white";
-  };
+  }, []);
 
   const filterBuilder = {
     logic: "and",
@@ -119,6 +117,7 @@ const DataTable = ({
     <main className="mt-5">
       <DataGrid
         id="dataTableGrid"
+        className={`${className}`}
         dataSource={data}
         onContextMenuPreparing={(e) => {
           handleContextMenuPreparing(e);
@@ -130,7 +129,6 @@ const DataTable = ({
         hoverStateEnabled={true}
         keyExpr={keyExpr}
         focusedRowEnabled={true}
-        onFocusedRowChanging={(e) => handleFocusedRowChanging(e)}
         onRowClick={(e) => selectRowItem(e)}
         onRowDblClick={(e) => startEdit(e)}
         allowColumnReordering={true}
@@ -147,6 +145,7 @@ const DataTable = ({
             key={column.dataField}
             alignment={column.alignment}
             caption={column.caption}
+            format={column.format}
             cellRender={
               column?.pk === true
                 ? (data) => {

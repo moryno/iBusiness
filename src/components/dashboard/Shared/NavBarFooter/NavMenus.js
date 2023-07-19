@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { menus } from "../../../../helpers/myNavLinks";
-import { logout } from "../../../../redux/userSlice";
+import { logout } from "../../../../redux/reducers/userSlice";
 
 const NavMenus = () => {
   const dispatch = useDispatch();

@@ -1,5 +1,3 @@
-import React from "react";
-
 const CustomActionsComponent = ({ customAction, handleClick }) => {
   return customAction.map((action) => (
     <article

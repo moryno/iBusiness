@@ -23,7 +23,6 @@ body{
   padding: 0;
   text-decoration: none;
   list-style: none;
-  background-color: #F4F6F9;
 }
 .notfound-header {
   font-size: 5rem;
@@ -131,11 +130,20 @@ body{
 
 /* DataGrid Styling */
 #dataTableGrid{
-  height: 75vh;
+
   font-size: 0.75rem !important;
   font-weight: 500 !important;
 
 }
+
+.security-admin{
+  height: calc(100vh - 120px);
+}
+
+.purchase-order{
+  height: calc(100vh - 170px);
+}
+
 
 #orderGrid{
   height: 50vh;
@@ -143,16 +151,21 @@ body{
   margin-top: 1rem;
   font-size: 0.7rem !important;
 }
-/* .dx-datagrid-header-panel{
-  border-bottom: 1px solid rgb(229 231 235) !important;
-} */
+.dx-datagrid-header-panel{
+  border-bottom: 0px solid rgb(229 231 235) !important;
+}
 .dx-datagrid-headers {
     color: #000 !important;
-   background-color: #f3f3f3 !important;
+   
    font-size: 0.75rem !important;
     font-weight: 600 !important;
   
 }
+
+.dx-row-focused td a div span {
+  color: var(--cream) !important;
+}
+
 
 .dx-overlay-content .dx-popup-normal {
   height: 20vh !important;

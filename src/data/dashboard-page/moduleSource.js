@@ -2,7 +2,13 @@ import { GiMoneyStack } from "react-icons/gi";
 import { VscOrganization } from "react-icons/vsc";
 import { TbReportSearch } from "react-icons/tb";
 import { MdOutlinePayment, MdOutlineSearch } from "react-icons/md";
-import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import {
+  //AiOutlineUsergroupAdd,
+  AiOutlineSecurityScan,
+} from "react-icons/ai";
+import { GrUserAdmin } from "react-icons/gr";
+import { MdOutlineSecurity } from "react-icons/md";
+import { FiUsers } from "react-icons/fi";
 
 export const moduleCategories = [
   {
@@ -31,7 +37,7 @@ export const moduleCategories = [
   },
 ];
 
-export const securityGroupModules = [
+export const securityActions = [
   {
     id: 1,
     title: "User Groups",
@@ -39,7 +45,24 @@ export const securityGroupModules = [
   },
   {
     id: 2,
-    title: "Create UserGroups",
-    icon: <AiOutlineUsergroupAdd fontSize={20} />,
+    title: "User Roles",
+    icon: <GrUserAdmin fontSize={20} />,
+  },
+];
+export const userGroupActions = [
+  {
+    id: 1,
+    title: "Users",
+    icon: <FiUsers fontSize={20} />,
+  },
+  {
+    id: 2,
+    title: "Security Groups",
+    icon: <MdOutlineSecurity fontSize={20} />,
+  },
+  {
+    id: 3,
+    title: "Roles",
+    icon: <AiOutlineSecurityScan fontSize={20} />,
   },
 ];

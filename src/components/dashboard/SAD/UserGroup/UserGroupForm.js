@@ -8,21 +8,29 @@ import { FcAddDatabase } from "react-icons/fc";
 import SadService from "../../../../ClientServices/sadService";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addUserGroupsSuccess } from "../../../../redux/userGroupSlice";
+import {
+  addUserGroupsSuccess,
+  updateUserGroupsSuccess,
+} from "../../../../redux/reducers/userGroupSlice";
 
-const UserGroupForm = ({
-  handleClose,
-
-  statusMode,
-}) => {
+const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
   const dispatch = useDispatch();
   const [groupCodeSource, setGroupCodeSource] = useState([]);
-  const [groupCode, setGroupCode] = useState("");
-  const [users, setUsers] = useState([]);
-  const [userNames, setUserNames] = useState([]);
-  const [selecteduserName, setSelectedUserName] = useState("");
 
-  const [narration, setNarration] = useState("");
+  const [groupCode, setGroupCode] = useState(
+    statusMode === "EditMode" ? singleRecord.groupCode : ""
+  );
+  const [users, setUsers] = useState([]);
+  const [userNames, setUserNames] = useState(
+    statusMode === "EditMode" ? singleRecord.userName : []
+  );
+  const [userName] = useState(
+    statusMode === "EditMode" && singleRecord.userName
+  );
+  const [selecteduserName, setSelectedUserName] = useState("");
+  const [narration, setNarration] = useState(
+    statusMode === "EditMode" ? singleRecord.narration : ""
+  );
 
   const getGroupCodes = async () => {
     const url = "/SecurityGroups/GetGroupCode";
@@ -38,7 +46,11 @@ const UserGroupForm = ({
   };
 
   const getUser = () => {
-    return users?.find((user) => selecteduserName === user.userName);
+    return users?.find(
+      (user) =>
+        selecteduserName === user.userName ||
+        singleRecord.userName === user.userName
+    );
   };
 
   useEffect(() => {
@@ -53,6 +65,12 @@ const UserGroupForm = ({
     const user = getUser();
     const formData = {
       groupCode,
+      userId: user.userId,
+      narration,
+    };
+
+    const editData = {
+      groupCode: singleRecord.groupCode,
       userId: user.userId,
       narration,
     };
@@ -74,9 +92,10 @@ const UserGroupForm = ({
     }
     if (statusMode === "EditMode") {
       try {
-        const response = await SadService.post("/UserGroups/Create", formData);
+        const response = await SadService.post("/UserGroups/Create", editData);
 
-        if (response?.dbResponse?.responseCode === "02") {
+        if (response?.dbResponse?.responseCode === "00") {
+          dispatch(updateUserGroupsSuccess(response?.userGroup));
           toast.success(response.dbResponse.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);
@@ -96,40 +115,82 @@ const UserGroupForm = ({
         className="flex flex-col h-full justify-between"
       >
         <article className="flex px-5  flex-wrap  w-full">
-          <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-            <label
-              className="text-[11px] text-label font-semibold"
-              htmlFor="groupCode"
-            >
-              <sup className="text-red-600">*</sup>Group Code
-            </label>
-            <SelectBox
-              dataSource={groupCodeSource}
-              onValueChanged={(e) => setGroupCode(e.value)}
-              searchEnabled={true}
-              placeholder="Select a Group Code"
-              height={30}
-              style={{ fontSize: "12px" }}
-              className="border pl-1 text-center w-full  outline-none"
-            />
-          </div>
-          <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-            <label
-              className="text-[11px] text-label font-semibold"
-              htmlFor="userName"
-            >
-              <sup className="text-red-600">*</sup>UserName
-            </label>
-            <SelectBox
-              dataSource={userNames}
-              onValueChanged={(e) => setSelectedUserName(e.value)}
-              searchEnabled={true}
-              placeholder="Select a UserName"
-              height={30}
-              style={{ fontSize: "12px" }}
-              className="border pl-1 text-center w-full  outline-none"
-            />
-          </div>
+          {statusMode === "CreateMode" ? (
+            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+              <label
+                className="text-[11px] text-label font-semibold"
+                htmlFor="groupCode"
+              >
+                <sup className="text-red-600">*</sup>Group Code
+              </label>
+              <SelectBox
+                dataSource={groupCodeSource}
+                onValueChanged={(e) => setGroupCode(e.value)}
+                searchEnabled={true}
+                placeholder="Select a Group Code"
+                height={30}
+                style={{ fontSize: "12px" }}
+                className="border pl-1 text-center w-full  outline-none"
+              />
+            </div>
+          ) : (
+            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+              <label
+                className="text-[11px] text-label font-semibold"
+                htmlFor="groupCode"
+              >
+                <sup className="text-red-600">*</sup>Group Code
+              </label>
+              <TextBox
+                placeholder="Type scheme position here"
+                onValueChanged={(e) => setGroupCode(e.value)}
+                value={groupCode}
+                height={30}
+                disabled={statusMode === "EditMode" && true}
+                style={{ fontSize: "12px" }}
+                className="border pl-1 text-center w-full  outline-none"
+              ></TextBox>
+            </div>
+          )}
+          {statusMode === "CreateMode" ? (
+            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+              <label
+                className="text-[11px] text-label font-semibold"
+                htmlFor="userName"
+              >
+                <sup className="text-red-600">*</sup>UserName
+              </label>
+              <SelectBox
+                dataSource={userNames}
+                onValueChanged={(e) => setSelectedUserName(e.value)}
+                searchEnabled={true}
+                placeholder="Select a UserName"
+                height={30}
+                disabled={statusMode === "EditMode" && true}
+                style={{ fontSize: "12px" }}
+                className="border pl-1 text-center w-full  outline-none"
+              />
+            </div>
+          ) : (
+            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+              <label
+                className="text-[11px] text-label font-semibold"
+                htmlFor="groupCode"
+              >
+                <sup className="text-red-600">*</sup>UserName
+              </label>
+              <TextBox
+                placeholder="Select a UserName"
+                onValueChanged={(e) => setGroupCode(e.value)}
+                value={userName}
+                height={30}
+                disabled={statusMode === "EditMode" && true}
+                style={{ fontSize: "12px" }}
+                className="border pl-1 text-center w-full  outline-none"
+              ></TextBox>
+            </div>
+          )}
+
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
               className="text-[11px] text-label font-semibold"

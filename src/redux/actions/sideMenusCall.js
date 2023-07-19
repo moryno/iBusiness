@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getMenus } from "../moduleSlice";
+import { getMenus } from "../reducers/moduleSlice";
 
 export const getSideMenus = async (dispatch) => {
   const url = process.env.REACT_APP_SIDEMENUS_URL;

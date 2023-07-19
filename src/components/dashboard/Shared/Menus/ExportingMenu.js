@@ -12,7 +12,7 @@ const ExportingMenu = () => {
             </h1>
             {link.submenu && (
               <section>
-                <section className="absolute top-9 z-50 hidden group-hover:block hover:block">
+                <section className="absolute top-7 z-50 hidden group-hover:block hover:block">
                   <article className="bg-bgDropDown rounded-md w-[180px] shadow-xl">
                     {link.sublinks.map((mysublinks) => (
                       <div

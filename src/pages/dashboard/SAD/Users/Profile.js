@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "../../../../redux/userSlice";
+import { updateUserProfile } from "../../../../redux/reducers/userSlice";
 import { updateMenuSource } from "../../../../data/dashboard-page/menu";
 import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Statusbar";
 import axios from "axios";

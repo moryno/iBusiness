@@ -1,0 +1,2 @@
+C:\Users\MAURICE\Documents\Work\iBusiness\SaaS\ibusiness-saas\src\ClientApp\obj\Debug\clientapp.esproj.SuggestedBindingRedirects.cache
+C:\Users\MAURICE\Documents\Work\iBusiness\SaaS\ibusiness-saas\src\ClientApp\obj\Debug\clientapp.esproj.CoreCompileInputs.cache

@@ -9,7 +9,7 @@ import DateBox from "devextreme-react/date-box";
 import TextArea from "devextreme-react/text-area";
 import NumberBox from "devextreme-react/number-box";
 import { useSelector } from "react-redux";
-import request from "../../../../helpers/tempRequest";
+import OnboardingService from "../../../../ClientServices/onboardingRequest";
 
 // Getting date today
 
@@ -31,7 +31,7 @@ const Form = ({
   initialRender,
   setInitialRender,
   orderstate,
-  setMessage,
+  setMessage
 }) => {
   const [costCenter, setCostCenter] = useState();
   const [supplier, setSupplier] = useState();
@@ -82,11 +82,13 @@ const Form = ({
 
       if (initialRender === true) {
         return;
-      } else if (orderstate === 1) {
+      } else if (orderstate === 1 || orderstate === 0) {
         setUpdateData({ ...updateData, formData: data });
-        return;
+
       }
+      if (orderstate === 0) {
       updateToCosmos(data);
+      }
     },
     // eslint-disable-next-line
     [
@@ -105,7 +107,7 @@ const Form = ({
   const updateToCosmos = async (data) => {
     setMessage("Saving...");
     try {
-      await request.put("/PurchaseOrder/updateorderinfo", data);
+      await OnboardingService.put("/PO/updateorderinfo", data);
     } catch (e) {
       console.log(e);
       setMessage("Network problem");
@@ -114,7 +116,7 @@ const Form = ({
   };
 
   return (
-    <div className="po-form px-3 md:px-5">
+    <div className="po-form">
       <div className="w-full flex flex-wrap lg:w-[75%] box-border justify-between  gap-2">
         <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between w-full md:w-[48%]">
           <label className="label-control text-xs text-gray-600">

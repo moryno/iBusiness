@@ -6,7 +6,7 @@ import { RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getSideMenus } from "../../../../redux/api/sideMenusCall";
+import { getSideMenus } from "../../../../redux/actions/sideMenusCall";
 
 const SideLinks = () => {
   const dispatch = useDispatch();

@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import {
   getFreshUsers,
   getUsers,
-} from "../../../../redux/api/userManagementCall";
+} from "../../../../redux/actions/userManagementCall";
 import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {

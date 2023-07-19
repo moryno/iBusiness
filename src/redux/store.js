@@ -10,12 +10,12 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import userReducer from "./userSlice";
-import bookingReducer from "./bookingSlice";
-import purchaseOrderReducer from "./purchaseOrderSlice";
-import securityGroupReducer from "./securityGroupSlice";
-import userGroupReducer from "./userGroupSlice";
-import moduleSlice from "./moduleSlice";
+import userReducer from "./reducers/userSlice";
+import bookingReducer from "./reducers/bookingSlice";
+import purchaseOrderReducer from "./reducers/purchaseOrderSlice";
+import securityGroupReducer from "./reducers/securityGroupSlice";
+import userGroupReducer from "./reducers/userGroupSlice";
+import moduleSlice from "./reducers/moduleSlice";
 
 const persistConfig = {
   key: "root",

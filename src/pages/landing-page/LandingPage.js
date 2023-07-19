@@ -3,7 +3,7 @@ import { Hero } from "../../components/frontend/hero/Hero";
 import { Testimonial } from "../../components/frontend/testimonial/Testimonial";
 import Feature from "../../components/frontend/feature/Feature";
 import Pricing from "../../components/frontend/pricing/Pricing";
-import { logoutUserInfo } from "../../redux/userSlice";
+import { logoutUserInfo } from "../../redux/reducers/userSlice";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../components/frontend/landing-page/Loading";

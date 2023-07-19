@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logoutFunc } from "../helpers/auth.js";
+import { logoutFunc } from "../../helpers/auth.js";
 
 const userSlice = createSlice({
   name: "user",

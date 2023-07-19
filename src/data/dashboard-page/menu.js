@@ -129,29 +129,38 @@ export const updateMenuSource = [
     onClick: "handleClick",
   },
 ];
-export const customActionsSource = [
+export const securityActionsSource = [
   {
     id: 1,
-    title: "Approve",
+    title: "User Groups",
     onClick: "handleClick",
   },
 
   {
     id: 2,
-    title: "Assign",
+    title: "User Roles",
+    onClick: "handleClick",
+  },
+];
+export const userGroupActionsSource = [
+  {
+    id: 1,
+    title: "Users",
+    onClick: "handleClick",
+  },
+
+  {
+    id: 2,
+    title: "Security Groups",
     onClick: "handleClick",
   },
   {
     id: 3,
-    title: "Decline",
-    onClick: "handleClick",
-  },
-  {
-    id: 4,
-    title: "Reverse",
+    title: "Roles",
     onClick: "handleClick",
   },
 ];
+
 export const purchaseOrderMenu = [
   {
     id: 1,

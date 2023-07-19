@@ -5,7 +5,8 @@ export const homeHeadingFooter = {
 };
 export const userGroupHeadingFooter = {
   heading: "User Group",
-  title: "New User Group",
+  create: "Create User Group",
+  edit: "Edit User Group",
   footer: "User Group",
   company: "ARBS Customer Portal",
 };

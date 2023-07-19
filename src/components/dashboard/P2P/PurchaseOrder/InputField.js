@@ -9,7 +9,7 @@ import { IoAdd, IoTrash } from "react-icons/io5";
 import { NumberBox } from "devextreme-react/number-box";
 import ConfirmMessage from "./ConfirmMessage";
 import { useSelector } from "react-redux";
-import request from "../../../../helpers/tempRequest";
+import OnboardingService from "../../../../ClientServices/onboardingRequest";
 
 // Input section component
 
@@ -70,8 +70,8 @@ export const InputField = ({ data, setMessage, order, orderstate }) => {
 
       if (orderstate === 0) {
         try {
-          await request.post(
-            "PurchaseOrder/insertorderitems",
+          await OnboardingService.post(
+            "PO/insertorderitems",
             itemtoadd.data()
           );
         } catch (e) {
@@ -111,8 +111,8 @@ export const InputField = ({ data, setMessage, order, orderstate }) => {
       if (orderstate === 0) {
         try {
           if (orderstate === 0) {
-            await request.put(
-              "PurchaseOrder/updateorderitem",
+            await OnboardingService.put(
+              "PO/updateorderitem",
               itemtoadd.data()
             );
           }

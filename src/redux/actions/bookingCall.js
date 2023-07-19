@@ -5,7 +5,7 @@ import {
   getBookingSuccess,
   refreshBooking,
   updateBookingSuccess,
-} from "../bookingSlice";
+} from "../reducers/bookingSlice";
 
 export const getBookings = async (dispatch) => {
   try {
