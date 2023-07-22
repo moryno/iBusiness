@@ -45,10 +45,49 @@ export const securityActions = [
   },
   {
     id: 2,
-    title: "User Roles",
+    title: "Group Roles",
     icon: <GrUserAdmin fontSize={20} />,
   },
 ];
+
+export const rolesActions = [
+  {
+    id: 1,
+    title: "Group Roles",
+    icon: <GrUserAdmin fontSize={20} />,
+  },
+  {
+    id: 2,
+    title: "Security Groups",
+    icon: <MdOutlineSecurity fontSize={20} />,
+  },
+];
+export const groupRolesActions = [
+  {
+    id: 1,
+    title: "Security Groups",
+    icon: <MdOutlineSecurity fontSize={20} />,
+  },
+  {
+    id: 2,
+    title: "Roles",
+    icon: <AiOutlineSecurityScan fontSize={20} />,
+  },
+];
+
+export const userDetailActions = [
+  {
+    id: 1,
+    title: "Deactivate user",
+    icon: <MdOutlineSecurity fontSize={20} />,
+  },
+  {
+    id: 2,
+    title: "User roles",
+    icon: <AiOutlineSecurityScan fontSize={20} />,
+  },
+];
+
 export const userGroupActions = [
   {
     id: 1,

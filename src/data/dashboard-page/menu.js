@@ -1,4 +1,4 @@
-import { MdFreeCancellation } from "react-icons/md";
+import { MdFreeCancellation, MdDisabledVisible } from "react-icons/md";
 import { FcAddDatabase } from "react-icons/fc";
 import { TbFileExport } from "react-icons/tb";
 import { SiMicrosoftexcel } from "react-icons/si";
@@ -6,6 +6,9 @@ import { SlPrinter } from "react-icons/sl";
 import { GrDocumentPdf } from "react-icons/gr";
 import { RiFileEditFill } from "react-icons/ri";
 import { FcInvite } from "react-icons/fc";
+import { BiUserCheck } from "react-icons/bi";
+import { IoMdExit } from "react-icons/io";
+
 
 import {
   MdArrowDropDown,
@@ -129,6 +132,29 @@ export const updateMenuSource = [
     onClick: "handleClick",
   },
 ];
+
+export const userDetailHeadActions = [
+  {
+    id: 1,
+    title: "Disable User",
+    icon: <MdDisabledVisible fontSize={20} />,
+    onClick: "handleClick",
+  },
+
+  {
+    id: 2,
+    title: "View Roles",
+    icon: <BiUserCheck fontSize={20} />,
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
+    title: "Close",
+    icon: <IoMdExit fontSize={20} />,
+    onClick: "handleClick",
+  },
+]
+
 export const securityActionsSource = [
   {
     id: 1,

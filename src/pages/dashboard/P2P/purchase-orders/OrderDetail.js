@@ -6,7 +6,7 @@ import {
   userGroupActionsSource,
   updateMenuSource,
 } from "../../../../data/dashboard-page/menu";
-import { deleteTitle, orderDetailTitle } from "../../../../data/headingFooterTitle";
+import { deleteOrderTitle, orderDetailTitle } from "../../../../data/headingFooterTitle";
 import GridItemContent from "../../../../components/dashboard/Shared/DetailsComponents/GridItemContent";
 import DetailsRightBar from "../../../../components/dashboard/Shared/DetailsComponents/DetailsRightBar";
 import { toast } from "react-toastify";
@@ -102,9 +102,9 @@ const OrderDetail = () => {
         <Portal isOpen={confirmDelete} setOpen={setConfirmDelete}>
           <ConfirmationPopupComponent
             handleClose={handleClose}
-            title={deleteTitle.heading}
-            text={deleteTitle.text}
-            statusBarText={deleteTitle.footer}
+            title={deleteOrderTitle.heading}
+            text={deleteOrderTitle.text + id + "?"}
+            statusBarText={deleteOrderTitle.footer}
             statusMode={statusMode}
             onDelete={handleDelete}
           />

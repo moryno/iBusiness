@@ -3,8 +3,17 @@ import { homeMenuSource } from "../../data/dashboard-page/menu";
 import MenusGroupComponent from "../../components/dashboard/Shared/Menus/MenusGroupComponent";
 import FromToDateComponent from "../../components/dashboard/Shared/FromToDateComponent";
 import { homeHeadingFooter } from "../../data/headingFooterTitle";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getMenuItem } from "../../redux/reducers/moduleSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(getMenuItem(""))
+  }, [dispatch])
+
   const handleClick = (menu) => {
     switch (menu) {
       case "Find":

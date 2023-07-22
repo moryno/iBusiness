@@ -7,6 +7,7 @@ import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getSideMenus } from "../../../../redux/actions/sideMenusCall";
+import { getMenuItem } from "../../../../redux/reducers/moduleSlice";
 
 const SideLinks = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const SideLinks = () => {
         break;
     }
   };
+
+  const onMenuChange = (menu) => {
+    dispatch(getMenuItem("| " + menu))
+  }
 
   useEffect(() => {
     getSideMenus(dispatch);
@@ -93,7 +98,7 @@ const SideLinks = () => {
                       <div>
                         {link.subLinks.map((mysublinks) => (
                           <Link to={mysublinks.link} key={mysublinks.name}>
-                            <div className="flex px-2 items-center gap-1 hover:bg-white hover:shadow-xl">
+                            <div onClick={() => onMenuChange(mysublinks.name)} className="flex px-2 items-center gap-1 hover:bg-white hover:shadow-xl">
                               <RxDot />
                               <li className="text-xs font-normal text-sideColor py-1.5">
                                 {mysublinks.name}

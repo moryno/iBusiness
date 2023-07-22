@@ -5,6 +5,7 @@ export const homeHeadingFooter = {
 };
 export const userGroupHeadingFooter = {
   heading: "User Group",
+  title: "User Group",
   create: "Create User Group",
   edit: "Edit User Group",
   footer: "User Group",
@@ -22,15 +23,45 @@ export const securityHeadingFooter = {
   footer: "Security Group",
   company: "ARBS Customer Portal",
 };
+export const rolesHeadingFooter = {
+  heading: "Roles",
+  title: "Roles",
+  footer: "Roles",
+  company: "ARBS Customer Portal",
+};
+export const rolesDetails = {
+  heading: "Roles Details",
+  title: "Role Name:",
+  footer: "Roles Details",
+  company: "ARBS Customer Portal",
+};
+export const userDetails = {
+  heading: "User Details",
+  title: "User:",
+  footer: "User Details",
+  company: "iBusiness",
+};
+export const groupRolesDetails = {
+  heading: "Group Roles Details",
+  title: "Group Roles Detail:",
+  footer: "Group Roles Details",
+  company: "ARBS Customer Portal",
+};
+export const groupRoleHeadingFooter = {
+  heading: "Group Roles",
+  title: "Group Roles",
+  footer: "Group Roles",
+  company: "ARBS Customer Portal",
+};
 export const securityDetail = {
-  heading: "Security Details",
-  title: "Group Code:",
-  footer: "Security Details",
+  heading: "Security Group Details",
+  title: "Security Group Details:",
+  footer: "Security Group Details",
   company: "ARBS Customer Portal",
 };
 export const userGroupDetail = {
   heading: "User Group Details",
-  title: "Group Code:",
+  title: "User Group Details:",
   footer: "User Group Details",
   company: "ARBS Customer Portal",
 };
@@ -70,6 +101,11 @@ export const editFormHeadingFooter = {
 };
 export const deleteTitle = {
   heading: "Confirm Deletion",
-  text: "Do you want to delete this record? You can't undo this action.",
-  footer: "Confirm Deletion",
+  text: "Are you sure you want to delete",
+};
+
+export const deleteOrderTitle = {
+  heading: "Confirm Deletion",
+  text: "Are you sure you want to delete order with order number ",
+  footer: "Purchase Orders",
 };

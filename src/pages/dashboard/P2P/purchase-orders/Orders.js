@@ -13,7 +13,7 @@ import MenusGroupComponent from "../../../../components/dashboard/Shared/Menus/M
 import { useDispatch, useSelector } from "react-redux";
 import { getPurchaseOrders } from "../../../../redux/actions/purchaseOrderCall";
 import { deletePurchaseOrderSuccess } from "../../../../redux/reducers/purchaseOrderSlice";
-import { deleteTitle, orderHeadingFooter } from "../../../../data/headingFooterTitle";
+import { deleteOrderTitle, orderHeadingFooter } from "../../../../data/headingFooterTitle";
 import OnboardingService from "../../../../ClientServices/onboardingRequest";
 import Portal from "../../../../components/modals/Portal";
 import ConfirmationPopupComponent from "../../../../components/dashboard/Shared/ConfirmationPopupComponent";
@@ -41,12 +41,11 @@ const Orders = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [])
-  
+  }, [navigate]);
 
   useEffect(() => {
     getPurchaseOrders(dispatch);
-  
+
     // eslint-disable-next-line
   }, [dispatch]);
 
@@ -87,42 +86,42 @@ const Orders = () => {
   };
 
   const handleDelete = async () => {
-      const action = `/PO/deleteOrder?orderNumber=${selectedRecordId}`;
-      try {
-        await OnboardingService.delete(action);
-        dispatch(deletePurchaseOrderSuccess(selectedRecordId));
-        toast.success("Order deleted successfully.");
-        setConfirmDelete(false);
-        setSelectedRecordId(null);
-      } catch (Ex) {
-        console.log(Ex)
-        toast.error("Order deletion failed. Please try again.")
-        setConfirmDelete(false);
-        setSelectedRecordId(null);
-      }
+    const action = `/PO/deleteOrder?orderNumber=${selectedRecordId}`;
+    try {
+      await OnboardingService.delete(action);
+      dispatch(deletePurchaseOrderSuccess(selectedRecordId));
+      toast.success("Order deleted successfully.");
+      setConfirmDelete(false);
+      setSelectedRecordId(null);
+    } catch (Ex) {
+      console.log(Ex);
+      toast.error("Order deletion failed. Please try again.");
+      setConfirmDelete(false);
+      setSelectedRecordId(null);
+    }
   };
 
   const handleClick = (menu) => {
-      switch (menu) {
-        case "Find":
-          break;
-        case "New":
-          navigate("/dashboard/orders/new");
-          break;
-        case "Delete":
-          openConfirmationPopup(selectedRecordId);
-          break;
-        case "Close":
-          navigate("/dashboard");
-          break;
-        case "Help":
-          console.log("Help was clicked");
-          break;
+    switch (menu) {
+      case "Find":
+        break;
+      case "New":
+        navigate("/dashboard/orders/new");
+        break;
+      case "Delete":
+        openConfirmationPopup(selectedRecordId);
+        break;
+      case "Close":
+        navigate(-1);
+        break;
+      case "Help":
+        window.open("", '_blank', "")
+        break;
 
-        default:
-          break;
-      }
-    };
+      default:
+        break;
+    }
+  };
 
   return (
     <main className="w-full min-h-full relative">
@@ -155,9 +154,9 @@ const Orders = () => {
         <Portal isOpen={confirmDelete} setOpen={setConfirmDelete}>
           <ConfirmationPopupComponent
             handleClose={handleClose}
-            title={deleteTitle.heading}
-            text={deleteTitle.text}
-            statusBarText={deleteTitle.footer}
+            title={deleteOrderTitle.heading}
+            text={deleteOrderTitle.text + selectedRecordId + "?"}
+            statusBarText={deleteOrderTitle.footer}
             statusMode={statusMode}
             onDelete={handleDelete}
           />

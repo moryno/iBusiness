@@ -13,7 +13,7 @@ const userGroupsSlice = createSlice({
     addUserGroupsSuccess: (state, action) => {
       state.groups = [action.payload, ...state.groups];
     },
-    // Edit Booking
+
     updateUserGroupsSuccess: (state, action) => {
       const updatedGroup = action.payload;
       const userGroupID = state.groups.findIndex(

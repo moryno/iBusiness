@@ -138,7 +138,7 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
               placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height={30}
+              height="5vh"
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >

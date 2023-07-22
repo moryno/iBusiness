@@ -233,16 +233,98 @@ export const securityGroupsColumns = [
     dataField: "createdDate",
   },
   {
-    dataField: "updatedDate",
-  },
-  {
     dataField: "createdUser",
   },
-
+  {
+    dataField: "updatedDate",
+  },
   {
     dataField: "updatedUser",
   },
 ];
+export const rolesColumns = [
+  {
+    dataField: "roleID",
+    width: 70,
+    pk: true,
+    caption: "Select",
+    alignment: "center",
+  },
+  {
+    dataField: "roleName",
+    width: 150,
+  },
+  {
+    dataField: "module",
+  },
+  {
+    dataField: "menuItem",
+  },
+  {
+    dataField: "menuClass",
+  },
+  {
+    dataField: "roleDescription",
+  },
+  {
+    dataField: "createdDate",
+  },
+  {
+    dataField: "createdUser",
+  },
+  {
+    dataField: "updatedDate",
+  },
+  {
+    dataField: "updatedUser",
+  },
+];
+export const groupRolesColumns = [
+  {
+    dataField: "groupRoleID",
+    width: 70,
+    pk: true,
+    caption: "Select",
+    alignment: "center",
+  },
+  {
+    dataField: "groupCode",
+  },
+  {
+    dataField: "roleName",
+  },
+  {
+    dataField: "view",
+  },
+  {
+    dataField: "edit",
+  },
+  {
+    dataField: "delete",
+  },
+  {
+    dataField: "export",
+  },
+  {
+    dataField: "import",
+  },
+  {
+    dataField: "effectiveDate",
+  },
+  {
+    dataField: "expiryDate",
+  },
+  {
+    dataField: "createdUser",
+  },
+  {
+    dataField: "updatedDate",
+  },
+  {
+    dataField: "updatedUser",
+  },
+];
+
 export const usersColumns = [
   {
     dataField: "userId",
@@ -293,10 +375,11 @@ export const userGroupsColumns = [
     dataField: "createdDate",
   },
   {
-    dataField: "updatedDate",
-  },
-  {
     dataField: "createdUser",
+  },
+
+  {
+    dataField: "updatedDate",
   },
 
   {

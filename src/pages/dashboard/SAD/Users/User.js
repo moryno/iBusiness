@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {
   const dispatch = useDispatch();
-  const url = "SecurityGroups";
-  const redirectRoute = "users/security-groups";
+  const url = "users";
+  const redirectRoute = "SAD/users";
 
   const users = useSelector((state) => state?.user?.users);
 
@@ -36,11 +36,12 @@ const User = () => {
       footer={userHeadingFooter.footer}
       company={userHeadingFooter.company}
       menus={usersMenuSource}
-      keyExpr={"userName"}
+      keyExpr={"userId"}
       columns={usersColumns}
       url={url}
       redirectRoute={redirectRoute}
       filterValues={bookingFilterValues}
+      className={"security-admin"}
       FormComponent={InviteUserForm}
     />
   );

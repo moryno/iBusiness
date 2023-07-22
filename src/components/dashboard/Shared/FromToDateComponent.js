@@ -19,7 +19,6 @@ const FromToDateComponent = () => {
           </label>
 
           <DateBox
-            id="fromDate"
             onValueChanged={(e) => setFromDate(e.value)}
             value={fromDate}
             height={28}
@@ -35,7 +34,6 @@ const FromToDateComponent = () => {
             To Date:
           </label>
           <DateBox
-            id="toDate"
             onValueChanged={(e) => setToDate(e.value)}
             value={toDate}
             height={28}

@@ -11,8 +11,8 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
   const handleSubmit = (e) => e.preventDefault();
   const [searchMode, setSearchMode] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const partitionKey = useSelector(
-    (state) => state.moduleCategory.partitionKey
+  const {partitionKey, menuItem} = useSelector(
+    (state) => state.moduleCategory
   );
 
   return (
@@ -25,9 +25,14 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
             fontSize={20}
           />
           <h1 className="font-bold text-base cursor-pointer">
-            iBusiness{" "}
+            iBusiness
+            {" "}
             <span className="capitalize text-sm opacity-80 font-medium">
               | {partitionKey ? partitionKey : "Procure2pay"}
+            </span>
+            {" "}
+            <span className="capitalize text-sm opacity-80 font-medium">
+              {menuItem ? menuItem : ""}
             </span>
           </h1>
         </article>

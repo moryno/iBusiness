@@ -9,6 +9,7 @@ import Portal from "../../../components/modals/Portal";
 import ConfirmationPopupComponent from "../../../components/dashboard/Shared/ConfirmationPopupComponent";
 import { deleteTitle } from "../../../data/headingFooterTitle";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const GroupPage = ({
   records,
@@ -23,12 +24,14 @@ const GroupPage = ({
   onActionClick,
   customActions,
   redirectRoute,
+  className,
   filterValues,
+  onDelete,
   FormComponent,
 }) => {
+  const navigate = useNavigate();
   const [singleRecord, setSingleRecord] = useState({});
   const [onEditRecordId, setEditRecordId] = useState(null);
-  // eslint-disable-next-line
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
@@ -43,8 +46,7 @@ const GroupPage = ({
       setOpen((isOpen) => !isOpen);
     };
     if (onEditRecordId) getSingleRecord();
-    // eslint-disable-next-line
-  }, [onEditRecordId]);
+  }, [onEditRecordId, url]);
 
   const startEdit = useCallback(({ key }) => {
     if (key) {
@@ -85,7 +87,7 @@ const GroupPage = ({
       const response = await SadService.delete(action);
 
       if (response?.responseCode === "02") {
-        //dispatch(deleteSecurityGroupSuccess(selectedRecordId));
+        onDelete(selectedRecordId);
         setConfirmDelete(false);
         setSelectedRecordId(null);
         toast.success(response?.responseMsg);
@@ -116,7 +118,7 @@ const GroupPage = ({
           openConfirmationPopup(selectedRecordId);
           break;
         case "Close":
-          console.log("Close was clicked");
+          navigate(-1);
           break;
         case "Help":
           console.log("Help was clicked");
@@ -126,7 +128,7 @@ const GroupPage = ({
           break;
       }
     },
-    [selectedRecordId, openConfirmationPopup]
+    [selectedRecordId, openConfirmationPopup, navigate]
   );
 
   return (
@@ -142,7 +144,7 @@ const GroupPage = ({
           />
           <DataTable
             data={records}
-            className={"security-admin"}
+            className={className}
             route={redirectRoute}
             keyExpr={keyExpr}
             columns={columns}
@@ -172,8 +174,10 @@ const GroupPage = ({
           <ConfirmationPopupComponent
             handleClose={handleClose}
             title={deleteTitle.heading}
+            body={heading}
+            code={selectedRecordId}
             text={deleteTitle.text}
-            statusBarText={deleteTitle.footer}
+            statusBarText={footer}
             statusMode={statusMode}
             onDelete={handleDelete}
           />

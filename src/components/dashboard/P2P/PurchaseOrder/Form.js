@@ -57,8 +57,8 @@ const Form = ({
       setdriverDetails(formUpdateData.vehicleDetails);
       setNarration(formUpdateData.narration);
       setOrderNumber(formUpdateData.orderNumber);
-      setInitialRender(false);
-      setLoading(false);
+      // setInitialRender(false);
+      // setLoading(false);
     },
     // eslint-disable-next-line
     [formUpdateData]
@@ -82,12 +82,13 @@ const Form = ({
 
       if (initialRender === true) {
         return;
-      } else if (orderstate === 1 || orderstate === 0) {
+      } else {
         setUpdateData({ ...updateData, formData: data });
 
-      }
-      if (orderstate === 0) {
-      updateToCosmos(data);
+        if (orderstate === 0) {
+        updateToCosmos(data);
+        }
+
       }
     },
     // eslint-disable-next-line

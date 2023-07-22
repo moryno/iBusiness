@@ -11,10 +11,10 @@ import { MessageDiv } from "../../../../components/dashboard/P2P/PurchaseOrder/M
 import { useNavigate, useParams } from "react-router-dom";
 import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Statusbar";
 import { useSelector } from "react-redux";
-import { LoadPanel } from "devextreme-react/load-panel";
 import OnboardingService from "../../../../ClientServices/onboardingRequest";
 import DesktopMenus from "../../../../components/dashboard/Shared/Menus/DesktopMenus";
 import { toast } from "react-toastify";
+import { SpinnerIcon } from "../../../../components/frontend/UI/SpinnerIcon";
 
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
@@ -27,9 +27,8 @@ export const PurchaseOrder = ({ orderstate }) => {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line
-  const [data, setData] = useState(new DataSource());
+  const [loading, setLoading] = useState(true);
+  const [data] = useState(new DataSource());
   const count = useRef(1);
   const [modalmessage, setModalMessage] = useState(
     "Are you sure you want to clear the table?"
@@ -37,9 +36,8 @@ export const PurchaseOrder = ({ orderstate }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(false);
+    setLoading(true);
     if (orderstate === 1) {
-      setMessage("Fetching order...");
       const getUpdateData = async () => {
         try {
           const response = await OnboardingService.get(
@@ -56,6 +54,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           console.log(e);
           setMessage("An error occured. Please refresh the page.");
         }
+        setLoading(false)
         setMessage("");
       };
 
@@ -73,22 +72,24 @@ export const PurchaseOrder = ({ orderstate }) => {
           });
           if (response.orderInformation.length === 0) {
             setInitialRender(false);
-            setLoading(false);
           } else {
             setFormUpdateData(response.orderInformation[0]);
           }
           data.reload();
-          setMessage();
+          setMessage("Order restored.");
+          setInitialRender(false)
         } catch (e) {
           console.log(e);
           setMessage("Unable to fetch pending orders.");
         }
+        setLoading(false)
       }
       getData();
     }
+    
 
     const handleKeyUp = (e) => {
-      if (e.code === "KeyS" && e.ctrlKey) {
+      if (e.code === "KeyS" && e.ctrlKey && e.shiftKey) {
         e.preventDefault();
         submitOrder();
       } else if (e.code === "Escape") {
@@ -110,7 +111,7 @@ export const PurchaseOrder = ({ orderstate }) => {
       if (orderstate === 0) {
         const dataToSubmit = {
           FormData: updateData.formData,
-          TableData: data.store()._array
+          TableData: data.store()._array,
         };
         await OnboardingService.post("/PO/createpurchaseorder", dataToSubmit);
         toast.success("Order submitted successfully.");
@@ -118,14 +119,14 @@ export const PurchaseOrder = ({ orderstate }) => {
       } else {
         const dataToUpdate = {
           FormData: updateData.formData,
-          TableData: data.store()._array
+          TableData: data.store()._array,
         };
         await OnboardingService.put("/PO/updateOrder", dataToUpdate);
         toast.success("Order has been updated successfully.");
         setLoading(false);
       }
       setTimeout(() => {
-        navigate("/dashboard/orders");
+        navigate(-1);
       }, 2000);
     } catch (e) {
       console.log(e);
@@ -141,7 +142,7 @@ export const PurchaseOrder = ({ orderstate }) => {
         break;
 
       case "Close":
-        navigate("/dashboard/orders");
+        navigate(-1);
         break;
 
       default:
@@ -197,10 +198,6 @@ export const PurchaseOrder = ({ orderstate }) => {
             setUpdateData={setUpdateData}
             orderstate={orderstate}
           />
-          <LoadPanel
-            visible={loading}
-            messageText="Checking for unsubmitted orders..."
-          />
         </div>
       </section>
       <div id="confirm-modal" className="po-modal">
@@ -219,6 +216,11 @@ export const PurchaseOrder = ({ orderstate }) => {
         </div>
       </div>
       <Statusbar heading="Purchase Order Entry" company="iBusiness" />
+      {loading ? (
+        <div className="absolute h-full w-full top-0 left-0 bg-slate-600 bg-opacity-20 flex justify-center items-center">
+            <SpinnerIcon />
+        </div>
+      ) : <></>} 
     </main>
   );
 };

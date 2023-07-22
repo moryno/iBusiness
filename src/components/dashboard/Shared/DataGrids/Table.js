@@ -190,7 +190,7 @@ export const Table = ({
     if (orderstate === 0) {
       if (!e.cancel) {
         try {
-          console.log(e.data)
+          console.log(e.data);
           await OnboardingService.delete("PO/removeorderitem", {
             data: e.data,
           });

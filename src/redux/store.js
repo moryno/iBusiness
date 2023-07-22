@@ -15,6 +15,8 @@ import bookingReducer from "./reducers/bookingSlice";
 import purchaseOrderReducer from "./reducers/purchaseOrderSlice";
 import securityGroupReducer from "./reducers/securityGroupSlice";
 import userGroupReducer from "./reducers/userGroupSlice";
+import rolesReducer from "./reducers/rolesSlice";
+import groupRolesReducer from "./reducers/groupRoleSlice";
 import moduleSlice from "./reducers/moduleSlice";
 
 const persistConfig = {
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   purchase: purchaseOrderReducer,
   securityGroups: securityGroupReducer,
   userGroups: userGroupReducer,
+  roles: rolesReducer,
+  groupRoles: groupRolesReducer,
   moduleCategory: moduleSlice,
 });
 

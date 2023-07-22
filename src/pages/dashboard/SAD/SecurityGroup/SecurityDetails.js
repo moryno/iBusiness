@@ -1,141 +1,65 @@
-import { useNavigate, useParams } from "react-router-dom";
-import DetailsPage from "../../../../components/dashboard/Shared/DetailsComponents/DetailsPage";
+import { useCallback } from "react";
 import GroupDetails from "../../../../components/dashboard/Shared/DetailsComponents/GroupDetails";
-import {
-  securityActionsSource,
-  updateMenuSource,
-} from "../../../../data/dashboard-page/menu";
-import {
-  deleteTitle,
-  securityDetail,
-} from "../../../../data/headingFooterTitle";
-import { useEffect, useState } from "react";
-import SadService from "../../../../ClientServices/sadService";
-import SecurityRightBar from "../../../../components/dashboard/SAD/SecurityGroup/SecurityRightBar";
+import { updateMenuSource } from "../../../../data/dashboard-page/menu";
+import { securityDetail } from "../../../../data/headingFooterTitle";
 import SecurityGroupForm from "../../../../components/dashboard/SAD/SecurityGroup/SecurityGroupForm";
-import CustomActionModal from "../../../../components/modals/CustomActionModal";
-import Portal from "../../../../components/modals/Portal";
-import ConfirmationPopupComponent from "../../../../components/dashboard/Shared/ConfirmationPopupComponent";
 import { deleteSecurityGroupSuccess } from "../../../../redux/reducers/securityGroupSlice";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import DetailsPage from "../DetailsPage";
+import { securityActions } from "../../../../data/dashboard-page/moduleSource";
+import { useNavigate } from "react-router-dom";
 
 const SecurityDetails = () => {
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const [data, setData] = useState({});
   const navigate = useNavigate();
-  const [isOpen, setOpen] = useState(false);
-  const [statusMode, setStatusMode] = useState("");
-  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const url = "SecurityGroups";
+  const onDelete = useCallback(
+    (recordId) => {
+      dispatch(deleteSecurityGroupSuccess(recordId));
+    },
+    [dispatch]
+  );
 
-  useEffect(() => {
-    const getSingleBooking = async () => {
-      const url = "/SecurityGroups/" + id;
-      const response = await SadService.get(url);
-      setData(response);
-    };
-    getSingleBooking();
-  }, [id]);
+  const onCustomActionClick = useCallback(
+    (menu) => {
+      switch (menu) {
+        case "User Groups":
+          navigate("/dashboard/SAD/user-groups");
+          break;
+        case "Group Roles":
+          navigate("/dashboard/SAD/group-roles");
+          break;
+        case "Delete":
+          break;
+        case "Close":
+          console.log("Close was clicked");
+          break;
+        case "Help":
+          console.log("Help was clicked");
+          break;
 
-  const handleDelete = async () => {
-    try {
-      const action = `/${url}/${id}`;
-      const response = await SadService.delete(action);
-
-      if (response?.responseCode === "02") {
-        dispatch(deleteSecurityGroupSuccess(id));
-        setConfirmDelete(false);
-        navigate(-1);
-        toast.success(response?.responseMsg);
-      } else {
-        setConfirmDelete(false);
-        toast.error("Cannot delete a group with assigned users.");
+        default:
+          break;
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const openConfirmationPopup = (rowItem) => {
-    if (rowItem === null) {
-      toast.warning(
-        "You must select one or more records before you can perform this action."
-      );
-    } else {
-      setStatusMode("DeleteMode");
-      setConfirmDelete((confirmDelete) => !confirmDelete);
-    }
-  };
-
-  const handleClick = (menu) => {
-    switch (menu) {
-      case "Edit":
-        setStatusMode("EditMode");
-        setOpen(true);
-        break;
-      case "Delete":
-        openConfirmationPopup(id);
-        break;
-      case "Close":
-        navigate(-1);
-        break;
-      case "Help":
-        console.log("Help was clicked");
-        break;
-
-      default:
-        break;
-    }
-  };
-
-  const handleClose = () => {
-    setStatusMode("");
-    setOpen(false);
-  };
+    },
+    [navigate]
+  );
 
   return (
-    <main className="w-full min-h-full relative">
-      <DetailsPage
-        data={data}
-        heading={securityDetail.heading}
-        footer={securityDetail.footer}
-        title={`${securityDetail.title} ${data?.groupCode}`}
-        menus={updateMenuSource}
-        customAction={securityActionsSource}
-        company={securityDetail.company}
-        onMenuClick={handleClick}
-        DetailComponent={GroupDetails}
-        CustomActionComponent={SecurityRightBar}
-      />
-      <CustomActionModal
-        title={data?.groupCode}
-        isOpen={isOpen}
-        handleClose={handleClose}
-      >
-        {statusMode === "EditMode" && (
-          <SecurityGroupForm
-            singleRecord={data}
-            statusMode={statusMode}
-            handleClose={handleClose}
-          />
-        )}
-      </CustomActionModal>
-      {statusMode === "DeleteMode" && (
-        <Portal isOpen={confirmDelete} setOpen={setConfirmDelete}>
-          <ConfirmationPopupComponent
-            handleClose={handleClose}
-            title={deleteTitle.heading}
-            text={deleteTitle.text}
-            statusBarText={deleteTitle.footer}
-            statusMode={statusMode}
-            onDelete={handleDelete}
-          />
-        </Portal>
-      )}
-    </main>
+    <DetailsPage
+      heading={securityDetail.heading}
+      footer={securityDetail.footer}
+      title={`${securityDetail.title}`}
+      menus={updateMenuSource}
+      url={"SecurityGroups"}
+      customAction={securityActions}
+      onActionClick={onCustomActionClick}
+      company={securityDetail.company}
+      deleteMsg={securityDetail.heading}
+      onDelete={onDelete}
+      DetailComponent={GroupDetails}
+      FormComponent={SecurityGroupForm}
+    />
   );
 };
 

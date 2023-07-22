@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./assets/styles.css";
-
 import Profile from "./pages/dashboard/SAD/Users/Profile";
 import Home from "./pages/dashboard/Home";
 import { PurchaseOrder } from "./pages/dashboard/P2P/purchase-orders/PurchaseOrder";
@@ -22,6 +21,11 @@ import User from "./pages/dashboard/SAD/Users/User";
 import UserGroup from "./pages/dashboard/SAD/UserGroup/UserGroup";
 import SecurityDetails from "./pages/dashboard/SAD/SecurityGroup/SecurityDetails";
 import UserGroupDetails from "./pages/dashboard/SAD/UserGroup/UserGroupDetails";
+import GroupRoles from "./pages/dashboard/SAD/GroupRoles/GroupRoles";
+import Roles from "./pages/dashboard/SAD/Roles/Roles";
+import RolesDetails from "./pages/dashboard/SAD/Roles/RolesDetails";
+import UserDetails from "./pages/dashboard/SAD/Users/UserDetails";
+import GroupRolesDetails from "./pages/dashboard/SAD/GroupRoles/GroupRolesDetails";
 
 function App() {
   return (
@@ -131,15 +135,33 @@ function App() {
                 }
               />
             </Route>
-            <Route path="users">
+            <Route path="SAD">
               <Route
                 index
                 element={
                   <ProtectedRoute>
-                    <User />
+                    <Home />
                   </ProtectedRoute>
                 }
               />
+              <Route path="users">
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <User />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path=":id/view"
+                  element={
+                    <ProtectedRoute>
+                      <UserDetails />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
               <Route path="security-groups">
                 <Route
                   index
@@ -172,6 +194,42 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <UserGroupDetails />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+              <Route path="roles">
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <Roles />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path=":id/view"
+                  element={
+                    <ProtectedRoute>
+                      <RolesDetails />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+              <Route path="group-roles">
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <GroupRoles />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path=":id/view"
+                  element={
+                    <ProtectedRoute>
+                      <GroupRolesDetails />
                     </ProtectedRoute>
                   }
                 />

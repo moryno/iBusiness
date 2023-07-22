@@ -1,5 +1,4 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import features from "../../../data/landing-page/products.json";
+import { features } from "../../../data/landing-page/products";
 import { Link } from "react-router-dom";
 
 const Feature = () => {
@@ -21,7 +20,7 @@ const Feature = () => {
               className="w-full px-5  box-border md:w-1/2 mt-4"
             >
               <div className="flex px-3 py-5 gap-5  bg-white rounded-md shadow-2xl">
-                <LazyLoadImage
+                <img
                   src={item.icon}
                   className="w-12 h-12"
                   alt="Bannerimage"

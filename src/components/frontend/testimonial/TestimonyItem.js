@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./testimonial.css";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import testimonies from "../../../data/landing-page/testimonial";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +40,7 @@ const TestimonyItem = () => {
       >
         {data.map((item) => (
           <div className="t-item" key={item.description}>
-            <LazyLoadImage
+            <img
               src={item.imgurl}
               className="t-profile"
               alt="profile"

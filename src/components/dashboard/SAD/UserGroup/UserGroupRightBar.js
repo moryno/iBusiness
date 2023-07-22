@@ -10,10 +10,10 @@ const UserGroupRightBar = ({ customAction }) => {
     (menu) => {
       switch (menu) {
         case "Users":
-          navigate("/dashboard/users");
+          navigate("/dashboard/SAD/users");
           break;
         case "Security Groups":
-          navigate("/dashboard/users/security-groups");
+          navigate("/dashboard/SAD/security-groups");
           break;
 
         case "Delete":

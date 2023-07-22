@@ -5,6 +5,7 @@ const moduleSlice = createSlice({
   initialState: {
     sideMenus: [],
     partitionKey: "",
+    menuItem: ""
   },
   reducers: {
     getMenus: (state, action) => {
@@ -13,8 +14,11 @@ const moduleSlice = createSlice({
     getModule: (state, action) => {
       state.partitionKey = action.payload;
     },
+    getMenuItem: (state, action) => {
+      state.menuItem= action.payload;
+    },
   },
 });
 
-export const { getMenus, getModule } = moduleSlice.actions;
+export const { getMenus, getModule, getMenuItem } = moduleSlice.actions;
 export default moduleSlice.reducer;

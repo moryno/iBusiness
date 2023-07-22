@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ImUndo2 } from "react-icons/im";
 import { TextBox } from "devextreme-react/text-box";
 import SelectBox from "devextreme-react/select-box";
@@ -21,9 +21,7 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
     statusMode === "EditMode" ? singleRecord.groupCode : ""
   );
   const [users, setUsers] = useState([]);
-  const [userNames, setUserNames] = useState(
-    statusMode === "EditMode" ? singleRecord.userName : []
-  );
+  const [userNames, setUserNames] = useState([]);
   const [userName] = useState(
     statusMode === "EditMode" && singleRecord.userName
   );
@@ -44,6 +42,19 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
     setUsers(response);
     setUserNames(response?.map((user) => user.userName));
   };
+
+  const getItemCode = useCallback((data) => {
+    return (
+      <div className="flex items-center w-full justify-between px-1">
+        <div className="text-menuText">{data.groupDesc}</div>
+        <div>{data.groupCode}</div>
+      </div>
+    );
+  }, []);
+
+  const onCodeSelected = useCallback((e) => {
+    setGroupCode(e.value);
+  }, []);
 
   const getUser = () => {
     return users?.find(
@@ -125,13 +136,21 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
               </label>
               <SelectBox
                 dataSource={groupCodeSource}
-                onValueChanged={(e) => setGroupCode(e.value)}
+                onValueChanged={onCodeSelected}
                 searchEnabled={true}
                 placeholder="Select a Group Code"
+                displayExpr="groupDesc"
+                valueExpr="groupCode"
+                itemRender={getItemCode}
                 height={30}
                 style={{ fontSize: "12px" }}
                 className="border pl-1 text-center w-full  outline-none"
-              />
+              >
+                {" "}
+                <Validator>
+                  <RequiredRule message="Group code is required" />
+                </Validator>
+              </SelectBox>
             </div>
           ) : (
             <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
@@ -142,8 +161,6 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
                 <sup className="text-red-600">*</sup>Group Code
               </label>
               <TextBox
-                placeholder="Type scheme position here"
-                onValueChanged={(e) => setGroupCode(e.value)}
                 value={groupCode}
                 height={30}
                 disabled={statusMode === "EditMode" && true}
@@ -180,8 +197,6 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
                 <sup className="text-red-600">*</sup>UserName
               </label>
               <TextBox
-                placeholder="Select a UserName"
-                onValueChanged={(e) => setGroupCode(e.value)}
                 value={userName}
                 height={30}
                 disabled={statusMode === "EditMode" && true}
@@ -202,7 +217,7 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
               placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height={30}
+              height="5vh"
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >

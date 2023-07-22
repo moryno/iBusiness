@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import RightBarHeader from "../../Shared/DetailsComponents/RightBarHeader";
 import CustomActionModal from "../../../modals/CustomActionModal";
-
 import UserGroupForm from "../UserGroup/UserGroupForm";
 import { useNavigate } from "react-router-dom";
 
@@ -13,9 +12,11 @@ const SecurityRightBar = ({ customAction }) => {
     (menu) => {
       switch (menu) {
         case "User Groups":
-          navigate("/dashboard/users/user-groups");
+          navigate("/dashboard/SAD/user-groups");
           break;
-
+        case "Group Roles":
+          navigate("/dashboard/SAD/group-roles");
+          break;
         case "Delete":
           break;
         case "Close":
