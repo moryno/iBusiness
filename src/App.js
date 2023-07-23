@@ -32,218 +32,190 @@ function App() {
     <Router>
       <ScrollToTop>
         <Routes>
-          <Route path="/">
-            <Route
-              index
-              element={
-                <FrontendLayout>
-                  <LandingPage />
-                </FrontendLayout>
-              }
-            ></Route>
-            <Route
-              path="pricing"
-              element={
-                <FrontendLayout>
-                  <ProductsView />
-                </FrontendLayout>
-              }
-            ></Route>
-            <Route
-              path="company"
-              element={
-                <FrontendLayout>
-                  <Company />
-                </FrontendLayout>
-              }
-            ></Route>
-            <Route
-              path="support"
-              element={
-                <FrontendLayout>
-                  <Support />
-                </FrontendLayout>
-              }
-            ></Route>
-            <Route
-              path="onboarding"
-              element={
-                <FrontendLayout>
-                  <Onboarding />
-                </FrontendLayout>
-              }
-            ></Route>
-          </Route>
-          <Route path="dashboard">
-            <Route
-              index
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="bookings">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Booking />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path=":id/view"
-                element={
-                  <ProtectedRoute>
-                    <BookingDetail />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="orders">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Orders />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path=":id/view"
-                element={
-                  <ProtectedRoute>
-                    <OrderDetail />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="new"
-                element={
-                  <ProtectedRoute>
-                    <PurchaseOrder orderstate={0} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path=":id/update"
-                element={
-                  <ProtectedRoute>
-                    <PurchaseOrder orderstate={1} />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="SAD">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="users">
-                <Route
-                  index
-                  element={
-                    <ProtectedRoute>
-                      <User />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path=":id/view"
-                  element={
-                    <ProtectedRoute>
-                      <UserDetails />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-              <Route path="security-groups">
-                <Route
-                  index
-                  element={
-                    <ProtectedRoute>
-                      <SecurityGroup />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path=":id/view"
-                  element={
-                    <ProtectedRoute>
-                      <SecurityDetails />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-              <Route path="user-groups">
-                <Route
-                  index
-                  element={
-                    <ProtectedRoute>
-                      <UserGroup />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path=":id/view"
-                  element={
-                    <ProtectedRoute>
-                      <UserGroupDetails />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-              <Route path="roles">
-                <Route
-                  index
-                  element={
-                    <ProtectedRoute>
-                      <Roles />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path=":id/view"
-                  element={
-                    <ProtectedRoute>
-                      <RolesDetails />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-              <Route path="group-roles">
-                <Route
-                  index
-                  element={
-                    <ProtectedRoute>
-                      <GroupRoles />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path=":id/view"
-                  element={
-                    <ProtectedRoute>
-                      <GroupRolesDetails />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-              <Route
-                path="profile"
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-          </Route>
+          <Route
+            path="/"
+            element={
+              <FrontendLayout>
+                <LandingPage />
+              </FrontendLayout>
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              <FrontendLayout>
+                <ProductsView />
+              </FrontendLayout>
+            }
+          />
+          <Route
+            path="/company"
+            element={
+              <FrontendLayout>
+                <Company />
+              </FrontendLayout>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <FrontendLayout>
+                <Support />
+              </FrontendLayout>
+            }
+          />
+          <Route
+            path="/onboarding"
+            element={
+              <FrontendLayout>
+                <Onboarding />
+              </FrontendLayout>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/bookings"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/bookings/:id/view"
+            element={
+              <ProtectedRoute>
+                <BookingDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/orders"
+            element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/orders/:id/view"
+            element={
+              <ProtectedRoute>
+                <OrderDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/orders/new"
+            element={
+              <ProtectedRoute>
+                <PurchaseOrder orderstate={0} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/orders/:id/update"
+            element={
+              <ProtectedRoute>
+                <PurchaseOrder orderstate={1} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/users"
+            element={
+              <ProtectedRoute>
+                <User />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/users/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/users/:id/view"
+            element={
+              <ProtectedRoute>
+                <UserDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/security-groups"
+            element={
+              <ProtectedRoute>
+                <SecurityGroup />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/security-groups/:id/view"
+            element={
+              <ProtectedRoute>
+                <SecurityDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/user-groups"
+            element={
+              <ProtectedRoute>
+                <UserGroup />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/user-groups/:id/view"
+            element={
+              <ProtectedRoute>
+                <UserGroupDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/roles"
+            element={
+              <ProtectedRoute>
+                <Roles />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/roles/:id/view"
+            element={
+              <ProtectedRoute>
+                <RolesDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/group-roles"
+            element={
+              <ProtectedRoute>
+                <GroupRoles />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD/group-roles/:id/view"
+            element={
+              <ProtectedRoute>
+                <GroupRolesDetails />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="*"
             element={

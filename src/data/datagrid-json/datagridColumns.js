@@ -335,7 +335,6 @@ export const usersColumns = [
   },
   {
     dataField: "userName",
-    width: 150,
   },
   {
     dataField: "fullNames",

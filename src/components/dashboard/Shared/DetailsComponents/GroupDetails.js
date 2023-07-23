@@ -11,6 +11,7 @@ const GroupDetails = ({ data, title }) => {
       return e;
     }
   };
+
   return (
     <main className="lg:rounded-md h-screen md:h-full flex flex-col gap-3 p-0 lg:px-5 lg:py-2">
       <section>
@@ -23,7 +24,7 @@ const GroupDetails = ({ data, title }) => {
             key={key}
             className="w-full md:w-[70%] flex justify-between gap-1 items-center border-b border-gray-300"
           >
-            <h3 className=" font-light text-xs">{key}:</h3>
+            <h3 className="capitalize font-light text-xs">{key}:</h3>
             <h5 className="font-medium text-sm">
               {handleDataValue(data[key])}
             </h5>

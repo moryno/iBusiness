@@ -91,7 +91,7 @@ const DataTable = ({
             text: "Delete",
             icon: "trash",
             onItemClick: () => {
-              openConfirmationPopup(e.row);
+              openConfirmationPopup(e.row.key);
             },
           }
         );
@@ -111,6 +111,16 @@ const DataTable = ({
       operator,
       value,
     })),
+  };
+
+  const handleDataValue = (data) => {
+    if (data.value === true) {
+      return "True";
+    } else if (data.value === false) {
+      return "False";
+    } else {
+      return data.value;
+    }
   };
 
   return (
@@ -168,7 +178,7 @@ const DataTable = ({
                         data-row-key={data.key}
                         data-column-index={data.columnIndex}
                       >
-                        {data.value}
+                        {handleDataValue(data)}
                       </div>
                     );
                   }

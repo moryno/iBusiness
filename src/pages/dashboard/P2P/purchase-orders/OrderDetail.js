@@ -6,14 +6,18 @@ import {
   userGroupActionsSource,
   updateMenuSource,
 } from "../../../../data/dashboard-page/menu";
-import { deleteOrderTitle, orderDetailTitle } from "../../../../data/headingFooterTitle";
+import {
+  deleteOrderTitle,
+  orderDetailTitle,
+} from "../../../../data/headingFooterTitle";
 import GridItemContent from "../../../../components/dashboard/Shared/DetailsComponents/GridItemContent";
-import DetailsRightBar from "../../../../components/dashboard/Shared/DetailsComponents/DetailsRightBar";
+
 import { toast } from "react-toastify";
 import { deletePurchaseOrderSuccess } from "../../../../redux/reducers/purchaseOrderSlice";
 import ConfirmationPopupComponent from "../../../../components/dashboard/Shared/ConfirmationPopupComponent";
 import Portal from "../../../../components/modals/Portal";
 import { useDispatch } from "react-redux";
+import DetailsRightBar from "../../../../components/dashboard/P2P/PurchaseOrder/DetailsRightBar";
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -32,7 +36,6 @@ const OrderDetail = () => {
     getSingleBooking();
   }, [id]);
 
-
   const openConfirmationPopup = useCallback(async (rowItem) => {
     if (rowItem === null) {
       toast.warning(
@@ -50,18 +53,18 @@ const OrderDetail = () => {
   };
 
   const handleDelete = async () => {
-      const action = `/PO/deleteOrder?orderNumber=${id}`;
-      try {
-        await OnboardingService.delete(action);
-        dispatch(deletePurchaseOrderSuccess(id));
-        toast.success("Order deleted successfully.");
-        setConfirmDelete(false);
-        navigate(-1)
-      } catch (Ex) {
-        console.log(Ex)
-        toast.error("Order deletion failed. Please try again.")
-        setConfirmDelete(false);
-      }
+    const action = `/PO/deleteOrder?orderNumber=${id}`;
+    try {
+      await OnboardingService.delete(action);
+      dispatch(deletePurchaseOrderSuccess(id));
+      toast.success("Order deleted successfully.");
+      setConfirmDelete(false);
+      navigate(-1);
+    } catch (Ex) {
+      console.log(Ex);
+      toast.error("Order deletion failed. Please try again.");
+      setConfirmDelete(false);
+    }
   };
 
   const handleClick = (menu) => {

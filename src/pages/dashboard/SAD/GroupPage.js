@@ -57,6 +57,7 @@ const GroupPage = ({
   }, []);
 
   const selectRowItem = useCallback(({ key }) => {
+    console.log(key);
     if (key) {
       setSelectedRecordId(key);
     }
@@ -76,6 +77,7 @@ const GroupPage = ({
         "You must select one or more records before you can perform this action."
       );
     } else {
+      setSelectedRecordId(rowItem);
       setStatusMode("DeleteMode");
       setConfirmDelete((confirmDelete) => !confirmDelete);
     }
@@ -151,6 +153,7 @@ const GroupPage = ({
             startEdit={startEdit}
             selectRowItem={selectRowItem}
             filterValues={filterValues}
+            openConfirmationPopup={openConfirmationPopup}
           />
 
           <Statusbar footer={footer} company={company} />

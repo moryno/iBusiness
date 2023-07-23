@@ -2,9 +2,9 @@ import { ImUndo2 } from "react-icons/im";
 import { useCallback, useEffect, useState } from "react";
 import {
   Button,
+  CheckBox,
   DateBox,
   SelectBox,
-  Switch,
   TextBox,
   Validator,
 } from "devextreme-react";
@@ -31,6 +31,8 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
   const [roleName, setRoleName] = useState(
     statusMode === "EditMode" ? singleRecord.roleName : ""
   );
+  const [selectAllSwitch, setSelectAllSwitch] = useState(false);
+  const [deselectAllSwitch, setDeSelectAllSwitch] = useState(false);
   const [view, setView] = useState(
     statusMode === "EditMode" ? singleRecord.view : false
   );
@@ -87,15 +89,72 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
     // eslint-disable-next-line
   }, []);
 
-  // const onSelectAll = (e) => {
-  //   const selectAllState = e.value;
-  //   setView(selectAllState);
-  //   setAdd(selectAllState);
-  //   setEdit(selectAllState);
-  //   setDelete(selectAllState);
-  //   setExport(selectAllState);
-  //   setImport(selectAllState);
-  // };
+  const onSelectAllChanged = useCallback((e) => {
+    const selectedAll = e.value;
+    if (selectedAll) {
+      setView(selectedAll);
+      setAdd(selectedAll);
+      setEdit(selectedAll);
+      setDelete(selectedAll);
+      setExport(selectedAll);
+      setImport(selectedAll);
+      setDeSelectAllSwitch(!selectedAll);
+    }
+  }, []);
+
+  const onDeSelectAllChanged = useCallback((e) => {
+    const deselectedAll = e.value;
+    setDeSelectAllSwitch(deselectedAll);
+    if (deselectedAll) {
+      setView(false);
+      setAdd(false);
+      setEdit(false);
+      setDelete(false);
+      setExport(false);
+      setImport(false);
+      setSelectAllSwitch(!deselectedAll);
+    }
+  }, []);
+
+  useEffect(() => {
+    const allSwitches = [view, add, edit, isDelete, isExport, isImport];
+    const allOn = allSwitches.every((switchValue) => switchValue === true);
+    const allOff = allSwitches.every((switchValue) => switchValue === false);
+    setSelectAllSwitch(allOn);
+    setDeSelectAllSwitch(allOff);
+  }, [add, edit, isDelete, isExport, isImport, view]);
+
+  const onViewValueChanged = useCallback((e) => {
+    setView(e.value);
+  }, []);
+
+  const onAddValueChanged = useCallback((e) => {
+    setAdd(e.value);
+  }, []);
+
+  const onEditValueChanged = useCallback((e) => {
+    setEdit(e.value);
+  }, []);
+
+  const onDeleteValueChanged = useCallback((e) => {
+    setDelete(e.value);
+  }, []);
+
+  const onExportValueChanged = useCallback((e) => {
+    setExport(e.value);
+  }, []);
+
+  const onImportValueChanged = useCallback((e) => {
+    setImport(e.value);
+  }, []);
+
+  const onEffectiveChanged = useCallback((e) => {
+    setEffectiveDate(e.value);
+  }, []);
+
+  const onExpiryValueChanged = useCallback((e) => {
+    setExpiryDate(e.value);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -250,14 +309,35 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             </div>
           )}
 
-          <div className="box-border border-b px-1 py-1 w-full flex items-center gap-2 mb-2">
-            <label
-              className="text-[12px] text-label font-semibold"
-              htmlFor="narration"
-            >
-              <sup className="text-red-600">*</sup>Select all
-            </label>
-            <Switch height={30} />
+          <div className="box-border border-b px-1 py-1 w-full flex items-center justify-between mb-3">
+            <div className="w-1/2 flex items-center gap-2">
+              <label
+                className="text-[12px] text-label font-semibold"
+                htmlFor="narration"
+              >
+                <sup className="text-red-600">*</sup>Select all
+              </label>
+              <CheckBox
+                height={30}
+                onValueChanged={onSelectAllChanged}
+                value={selectAllSwitch}
+                disabled={selectAllSwitch}
+              />
+            </div>
+            <div className="w-1/2 flex items-center gap-2">
+              <label
+                className="text-[12px] text-label font-semibold"
+                htmlFor="narration"
+              >
+                <sup className="text-red-600">*</sup>Deselect all
+              </label>
+              <CheckBox
+                height={30}
+                onValueChanged={onDeSelectAllChanged}
+                value={deselectAllSwitch}
+                disabled={deselectAllSwitch}
+              />
+            </div>
           </div>
 
           <div className="box-border border rounded-[4px] px-1 w-full items-center flex justify-between mb-2">
@@ -267,7 +347,11 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             >
               <sup className="text-red-600">*</sup>View
             </label>
-            <Switch onValueChanged={(e) => setView(e.value)} height={30} />
+            <CheckBox
+              onValueChanged={onViewValueChanged}
+              value={view}
+              height={30}
+            />
           </div>
 
           <div className="box-border border rounded-[4px] px-1 w-full items-center flex justify-between mb-2">
@@ -277,9 +361,9 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             >
               <sup className="text-red-600">*</sup>Add
             </label>
-            <Switch
-              onValueChanged={(e) => setAdd(e.value)}
-              //value={add}
+            <CheckBox
+              onValueChanged={onAddValueChanged}
+              value={add}
               height={30}
             />
           </div>
@@ -291,9 +375,9 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             >
               <sup className="text-red-600">*</sup>Edit
             </label>
-            <Switch
-              onValueChanged={(e) => setEdit(e.value)}
-              //value={edit}
+            <CheckBox
+              onValueChanged={onEditValueChanged}
+              value={edit}
               height={30}
             />
           </div>
@@ -305,9 +389,9 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             >
               <sup className="text-red-600">*</sup>Delete
             </label>
-            <Switch
-              onValueChanged={(e) => setDelete(e.value)}
-              //value={isDelete}
+            <CheckBox
+              onValueChanged={onDeleteValueChanged}
+              value={isDelete}
               height={30}
             />
           </div>
@@ -319,9 +403,9 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             >
               <sup className="text-red-600">*</sup>Export
             </label>
-            <Switch
-              onValueChanged={(e) => setExport(e.value)}
-              // value={isExport}
+            <CheckBox
+              onValueChanged={onExportValueChanged}
+              value={isExport}
               height={30}
             />
           </div>
@@ -333,9 +417,9 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
             >
               <sup className="text-red-600">*</sup>Import
             </label>
-            <Switch
-              onValueChanged={(e) => setImport(e.value)}
-              // value={isImport}
+            <CheckBox
+              onValueChanged={onImportValueChanged}
+              value={isImport}
               height={30}
             />
           </div>
@@ -347,7 +431,7 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
               <sup className="text-red-600">*</sup>Effective Date
             </label>
             <DateBox
-              onValueChanged={(e) => setEffectiveDate(e.value)}
+              onValueChanged={onEffectiveChanged}
               value={effectiveDate}
               height={30}
               style={{ fontSize: "12px" }}
@@ -362,7 +446,7 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
               <sup className="text-red-600">*</sup>Expiry Date
             </label>
             <DateBox
-              onValueChanged={(e) => setExpiryDate(e.value)}
+              onValueChanged={onExpiryValueChanged}
               value={expiryDate}
               height={30}
               style={{ fontSize: "12px" }}
