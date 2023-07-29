@@ -1,7 +1,8 @@
 import { RiMenuUnfoldFill } from "react-icons/ri";
 import { useState } from "react";
+import MobileActions from "../NavBarFooter/MobileActions";
 
-const MobileMenus = ({ onMenuClick, menus }) => {
+const MobileMenus = ({ onMenuClick, menus, customActions, onActionClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <main className="md:hidden">
@@ -26,6 +27,12 @@ const MobileMenus = ({ onMenuClick, menus }) => {
               {menu.title}
             </li>
           ))}
+          {customActions && (
+            <MobileActions
+              customActions={customActions}
+              onActionClick={onActionClick}
+            />
+          )}
         </ul>
       )}
     </main>

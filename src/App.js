@@ -97,7 +97,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/orders"
+            path="/dashboard/P2P/orders"
             element={
               <ProtectedRoute>
                 <Orders />
@@ -105,7 +105,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/orders/:id/view"
+            path="/dashboard/P2P/orders/:id/view"
             element={
               <ProtectedRoute>
                 <OrderDetail />
@@ -113,7 +113,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/orders/new"
+            path="/dashboard/P2P/orders/new"
             element={
               <ProtectedRoute>
                 <PurchaseOrder orderstate={0} />
@@ -121,10 +121,18 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/orders/:id/update"
+            path="/dashboard/P2P/orders/:id/update"
             element={
               <ProtectedRoute>
                 <PurchaseOrder orderstate={1} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/SAD"
+            element={
+              <ProtectedRoute>
+                <Home />
               </ProtectedRoute>
             }
           />

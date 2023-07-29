@@ -5,7 +5,6 @@ import {
   CheckBox,
   DateBox,
   SelectBox,
-  TextBox,
   Validator,
 } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
@@ -23,6 +22,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [groupCodeSource, setGroupCodeSource] = useState([]);
   const [groupCode, setGroupCode] = useState(
     statusMode === "EditMode" ? singleRecord.groupCode : ""
@@ -58,17 +58,17 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
     statusMode === "EditMode" ? singleRecord.expiryDate : today
   );
 
-  const getGroupCodes = async () => {
-    const url = "/SecurityGroups/GetGroupCode";
+  const getGroupCodes = useCallback(async () => {
+    const url = "/UserGroups/GetGroupCode";
     const response = await SadService.get(url);
     setGroupCodeSource(response);
-  };
+  }, []);
 
-  const getRoleNames = async () => {
+  const getRoleNames = useCallback(async () => {
     const url = "/Roles/GetRoleNames";
     const response = await SadService.get(url);
     setRoleNameSource(response);
-  };
+  }, []);
 
   const getItemCode = useCallback((data) => {
     return (
@@ -86,8 +86,7 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
   useEffect(() => {
     getGroupCodes();
     getRoleNames();
-    // eslint-disable-next-line
-  }, []);
+  }, [getGroupCodes, getRoleNames]);
 
   const onSelectAllChanged = useCallback((e) => {
     const selectedAll = e.value;
@@ -158,7 +157,7 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const formData = {
       groupCode,
       roleName,
@@ -174,7 +173,7 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
 
     if (statusMode === "CreateMode") {
       try {
-        if (expiryDate >= effectiveDate) {
+        if (expiryDate > effectiveDate) {
           const response = await SadService.post(
             "/GroupRoles/Create",
             formData
@@ -182,20 +181,28 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
           if (response?.dbResponse?.responseCode === "01") {
             dispatch(addGroupRolesSuccess(response?.groupRole));
             toast.success(response?.dbResponse?.responseMsg);
+          } else if (response?.dbResponse?.responseCode === "02") {
+            dispatch(updateGroupRolesSuccess(response?.groupRole));
+            toast.success(response?.dbResponse?.responseMsg);
+          } else if (response.status === 401) {
+            toast.error(response?.message);
           } else {
             toast.error(response?.dbResponse?.responseMsg);
           }
+          setLoading(false);
           handleClose();
         } else {
-          toast.error("Expiry date should not be less than effective date.");
+          setLoading(false);
+          toast.error("Expiry date should be greater than effective date.");
         }
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
     if (statusMode === "EditMode") {
       try {
-        if (expiryDate >= effectiveDate) {
+        if (expiryDate > effectiveDate) {
           const response = await SadService.post(
             "/GroupRoles/Create",
             formData
@@ -204,14 +211,18 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
           if (response?.dbResponse?.responseCode === "02") {
             dispatch(updateGroupRolesSuccess(response?.groupRole));
             toast.success(response?.dbResponse?.responseMsg);
+          } else if (response.status === 401) {
+            toast.error(response?.message);
           } else {
             toast.error(response?.dbResponse?.responseMsg);
           }
+          setLoading(false);
           handleClose();
         } else {
           toast.error("Expiry date should not be less than effective date.");
         }
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -224,90 +235,58 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
         className="flex flex-col h-full justify-between"
       >
         <article className="flex px-5  flex-wrap  w-full">
-          {statusMode === "CreateMode" ? (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>Group Code
-              </label>
-              <SelectBox
-                dataSource={groupCodeSource}
-                onValueChanged={onCodeSelected}
-                searchEnabled={true}
-                placeholder="Select a Group Code"
-                height={30}
-                displayExpr="groupDesc"
-                valueExpr="groupCode"
-                itemRender={getItemCode}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              >
-                {" "}
-                <Validator>
-                  <RequiredRule message="Group code is required" />
-                </Validator>
-              </SelectBox>
-            </div>
-          ) : (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>Group Code
-              </label>
-              <TextBox
-                placeholder="Type group code here"
-                value={groupCode}
-                height={30}
-                disabled={statusMode === "EditMode" && true}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              ></TextBox>
-            </div>
-          )}
-          {statusMode === "CreateMode" ? (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>Role Name
-              </label>
-              <SelectBox
-                dataSource={roleNameSource}
-                onValueChanged={(e) => setRoleName(e.value)}
-                searchEnabled={true}
-                placeholder="Select a Group Code"
-                height={30}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              >
-                {" "}
-                <Validator>
-                  <RequiredRule message="Role name is required" />
-                </Validator>
-              </SelectBox>
-            </div>
-          ) : (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>Role Name
-              </label>
-              <TextBox
-                value={groupCode}
-                height={30}
-                disabled={statusMode === "EditMode" && true}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              ></TextBox>
-            </div>
-          )}
+          <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+            <label
+              className="text-[11px] text-label font-semibold"
+              htmlFor="groupCode"
+            >
+              <sup className="text-red-600">*</sup>Group Code
+            </label>
+            <SelectBox
+              dataSource={groupCodeSource}
+              onValueChanged={onCodeSelected}
+              searchEnabled={true}
+              placeholder="Select a Group Code"
+              displayExpr="groupDesc"
+              valueExpr="groupCode"
+              value={groupCode}
+              disabled={statusMode === "EditMode" && true}
+              itemRender={getItemCode}
+              height={30}
+              style={{ fontSize: "12px" }}
+              className="border pl-1 text-center w-full  outline-none"
+            >
+              {" "}
+              <Validator>
+                <RequiredRule message="Group code is required" />
+              </Validator>
+            </SelectBox>
+          </div>
+
+          <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+            <label
+              className="text-[11px] text-label font-semibold"
+              htmlFor="groupCode"
+            >
+              <sup className="text-red-600">*</sup>Role Name
+            </label>
+            <SelectBox
+              dataSource={roleNameSource}
+              onValueChanged={(e) => setRoleName(e.value)}
+              searchEnabled={true}
+              placeholder="Select a Group Code"
+              value={roleName}
+              disabled={statusMode === "EditMode" && true}
+              height={30}
+              style={{ fontSize: "12px" }}
+              className="border pl-1 text-center w-full  outline-none"
+            >
+              {" "}
+              <Validator>
+                <RequiredRule message="Role name is required" />
+              </Validator>
+            </SelectBox>
+          </div>
 
           <div className="box-border border-b px-1 py-1 w-full flex items-center justify-between mb-3">
             <div className="w-1/2 flex items-center gap-2">
@@ -455,7 +434,11 @@ const GroupRolesForm = ({ handleClose, singleRecord, statusMode }) => {
           </div>
         </article>
         <article className="w-full border-t border-gray-300 py-1.5 bg-white sticky inset-x-0 bottom-0 flex justify-center items-center gap-4">
-          <Button id="devBlueButton" useSubmitBehavior={true}>
+          <Button
+            id="devBlueButton"
+            disabled={loading}
+            useSubmitBehavior={true}
+          >
             {" "}
             <FcAddDatabase fontSize={20} /> Save
           </Button>

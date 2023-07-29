@@ -15,6 +15,7 @@ import {
 
 const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [groupCodeSource, setGroupCodeSource] = useState([]);
 
   const [groupCode, setGroupCode] = useState(
@@ -22,26 +23,25 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
   );
   const [users, setUsers] = useState([]);
   const [userNames, setUserNames] = useState([]);
-  const [userName] = useState(
-    statusMode === "EditMode" && singleRecord.userName
+  const [selecteduserName, setSelectedUserName] = useState(
+    statusMode === "EditMode" ? singleRecord.userName : ""
   );
-  const [selecteduserName, setSelectedUserName] = useState("");
   const [narration, setNarration] = useState(
     statusMode === "EditMode" ? singleRecord.narration : ""
   );
 
-  const getGroupCodes = async () => {
+  const getGroupCodes = useCallback(async () => {
     const url = "/SecurityGroups/GetGroupCode";
     const response = await SadService.get(url);
     setGroupCodeSource(response);
-  };
+  }, []);
 
-  const getAllUsers = async () => {
+  const getAllUsers = useCallback(async () => {
     const url = "/UserGroups/GetAllUsers";
     const response = await SadService.get(url);
     setUsers(response);
     setUserNames(response?.map((user) => user.userName));
-  };
+  }, []);
 
   const getItemCode = useCallback((data) => {
     return (
@@ -67,12 +67,11 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
   useEffect(() => {
     getAllUsers();
     getGroupCodes();
-    // eslint-disable-next-line
-  }, []);
+  }, [getAllUsers, getGroupCodes]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const user = getUser();
     const formData = {
       groupCode,
@@ -93,11 +92,17 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
         if (response?.dbResponse?.responseCode === "01") {
           dispatch(addUserGroupsSuccess(response?.userGroup));
           toast.success(response.dbResponse.responseMsg);
+        } else if (response.status === 401) {
+          toast.error(response?.message);
+        } else if (response.responseCode === "999") {
+          toast.error(response.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);
         }
+        setLoading(false);
         handleClose();
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -108,12 +113,17 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
         if (response?.dbResponse?.responseCode === "00") {
           dispatch(updateUserGroupsSuccess(response?.userGroup));
           toast.success(response.dbResponse.responseMsg);
+        } else if (response.status === 401) {
+          toast.error(response?.message);
+        } else if (response.responseCode === "999") {
+          toast.error(response.responseMsg);
         } else {
           toast.error(response.dbResponse.responseMsg);
         }
-
+        setLoading(false);
         handleClose();
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -126,85 +136,53 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
         className="flex flex-col h-full justify-between"
       >
         <article className="flex px-5  flex-wrap  w-full">
-          {statusMode === "CreateMode" ? (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>Group Code
-              </label>
-              <SelectBox
-                dataSource={groupCodeSource}
-                onValueChanged={onCodeSelected}
-                searchEnabled={true}
-                placeholder="Select a Group Code"
-                displayExpr="groupDesc"
-                valueExpr="groupCode"
-                itemRender={getItemCode}
-                height={30}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              >
-                {" "}
-                <Validator>
-                  <RequiredRule message="Group code is required" />
-                </Validator>
-              </SelectBox>
-            </div>
-          ) : (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>Group Code
-              </label>
-              <TextBox
-                value={groupCode}
-                height={30}
-                disabled={statusMode === "EditMode" && true}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              ></TextBox>
-            </div>
-          )}
-          {statusMode === "CreateMode" ? (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="userName"
-              >
-                <sup className="text-red-600">*</sup>UserName
-              </label>
-              <SelectBox
-                dataSource={userNames}
-                onValueChanged={(e) => setSelectedUserName(e.value)}
-                searchEnabled={true}
-                placeholder="Select a UserName"
-                height={30}
-                disabled={statusMode === "EditMode" && true}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              />
-            </div>
-          ) : (
-            <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
-              <label
-                className="text-[11px] text-label font-semibold"
-                htmlFor="groupCode"
-              >
-                <sup className="text-red-600">*</sup>UserName
-              </label>
-              <TextBox
-                value={userName}
-                height={30}
-                disabled={statusMode === "EditMode" && true}
-                style={{ fontSize: "12px" }}
-                className="border pl-1 text-center w-full  outline-none"
-              ></TextBox>
-            </div>
-          )}
+          <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+            <label
+              className="text-[11px] text-label font-semibold"
+              htmlFor="groupCode"
+            >
+              <sup className="text-red-600">*</sup>Group Code
+            </label>
+            <SelectBox
+              dataSource={groupCodeSource}
+              onValueChanged={onCodeSelected}
+              searchEnabled={true}
+              placeholder="Select a Group Code"
+              displayExpr="groupDesc"
+              valueExpr="groupCode"
+              value={groupCode}
+              disabled={statusMode === "EditMode" && true}
+              itemRender={getItemCode}
+              height={30}
+              style={{ fontSize: "12px" }}
+              className="border pl-1 text-center w-full  outline-none"
+            >
+              {" "}
+              <Validator>
+                <RequiredRule message="Group code is required" />
+              </Validator>
+            </SelectBox>
+          </div>
+
+          <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
+            <label
+              className="text-[11px] text-label font-semibold"
+              htmlFor="userName"
+            >
+              <sup className="text-red-600">*</sup>UserName
+            </label>
+            <SelectBox
+              dataSource={userNames}
+              onValueChanged={(e) => setSelectedUserName(e.value)}
+              searchEnabled={true}
+              placeholder="Select a UserName"
+              value={selecteduserName}
+              height={30}
+              disabled={statusMode === "EditMode" && true}
+              style={{ fontSize: "12px" }}
+              className="border pl-1 text-center w-full  outline-none"
+            />
+          </div>
 
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
             <label
@@ -217,7 +195,7 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
               placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height="5vh"
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
@@ -229,7 +207,11 @@ const UserGroupForm = ({ singleRecord, handleClose, statusMode }) => {
           </div>
         </article>
         <article className="w-full border-t border-gray-300 py-1.5 bg-white sticky inset-x-0 bottom-0 flex justify-center items-center gap-4">
-          <Button id="devBlueButton" useSubmitBehavior={true}>
+          <Button
+            id="devBlueButton"
+            disabled={loading}
+            useSubmitBehavior={true}
+          >
             {" "}
             <FcAddDatabase fontSize={20} /> Save
           </Button>

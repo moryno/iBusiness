@@ -10,11 +10,11 @@ import { Table } from "../../../../components/dashboard/Shared/DataGrids/Table";
 import { MessageDiv } from "../../../../components/dashboard/P2P/PurchaseOrder/Message";
 import { useNavigate, useParams } from "react-router-dom";
 import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Statusbar";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import OnboardingService from "../../../../ClientServices/onboardingRequest";
 import DesktopMenus from "../../../../components/dashboard/Shared/Menus/DesktopMenus";
 import { toast } from "react-toastify";
-import { SpinnerIcon } from "../../../../components/frontend/UI/SpinnerIcon";
+import { Loader } from "../../loader/Loader";
 
 export const PurchaseOrder = ({ orderstate }) => {
   const [currentmessage, setMessage] = useState();
@@ -24,7 +24,7 @@ export const PurchaseOrder = ({ orderstate }) => {
     tableData: "",
   });
   const [initialRender, setInitialRender] = useState(true);
-  const currentUser = useSelector((state) => state.user?.currentUser?.user);
+  // const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const [formUpdateData, setFormUpdateData] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ export const PurchaseOrder = ({ orderstate }) => {
           console.log(e);
           setMessage("An error occured. Please refresh the page.");
         }
-        setLoading(false)
+        setLoading(false);
         setMessage("");
       };
 
@@ -62,31 +62,31 @@ export const PurchaseOrder = ({ orderstate }) => {
     } else {
       async function getData() {
         try {
-          setMessage("Checking for pending orders...");
-          const response = await OnboardingService.get(
-            `/PO/getorderitems?userid=${currentUser?.email}`
-          );
-          data.store().clear();
-          response.orderItems.map((item) => {
-            return data.store().insert(item);
-          });
-          if (response.orderInformation.length === 0) {
-            setInitialRender(false);
-          } else {
-            setFormUpdateData(response.orderInformation[0]);
-          }
-          data.reload();
-          setMessage("Order restored.");
-          setInitialRender(false)
+          setInitialRender(false);
+          // setMessage("Checking for pending orders...");
+          // const response = await OnboardingService.get(
+          //   `/PO/getorderitems?userid=${currentUser?.email}`
+          // );
+          // data.store().clear();
+          // response.orderItems.map((item) => {
+          //   return data.store().insert(item);
+          // });
+          // if (response.orderInformation.length === 0) {
+          //   setInitialRender(false);
+          // } else {
+          //   setFormUpdateData(response.orderInformation[0]);
+          // }
+          // data.reload();
+          // setMessage("Order restored.");
+          // setInitialRender(false);
         } catch (e) {
           console.log(e);
           setMessage("Unable to fetch pending orders.");
         }
-        setLoading(false)
+        setLoading(false);
       }
       getData();
     }
-    
 
     const handleKeyUp = (e) => {
       if (e.code === "KeyS" && e.ctrlKey && e.shiftKey) {
@@ -152,6 +152,7 @@ export const PurchaseOrder = ({ orderstate }) => {
 
   return (
     <main className="purchase-order-page w-full min-h-full relative h-full">
+      {loading && <Loader />}
       <section>
         <DesktopMenus
           heading={
@@ -216,11 +217,6 @@ export const PurchaseOrder = ({ orderstate }) => {
         </div>
       </div>
       <Statusbar heading="Purchase Order Entry" company="iBusiness" />
-      {loading ? (
-        <div className="absolute h-full w-full top-0 left-0 bg-slate-600 bg-opacity-20 flex justify-center items-center">
-            <SpinnerIcon />
-        </div>
-      ) : <></>} 
     </main>
   );
 };

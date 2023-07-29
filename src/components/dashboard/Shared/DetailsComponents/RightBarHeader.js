@@ -1,17 +1,14 @@
-import { FaToolbox } from "react-icons/fa";
 import CustomActionsComponent from "../Menus/CustomActionsComponent";
 
 const RightBarHeader = ({ customAction, handleClick }) => {
   return (
-    <section className="flex flex-col gap-y-3 md:gap-1.5">
+    <section className="flex flex-col justify-between gap-y-3 md:gap-3">
       <article className="p-2">
-        <div className="flex items-center gap-x-2 font-semibold text-sm">
-          <FaToolbox className="text-menuText text-sm md:text-lg" /> Custom
-          Actions
+        <div className="flex items-center text-col text-sm capitalize font-semibold gap-x-2">
+          {'Quick Actions'}
         </div>
       </article>
-      <hr className="border h-0 border-gray-200" />
-      <article className="flex flex-wrap items-center">
+      <article className="flex flex-wrap items-center flex-col justify-center gap-3">
         <CustomActionsComponent
           customAction={customAction}
           handleClick={handleClick}

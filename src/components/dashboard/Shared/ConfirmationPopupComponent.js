@@ -10,6 +10,7 @@ const ConfirmationPopupComponent = ({
   code,
   statusBarText,
   onDelete,
+  loading,
 }) => {
   return (
     <main className="bg-white w-full md:w-[600px]  mx-auto h-fit">
@@ -34,6 +35,7 @@ const ConfirmationPopupComponent = ({
         <article className="flex bg-white px-2 pb-1 justify-center items-center gap-4">
           <button
             onClick={onDelete}
+            disabled={loading}
             className="flex gap-1 border-none  hover:bg-gray-200 py-1 px-4 w-fit bg-white text-menuText items-center font-medium  cursor-pointer text-xs"
           >
             <MdOutlineDeleteOutline fontSize={20} /> Delete

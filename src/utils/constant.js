@@ -2,6 +2,7 @@ const Constant = {
   ACTION: {
     STORE: "store/",
     DEFAULT: "DEFAULT/",
+    DASHBOARD: "/dashboard",
     CHECK_AUTH_STATE: "account/isloggedin",
     CATEGORY: "category/",
     CONTENT: "content/",
@@ -28,9 +29,10 @@ const Constant = {
     SHIPPING: "shipping",
     TOTAL: "total/",
     NEWSLETTER: "newsletter/",
+    PASSWORD_RESET: "/AccountSettings/PasswordReset",
     REGISTER: "register",
     CHECKOUT: "checkout",
-    PASSWORD: "password/",
+    USER_PROFILE_EDIT: "AccountSettings/UserProfileEdit",
     CONTACT: "contact/",
     ORDERS: "orders/",
     ADDRESS: "address",
@@ -54,7 +56,7 @@ const Constant = {
   },
   ROUTE: {
     BOOKING: "bookings",
-    ORDER: "orders",
+    ORDER: "P2P/orders",
   },
 };
 

@@ -13,6 +13,8 @@ import {
   groupRolesDetails,
 } from "../../../data/headingFooterTitle";
 import DetailsRightBar from "../../../components/dashboard/Shared/DetailsComponents/DetailsRightBar";
+import { Loader } from "../loader/Loader";
+import { RightBarFooter } from "./RightBarFooter";
 
 const DetailsPage = ({
   heading,
@@ -34,17 +36,31 @@ const DetailsPage = ({
   const [isOpen, setOpen] = useState(false);
   const [statusMode, setStatusMode] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
 
   useEffect(() => {
-    const getSingleBooking = async () => {
+    document.addEventListener("contextmenu", handleContextMenu);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+  useEffect(() => {
+    const getSingleRecord = async () => {
       const action = `/${url}/${id}`;
       const response = await SadService.get(action);
       setData(response);
     };
-    getSingleBooking();
+    getSingleRecord();
   }, [id, url]);
 
   const handleDelete = async () => {
+    setLoading(true);
     try {
       const action = `/${url}/${id}`;
       const response = await SadService.delete(action);
@@ -52,13 +68,17 @@ const DetailsPage = ({
       if (response?.responseCode === "02") {
         onDelete(id);
         setConfirmDelete(false);
+        setLoading(false);
         navigate(-1);
         toast.success(response?.responseMsg);
       } else {
         setConfirmDelete(false);
+        setLoading(false);
         toast.error("Cannot delete a group with assigned users.");
       }
     } catch (error) {
+      setLoading(false);
+      setConfirmDelete(false);
       console.log(error);
     }
   };
@@ -101,26 +121,28 @@ const DetailsPage = ({
   };
 
   return (
-    <main className="w-full min-h-full relative">
+    <main className="w-full h-full min-h-full relative">
+      {Object.keys(data).length ? null : <Loader />}
       <MenusGroupComponent
         menus={menus}
         heading={heading}
         onMenuClick={handleClick}
       />
-      <section className="mt-5 w-full gap-2 md:gap-0 flex flex-col-reverse md:flex-row">
+      <section className="w-full mt-1 h-[90%] gap-2 md:gap-0 flex flex-col-reverse md:flex-row">
         <article className="w-full px-2 md:w-9/12 lg:px-5 box-border">
           {Object.keys(data).length ? (
-            <DetailComponent data={data} title={`${title} code(${id})`} />
+            <DetailComponent data={data} title={`${title} ${id}`} />
           ) : (
             <SkeletonDetail />
           )}
         </article>
-        <article className="w-full px-2 md:w-3/12 lg:px-5 ">
+        <article className="w-full shadow-md py-6 flex flex-col gap-5 px-2 md:w-3/12 lg:px-5 ">
           <DetailsRightBar
             customAction={customAction}
             onActionClick={onActionClick}
             FormComponent={FormComponent}
           />
+          <RightBarFooter />
         </article>
       </section>
       <Statusbar footer={footer} company={company} />
@@ -148,6 +170,7 @@ const DetailsPage = ({
             statusBarText={groupRolesDetails.footer}
             statusMode={statusMode}
             onDelete={handleDelete}
+            loading={loading}
           />
         </Portal>
       )}

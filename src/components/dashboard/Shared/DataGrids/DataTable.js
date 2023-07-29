@@ -1,4 +1,11 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Pager,
@@ -17,7 +24,7 @@ import {
   getDataGridRef,
   handleExporting,
 } from "../../../../helpers/datagridFunctions";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DataTable = ({
   data,
@@ -32,6 +39,7 @@ const DataTable = ({
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
+  const navigate = useNavigate();
   const dataGridRef = useRef(null);
 
   const exportFormats = useMemo(() => {
@@ -72,17 +80,17 @@ const DataTable = ({
             icon: "export",
             items: [
               {
-                text: "Export all data to Excel",
+                text: "Export to Excel",
                 icon: "exportxlsx",
                 onItemClick: () => {
-                  handleExporting("Export all data to Excel");
+                  handleExporting("Export to Excel");
                 },
               },
               {
-                text: "Export all data to PDF",
+                text: "Export to PDF",
                 icon: "exportpdf",
                 onItemClick: () => {
-                  handleExporting("Export all data to PDF");
+                  handleExporting("Export to PDF");
                 },
               },
             ],
@@ -99,10 +107,6 @@ const DataTable = ({
     },
     [openConfirmationPopup, startEdit]
   );
-
-  const handleHyperlinkClick = useCallback((e) => {
-    e.target.style.color = "white";
-  }, []);
 
   const filterBuilder = {
     logic: "and",
@@ -122,6 +126,30 @@ const DataTable = ({
       return data.value;
     }
   };
+
+  const handleKeyDown = useCallback((event) => {
+    if (
+      (event.key === "a" || event.key === "A") &&
+      (event.ctrlKey || event.metaKey)
+    ) {
+      event.preventDefault();
+    } else if (
+      (event.key === "c" || event.key === "C") &&
+      (event.ctrlKey || event.metaKey)
+    ) {
+      event.preventDefault();
+    }
+  }, []);
+
+  useEffect(() => {
+    const element = dataGridRef.current?.instance?.element?.();
+    if (element) {
+      element.addEventListener("keydown", handleKeyDown);
+      return () => {
+        element.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [handleKeyDown]);
 
   return (
     <main className="mt-5">
@@ -160,16 +188,15 @@ const DataTable = ({
               column?.pk === true
                 ? (data) => {
                     return (
-                      <Link to={`/dashboard/${route}/${data.row.key}/view`}>
-                        <div
-                          data-row-key={data.key}
-                          onClick={(e) => handleHyperlinkClick(e, data)}
-                          data-column-index={data.columnIndex}
-                          className="pk-div"
-                        >
+                      <button
+                        onClick={() =>
+                          navigate(`/dashboard/${route}/${data.row.key}/view`)
+                        }
+                      >
+                        <div className="pk-div">
                           <span className="pk-hyperlink">Details...</span>
                         </div>
-                      </Link>
+                      </button>
                     );
                   }
                 : (data) => {

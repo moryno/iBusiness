@@ -1,12 +1,9 @@
-import { HiCheck } from "react-icons/hi";
-import { IoMdClose } from "react-icons/io";
-
 const GroupDetails = ({ data, title }) => {
   const handleDataValue = (e) => {
     if (e === true) {
-      return <HiCheck fontSize={20} />;
+      return "True";
     } else if (e === false) {
-      return <IoMdClose fontSize={20} />;
+      return "False";
     } else {
       return e;
     }

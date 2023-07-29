@@ -4,14 +4,39 @@ import { groupRolesActions } from "../../../../data/dashboard-page/moduleSource"
 import GridItemContent from "../../../../components/dashboard/Shared/DetailsComponents/GridItemContent";
 import { deleteGroupRolesuccess } from "../../../../redux/reducers/groupRoleSlice";
 import DetailsPage from "../DetailsPage";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import GroupRolesForm from "../../../../components/dashboard/SAD/GroupRoles/GroupRolesForm";
 import { useNavigate } from "react-router-dom";
 
 const GroupRolesDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const [filteredActions, setFilteredActions] = useState([]);
+  const { moduleMenus } = useSelector((state) => state.moduleCategory);
+
+  useEffect(() => {
+    const menuItem = updateMenuSource?.filter((item) =>
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems[
+        "grouproles"
+      ]?.permissions.includes(item.title)
+    );
+    const rolesAction = groupRolesActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["roles"]?.name ===
+        item.title
+    );
+    const userGroupsAction = groupRolesActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["usergroups"]
+          ?.name === item.title
+    );
+    const actionArray = rolesAction.concat(userGroupsAction);
+
+    setFilteredActions(actionArray);
+    setFilteredMenus(menuItem);
+  }, [dispatch, moduleMenus]);
 
   const onDelete = useCallback(
     (recordId) => {
@@ -23,19 +48,11 @@ const GroupRolesDetails = () => {
   const onCustomActionClick = useCallback(
     (menu) => {
       switch (menu) {
-        case "Security Groups":
-          navigate("/dashboard/SAD/security-groups");
+        case "User Groups":
+          navigate("/dashboard/SAD/user-groups");
           break;
         case "Roles":
-          navigate("/dashboard/SAD/roles");
-          break;
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
+          navigate("/dashboard/SAD/user-roles");
           break;
 
         default:
@@ -50,9 +67,9 @@ const GroupRolesDetails = () => {
       heading={groupRolesDetails.heading}
       footer={groupRolesDetails.footer}
       title={`${groupRolesDetails.title}`}
-      menus={updateMenuSource}
+      menus={filteredMenus}
       url={"GroupRoles"}
-      customAction={groupRolesActions}
+      customAction={filteredActions}
       onActionClick={onCustomActionClick}
       company={groupRolesDetails.company}
       deleteMsg={groupRolesDetails.heading}

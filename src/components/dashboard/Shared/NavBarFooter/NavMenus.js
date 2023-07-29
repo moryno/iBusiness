@@ -1,16 +1,19 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import { menus } from "../../../../helpers/myNavLinks";
 import { logout } from "../../../../redux/reducers/userSlice";
+
+import Constant from "../../../../utils/constant";
 
 const NavMenus = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
 
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
 
+  
   const handleLogOut = () => {
     dispatch(logout());
   };
@@ -19,7 +22,12 @@ const NavMenus = () => {
     if (link === "Sign Out") {
       handleLogOut();
     } else if (link === "Update Profile") {
-      navigate("/dashboard/profile");
+      navigate("/dashboard/SAD/users/profile");
+    } else if (link === "Change Password") {
+      window.location.href =
+        process.env.REACT_APP_BASE_URL +
+        process.env.REACT_APP_API_VERSION +
+        Constant.ACTION.PASSWORD_RESET;
     }
   };
 
@@ -36,7 +44,7 @@ const NavMenus = () => {
                   <article className="rounded-full overflow-hidden  w-20 h-20 flex items-center justify-center cursor-pointer absolute top-6 right-0 left-0 m-auto">
                     <img
                       className="w-full h-full object-cover"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                      src={currentUser?.imageLink??"https://pp-b5facpcqcnbmaecm.z01.azurefd.net/profilepic/default.jpg"}
                       alt="profile"
                     />
                   </article>
@@ -60,7 +68,9 @@ const NavMenus = () => {
                             className="text-sm text-heading py-2.5 hover:bg-bgDark"
                             onClick={() => handleClick(slink.name)}
                           >
-                            <Link to={slink.link}>{slink.name}</Link>
+                            {/* <a href={slink.link}> */}
+                            {slink.name}
+                            {/* </a> */}
                           </li>
                         ))}
                       </div>

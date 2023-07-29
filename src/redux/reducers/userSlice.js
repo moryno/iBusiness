@@ -42,7 +42,7 @@ const userSlice = createSlice({
     updateUserProfile: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
-        user: action.payload.user,
+        user: action.payload,
       };
     },
   },

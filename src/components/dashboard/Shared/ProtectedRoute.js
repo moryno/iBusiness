@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Layout from "../../../layout/Layout";
-import LoadingComponent from "../../frontend/LoadingComponent";
 import {
   loginSuccess,
   logoutUserInfo,
 } from "../../../redux/reducers/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getCRSFToken, setUpToken } from "../../../helpers/auth";
 import OnboardingService from "../../../ClientServices/onboardingRequest";
 import Constant from "../../../utils/constant";
 import axios from "axios";
+import { Loading } from "../../frontend/landing-page/Loading";
+import { getSourceMenus } from "../../../redux/actions/sideMenusCall";
 
 const ProtectedRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const isAuthenticated = useSelector((state) => state.user?.currentUser?.user);
+  // const isAuthenticated = useSelector((state) => state.user?.currentUser?.user);
+  const isAuthenticated = localStorage.getItem("token");
 
   const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     async function checkAuthentication() {
       const axiosClient = axios.create({
-        baseURL: "https://localhost:5001/",
+        baseURL: process.env.REACT_APP_BASE_URL,
         withCredentials: true,
       });
       try {
@@ -41,9 +43,7 @@ const ProtectedRoute = ({ children }) => {
       }
     }
     checkAuthentication();
-
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -59,11 +59,19 @@ const ProtectedRoute = ({ children }) => {
       }
     };
 
-    if (!isAuthenticated) getCurrentUser();
+    if (!isAuthenticated) {
+      getCurrentUser();
+    } else {
+      getSourceMenus(dispatch);
+    }
   }, [dispatch, isAuthenticated]);
 
   if (isLoading && !isAuthenticated) {
-    return <LoadingComponent />;
+    return (
+      <div className="h-[100vh] flex justify-center items-center">
+        <Loading fullMode={true} />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

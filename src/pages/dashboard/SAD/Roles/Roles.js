@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import GroupPage from "../GroupPage";
 import { homeMenuSource } from "../../../../data/dashboard-page/menu";
 import { rolesHeadingFooter } from "../../../../data/headingFooterTitle";
@@ -14,12 +14,40 @@ import { deleteRoleSuccess } from "../../../../redux/reducers/rolesSlice";
 const Roles = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const [filteredActions, setFilteredActions] = useState([]);
+  const [page, setPage] = useState("");
 
   const roles = useSelector((state) => state?.roles.roles);
+  const { moduleMenus } = useSelector((state) => state.moduleCategory);
 
   useEffect(() => {
     getRoles(dispatch);
-  }, [dispatch]);
+    const menuItem = homeMenuSource?.filter((item) =>
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems[
+        "roles"
+      ]?.permissions.includes(item.title)
+    );
+
+    const page =
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems["roles"]?.name;
+
+    const groupRolesAction = rolesActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["grouproles"]
+          ?.name === item.title
+    );
+    const securityGroupsAction = rolesActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["securitygroups"]
+          ?.name === item.title
+    );
+    const actionArray = groupRolesAction.concat(securityGroupsAction);
+
+    setFilteredActions(actionArray);
+    setFilteredMenus(menuItem);
+    setPage(page);
+  }, [dispatch, moduleMenus]);
 
   const onCustomActionClick = useCallback(
     (menu) => {
@@ -29,14 +57,6 @@ const Roles = () => {
           break;
         case "Security Groups":
           navigate("/dashboard/SAD/security-groups");
-          break;
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
           break;
 
         default:
@@ -60,8 +80,9 @@ const Roles = () => {
       title={rolesHeadingFooter.title}
       footer={rolesHeadingFooter.footer}
       company={rolesHeadingFooter.company}
-      menus={homeMenuSource}
-      customActions={rolesActions}
+      menus={filteredMenus}
+      roles={page}
+      customActions={filteredActions}
       keyExpr={"roleName"}
       columns={rolesColumns}
       url={"roles"}

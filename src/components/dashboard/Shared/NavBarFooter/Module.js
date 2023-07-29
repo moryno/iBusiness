@@ -1,15 +1,51 @@
 import { CgMenuGridO } from "react-icons/cg";
 
 import { FaEllipsisV } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { moduleCategories } from "../../../../data/dashboard-page/moduleSource";
-import { getModule } from "../../../../redux/reducers/moduleSlice";
+import {
+  getMenuItem,
+  getModuleName,
+  getPartitionKey,
+} from "../../../../redux/reducers/moduleSlice";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Module = () => {
   const dispatch = useDispatch();
+  const { sideMenus, partitionKey } = useSelector(
+    (state) => state.moduleCategory
+  );
+  //This user component
+  const [userModules, setUserModules] = useState([]);
+  const [currentModule, setCurrentModule] = useState("");
 
-  const handleClick = (partitionKey) => {
-    dispatch(getModule(partitionKey));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const partionKeys = sideMenus?.map((item) => item.partitionKey);
+    const filtered = moduleCategories?.filter((item) =>
+      partionKeys?.includes(item.partitionKey)
+    );
+    setUserModules(filtered);
+  }, [sideMenus]);
+
+  useEffect(() => {
+    setCurrentModule(partitionKey);
+  }, [partitionKey]);
+
+  const handleClick = (category) => {
+    //Before switching check if not in current route
+    if (currentModule !== category.partitionKey) {
+      dispatch(getPartitionKey(category.partitionKey));
+      dispatch(getModuleName(category.title));
+      //Reset menu
+      dispatch(getMenuItem(""));
+
+      //May want to navigate to category home, through it's provided link
+      //i.e category.link
+      navigate(category.link);
+    }
   };
 
   return (
@@ -25,11 +61,11 @@ const Module = () => {
         <section className="absolute md:top-8 top-6 right-1 md:right-5  z-50 hidden  group-hover:block hover:block">
           <article className="bg-bgDropDown rounded-sm px-2 py-1 shadow-xl">
             <div className="flex flex-col mt-2 justify-between">
-              {moduleCategories.map((category) => (
+              {userModules.map((category) => (
                 <li
-                  key={category.id}
+                  key={category.partitionKey}
                   className="text-xs flex gap-1 items-center text-dropDown py-2.5 hover:bg-bgxxLight"
-                  onClick={() => handleClick(category.partitionKey)}
+                  onClick={() => handleClick(category)}
                 >
                   {category.icon} {category.title}
                 </li>

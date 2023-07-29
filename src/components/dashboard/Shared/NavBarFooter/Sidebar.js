@@ -8,16 +8,16 @@ const Sidebar = ({ showSidebar, openSidebar }) => {
       className={classNames({
         "flex md:py-2 flex-col bg-sidebarBg  text-sideColor border-r border-gray-200": true,
         "left-0 w-[250px] md:sticky overflow-auto md:top-[40px] md:z-0 top-0 z-20 fixed": true,
-        "md:max-h-[calc(100vh_-_40px)] h-full lg:w-2/12 xxxl:w-[12%]": true,
+        "md:max-h-[calc(100vh_-_40px)] h-full lg:w-[14%] xxl:w-[12%] xxxl:w-[10%]": true,
         "transition-transform .3s ease-in-out md:translate-x-0": true,
         "-translate-x-full": !showSidebar,
         "md:hidden": !openSidebar,
       })}
     >
       <section className="flex flex-col h-full justify-between">
-        <section id="sidebar-child">
-          <article className="w-full font-medium">
-            <ul className="flex flex-col gap-2 text-left">
+        <section id="sidebar-child" className="h-full">
+          <article className="w-full font-medium h-full">
+            <ul className="flex flex-col gap-2 text-left h-full">
               <SideLinks />
             </ul>
           </article>

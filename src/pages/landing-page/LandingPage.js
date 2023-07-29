@@ -23,7 +23,9 @@ export const LandingPage = () => {
           <Testimonial />
         </>
       ) : (
-        <Loading />
+        <div className="h-[700px]">
+          <Loading fullMode={true} />
+        </div>
       )}
     </>
   );

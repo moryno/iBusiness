@@ -4,21 +4,35 @@ const moduleSlice = createSlice({
   name: "moduleCategory",
   initialState: {
     sideMenus: [],
+    moduleMenus: {},
     partitionKey: "",
-    menuItem: ""
+    moduleName: "",
+    menuItem: "",
   },
   reducers: {
     getMenus: (state, action) => {
       state.sideMenus = action.payload;
     },
-    getModule: (state, action) => {
+    getModuleMenus: (state, action) => {
+      state.moduleMenus = action.payload;
+    },
+    getModuleName: (state, action) => {
+      state.moduleName = action.payload;
+    },
+    getPartitionKey: (state, action) => {
       state.partitionKey = action.payload;
     },
     getMenuItem: (state, action) => {
-      state.menuItem= action.payload;
+      state.menuItem = action.payload;
     },
   },
 });
 
-export const { getMenus, getModule, getMenuItem } = moduleSlice.actions;
+export const {
+  getMenus,
+  getModuleMenus,
+  getModuleName,
+  getPartitionKey,
+  getMenuItem,
+} = moduleSlice.actions;
 export default moduleSlice.reducer;

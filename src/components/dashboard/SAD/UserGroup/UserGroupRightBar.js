@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import RightBarHeader from "../../Shared/DetailsComponents/RightBarHeader";
-
 import { useNavigate } from "react-router-dom";
 
 const UserGroupRightBar = ({ customAction }) => {
@@ -14,15 +13,6 @@ const UserGroupRightBar = ({ customAction }) => {
           break;
         case "Security Groups":
           navigate("/dashboard/SAD/security-groups");
-          break;
-
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
           break;
 
         default:

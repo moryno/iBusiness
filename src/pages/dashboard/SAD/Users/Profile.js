@@ -1,107 +1,274 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TextBox from "devextreme-react/text-box";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "../../../../redux/reducers/userSlice";
-import { updateMenuSource } from "../../../../data/dashboard-page/menu";
+import { profileMenuSource } from "../../../../data/dashboard-page/menu";
 import Statusbar from "../../../../components/dashboard/Shared/NavBarFooter/Statusbar";
-import axios from "axios";
+import { toast } from "react-toastify";
 import MenusGroupComponent from "../../../../components/dashboard/Shared/Menus/MenusGroupComponent";
+import { NumberBox, SelectBox, Validator } from "devextreme-react";
+import OnboardingService from "../../../../ClientServices/onboardingRequest";
+import Constant from "../../../../utils/constant";
+import { FaPen } from "react-icons/fa";
+import refStrings from "../../../../data/dashboard-page/sadData";
+import { Loader } from "../../loader/Loader";
+import services from "../../../../helpers/formDataSource";
+import { RequiredRule } from "devextreme-react/validator";
+import { PatternRule } from "devextreme-react/form";
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
-  const [formInputs, setFormInputs] = useState(currentUser);
-
+  const [fullNames, setfullNames] = useState(currentUser?.fullName);
+  const [telephone, setTelephone] = useState("" + currentUser?.telephone);
+  const [physicalAddress, setpAddress] = useState(
+    currentUser?.physicalAddress ?? ""
+  );
+  const [country, setCountry] = useState(currentUser?.country);
+  const [countryCode, setCountryCode] = useState("+254");
+  const [editable, setEditable] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormInputs({ ...formInputs, [name]: value });
+  //Profile link
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+
+    try {
+      if (file) {
+        formData.append("profile", file);
+      }
+      const response = await OnboardingService.post("/UploadImage", formData);
+
+      //setProfileImage(response.imageLink)
+      let cUser = { ...currentUser };
+      cUser.imageLink = response?.imageLink ?? currentUser?.imageLink;
+      dispatch(updateUserProfile(cUser));
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     try {
-      const { data } = await axios.put("/User", formInputs);
+      setLoading(true);
+      await OnboardingService.post(Constant.ACTION.USER_PROFILE_EDIT, {
+        DisplayName: fullNames,
+        MobilePhone: countryCode + telephone,
+        StreetAddress: physicalAddress,
+        Country: country,
+      });
 
+      const data = {
+        fullName: fullNames,
+        telephone,
+        country,
+        company: "",
+        email: currentUser?.email,
+        id: 0,
+        industry: "",
+        userName: currentUser?.email,
+        physicalAddress,
+      };
+
+      setEditable(false);
+      toast.success(refStrings.operationSuceess);
       dispatch(updateUserProfile(data));
+      setLoading(false);
     } catch (error) {
+      toast.error(refStrings.operationFailed);
       console.log(error);
+      setLoading(false);
     }
   };
 
   const handleClick = (menu) => {
     switch (menu) {
-      case "Update":
+      case refStrings.menu1:
+        if (editable) {
+          setTelephone();
+          setEditable(!editable);
+        }
+        break;
+      case refStrings.menu2:
         handleSubmit();
         break;
-      case "Close":
-        navigate("/");
+      case refStrings.menu3:
+        navigate(-1);
         break;
       default:
         break;
     }
   };
 
+  const inputAttr = {
+    autocomplete: "chrome-off",
+  };
+
+  const handleTelephone = useCallback((e) => {
+    // e = e.replace(/^0+/, '');
+    // console.log(e)
+    setTelephone(e);
+  }, []);
+
   return (
     <main className="w-full relative h-full md:h-full py-1.5">
+      {loading && <Loader />}
       <section>
         <MenusGroupComponent
-          heading="Update Profile"
-          menus={updateMenuSource}
+          heading={refStrings.heading}
+          menus={profileMenuSource}
           onMenuClick={handleClick}
         />
 
         <section>
-          <article className="md:p-5 flex gap-5 w-full">
-            <article className="flex flex-col md:flex-row w-full md:w-1/2 p-5 relative shadow-none md:shadow-xl">
-              <h2 className="mb-5 text-menu">Information</h2>
-              <div className="flex flex-col md:flex-row gap-5">
-                <img
-                  className="w-[6.25rem] h-[6.25rem] self-center md:self-start rounded-full object-cover cursor-pointer"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-                  alt="profile"
-                />
-                <div>
-                  <h2 className="mb-2.5 text-menu font-medium">User Profile</h2>
-                  <div className="mb-2.5 text-[14px]">
-                    <span className=" font-bold mr-1 text-menu">Full Name</span>
-                    <span className="text-text font-medium">
-                      {currentUser?.fullName}
-                    </span>
+          <article className="md:p-5 flex flex-col gap-3 w-full">
+            <article className="flex flex-col w-3/4 p-5 relative shadow-none md:shadow-xl">
+              <h1 className="mb-5 text-menu text-lg font-semibold">
+                {refStrings.subHeading}
+              </h1>
+              <div className="flex flex-col gap-5">
+                <div className="w-[7rem] h-[7rem] self-center relative">
+                  <div className="absolute bottom-0 right-0 flex gap-2 items-center bg-slate-800 rounded p-1 text-xs text-blueLight hover:text-headingBlue">
+                    <label
+                      htmlFor="image-input"
+                      className="flex justify-center items-center gap-2 cursor-pointer"
+                    >
+                      {refStrings.menu1}
+                      <FaPen fontSize={10} />
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="profile-edit"
+                      id="image-input"
+                      onChange={handleImageChange}
+                    />
                   </div>
-                  <div className="mb-2.5 text-[14px]">
-                    <span className=" font-bold mr-1 text-menu">Username</span>
-                    <span className="text-text font-medium">
-                      {currentUser?.userName}
-                    </span>
-                  </div>
-                  <div className="mb-2.5 text-[14px]">
-                    <span className=" font-bold mr-1 text-menu">Email</span>
-                    <span className="text-text font-medium">
-                      {currentUser?.email}
-                    </span>
-                  </div>
-                  <div className="mb-2.5 text-[14px]">
-                    <span className=" font-bold mr-1 text-menu">Telephone</span>
-                    <span className="text-text font-medium">
-                      {currentUser?.telephone}
-                    </span>
-                  </div>
-                  <div className="mb-2.5 text-[14px]">
+                  <img
+                    className="w-[6.5rem] h-[6.5rem] rounded-full object-cover cursor-pointer"
+                    src={
+                      currentUser?.imageLink ??
+                      "https://pp-b5facpcqcnbmaecm.z01.azurefd.net/profilepic/default.jpg"
+                    }
+                    alt="profile"
+                  />
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  <div className="mb-2.5 text-[14px] w-2/3">
                     <span className=" font-bold mr-1 text-menu">
-                      Physical Address
+                      {refStrings.fullNames}
                     </span>
                     <span className="text-text font-medium">
-                      {currentUser?.physicalAddress}
+                      <TextBox
+                        onValueChange={(e) => setfullNames(e)}
+                        id={refStrings.fullNamesid}
+                        value={fullNames}
+                        disabled={editable}
+                      />
                     </span>
                   </div>
-                  <div className="mb-2.5 text-[14px]">
+                  <div className="mb-2.5 text-[14px] w-1/3">
                     <span className=" font-bold mr-1 text-menu">
-                      Origin Country
+                      {refStrings.userName}
                     </span>
                     <span className="text-text font-medium">
-                      {currentUser?.originCountry}
+                      <TextBox
+                        id={refStrings.userNameid}
+                        disabled={true}
+                        value={currentUser?.userName}
+                      />
+                    </span>
+                  </div>
+                  <div className="mb-2.5 text-[14px] w-1/2">
+                    <span className=" font-bold mr-1 text-menu">
+                      {refStrings.email}
+                    </span>
+                    <span className="text-text font-medium">
+                      <TextBox
+                        id={refStrings.emailid}
+                        disabled={true}
+                        value={currentUser?.email}
+                      />
+                    </span>
+                  </div>
+                  <div className="mb-2.5 text-[14px] w-1/2">
+                    <span className=" font-bold mr-1 text-menu">
+                      {refStrings.telephone}
+                    </span>
+                    {!editable ? (
+                      <span className="text-text font-medium flex gap-1">
+                        <SelectBox
+                          dataSource={services.getCountryCodes()}
+                          onValueChange={(e) => setCountryCode(e)}
+                          value={countryCode}
+                          displayExpr={"dial_code"}
+                          valueExpr={"dial_code"}
+                          disabled={editable}
+                          searchEnabled={true}
+                          search
+                          width={80}
+                          maxLength={5}
+                          inputAttr={inputAttr}
+                        />
+                        <NumberBox
+                          id={refStrings.telephoneid}
+                          onValueChange={(e) => handleTelephone(e)}
+                          value={telephone}
+                          disabled={editable}
+                          maxLength={11}
+                          min={10}
+                        >
+                          <Validator>
+                            <RequiredRule />
+                            <PatternRule
+                              pattern="^[0-9]+$"
+                              message="Do not use text characters."
+                            />
+                          </Validator>
+                        </NumberBox>
+                      </span>
+                    ) : (
+                      <span className="text-text font-medium">
+                        <TextBox
+                          id={refStrings.telephoneid}
+                          value={telephone}
+                          disabled={editable}
+                        />
+                      </span>
+                    )}
+                  </div>
+                  <div className="mb-2.5 text-[14px] w-1/2">
+                    <span className=" font-bold mr-1 text-menu">
+                      {refStrings.physicalAddress}
+                    </span>
+                    <span className="text-text font-medium">
+                      <TextBox
+                        id={refStrings.physicalAddressid}
+                        placeholder={refStrings.physicalAddress}
+                        onValueChange={(e) => setpAddress(e)}
+                        value={physicalAddress}
+                        disabled={editable}
+                      />
+                    </span>
+                  </div>
+                  <div className="mb-2.5 text-[14px] w-1/2">
+                    <span className=" font-bold mr-1 text-menu">
+                      {refStrings.country}
+                    </span>
+                    <span className="text-text font-medium">
+                      <SelectBox
+                        dataSource={services.getCountries()}
+                        onValueChange={(e) => setCountry(e)}
+                        value={country}
+                        searchEnabled={true}
+                        id={refStrings.countryid}
+                        placeholder={refStrings.country}
+                        disabled={editable}
+                        inputAttr={inputAttr}
+                      />
                     </span>
                   </div>
                 </div>
@@ -111,174 +278,10 @@ const Profile = () => {
           </article>
         </section>
       </section>
-      {/* Bottom Section */}
-      <section>
-        <div className="w-full p-2 md:p-5">
-          <div className="text-menu bg-bgxLight rounded-t-md py-1 px-2 font-medium ">
-            Enter all the details in the fields below then click save.
-          </div>
-          <form className="flex w-full mt-1 py-4 md:py-3 rounded-sm flex-wrap justify-between gap-2">
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="fullName"
-              >
-                Full Name:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="text"
-                id="fullName"
-                name="fullName"
-                onChange={handleChange}
-                value={formInputs.fullName}
-              />
-            </div>
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="userName"
-              >
-                Username:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="text"
-                id="userName"
-                name="userName"
-                onChange={handleChange}
-                value={formInputs.userName}
-              />
-            </div>
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="email"
-              >
-                Email:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="email"
-                id="email"
-                name="email"
-                onChange={handleChange}
-                value={formInputs.email}
-              />
-            </div>
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="telephone"
-              >
-                Telephone:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="text"
-                id="telephone"
-                name="telephone"
-                onChange={handleChange}
-                value={formInputs.telephone}
-              />
-            </div>
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="physicalAddress"
-              >
-                Physical Address:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="text"
-                id="physicalAddress"
-                name="physicalAddress"
-                onChange={handleChange}
-                value={formInputs.physicalAddress}
-              />
-            </div>
 
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="originCountry"
-              >
-                Origin Country:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="text"
-                id="originCountry"
-                name="originCountry"
-                onChange={handleChange}
-                value={formInputs.originCountry}
-              />
-            </div>
-
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="experience"
-              >
-                Experience (years):<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="number"
-                id="experience"
-                name="experience"
-                onChange={handleChange}
-                value={formInputs.experience}
-              />
-            </div>
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="position"
-              >
-                Position:<sup className=" text-red-600">*</sup>
-              </label>
-              <input
-                className="border border-menu rounded-sm pl-1 w-full md:w-1/2 outline-none "
-                type="text"
-                id="position"
-                name="position"
-                onChange={handleChange}
-                value={formInputs.position}
-              />
-            </div>
-            <div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row w-full md:w-[45%]">
-              <label
-                className="text-sm font-medium text-gray-600"
-                htmlFor="disabilityStatus"
-              >
-                Disability Status:<sup className=" text-red-600">*</sup>
-              </label>
-              <select
-                className="w-full md:w-1/2  border border-menu rounded-sm pl-1 outline-none placeholder:text-sm outline-blue text-menu"
-                id="disabilityStatus"
-                name="disabilityStatus"
-                onChange={handleChange}
-                defaultValue={currentUser.disabilityStatus}
-              >
-                <option className=" rounded-none p-5 text-sm" value="Disabled">
-                  Disabled
-                </option>
-                <option
-                  className=" rounded-none p-5 text-sm"
-                  value="Not Disabled"
-                >
-                  Not Disabled
-                </option>
-              </select>
-            </div>
-          </form>
-        </div>
-      </section>
       <Statusbar
         heading={`Welcome ${currentUser?.fullName}`}
-        company="ARBS Customer Portal"
+        company={refStrings.company}
       />
     </main>
   );

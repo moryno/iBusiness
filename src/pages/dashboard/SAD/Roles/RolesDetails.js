@@ -1,7 +1,7 @@
 import { updateMenuSource } from "../../../../data/dashboard-page/menu";
 import { rolesDetails } from "../../../../data/headingFooterTitle";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { rolesActions } from "../../../../data/dashboard-page/moduleSource";
 import { deleteRoleSuccess } from "../../../../redux/reducers/rolesSlice";
 import GridItemContent from "../../../../components/dashboard/Shared/DetailsComponents/GridItemContent";
@@ -12,6 +12,31 @@ import { useNavigate } from "react-router-dom";
 const RolesDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const [filteredActions, setFilteredActions] = useState([]);
+  const { moduleMenus } = useSelector((state) => state.moduleCategory);
+
+  useEffect(() => {
+    const menuItem = updateMenuSource?.filter((item) =>
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems[
+        "roles"
+      ]?.permissions.includes(item.title)
+    );
+    const groupRolesAction = rolesActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["grouproles"]
+          ?.name === item.title
+    );
+    const securityGroupsAction = rolesActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["securitygroups"]
+          ?.name === item.title
+    );
+    const actionArray = groupRolesAction.concat(securityGroupsAction);
+
+    setFilteredActions(actionArray);
+    setFilteredMenus(menuItem);
+  }, [dispatch, moduleMenus]);
 
   const onDelete = useCallback(
     (recordId) => {
@@ -29,14 +54,6 @@ const RolesDetails = () => {
         case "Security Groups":
           navigate("/dashboard/SAD/security-groups");
           break;
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
-          break;
 
         default:
           break;
@@ -50,9 +67,9 @@ const RolesDetails = () => {
       heading={rolesDetails.heading}
       footer={rolesDetails.footer}
       title={rolesDetails.title}
-      menus={updateMenuSource}
+      menus={filteredMenus}
       url={"Roles"}
-      customAction={rolesActions}
+      customAction={filteredActions}
       onActionClick={onCustomActionClick}
       company={rolesDetails.company}
       deleteMsg={rolesDetails.heading}

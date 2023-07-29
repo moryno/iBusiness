@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getLocalData } from "../helpers/auth";
+import { toast } from "react-toastify";
 
 const BASE_URL =
   process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION;
@@ -8,8 +9,6 @@ export const onboardingRequest = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
-
-//export default onboardingRequest;
 
 export default class OnboardingService {
   static async post(action, params) {
@@ -54,11 +53,37 @@ onboardingRequest.interceptors.response.use(
     return response;
   },
   (error) => {
-    const { response } = error;
-    if (response.status === 401 || response.status === 404) {
-      return Promise.reject(error);
-    } else {
-      return Promise.reject(error);
-    }
+    handleErrorResponse(error);
+    return Promise.reject(error);
   }
 );
+
+const handleErrorResponse = (error) => {
+  if (error.response) {
+    const { status, data } = error.response;
+
+    switch (status) {
+      case 400:
+        toast.error("Bad Request: " + data.message);
+        break;
+      case 401:
+        toast.error("Unauthorized: " + data.message);
+        break;
+      case 404:
+        toast.error("Not Found: " + data.message);
+        break;
+      case 405:
+        toast.error(
+          "Method Not Allowed: The requested method is not allowed for this resource"
+        );
+        break;
+
+      default:
+        toast.error("Error: Something went wrong");
+    }
+  } else if (error.request) {
+    toast.error("Network Error: Please check your internet connection");
+  } else {
+    toast.error("Error: Something went wrong");
+  }
+};

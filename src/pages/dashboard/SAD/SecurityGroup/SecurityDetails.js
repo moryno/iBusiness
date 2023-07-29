@@ -1,10 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import GroupDetails from "../../../../components/dashboard/Shared/DetailsComponents/GroupDetails";
 import { updateMenuSource } from "../../../../data/dashboard-page/menu";
 import { securityDetail } from "../../../../data/headingFooterTitle";
 import SecurityGroupForm from "../../../../components/dashboard/SAD/SecurityGroup/SecurityGroupForm";
 import { deleteSecurityGroupSuccess } from "../../../../redux/reducers/securityGroupSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DetailsPage from "../DetailsPage";
 import { securityActions } from "../../../../data/dashboard-page/moduleSource";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,31 @@ import { useNavigate } from "react-router-dom";
 const SecurityDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const [filteredActions, setFilteredActions] = useState([]);
+  const { moduleMenus } = useSelector((state) => state.moduleCategory);
+
+  useEffect(() => {
+    const menuItem = updateMenuSource?.filter((item) =>
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems[
+        "securitygroups"
+      ]?.permissions.includes(item.title)
+    );
+    const groupRolesAction = securityActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["grouproles"]
+          ?.name === item.title
+    );
+    const userGroupsAction = securityActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["usergroups"]
+          ?.name === item.title
+    );
+    const actionArray = groupRolesAction.concat(userGroupsAction);
+
+    setFilteredActions(actionArray);
+    setFilteredMenus(menuItem);
+  }, [dispatch, moduleMenus]);
 
   const onDelete = useCallback(
     (recordId) => {
@@ -29,14 +54,6 @@ const SecurityDetails = () => {
         case "Group Roles":
           navigate("/dashboard/SAD/group-roles");
           break;
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
-          break;
 
         default:
           break;
@@ -50,9 +67,9 @@ const SecurityDetails = () => {
       heading={securityDetail.heading}
       footer={securityDetail.footer}
       title={`${securityDetail.title}`}
-      menus={updateMenuSource}
+      menus={filteredMenus}
       url={"SecurityGroups"}
-      customAction={securityActions}
+      customAction={filteredActions}
       onActionClick={onCustomActionClick}
       company={securityDetail.company}
       deleteMsg={securityDetail.heading}

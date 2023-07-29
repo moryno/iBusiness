@@ -12,13 +12,14 @@ const FrontendLayout = ({ children }) => {
   useEffect(() => {
     async function checkAuthentication() {
       const axiosClient = axios.create({
-        baseURL: "https://localhost:5001/",
+        baseURL: process.env.REACT_APP_BASE_URL,
         withCredentials: true,
       });
       try {
-        const { status } = await axiosClient.get(Constant.ACTION.CHECK_AUTH_STATE);
+        const { status } = await axiosClient.get(
+          Constant.ACTION.CHECK_AUTH_STATE
+        );
         if (status === 200) {
-          console.log("All good.");
           return;
         }
       } catch (ex) {
@@ -26,9 +27,7 @@ const FrontendLayout = ({ children }) => {
       }
     }
     checkAuthentication();
-
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <main>

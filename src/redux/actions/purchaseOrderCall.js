@@ -3,7 +3,7 @@ import { getPurchaseOrderSuccess } from "../reducers/purchaseOrderSlice";
 
 export const getPurchaseOrders = async (dispatch) => {
   try {
-    const response = await OnboardingService.get("test2");
+    const response = await OnboardingService.get("PO/getorders");
     dispatch(getPurchaseOrderSuccess(response));
   } catch (error) {}
 };

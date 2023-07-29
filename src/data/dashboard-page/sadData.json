@@ -1,0 +1,26 @@
+{
+    "operationSuceess" : "Profile updated successfully.",
+    "operationFailed" : "Profile update failed.",
+    "menu1" : "Edit profile",
+    "menu2" : "Save profile",
+    "menu3" : "Close",
+    "heading" : "Edit profile",
+    "subHeading" : "Account profile",
+    "fullNames" : "Full Names",
+    "fullNamesid" : "fullNames",
+    "userName" : "Username",
+    "userNameid" : "username",
+    "email" : "Email",
+    "emailid" : "email",
+    "telephone" : "Telephone",
+    "telephoneid" : "telephone",
+    "physicalAddress" : "Physical Address",
+    "physicalAddressid" : "physicalAddress",
+    "country" : "Country of residence",
+    "countryid" : "originCountry",
+    "countrycode" : "originCountry",
+    "countrycodeid" : "originCountry",
+    "company" : "iBusinessCloud"
+    
+
+}

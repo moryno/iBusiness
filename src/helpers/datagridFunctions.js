@@ -3,6 +3,8 @@ import { saveAs } from "file-saver";
 import { exportDataGrid as exportDataGridToExcel } from "devextreme/excel_exporter";
 import { jsPDF } from "jspdf";
 import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
+import { checkPermission } from "../redux/actions/userManagementCall";
+import { toast } from "react-toastify";
 
 let dataGridInstance;
 // Function to get the instance of the datagrid onLoad
@@ -11,7 +13,7 @@ export const getDataGridRef = (dataGrid) => {
 };
 
 // Function to export row as excel or pdf
-export const onExporting = (exportValue) => {
+export const onExporting = (exportValue, pageTitle) => {
   if (exportValue.format === "xlsx") {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet("Main sheet");
@@ -25,7 +27,7 @@ export const onExporting = (exportValue) => {
         workbook.xlsx.writeBuffer().then((buffer) => {
           saveAs(
             new Blob([buffer], { type: "application/octet-stream" }),
-            "DataGrid.xlsx"
+            `${pageTitle ? pageTitle : "Datagrid"}.xlsx`
           );
         });
       });
@@ -44,7 +46,7 @@ export const onExporting = (exportValue) => {
         component: dataGridInstance._instance,
         indent: 5,
       }).then(() => {
-        doc.save("DataGrid.pdf");
+        doc.save(`${pageTitle ? pageTitle : "Datagrid"}.pdf`);
       });
     } catch (error) {
       console.error("Error exporting to PDF:", error);
@@ -62,7 +64,7 @@ export const handleExportFormat = (title) => {
       format = "xlsx";
       selectedRowsOnly = true;
       break;
-    case "Export all data to Excel":
+    case "Export to Excel":
       format = "xlsx";
       selectedRowsOnly = false;
       break;
@@ -70,7 +72,7 @@ export const handleExportFormat = (title) => {
       format = "pdf";
       selectedRowsOnly = true;
       break;
-    case "Export all data to PDF":
+    case "Export to PDF":
       format = "pdf";
       selectedRowsOnly = false;
       break;
@@ -83,7 +85,15 @@ export const handleExportFormat = (title) => {
 };
 
 // Define a function that calls on OnExporting function and pass the format to export
-export const handleExporting = (exportFormat) => {
-  const exportValue = handleExportFormat(exportFormat);
-  onExporting(exportValue);
+export const handleExporting = async (exportFormat, pageTitle) => {
+  const exportPermission = await checkPermission({
+    role: pageTitle,
+    permissions: "Export",
+  });
+  if (exportPermission) {
+    const exportValue = handleExportFormat(exportFormat);
+    onExporting(exportValue, pageTitle);
+  } else {
+    toast.error("Unauthorized access");
+  }
 };

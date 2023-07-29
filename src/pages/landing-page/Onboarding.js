@@ -16,7 +16,6 @@ import {
   handleCategory,
   handleServicePlan,
 } from "../../helpers/onBoardingFunction";
-import { useNavigate } from "react-router-dom";
 import services from "../../helpers/formDataSource";
 import Portal from "../../components/modals/Portal";
 import LoadingIndicator from "../../components/dashboard/Shared/LoadingIndicator";
@@ -37,7 +36,7 @@ const Onboarding = () => {
   const [profession, setProfession] = useState(
     "Accounting, finance, banking, insuarance"
   );
-  // eslint-disable-next-line
+
   const [categoryId, setCategoryId] = useState(null);
   const [employees, setEmployees] = useState(0);
 
@@ -52,11 +51,10 @@ const Onboarding = () => {
   const [servicePlan, setServicePlan] = useState(
     "Standard (Ksh10,000, Free 14 Days Trial)"
   );
-  // eslint-disable-next-line
+
   const [servicePlanNumber, setServicePlanNumber] = useState(7);
 
   const [organizationName, setOrganizationName] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -129,7 +127,7 @@ const Onboarding = () => {
       if (response) {
         setOpen(false);
         setLoading(false);
-        navigate("/dashboard");
+        window.location = process.env.REACT_APP_SIGNUPIN_URL;
       }
     } catch (error) {
       setOpen(false);

@@ -10,7 +10,7 @@ const DetailsRightBar = ({ customAction, onActionClick, FormComponent }) => {
   };
 
   return (
-    <main className="flex bg-white flex-col gap-4 box-border">
+    <main className="flex h-full bg-white flex-col gap-4 box-border">
       <RightBarHeader customAction={customAction} handleClick={onActionClick} />
       <CustomActionModal
         title={"Orders Approval"}

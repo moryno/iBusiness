@@ -6,17 +6,13 @@ import { Button } from "devextreme-react";
 import { FcAddDatabase } from "react-icons/fc";
 import { toast } from "react-toastify";
 import OnboardingService from "../../../../ClientServices/onboardingRequest";
+import { Loader } from "../../../../pages/dashboard/loader/Loader";
 
-const InviteUserForm = ({
-  handleClose,
-  records,
-  setRecords,
-  statusMode,
-}) => {
+const InviteUserForm = ({ handleClose }) => {
   const [fullName, setFullName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [narration, setNarration] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const formData = {
     fullName,
     emailAddress,
@@ -25,57 +21,33 @@ const InviteUserForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (statusMode === "CreateMode") {
-      try {
-        const response = await OnboardingService.post(
-          "/UserInvitation/newInvite",
-          formData
-        );
+    setLoading(true);
+    try {
+      const response = await OnboardingService.post(
+        "/UserInvitation/newInvite",
+        formData
+      );
 
-        if (response?.dbResponse?.responseCode === "01") {
-          setRecords([response?.securityGroup, ...records]);
-          toast.success(response.dbResponse.responseMsg);
-        } else {
-          toast.error(response.dbResponse.responseMsg);
-        }
-        handleClose();
-      } catch (error) {
-        console.log(error);
+      if (response?.responseCode === "001") {
+        toast.success(response.responseMsg);
+      } else {
+        toast.error(response.responseMsg);
       }
+      setLoading(false);
+      handleClose();
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
-    if (statusMode === "EditMode") {
-      try {
-        const response = await OnboardingService.post(
-          "/SecurityGroups/Create",
-          formData
-        );
 
-        if (response?.dbResponse?.responseCode === "02") {
-          const newRecord = records.map((record) => {
-            if (record.groupCode === response?.securityGroup?.groupCode) {
-              return response?.securityGroup;
-            }
-            return record;
-          });
-
-          setRecords(newRecord);
-          toast.success(response.dbResponse.responseMsg);
-        } else {
-          toast.error(response.dbResponse.responseMsg);
-        }
-
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      }
-    }
   };
 
   return (
-    <main className="h-full">
+    <main className="h-full mt-[-1.5rem]">
+      { loading && (<Loader />) }
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col h-full justify-between"
+        className="flex flex-col h-full justify-between pt-[23px]"
       >
         <article className="flex px-5  flex-wrap  w-full">
           <div className="box-border w-full flex flex-col justify-between gap-1 mb-2">
@@ -90,7 +62,6 @@ const InviteUserForm = ({
               onValueChanged={(e) => setFullName(e.value)}
               value={fullName}
               height={30}
-              disabled={statusMode === "EditMode" && true}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
@@ -144,7 +115,11 @@ const InviteUserForm = ({
           </div>
         </article>
         <article className="w-full border-t border-gray-300 py-1.5 bg-white sticky inset-x-0 bottom-0 flex justify-center items-center gap-4">
-          <Button id="devBlueButton" useSubmitBehavior={true}>
+          <Button
+            id="devBlueButton"
+            disabled={loading}
+            useSubmitBehavior={true}
+          >
             {" "}
             <FcAddDatabase fontSize={20} /> Save
           </Button>

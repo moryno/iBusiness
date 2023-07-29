@@ -10,10 +10,13 @@ import ConfirmationPopupComponent from "../../../components/dashboard/Shared/Con
 import { deleteTitle } from "../../../data/headingFooterTitle";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getMenuItem } from "../../../redux/reducers/moduleSlice";
 
 const GroupPage = ({
   records,
   menus,
+  roles,
   keyExpr,
   heading,
   company,
@@ -30,23 +33,48 @@ const GroupPage = ({
   FormComponent,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [singleRecord, setSingleRecord] = useState({});
   const [onEditRecordId, setEditRecordId] = useState(null);
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [statusMode, setStatusMode] = useState("");
   const [isOpen, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
+
   useEffect(() => {
-    const getSingleRecord = async () => {
-      const action = `/${url}/${onEditRecordId}`;
-      const response = await SadService.get(action);
-      setSingleRecord(response);
-      setStatusMode("EditMode");
-      setOpen((isOpen) => !isOpen);
+    document.addEventListener("contextmenu", handleContextMenu);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
     };
-    if (onEditRecordId) getSingleRecord();
-  }, [onEditRecordId, url]);
+  }, []);
+
+  useEffect(() => {
+    const getRecord = async () => {
+      try {
+        if (onEditRecordId) {
+          const action = `/${url}/${onEditRecordId}`;
+          const response = await SadService.get(action);
+          setSingleRecord(response);
+          setStatusMode("EditMode");
+          setOpen((isOpen) => !isOpen);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getRecord();
+  }, [onEditRecordId, url, menus, roles]);
+
+  useEffect(() => {
+    dispatch(getMenuItem(roles));
+  }, [dispatch, roles]);
 
   const startEdit = useCallback(({ key }) => {
     if (key) {
@@ -57,33 +85,38 @@ const GroupPage = ({
   }, []);
 
   const selectRowItem = useCallback(({ key }) => {
-    console.log(key);
     if (key) {
       setSelectedRecordId(key);
     }
   }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setEditRecordId(null);
     setSingleRecord({});
     setStatusMode("");
     setOpen(false);
     setConfirmDelete(false);
-  };
+  }, []);
 
   const openConfirmationPopup = useCallback(async (rowItem) => {
-    if (rowItem === null) {
-      toast.warning(
-        "You must select one or more records before you can perform this action."
-      );
-    } else {
-      setSelectedRecordId(rowItem);
-      setStatusMode("DeleteMode");
-      setConfirmDelete((confirmDelete) => !confirmDelete);
+    try {
+      if (rowItem === null) {
+        toast.warning("Select a record to delete");
+      } else {
+        setSelectedRecordId(rowItem);
+        setStatusMode("DeleteMode");
+        setConfirmDelete((confirmDelete) => !confirmDelete);
+      }
+    } catch (error) {
+      setSelectedRecordId(null);
+      setStatusMode("");
+      setConfirmDelete(false);
+      console.log(error);
     }
   }, []);
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
+    setLoading(true);
     try {
       const action = `/${url}/${selectedRecordId}`;
       const response = await SadService.delete(action);
@@ -91,24 +124,29 @@ const GroupPage = ({
       if (response?.responseCode === "02") {
         onDelete(selectedRecordId);
         setConfirmDelete(false);
+        setLoading(false);
         setSelectedRecordId(null);
         toast.success(response?.responseMsg);
       } else {
         setConfirmDelete(false);
+        setLoading(false);
         setSelectedRecordId(null);
         toast.error("Cannot delete a group with assigned users.");
       }
     } catch (error) {
+      setLoading(false);
+      setConfirmDelete(false);
+      setSelectedRecordId(null);
       console.log(error);
     }
-  };
+  }, [onDelete, selectedRecordId, url]);
 
   const handleClick = useCallback(
     (menu) => {
       switch (menu) {
         case "Find":
           break;
-        case "New":
+        case "Add":
           setStatusMode("CreateMode");
           setOpen(true);
           break;
@@ -130,7 +168,7 @@ const GroupPage = ({
           break;
       }
     },
-    [selectedRecordId, openConfirmationPopup, navigate]
+    [openConfirmationPopup, selectedRecordId, navigate]
   );
 
   return (
@@ -183,6 +221,7 @@ const GroupPage = ({
             statusBarText={footer}
             statusMode={statusMode}
             onDelete={handleDelete}
+            loading={loading}
           />
         </Portal>
       )}

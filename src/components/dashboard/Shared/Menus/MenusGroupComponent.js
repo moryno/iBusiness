@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DesktopMenus from "./DesktopMenus";
 import MobileMenus from "./MobileMenus";
+import { useParams } from "react-router-dom";
 
 const MenusGroupComponent = ({
   menus,
@@ -9,16 +10,34 @@ const MenusGroupComponent = ({
   onMenuClick,
   onActionClick,
 }) => {
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const params = useParams();
+
+  useEffect(() => {
+    const menuItem = menus?.filter((item) => {
+      if (Object.keys(params).length > 0) {
+        return item;
+      }
+      return item.title !== "Edit";
+    });
+    setFilteredMenus(menuItem);
+  }, [menus, params]);
+
   return (
     <section>
       <DesktopMenus
         heading={heading}
-        menus={menus}
+        menus={filteredMenus}
         customActions={customActions}
         onMenuClick={onMenuClick}
         onActionClick={onActionClick}
       />
-      <MobileMenus menus={menus} onMenuClick={onMenuClick} />
+      <MobileMenus
+        menus={filteredMenus}
+        onMenuClick={onMenuClick}
+        customActions={customActions}
+        onActionClick={onActionClick}
+      />
     </section>
   );
 };

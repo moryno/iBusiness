@@ -1,11 +1,11 @@
 import { FaToolbox } from "react-icons/fa";
 
-const DrillDownSwitch = ({ customActions, onActionClick }) => {
+const DesktopActions = ({ customActions, onActionClick }) => {
   return (
     <main className="flex flex-col  hover:bg-gray-200 group">
       <section className="cursor-pointer ">
-        <article className="flex gap-1 transition-all duration-100 hover:bg-gray-200 py-[3px] px-4 w-fit bg-menuBg text-menuText items-center font-medium  cursor-pointer text-xs">
-          <FaToolbox fontSize={20} />
+        <article className="flex gap-1 transition-all duration-100 font-semibold hover:bg-gray-200 py-[3px] px-4 w-fit bg-menuBg text-zinc-600 items-center cursor-pointer text-xs">
+          <FaToolbox fontSize={20} className="text-menuText" />
           Actions
         </article>
         <section className="absolute md:top-8 top-6 right-1 md:right-8  z-50 hidden  group-hover:block hover:block">
@@ -28,4 +28,4 @@ const DrillDownSwitch = ({ customActions, onActionClick }) => {
   );
 };
 
-export default DrillDownSwitch;
+export default DesktopActions;

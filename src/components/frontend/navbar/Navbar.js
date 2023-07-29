@@ -10,14 +10,16 @@ import {
   faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../data/landing-page/navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../../redux/reducers/userSlice";
+import Constant from "../../../utils/constant";
 
 export const Navbar = () => {
   const [toggleSidebar, setToggleNav] = useState(false);
   const currentUser = useSelector((state) => state.user?.currentUser?.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogOut = () => {
     dispatch(logout());
@@ -84,6 +86,9 @@ export const Navbar = () => {
                   </h1>
                 </article>
               </article>
+              <button onClick={() => navigate(Constant.ACTION.DASHBOARD)} className="nav-signin-button">
+                {data.dashboard}
+              </button>
               <button onClick={handleLogOut} className="nav-signin-button">
                 {data.signouttext}
               </button>

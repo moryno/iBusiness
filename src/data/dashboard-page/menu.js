@@ -1,14 +1,12 @@
 import { MdFreeCancellation, MdDisabledVisible } from "react-icons/md";
 import { FcAddDatabase } from "react-icons/fc";
-import { TbFileExport } from "react-icons/tb";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { SlPrinter } from "react-icons/sl";
-import { GrDocumentPdf } from "react-icons/gr";
+import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiFileEditFill } from "react-icons/ri";
 import { FcInvite } from "react-icons/fc";
-import { BiUserCheck } from "react-icons/bi";
+import { AiOutlineSecurityScan } from "react-icons/ai";
 import { IoMdExit } from "react-icons/io";
-
 
 import {
   MdArrowDropDown,
@@ -23,37 +21,45 @@ export const homeMenuSource = [
   {
     id: 1,
     title: "Find",
-    icon: <MdOutlineSearch fontSize={20} />,
+    icon: <MdOutlineSearch fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
   {
     id: 2,
-    title: "New",
-    icon: <MdOutlineAdd fontSize={20} />,
+    title: "Add",
+    icon: <MdOutlineAdd fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
+
   {
     id: 3,
-    title: "Export",
-    icon: <MdOutlineLocalPrintshop fontSize={20} />,
+    title: "Edit",
+    icon: <RiFileEditFill fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
+
   {
     id: 4,
-    title: "Delete",
-    icon: <MdOutlineDeleteOutline fontSize={20} />,
+    title: "Export",
+    icon: <MdOutlineLocalPrintshop fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
   {
     id: 5,
-    title: "Close",
-    icon: <MdFreeCancellation fontSize={20} />,
+    title: "Delete",
+    icon: <MdOutlineDeleteOutline fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
   {
     id: 6,
+    title: "Close",
+    icon: <MdFreeCancellation fontSize={20} className="text-menuText" />,
+    onClick: "handleClick",
+  },
+  {
+    id: 7,
     title: "Help",
-    icon: <MdHelpOutline fontSize={20} />,
+    icon: <MdHelpOutline fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
 ];
@@ -111,18 +117,18 @@ export const newMenuSource = [
     onClick: "handleClick",
   },
 ];
-export const updateMenuSource = [
+
+export const profileMenuSource = [
   {
     id: 1,
-    title: "Edit",
+    title: "Edit profile",
     icon: <RiFileEditFill fontSize={20} />,
     onClick: "handleClick",
   },
-
   {
     id: 2,
-    title: "Delete",
-    icon: <MdOutlineDeleteOutline fontSize={20} />,
+    title: "Save profile",
+    icon: <RiFileEditFill fontSize={20} />,
     onClick: "handleClick",
   },
   {
@@ -131,29 +137,62 @@ export const updateMenuSource = [
     icon: <MdFreeCancellation fontSize={20} />,
     onClick: "handleClick",
   },
+  {
+    id: 4,
+    title: "Help",
+    icon: <MdHelpOutline fontSize={20} />,
+    onClick: "handleClick",
+  },
+];
+
+export const updateMenuSource = [
+  {
+    id: 1,
+    title: "Edit",
+    icon: <RiFileEditFill fontSize={20} className="text-menuText" />,
+    onClick: "handleClick",
+  },
+  {
+    id: 2,
+    title: "Delete",
+    icon: <MdOutlineDeleteOutline fontSize={20} className="text-menuText" />,
+    onClick: "handleClick",
+  },
+  {
+    id: 3,
+    title: "Help",
+    icon: <MdHelpOutline fontSize={20} className="text-menuText" />,
+    onClick: "handleClick",
+  },
+  {
+    id: 4,
+    title: "Close",
+    icon: <MdFreeCancellation fontSize={20} className="text-menuText" />,
+    onClick: "handleClick",
+  },
 ];
 
 export const userDetailHeadActions = [
   {
     id: 1,
     title: "Disable User",
-    icon: <MdDisabledVisible fontSize={20} />,
+    icon: <MdDisabledVisible fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
 
   {
     id: 2,
     title: "View Roles",
-    icon: <BiUserCheck fontSize={20} />,
+    icon: <AiOutlineSecurityScan fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
   {
     id: 3,
     title: "Close",
-    icon: <IoMdExit fontSize={20} />,
+    icon: <IoMdExit fontSize={20} className="text-menuText" />,
     onClick: "handleClick",
   },
-]
+];
 
 export const securityActionsSource = [
   {
@@ -168,6 +207,7 @@ export const securityActionsSource = [
     onClick: "handleClick",
   },
 ];
+
 export const userGroupActionsSource = [
   {
     id: 1,
@@ -212,19 +252,25 @@ export const dropDownMenuSource = [
   {
     id: 1,
     title: "Export",
-    icon: <TbFileExport fontSize={"18px"} />,
-    dropArrow: (
-      <MdArrowDropDown fontSize={20} className=" opacity-70 cursor-pointer" />
-    ),
+    icon: <SiMicrosoftexcel fontSize={"16px"} className="text-menuText" />,
+    dropArrow: <MdArrowDropDown fontSize={20} className="cursor-pointer" />,
     onClick: "handleClick",
     submenu: true,
     sublinks: [
       {
         Head: "Set Credentials",
         sublink: [
-          { name: "Export all data to Excel", icon: <SiMicrosoftexcel /> },
+          {
+            name: "Export to Excel",
+            icon: (
+              <SiMicrosoftexcel fontSize={"16px"} className="text-menuText" />
+            ),
+          },
 
-          { name: "Export all data to PDF", icon: <GrDocumentPdf /> },
+          {
+            name: "Export to PDF",
+            icon: <AiOutlineFilePdf fontSize={20} className="text-menuText" />,
+          },
         ],
       },
     ],

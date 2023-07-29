@@ -15,6 +15,7 @@ import { StringLengthRule } from "devextreme-react/form";
 
 const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [groupCode, setGroupCode] = useState(
     statusMode === "EditMode" ? singleRecord.groupCode : ""
   );
@@ -33,6 +34,7 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (statusMode === "CreateMode") {
       try {
         const response = await SadService.post(
@@ -43,11 +45,15 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
         if (response?.dbResponse?.responseCode === "01") {
           dispatch(addSecurityGroupsSuccess(response?.securityGroup));
           toast.success(response.dbResponse.responseMsg);
+        } else if (response.status === 401) {
+          toast.error(response?.message);
         } else {
           toast.error(response.dbResponse.responseMsg);
         }
+        setLoading(false);
         handleClose();
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -61,12 +67,15 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
         if (response?.dbResponse?.responseCode === "02") {
           dispatch(updateSecurityGroupsSuccess(response?.securityGroup));
           toast.success(response.dbResponse.responseMsg);
+        } else if (response.status === 401) {
+          toast.error(response?.message);
         } else {
           toast.error(response.dbResponse.responseMsg);
         }
-
+        setLoading(false);
         handleClose();
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -138,7 +147,7 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
               placeholder="Type narration here"
               onValueChanged={(e) => setNarration(e.value)}
               value={narration}
-              height="5vh"
+              height={30}
               style={{ fontSize: "12px" }}
               className="border pl-1 text-center w-full  outline-none"
             >
@@ -150,7 +159,11 @@ const SecurityGroupForm = ({ handleClose, singleRecord, statusMode }) => {
           </div>
         </article>
         <article className="w-full border-t border-gray-300 py-1.5 bg-white sticky inset-x-0 bottom-0 flex justify-center items-center gap-4">
-          <Button id="devBlueButton" useSubmitBehavior={true}>
+          <Button
+            id="devBlueButton"
+            disabled={loading}
+            useSubmitBehavior={true}
+          >
             {" "}
             <FcAddDatabase fontSize={20} /> Save
           </Button>

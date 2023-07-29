@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
-import { RxDot } from "react-icons/rx";
-import { Link } from "react-router-dom";
 import { RiSettings5Fill, RiFolder3Fill } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { FaTools } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { getSideMenus } from "../../../../redux/actions/sideMenusCall";
-import { getMenuItem } from "../../../../redux/reducers/moduleSlice";
+import { useSelector } from "react-redux";
+
+import NavLink from "./NavLink";
+import { Loading } from "../../../frontend/landing-page/Loading";
 
 const SideLinks = () => {
-  const dispatch = useDispatch();
   const [heading, setHeading] = useState("");
   const [filteredMenus, setFilteredMenus] = useState([]);
   const { sideMenus, partitionKey } = useSelector(
@@ -37,31 +35,21 @@ const SideLinks = () => {
     }
   };
 
-  const onMenuChange = (menu) => {
-    dispatch(getMenuItem("| " + menu))
-  }
-
   useEffect(() => {
-    getSideMenus(dispatch);
-  }, [dispatch]);
-
-  useEffect(() => {
-    const newMenus = sideMenus?.filter((menu) => {
+    const newMenus = sideMenus?.find((menu) => {
       if (partitionKey === "") {
-        return menu?.partitionKey.toLowerCase().includes("procure2pay");
+        return menu?.partitionKey === "sad";
       } else {
-        return menu?.partitionKey
-          .toLowerCase()
-          .includes(partitionKey.toLowerCase());
+        return menu?.partitionKey.toLowerCase() === partitionKey.toLowerCase();
       }
     });
 
-    setFilteredMenus(newMenus);
+    setFilteredMenus(newMenus?.subMenus);
   }, [partitionKey, sideMenus]);
 
   return (
     <>
-      {filteredMenus &&
+      {filteredMenus ? (
         filteredMenus?.map((link) => {
           const icon = getCategoryIcon(link.title);
 
@@ -76,7 +64,7 @@ const SideLinks = () => {
                       : setHeading("")
                   }
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2">
                     <span> {icon}</span>
                     {link.title}
                   </div>
@@ -97,14 +85,11 @@ const SideLinks = () => {
                     <div>
                       <div>
                         {link.subLinks.map((mysublinks) => (
-                          <Link to={mysublinks.link} key={mysublinks.name}>
-                            <div onClick={() => onMenuChange(mysublinks.name)} className="flex px-2 items-center gap-1 hover:bg-white hover:shadow-xl">
-                              <RxDot />
-                              <li className="text-xs font-normal text-sideColor py-1.5">
-                                {mysublinks.name}
-                              </li>
-                            </div>
-                          </Link>
+                          <NavLink
+                            key={mysublinks.name}
+                            to={mysublinks.link}
+                            name={mysublinks.name}
+                          />
                         ))}
                       </div>
                     </div>
@@ -113,7 +98,10 @@ const SideLinks = () => {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };

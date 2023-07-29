@@ -1,4 +1,5 @@
 import { MdArrowDropDown } from "react-icons/md";
+
 export const menus = [
   {
     title: (
@@ -9,7 +10,7 @@ export const menus = [
       {
         Head: "Set Credentials",
         sublink: [
-          { name: "Update Profile", link: "/dashboard/profile" },
+          { name: "Update Profile", link: "/dashboard/SAD/users/profile" },
           { name: "Change Password", link: "" },
           { name: "Sign Out", link: "" },
         ],

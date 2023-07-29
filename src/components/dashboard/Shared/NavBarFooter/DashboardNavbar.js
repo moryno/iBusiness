@@ -11,8 +11,9 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
   const handleSubmit = (e) => e.preventDefault();
   const [searchMode, setSearchMode] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const {partitionKey, menuItem} = useSelector(
-    (state) => state.moduleCategory
+  const { moduleName, menuItem } = useSelector((state) => state.moduleCategory);
+  const profilePicture = useSelector(
+    (state) => state.user?.currentUser?.user?.imageLink
   );
 
   return (
@@ -25,14 +26,12 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
             fontSize={20}
           />
           <h1 className="font-bold text-base cursor-pointer">
-            iBusiness
-            {" "}
+            iBusiness{" "}
             <span className="capitalize text-sm opacity-80 font-medium">
-              | {partitionKey ? partitionKey : "Procure2pay"}
-            </span>
-            {" "}
+              | {moduleName ? moduleName : "System Administration"}
+            </span>{" "}
             <span className="capitalize text-sm opacity-80 font-medium">
-              {menuItem ? menuItem : ""}
+              {menuItem ? `| ${menuItem}` : ""}
             </span>
           </h1>
         </article>
@@ -60,7 +59,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
               <article className="rounded-full overflow-hidden  w-7 h-7 flex items-center justify-center cursor-pointer">
                 <img
                   className="w-full object-cover"
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                  src={profilePicture}
                   alt="profile"
                 />
               </article>
@@ -100,7 +99,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
           <article className="md:hidden flex items-center w-full justify-between">
             <article className="items-center gap-2">
               <h1 className="font-semibold text-base cursor-pointer">
-                ARBS Customer Portal
+                iBusinessCloud
               </h1>
             </article>
             <article className="flex items-center md:hidden gap-1 ">
@@ -114,7 +113,7 @@ const DashboardNavbar = ({ onMenuButtonClick, onMenuClick }) => {
                   <article className="rounded-full overflow-hidden w-6 h-6 md:w-8 md:h-8 flex items-center justify-center cursor-pointer">
                     <img
                       className="w-full object-cover"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                      src={profilePicture}
                       alt="profile"
                     />
                   </article>

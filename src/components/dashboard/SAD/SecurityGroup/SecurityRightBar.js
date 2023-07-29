@@ -17,14 +17,6 @@ const SecurityRightBar = ({ customAction }) => {
         case "Group Roles":
           navigate("/dashboard/SAD/group-roles");
           break;
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
-          break;
 
         default:
           break;

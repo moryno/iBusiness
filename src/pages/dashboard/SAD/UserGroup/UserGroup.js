@@ -4,7 +4,7 @@ import { userGroupsColumns } from "../../../../data/datagrid-json/datagridColumn
 import { bookingFilterValues } from "../../../../helpers/datatableSource";
 import { userGroupHeadingFooter } from "../../../../data/headingFooterTitle";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getUserGroups } from "../../../../redux/actions/userManagementCall";
 import { userGroupActions } from "../../../../data/dashboard-page/moduleSource";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +14,54 @@ import { deleteUserGroupSuccess } from "../../../../redux/reducers/userGroupSlic
 const UserGroup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const [filteredActions, setFilteredActions] = useState([]);
+  const [page, setPage] = useState("");
 
   const userGroups = useSelector((state) => state?.userGroups?.groups);
+  const { moduleMenus } = useSelector((state) => state.moduleCategory);
 
   useEffect(() => {
     getUserGroups(dispatch);
-  }, [dispatch]);
+    const menuItem = homeMenuSource?.filter((item) =>
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems[
+        "usergroups"
+      ]?.permissions.includes(item.title)
+    );
+
+    const page =
+      moduleMenus["sad"]?.subMenus["setups"]?.menuItems["usergroups"]?.name;
+
+    const usersAction = userGroupActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["users"]?.name ===
+        item.title
+    );
+    const securityGroupAction = userGroupActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["securitygroups"]
+          ?.name === item.title
+    );
+    const rolesAction = userGroupActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["roles"]?.name ===
+        item.title
+    );
+    const groupRolesAction = userGroupActions?.filter(
+      (item) =>
+        moduleMenus["sad"]?.subMenus["setups"]?.menuItems["grouproles"]
+          ?.name === item.title
+    );
+    const actionArray = usersAction.concat(
+      securityGroupAction,
+      rolesAction,
+      groupRolesAction
+    );
+
+    setFilteredActions(actionArray);
+    setFilteredMenus(menuItem);
+    setPage(page);
+  }, [dispatch, moduleMenus]);
 
   const onDelete = useCallback(
     (recordId) => {
@@ -40,14 +82,8 @@ const UserGroup = () => {
         case "Roles":
           navigate("/dashboard/SAD/roles");
           break;
-
-        case "Delete":
-          break;
-        case "Close":
-          console.log("Close was clicked");
-          break;
-        case "Help":
-          console.log("Help was clicked");
+        case "Group Roles":
+          navigate("/dashboard/SAD/group-roles");
           break;
 
         default:
@@ -64,8 +100,9 @@ const UserGroup = () => {
       title={userGroupHeadingFooter.title}
       footer={userGroupHeadingFooter.footer}
       company={userGroupHeadingFooter.company}
-      menus={homeMenuSource}
-      customActions={userGroupActions}
+      menus={filteredMenus}
+      roles={page}
+      customActions={filteredActions}
       keyExpr={"userGroupID"}
       columns={userGroupsColumns}
       url={"UserGroups"}

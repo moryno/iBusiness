@@ -14,7 +14,13 @@ const Layout = ({ children }) => {
       />
       <div className="flex w-full">
         <Sidebar showSidebar={showSidebar} openSidebar={openSidebar} />
-        <div className="w-full">{children}</div>
+        <div
+          className={`${
+            openSidebar ? "lg:w-[86%] xxl:w-[88%] xxxl:w-[90%]" : "w-full"
+          }`}
+        >
+          {children}
+        </div>
       </div>
     </main>
   );

@@ -26,6 +26,7 @@ const OrderDetail = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [statusMode, setStatusMode] = useState("");
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getSingleBooking = async () => {
@@ -53,17 +54,20 @@ const OrderDetail = () => {
   };
 
   const handleDelete = async () => {
+    setLoading(true);
     const action = `/PO/deleteOrder?orderNumber=${id}`;
     try {
       await OnboardingService.delete(action);
       dispatch(deletePurchaseOrderSuccess(id));
       toast.success("Order deleted successfully.");
       setConfirmDelete(false);
+      setLoading(false);
       navigate(-1);
     } catch (Ex) {
       console.log(Ex);
       toast.error("Order deletion failed. Please try again.");
       setConfirmDelete(false);
+      setLoading(false);
     }
   };
 
@@ -110,6 +114,7 @@ const OrderDetail = () => {
             statusBarText={deleteOrderTitle.footer}
             statusMode={statusMode}
             onDelete={handleDelete}
+            loading={loading}
           />
         </Portal>
       )}

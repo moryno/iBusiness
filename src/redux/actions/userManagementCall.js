@@ -1,7 +1,5 @@
 import SadService from "../../ClientServices/sadService";
-import {
-  getSecurityGroupsSuccess,
-} from "../reducers/securityGroupSlice";
+import { getSecurityGroupsSuccess } from "../reducers/securityGroupSlice";
 import { getUserGroupsSuccess } from "../reducers/userGroupSlice";
 import { getUserSuccess, refreshUser } from "../reducers/userSlice";
 
@@ -40,6 +38,18 @@ export const getUserGroups = async (dispatch) => {
   try {
     const response = await SadService.get("/UserGroups/GetAll");
     dispatch(getUserGroupsSuccess(response));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const checkPermission = async (params) => {
+  try {
+    const response = await SadService.post(
+      `/SecurityGroups/CheckPermission`,
+      params
+    );
+    return response;
   } catch (error) {
     console.log(error);
   }
